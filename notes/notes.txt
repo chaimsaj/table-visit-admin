@@ -1,0 +1,24 @@
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage/logs/laravel.log
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage
+
+chown -R www-data:www-data "/Volumes/DATA/project/table-visit-admin/webapp"
+
+<VirtualHost *:80>
+       DocumentRoot "/Volumes/DATA/project/table-visit-admin/webapp/public"
+       ServerName table-visit.local
+</VirtualHost>
+<Directory "/Volumes/DATA/project/table-visit-admin/webapp">
+    AllowOverride All
+    Options MultiViews Indexes Includes FollowSymLinks
+    Require all granted
+</Directory>
+
+
+npm run dev
+composer install
+php artisan migrate
+
+php artisan config:clear
+php artisan migrate:install
+
+sudo /Applications/XAMPP/xamppfiles/xampp security 
