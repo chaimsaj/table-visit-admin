@@ -1,5 +1,6 @@
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage/logs/laravel.log
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/public
 
 chown -R www-data:www-data "/Volumes/DATA/project/table-visit-admin/webapp"
 
