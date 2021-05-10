@@ -23,3 +23,20 @@ php artisan config:clear
 php artisan migrate:install
 
 sudo /Applications/XAMPP/xamppfiles/xampp security 
+
+brew install mariadb
+mysql.server start
+
+brew services start mariadb
+
+/usr/local/etc/nginx/nginx.conf
+sudo brew services start php70
+
+FLUSH PRIVILEGES;
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Qwerty0987';
+FLUSH PRIVILEGES;
+
+sudo brew services start php
+sudo nginx  
+sudo nginx -s stop
