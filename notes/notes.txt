@@ -4,7 +4,7 @@ sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/public
 
 chown -R www-data:www-data "/Volumes/DATA/project/table-visit-admin/webapp"
 
-<VirtualHost *:80>
+<VirtualHost table-visit.local:80>
        DocumentRoot "/Volumes/DATA/project/table-visit-admin/webapp/public"
        ServerName table-visit.local
 </VirtualHost>
