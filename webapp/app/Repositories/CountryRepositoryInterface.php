@@ -3,10 +3,10 @@
 
 namespace App\Repositories;
 
-use App\Model\Country;
+use App\Repositories\Base\BaseRepositoryInterface;
 use Illuminate\Support\Collection;
 
-interface CountryRepositoryInterface
+interface CountryRepositoryInterface extends BaseRepositoryInterface
 {
-    public function all(): Collection;
+
 }

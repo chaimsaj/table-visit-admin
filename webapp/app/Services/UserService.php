@@ -3,11 +3,10 @@
 
 namespace App\Services;
 
-
-use App\Models\Country;
+use App\Models\User;
 use App\Repositories\CountryRepositoryInterface;
 
-class CountryService implements CountryServiceInterface
+class UserService implements UserServiceInterface
 {
     private $countryRepository;
 
@@ -16,7 +15,7 @@ class CountryService implements CountryServiceInterface
         $this->countryRepository = $countryRepository;
     }
 
-    public function find($id): ?Country
+    public function find($id): ?User
     {
         return $this->countryRepository->find($id);
     }
