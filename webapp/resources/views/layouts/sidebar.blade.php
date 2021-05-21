@@ -11,6 +11,13 @@
 
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
+                        <i class="bx bxs-user-detail"></i>
+                        <span key="t-dashboards">@lang('translation.User')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="users" key="t-default">@lang('translation.Default')</a></li>
+                    </ul>
+                    <a href="javascript: void(0);" class="waves-effect">
                         <i class="bx bx-home-circle"></i><span class="badge rounded-pill bg-info float-end">04</span>
                         <span key="t-dashboards">@lang('translation.Dashboards')</span>
                     </a>

@@ -53,7 +53,7 @@ $rightbar-width:  280px;
 $display-none: none;
 $display-block: block;
 
-// Brand 
+// Brand
 $navbar-brand-box-width: 250px;
 
 // Boxed layout width
@@ -116,6 +116,7 @@ $yellow:  #f1b44c;
 $green:   #34c38f;
 $teal:    #050505;
 $cyan:    #50a5f1;
+$table-visit-color: #EE3E28;
 
 // scss-docs-start colors-map
 $colors: (
@@ -131,11 +132,13 @@ $colors: (
     "cyan":       $cyan,
     "white":      $white,
     "gray":       $gray-600,
-    "gray-dark":  $gray-800
+    "gray-dark":  $gray-800,
+    "table-visit-color": $table-visit-color,
+
 );
 // scss-docs-end colors-map
 
-$primary:       $blue;
+$primary:       $table-visit-color;
 $secondary:     $gray-600;
 $success:       $green;
 $info:          $cyan;

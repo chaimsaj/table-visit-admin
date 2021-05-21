@@ -1,7 +1,7 @@
 <?php
 
 return [
-  
+    "User" =>"Usuario",
   "Menu" =>"Меню",
   "Dashboards" =>"Дашборды",
   "Default" =>"По умолчанию",

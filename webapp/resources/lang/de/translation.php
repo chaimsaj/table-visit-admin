@@ -1,7 +1,7 @@
 <?php
 
 return [
-  
+    "User" =>"Usuario",
   "Menu" =>"Speisekarte",
   "Dashboards" =>"Dashboards",
   "Default" =>"Standard",

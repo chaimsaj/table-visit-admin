@@ -61,7 +61,7 @@ File: Main Js File
     function initHoriMenuActive() {
         $(".navbar-nav a").each(function () {
             var pageUrl = window.location.href.split(/[?#]/)[0];
-            if (this.href == pageUrl) { 
+            if (this.href == pageUrl) {
                 $(this).addClass("active");
                 $(this).parent().addClass("active");
                 $(this).parent().parent().addClass("active");
@@ -146,7 +146,7 @@ File: Main Js File
             }
         }
     }
-    
+
     function initComponents() {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -215,10 +215,10 @@ File: Main Js File
     }
 
     function initCheckAll() {
-        $('#checkAll').on('change', function() {     
-            $('.table-check .form-check-input').prop('checked', $(this).prop("checked"));              
+        $('#checkAll').on('change', function() {
+            $('.table-check .form-check-input').prop('checked', $(this).prop("checked"));
         });
-        $('.table-check .form-check-input').change(function(){ 
+        $('.table-check .form-check-input').change(function(){
             if($('.table-check .form-check-input:checked').length == $('.table-check .form-check-input').length){
                 $('#checkAll').prop('checked',true);
             }else{
@@ -237,7 +237,7 @@ File: Main Js File
         initRightSidebar();
         initDropdownMenu();
         initComponents();
-        initSettings();
+        //initSettings();
         initPreloader();
         Waves.init();
         initCheckAll();
