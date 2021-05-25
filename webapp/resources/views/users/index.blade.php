@@ -30,7 +30,7 @@
                      <h4 class="card-title">List</h4>
 <div class="row">
 <div class="text-sm-end">
-    <button type="button"  onclick="window.location.href='/user-detail/0'" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add New User</button>
+    <button type="button"  onclick="window.location.href='/users-create'" class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i class="mdi mdi-plus me-1"></i> Add New User</button>
 </div>
 </div>
                      <div class="row">
@@ -56,13 +56,16 @@
                              <td>{{ $user->name }}</td>
                              <td>{{ $user->email }}</td>
                              <td>
-                                 <a href="user-detail/{{ $user->id }}" class="btn btn-outline-secondary btn-sm edit" title="Edit">
+                                 <a href="" class="btn  btn-sm edit" title="Edit">
                                      <i class="fas fa-pencil-alt"></i>
+                                 </a>
+                                 <a href="" class="btn  btn-sm deleted" title="Delete">
+                                     <i class="fas fa-trash-alt"></i>
                                  </a>
                              </td>
 
                          </tr>
-                         @endforeach
+                          @endforeach
                          </tbody>
                      </table>
                      </div>
@@ -75,8 +78,8 @@
  @section('script')
      <!-- Required datatable js -->
      <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-     <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+     <!--   <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
+     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>-->
      <!-- Datatable init js -->
      <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
  @endsection

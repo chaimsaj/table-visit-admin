@@ -4,6 +4,8 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Http\Request;
+use http\Message;
 use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\UserRepositoryInterface;
 
@@ -25,5 +27,10 @@ class UserService implements UserServiceInterface
     public function all(): Collection
     {
         return $this->userRepository->all();
+    }
+
+    public function editUser($request, $id): Message
+    {
+        return $this->userRepository->create();
     }
 }

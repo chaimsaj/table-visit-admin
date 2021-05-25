@@ -21,14 +21,23 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('roo
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
-Route::post('/edit-user/{id}', [App\Http\Controllers\HomeController::class, 'edit-user'])->name('edituser');
+
+
 
 //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
+
 // Route::get('/users', [App\Http\Controllers\UserController::class, 'index']);
 
 Route::get('/users', 'App\Http\Controllers\UserController@index');
-Route::get('/user-detail/{id}', 'App\Http\Controllers\UserController@detail');
+Route::get('/users-update/{id}', 'App\Http\Controllers\UserController@update');
+//Route::post('/users', 'App\Http\Controllers\UserController@index');
+Route::post('/users-create', [App\Http\Controllers\UserController::class, 'store'])->name('store');
+Route::get('/users-create', 'App\Http\Controllers\UserController@create');
+//Route::post('/user-detail', [App\Http\Controllers\UserController::class, 'editUser'])->name('editUser');
+
+//Route::resource('users','App\Http\Controllers\UserController@index');
+

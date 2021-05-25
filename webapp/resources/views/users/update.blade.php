@@ -3,8 +3,7 @@
 @section('title') @lang('translation.user') @endsection
 
 @section('css')
-    <!-- DataTables -->
-    <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('content')
@@ -16,12 +15,6 @@
 
     <div class="row">
 
-        {{--@foreach ($data as $user)
-            <p>This is user {{ $user->id }}</p>
-        @endforeach--}}
-
-        {{-- {{ $data->name }}--}}
-
 
         <div class="col-12">
             <div class="card">
@@ -31,7 +24,7 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <form method="POST" class="form-horizontal custom-validation" action="{{ route('editUser')}}" enctype="multipart/form-data">
+                                    <form method="POST" class="form-horizontal custom-validation" action="#" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="id" value="fdvffff">
 
@@ -82,25 +75,27 @@
 
 
 
-                                </form>
+                                    </form>
 
-                            </div>
-                        </div> <!-- end col -->
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+
+
+
                     </div>
-
-
-
                 </div>
-            </div>
-        </div> <!-- end col -->
-    </div> <!-- end row -->
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+    @endsection
+
+    @section('script')
+        <!-- Required datatable js -->
+            <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
+            <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
+            <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+            <!-- Datatable init js -->
+            <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
 @endsection
 
-@section('script')
-    <!-- Required datatable js -->
-    <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- Datatable init js -->
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
-@endsection
+
