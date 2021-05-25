@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "User" =>"Usuario",
+  
   "Menu" =>"Speisekarte",
   "Dashboards" =>"Dashboards",
   "Default" =>"Standard",
@@ -101,6 +101,7 @@ return [
   "Images" =>"Bilder",
   "Lightbox" =>"Leuchtkasten",
   "Modals" =>"Modale",
+  "Offcanvas" =>"Aus Leinwand",
   "Range_Slider" =>"Range Slider",
   "Session_Timeout" =>"Session-Timeout",
   "Progress_Bars" =>"Fortschrittsbalken",

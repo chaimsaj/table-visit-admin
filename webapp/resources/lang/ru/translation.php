@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "User" =>"Usuario",
+  
   "Menu" =>"Меню",
   "Dashboards" =>"Дашборды",
   "Default" =>"По умолчанию",
@@ -101,6 +101,7 @@ return [
   "Images" =>"Картинки",
   "Lightbox" =>"Лайтбокс",
   "Modals" =>"Модальные окна",
+  "Offcanvas" =>"Вне холста",
   "Range_Slider" =>"Ползунок диапазона",
   "Session_Timeout" =>"Тайм-аут сеанса",
   "Progress_Bars" =>"Индикаторы прогресса",

@@ -33,7 +33,7 @@
         "@curiosityx/bootstrap-session-timeout": "^1.0.0",
         "admin-resources": "git+https://github.com/themesbrand/admin-resources#master",
         "apexcharts": "^3.22.2",
-        "bootstrap": "^5.0.0-beta2",
+        "bootstrap": "^5.0.1",
         "bootstrap-datepicker": "^1.9.0",
         "bootstrap-editable": "^1.0.1",
         "bootstrap-filestyle2": "^2.1.0",

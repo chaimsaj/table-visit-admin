@@ -1,7 +1,7 @@
 <?php
 
 return [
-    "User" =>"Usuario",
+  
   "Menu" =>"Menù",
   "Dashboards" =>"Dashboard",
   "Default" =>"Predefinito",
@@ -101,6 +101,7 @@ return [
   "Images" =>"immagini",
   "Lightbox" =>"Lightbox",
   "Modals" =>"Modali",
+  "Offcanvas" =>"Fuori tela",
   "Range_Slider" =>"Range Slider",
   "Session_Timeout" =>"Timeout della sessione",
   "Progress_Bars" =>"Barre di avanzamento",
