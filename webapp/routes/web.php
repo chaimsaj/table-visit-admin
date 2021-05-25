@@ -16,28 +16,25 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+//Countries
+Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries.index');
+Route::get('/country/{id}', [App\Http\Controllers\CountriesController::class, 'detail'])->name('countries.detail');
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Route::get('/index', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
-
-
 
 //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
+Route::get('/users', 'App\Http\Controllers\UsersController@index');
+Route::get('/users-update/{id}', 'App\Http\Controllers\UsersController@update');
+Route::post('/users-create', [App\Http\Controllers\UsersController::class, 'store'])->name('store');
+Route::get('/users-create', 'App\Http\Controllers\UsersController@create');
 
-// Route::get('/users', [App\Http\Controllers\UserController::class, 'index']);
-
-Route::get('/users', 'App\Http\Controllers\UserController@index');
-Route::get('/users-update/{id}', 'App\Http\Controllers\UserController@update');
-//Route::post('/users', 'App\Http\Controllers\UserController@index');
-Route::post('/users-create', [App\Http\Controllers\UserController::class, 'store'])->name('store');
-Route::get('/users-create', 'App\Http\Controllers\UserController@create');
-//Route::post('/user-detail', [App\Http\Controllers\UserController::class, 'editUser'])->name('editUser');
-
-//Route::resource('users','App\Http\Controllers\UserController@index');
 

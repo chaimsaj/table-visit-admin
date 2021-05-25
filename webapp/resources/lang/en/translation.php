@@ -2,9 +2,31 @@
 
 return [
     "Menu" => "Menu",
-    "Dashboards" => "Dashboards",
+    "Dashboard" => "Dashboard",
     "Default" => "Default",
-    "Saas" => "Saas",
+    "App" => "App",
+    "Profile" => "Profile",
+    "Logout" => "Logout",
+
+    //Authentication
+    "Authentication" => "Authentication",
+    "Login" => "Login",
+    "Register" => "Register",
+    "Recover_Password" => "Recover Password",
+    "Lock_Screen" => "Lock Screen",
+    "Confirm_Mail" => "Confirm Mail",
+    "Email_verification" => "Email verification",
+    "Two_step_verification" => "Two step verification",
+
+    "TableVisit" => "Table Visit",
+
+    //Users
+    "Users" => "Users",
+
+    //Locations
+    "Locations" => "Locations",
+    "Countries" => "Countries",
+    /*"Saas" => "Saas",
     "Crypto" => "Crypto",
     "Blog" => "Blog",
     "Layouts" => "Layouts",
@@ -172,9 +194,7 @@ return [
     "Settings" => "Settings",
     "Lock_screen" => "Lock screen",
     "Logout" => "Logout",
-    "Edit_Details" => "Edit Details",
-
-    "User" => "Users"
+    "Edit_Details" => "Edit Details",*/
 ];
 
 ?>

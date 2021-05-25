@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Dashboards') @endsection
+@section('title') @lang('translation.Dashboard') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') Dashboards @endslot
-        @slot('title') Dashboard @endslot
+        @slot('li_1') @lang('translation.App') @endslot
+        @slot('title') @lang('translation.Dashboard') @endslot
     @endcomponent
 
     <!-- subscribeModal -->
