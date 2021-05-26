@@ -2,11 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title> @yield('title') | Table Visit</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Table Visit" name="description" />
-    <meta content="Table Visit" name="author" />
+    <meta content="Table Visit" name="description"/>
+    <meta content="Table Visit" name="author"/>
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
     @include('layouts.head-css')
@@ -14,12 +14,25 @@
 
 @section('body')
     <body data-sidebar="dark">
-@show
+    <!-- Loader -->
+    <div id="preloader">
+        <div id="status">
+            <div class="spinner-chase">
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+                <div class="chase-dot"></div>
+            </div>
+        </div>
+    </div>
+    @show
     <!-- Begin page -->
     <div id="layout-wrapper">
-        @include('layouts.topbar')
-        @include('layouts.sidebar')
-        <!-- ============================================================== -->
+    @include('layouts.topbar')
+    @include('layouts.sidebar')
+    <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->
         <div class="main-content">
@@ -42,6 +55,6 @@
 
     <!-- JAVASCRIPT -->
     @include('layouts.vendor-scripts')
-</body>
+    </body>
 
 </html>
