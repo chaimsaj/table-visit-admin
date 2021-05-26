@@ -19,7 +19,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <form method="POST" class="form-horizontal custom-validation"
-                                          action="{{ route('user.save', $data->id)}}" enctype="multipart/form-data">
+                                          enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name="id" value="fdvffff">
 

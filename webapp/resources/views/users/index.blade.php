@@ -60,7 +60,7 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <a href="user/{{ $user->id }}" class="btn  btn-sm edit" title="Edit">
+                                        <a href="users/{{ $user->id }}" class="btn  btn-sm edit" title="Edit">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                         <a href="" class="btn  btn-sm deleted" title="Delete">

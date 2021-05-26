@@ -10,14 +10,9 @@ use Illuminate\Http\Response;
 
 class CountriesController extends Controller
 {
-    private $userService;
-
-    public function __construct(UserServiceInterface $userService)
+    public function __construct()
     {
-        //$this->middleware('auth');
-        $this->userService = $userService;
-
-
+        $this->middleware('auth');
     }
 
     public function index()
