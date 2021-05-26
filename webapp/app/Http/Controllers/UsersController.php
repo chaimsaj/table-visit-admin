@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Services\UserServiceInterface;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
+use function PHPUnit\Framework\isEmpty;
 
 class UsersController extends Controller
 {
@@ -38,64 +40,67 @@ class UsersController extends Controller
         $user = null;
 
         try {
-            $avatarName = "";
 
-            if ($request->file('avatar')) {
-                $avatar = $request->file('avatar');
-                $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                $avatarPath = public_path('/images/');
-                $avatar->move($avatarPath, $avatarName);
-                if (file_exists(public_path('/images/' . $avatarName))) {
-                    unlink(public_path('/images/' . $avatarName));
-                }
+            $validator = Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ]);
 
-            }
+            $validator->after(function ($validator) {
+                //$validator->errors()->add('email', 'Something is wrong with this field!');
+            });
 
             $user = $this->userService->find($id);
-            $user->name = $request->get('name');
-            $user->email = $request->get('email');
-            $user->password = $request->get('password');
-            $user->dob = date('Y-m-d', strtotime($request->get('dob')));
-            $user->avatar = '/images/' . $avatarName;
-            $user->save();
 
-        } catch (Throwable $e) {
-            return $e;
+            if ($validator->fails() && $user == null) {
+                /*return redirect('post/create')
+                    ->withErrors($validator)
+                    ->withInput();*/
+                //return redirect()->back()->withErrors($validator)->withInput($request->all());
+                return view('users/detail', ["data" => $request])->withErrors($validator);
+            } else {
+                $avatarName = "";
+
+                if (request()->has('avatar')) {
+                    $avatar = request()->file('avatar');
+                    $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+                    $avatarPath = public_path('/images/');
+                    $avatar->move($avatarPath, $avatarName);
+                }
+
+                /* if ($request->file('avatar')) {
+                     $avatar = $request->file('avatar');
+                     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+                     $avatarPath = public_path('/images/');
+                     $avatar->move($avatarPath, $avatarName);
+                     if (file_exists(public_path('/images/' . $avatarName))) {
+                         unlink(public_path('/images/' . $avatarName));
+                     }
+                 }*/
+
+                if ($user == null)
+                    $user = new User();
+
+                $user->name = $request->get('name');
+                $user->email = $request->get('email');
+
+                if (!empty($request->get('password')))
+                    $user->password = $request->get('password');
+
+                $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+
+                if (!empty($avatarName))
+                    $user->avatar = '/images/' . $avatarName;
+                else
+                    $user->avatar = "";
+
+                $user->save();
+            }
+
+        } catch (Throwable $ex) {
+            return $ex;
         }
 
         return redirect("users");
-        //return view('users/detail', ["data" => $user]);
-    }
-
-    public function store(Request $request)
-    {
-        try {
-            $avatarName = "";
-
-            if ($request->file('avatar')) {
-                $avatar = $request->file('avatar');
-                $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                $avatarPath = public_path('/images/');
-                $avatar->move($avatarPath, $avatarName);
-                if (file_exists(public_path('/images/' . $avatarName))) {
-                    unlink(public_path('/images/' . $avatarName));
-                }
-            }
-
-            $user = new User();
-
-            $user->name = $request->get('name');
-            $user->email = $request->get('email');
-            $user->password = $request->get('password');
-            $user->dob = date('Y-m-d', strtotime($request->get('dob')));
-            $user->avatar = '/images/' . $avatarName;
-            $user->save();
-
-        } catch (Throwable $e) {
-            return $e;
-        }
-        //return $request->input();
-        return redirect("/users");
-
     }
 }

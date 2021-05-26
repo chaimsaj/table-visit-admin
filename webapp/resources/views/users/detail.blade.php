@@ -19,7 +19,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <form method="POST" class="form-horizontal custom-validation"
-                                          action="{{route("user.save", $data->id)}}"
+                                          action="{{route("user.save", $data->id ?? 0)}}"
                                           enctype="multipart/form-data">
                                         @csrf
                                         <img class="rounded-circle header-profile-user"
@@ -28,15 +28,15 @@
                                         <div class="mb-3">
                                             <label for="avatar">Profile Picture</label>
                                             <div class="input-group">
-                                                <input type="file" name="avatar" value="eeee" class="form-control">
-                                                <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                                <input type="file" name="avatar" class="form-control">
+                                                <label class="input-group-text" for="avatar">Upload</label>
                                             </div>
 
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Name</label>
                                             <input type="text" name="name"
-                                                   value="{{isset($data->name) ? $data->name  : ''}}"
+                                                   value="{{$data->name ?? ''}}"
                                                    class="form-control" value="" required placeholder="Name"/>
                                         </div>
 
@@ -44,13 +44,13 @@
                                             <label class="form-label">Password</label>
                                             <div>
                                                 <input type="password" name="password"
-                                                       value="{{isset($data->password) ? $data->password  : ''}}"
-                                                       id="pass2" class="form-control" required placeholder="Password"/>
+                                                       id="password" class="form-control"
+                                                       {{!isset($data->id) ? 'required' : ''}} placeholder="Password"/>
                                             </div>
                                             <div class="mt-2">
                                                 <input type="password"
-                                                       value="{{isset($data->password) ? $data->password  : ''}}"
-                                                       class="form-control" required data-parsley-equalto="#pass2"
+                                                       class="form-control"
+                                                       {{!isset($data->id) ? 'required' : ''}} data-parsley-equalto="#password"
                                                        placeholder="Re-Type Password"/>
                                             </div>
                                         </div>
@@ -58,24 +58,35 @@
                                         <div class="mb-3">
                                             <label class="form-label">E-Mail</label>
                                             <div>
-                                                <input name="email" type="email" value="{{isset($data->email) ? $data->email  : ''}}"
+                                                <input name="email" type="email"
+                                                       value="{{$data->email ?? ''}}"
                                                        class="form-control" required parsley-type="email"
                                                        placeholder="Enter a valid e-mail"/>
                                             </div>
                                         </div>
 
                                         <div class="d-flex flex-wrap gap-2">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                Submit
+                                            <button type="submit" class="btn btn-success waves-effect waves-light">
+                                                @lang('translation.Save')
                                             </button>
-                                            <button type="reset" onclick="window.location.href='/users'"
-                                                    class="btn btn-secondary waves-effect">
-                                                Cancel
-                                            </button>
+                                            <a href="{{route("users")}}"
+                                               class="btn btn-secondary waves-effect">
+                                                @lang('translation.Cancel')
+                                            </a>
                                         </div>
 
 
                                     </form>
+
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                            @foreach ($errors->all() as $error)
+                                                <div>{{ $error }}</div>
+                                            @endforeach
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                    aria-label="close"></button>
+                                        </div>
+                                    @endif
 
                                 </div>
                             </div> <!-- end col -->
@@ -90,10 +101,6 @@
 @endsection
 
 @section('script')
-    <!-- Required datatable js -->
-    <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- Datatable init js -->
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
 @endsection

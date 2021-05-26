@@ -29,7 +29,7 @@ File: Main Js File
         });
     }
 
-    /*function initActiveMenu() {
+    function initActiveMenu() {
         // === following js will activate the menu in left side bar based on url ====
         $("#sidebar-menu a").each(function () {
             var pageUrl = window.location.href.split(/[?#]/)[0];
@@ -43,7 +43,7 @@ File: Main Js File
                 $(this).parent().parent().parent().parent().parent().addClass("mm-active");
             }
         });
-    }*/
+    }
 
     function initMenuItemScroll() {
         // focus active menu in left sidebar
@@ -243,12 +243,12 @@ File: Main Js File
         initLeftMenuCollapse();
         initActiveMenu();
         initMenuItemScroll();
-        initHoriMenuActive();
-        initFullScreen();
+        // initHoriMenuActive();
+        // initFullScreen();
         initRightSidebar();
         initDropdownMenu();
         initComponents();
-        initSettings();
+        // initSettings();
         initPreloader();
         Waves.init();
         initCheckAll();

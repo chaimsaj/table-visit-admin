@@ -10,7 +10,12 @@ Contact: themesbrand@gmail.com
 File: Datatables Js File
 */
 $(document).ready(function () {
-  $('#datatable').DataTable(); //Buttons examples
+  $('#datatable').DataTable({
+    columnDefs: [{
+      targets: 'no-sort',
+      orderable: false
+    }]
+  }); //Buttons examples
 
   var table = $('#datatable-buttons').DataTable({
     lengthChange: false,

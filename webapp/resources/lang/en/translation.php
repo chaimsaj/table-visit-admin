@@ -8,6 +8,10 @@ return [
     "Profile" => "Profile",
     "Logout" => "Logout",
     "Detail" => "Detail",
+    "Save" => "Save",
+    "Cancel" => "Cancel",
+
+
 
 
     //Authentication
