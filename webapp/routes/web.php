@@ -34,11 +34,12 @@ Route::post('/users-create', [App\Http\Controllers\UsersController::class, 'stor
 Route::get('/users-create', 'App\Http\Controllers\UsersController@create');*/
 
 //Users
-Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
-Route::get('/users/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('users.detail');
-//Route::post('/user-save/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
+Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
+Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
+Route::post('/user/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
 
 //Countries
-Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries.index');
-Route::get('/countries/{id}', [App\Http\Controllers\CountriesController::class, 'detail'])->name('countries.detail');
+Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries');
+Route::get('/country/{id}', [App\Http\Controllers\CountriesController::class, 'detail'])->name('country.detail');
+Route::post('/country/{id}', [App\Http\Controllers\CountriesController::class, 'save'])->name('country.save');
 

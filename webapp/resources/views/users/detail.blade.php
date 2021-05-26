@@ -19,10 +19,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <form method="POST" class="form-horizontal custom-validation"
+                                          action="{{route("user.save", $data->id)}}"
                                           enctype="multipart/form-data">
                                         @csrf
-                                        <input type="hidden" name="id" value="fdvffff">
-
                                         <img class="rounded-circle header-profile-user"
                                              src="{{ isset($data->avatar) ? asset($data->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                                              alt="">
@@ -59,7 +58,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">E-Mail</label>
                                             <div>
-                                                <input type="email" value="{{isset($data->email) ? $data->email  : ''}}"
+                                                <input name="email" type="email" value="{{isset($data->email) ? $data->email  : ''}}"
                                                        class="form-control" required parsley-type="email"
                                                        placeholder="Enter a valid e-mail"/>
                                             </div>

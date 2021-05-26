@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\UserServiceInterface;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -32,9 +33,37 @@ class UsersController extends Controller
 
     public function save(Request $request, $id)
     {
-        $data = $this->userService->find($id);
+        //$data = $this->userService->find($id);
 
-        return view('users/detail', ["data" => $data]);
+        $user = null;
+
+        try {
+            $avatarName = "";
+
+            if ($request->file('avatar')) {
+                $avatar = $request->file('avatar');
+                $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+                $avatarPath = public_path('/images/');
+                $avatar->move($avatarPath, $avatarName);
+                if (file_exists(public_path('/images/' . $avatarName))) {
+                    unlink(public_path('/images/' . $avatarName));
+                }
+
+            }
+
+            $user = $this->userService->find($id);
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = $request->get('password');
+            $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+            $user->avatar = '/images/' . $avatarName;
+            $user->save();
+
+        } catch (Throwable $e) {
+            return $e;
+        }
+
+        return view('users/detail', ["data" => $user]);
     }
 
     public function store(Request $request)

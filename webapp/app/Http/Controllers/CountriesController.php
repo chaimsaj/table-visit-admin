@@ -25,7 +25,7 @@ class CountriesController extends Controller
         return view('countries/detail');
     }
 
-    public function data(Request $request)
+    public function save(Request $request)
     {
         if (view()->exists($request->path())) {
             return view($request->path());

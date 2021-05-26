@@ -17,7 +17,7 @@
                         <span key="t-users">@lang('translation.Users')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="users" key="t-users">@lang('translation.Users')</a></li>
+                        <li><a href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
                     </ul>
                 </li>
 
@@ -46,7 +46,7 @@
                         <span key="t-locations">@lang('translation.Locations')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="countries" key="t-countries">@lang('translation.Countries')</a></li>
+                        <li><a href="{{route("countries")}}" key="t-countries">@lang('translation.Countries')</a></li>
                     </ul>
                 </li>
 
