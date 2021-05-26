@@ -79,7 +79,6 @@ class UsersController extends Controller
                 if (file_exists(public_path('/images/' . $avatarName))) {
                     unlink(public_path('/images/' . $avatarName));
                 }
-
             }
 
             $user = new User();
