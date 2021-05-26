@@ -24,33 +24,46 @@
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <form method="POST" class="form-horizontal custom-validation" action="#" enctype="multipart/form-data">
+                                    <form method="POST" class="form-horizontal custom-validation" action="{{ route('update')}}"  >
                                         @csrf
-                                        <input type="hidden" name="id" value="fdvffff">
-
+                                        @method('PUT')
                                         <img class="rounded-circle header-profile-user"
                                              src="{{ isset($user->avatar) ? asset($user->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                                              alt="">
                                         <div class="mb-3">
                                             <label for="avatar">Profile Picture</label>
                                             <div class="input-group">
-                                                <input type="file" name="avatar" value="eeee" class="form-control"  >
+                                                <input type="file" name="avatar"  value="{{$user->avatar ?? ''}}" class="form-control"  >
                                                 <label class="input-group-text" for="inputGroupFile02">Upload</label>
                                             </div>
 
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Name</label>
-                                            <input type="text" name="name" value="{{isset($data->name) ? $data->name  : ''}}" class="form-control" value="" required placeholder="Name" />
+                                            <input type="text" name="name" value="{{$user->name ?? ''}}" class="form-control" value="" required placeholder="Name" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="userdob">Date of Birth</label>
+                                            <div class="input-group" id="datepicker1">
+                                                <input type="text" value="{{$user->dob ?? ''}}"  class="form-control" required placeholder="dd-mm-yyyy"
+                                                       data-date-format="dd-mm-yyyy" data-date-container='#datepicker1' data-date-end-date="0d" value=""
+                                                       data-provide="datepicker" name="dob" autofocus required>
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+
+                                                <span class="invalid-feedback" role="alert">
+                                                                <strong></strong>
+                                                            </span>
+
+                                            </div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label class="form-label">Password</label>
                                             <div>
-                                                <input type="password" name="password" value="{{isset($data->password) ? $data->password  : ''}}" id="pass2" class="form-control" required placeholder="Password" />
+                                                <input type="password" name="password" value="{{$user->password ?? ''}}" id="password" class="form-control" required placeholder="Password" />
                                             </div>
                                             <div class="mt-2">
-                                                <input type="password" value="{{isset($data->password) ? $data->password  : ''}}" class="form-control" required data-parsley-equalto="#pass2"
+                                                <input type="password" value="{{$user->password ?? ''}}" class="form-control" required data-parsley-equalto="#password"
                                                        placeholder="Re-Type Password" />
                                             </div>
                                         </div>
@@ -58,7 +71,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">E-Mail</label>
                                             <div>
-                                                <input type="email" value="{{isset($data->email) ? $data->email  : ''}}" class="form-control" required parsley-type="email"
+                                                <input type="email" value="{{$user->email ?? ''}}" class="form-control" required parsley-type="email"
                                                        placeholder="Enter a valid e-mail" />
                                             </div>
                                         </div>
