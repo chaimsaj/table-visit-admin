@@ -63,7 +63,8 @@ class UsersController extends Controller
             return $e;
         }
 
-        return view('users/detail', ["data" => $user]);
+        return redirect("users");
+        //return view('users/detail', ["data" => $user]);
     }
 
     public function store(Request $request)
