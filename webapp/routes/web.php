@@ -20,13 +20,13 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('roo
 Route::get('/index', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 //Update User Details
-Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
-Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+//Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+//Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
 
 //Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 //Language Translation
-Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
+//Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 /*Route::get('/users', 'App\Http\Controllers\UsersController@index');
 Route::get('/users-update/{id}', 'App\Http\Controllers\UsersController@update');
@@ -36,7 +36,7 @@ Route::get('/users-create', 'App\Http\Controllers\UsersController@create');*/
 //Countries
 Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
 Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
-Route::post('/user-save/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
+//Route::post('/user-save/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
 
 //Countries
 Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries.index');

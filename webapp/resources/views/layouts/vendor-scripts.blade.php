@@ -4,7 +4,7 @@
 <script src="{{ URL::asset('assets/libs/metismenu/metismenu.min.js')}}"></script>
 <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js')}}"></script>
-<script>
+{{--<script>
     $('#change-password').on('submit',function(event){
         event.preventDefault();
         var Id = $('#data_id').val();
@@ -27,11 +27,11 @@
                 $('#current_passwordError').text('');
                 $('#passwordError').text('');
                 $('#password_confirmError').text('');
-                if(response.isSuccess == false){ 
+                if(response.isSuccess == false){
                     $('#current_passwordError').text(response.Message);
                 }else if(response.isSuccess == true){
-                    setTimeout(function () {   
-                        window.location.href = "{{ route('root') }}"; 
+                    setTimeout(function () {
+                        window.location.href = "{{ route('root') }}";
                     }, 1000);
                 }
             },
@@ -42,7 +42,7 @@
             }
         });
     });
-</script>
+</script>--}}
 
 @yield('script')
 

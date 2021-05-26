@@ -27,6 +27,6 @@ Route::middleware('api')->get('/health', function () {
 Route::middleware('api')->group(function () {
     //Route::resource('countries', CountryController::class);
 
-    Route::get('countries/list', 'App\Http\Api\CountryController@list');
-    Route::get('countries/find/{id}', 'App\Http\Api\CountryController@find');
+//    Route::get('countries/list', 'App\Http\Api\CountryController@list');
+//    Route::get('countries/find/{id}', 'App\Http\Api\CountryController@find');
 });

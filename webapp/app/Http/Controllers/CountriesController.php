@@ -14,7 +14,7 @@ class CountriesController extends Controller
 
     public function __construct(UserServiceInterface $userService)
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
         $this->userService = $userService;
 
 

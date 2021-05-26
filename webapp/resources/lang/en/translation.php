@@ -28,6 +28,8 @@ return [
     //Locations
     "Locations" => "Locations",
     "Countries" => "Countries",
+    "Country" => "Country",
+
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",
     "Blog" => "Blog",

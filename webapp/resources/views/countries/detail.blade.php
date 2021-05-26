@@ -6,7 +6,7 @@
 
     @component('components.breadcrumb')
         @slot('li_1') @lang('translation.Locations') @endslot
-        @slot('title') @lang('translation.Countries') @endslot
+        @slot('title') @lang('translation.Country') @endslot
     @endcomponent
 
 @endsection
