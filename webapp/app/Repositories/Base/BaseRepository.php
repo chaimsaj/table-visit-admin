@@ -29,4 +29,19 @@ class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->all();
     }
+
+    public function logicDelete($id): bool
+    {
+        return $this->find($id)->delete();
+    }
+
+    public function restore($id): bool
+    {
+        return $this->findOnlyTrashedById($id)->restore();
+    }
+
+    public function delete($id): bool
+    {
+        return $this->find($id)->forceDelete();
+    }
 }

@@ -91,8 +91,10 @@ class UsersController extends Controller
 
                 if (!empty($avatarName))
                     $user->avatar = '/images/' . $avatarName;
-                else
-                    $user->avatar = "";
+                else {
+                    if ($user->id == 0)
+                        $user->avatar = "";
+                }
 
                 $user->save();
             }
@@ -100,6 +102,13 @@ class UsersController extends Controller
         } catch (Throwable $ex) {
             return $ex;
         }
+
+        return redirect("users");
+    }
+
+    public function delete($id)
+    {
+        $this->userService->delete($id);
 
         return redirect("users");
     }

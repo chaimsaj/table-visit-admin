@@ -20,4 +20,9 @@ class CountryService implements CountryServiceInterface
     {
         return $this->countryRepository->find($id);
     }
+
+    public function delete($id): bool
+    {
+        return $this->countryRepository->delete($id);
+    }
 }

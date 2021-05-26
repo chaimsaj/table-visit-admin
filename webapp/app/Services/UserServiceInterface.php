@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface UserServiceInterface
 {
-    public function editUser(Request $request, $id): Message;
     public function find($id): ?User;
+
     public function all(): Collection;
+
+    public function delete($id): bool;
 }

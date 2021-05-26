@@ -29,8 +29,8 @@ class UserService implements UserServiceInterface
         return $this->userRepository->all();
     }
 
-    public function editUser($request, $id): Message
+    public function delete($id): bool
     {
-        return $this->userRepository->create();
+        return $this->userRepository->delete($id);
     }
 }

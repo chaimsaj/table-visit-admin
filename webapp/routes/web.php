@@ -35,6 +35,7 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
 Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
 Route::post('/user/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
+Route::get('/user/delete/{id}', [App\Http\Controllers\UsersController::class, 'delete'])->name('user.delete');
 
 //Countries
 Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries');
