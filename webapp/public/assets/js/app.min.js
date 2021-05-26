@@ -1,7 +1,7 @@
 /*
 Template Name: Skote - Admin & Dashboard Template
 Author: Themesbrand
-Version: 3.0.0
+Version: 3.1.0
 Website: https://themesbrand.com/
 Contact: themesbrand@gmail.com
 File: Main Js File
@@ -29,7 +29,7 @@ File: Main Js File
         });
     }
 
-    function initActiveMenu() {
+    /*function initActiveMenu() {
         // === following js will activate the menu in left side bar based on url ====
         $("#sidebar-menu a").each(function () {
             var pageUrl = window.location.href.split(/[?#]/)[0];
@@ -43,7 +43,7 @@ File: Main Js File
                 $(this).parent().parent().parent().parent().parent().addClass("mm-active");
             }
         });
-    }
+    }*/
 
     function initMenuItemScroll() {
         // focus active menu in left sidebar
@@ -173,44 +173,55 @@ File: Main Js File
                 sessionStorage.setItem("is_visited", "light-mode-switch");
             } else {
                 $(".right-bar input:checkbox").prop('checked', false);
-                $("#"+alreadyVisited).prop('checked', true);
+                $("#" + alreadyVisited).prop('checked', true);
                 updateThemeSetting(alreadyVisited);
             }
         }
-        $("#light-mode-switch, #dark-mode-switch, #rtl-mode-switch").on("change", function(e) {
+        $("#light-mode-switch, #dark-mode-switch, #rtl-mode-switch, #dark-rtl-mode-switch").on("change", function (e) {
             updateThemeSetting(e.target.id);
         });
 
         // show password input value
-        $("#password-addon").on('click', function(){
-            if($(this).siblings('input').length > 0) {
+        $("#password-addon").on('click', function () {
+            if ($(this).siblings('input').length > 0) {
                 $(this).siblings('input').attr('type') == "password" ? $(this).siblings('input').attr('type', 'input') : $(this).siblings('input').attr('type', 'password');
             }
         })
     }
 
     function updateThemeSetting(id) {
-        if($("#light-mode-switch").prop("checked") == true && id === "light-mode-switch"){
+        if ($("#light-mode-switch").prop("checked") == true && id === "light-mode-switch") {
             $("html").removeAttr("dir");
             $("#dark-mode-switch").prop("checked", false);
             $("#rtl-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href','/assets/css/bootstrap.min.css');
-            $("#app-style").attr('href','/assets/css/app.min.css');
+            $("#dark-rtl-mode-switch").prop("checked", false);
+            $("#bootstrap-style").attr('href', 'assets/css/bootstrap.min.css');
+            $("#app-style").attr('href', 'assets/css/app.min.css');
             sessionStorage.setItem("is_visited", "light-mode-switch");
-        } else if($("#dark-mode-switch").prop("checked") == true && id === "dark-mode-switch"){
+        } else if ($("#dark-mode-switch").prop("checked") == true && id === "dark-mode-switch") {
             $("html").removeAttr("dir");
             $("#light-mode-switch").prop("checked", false);
             $("#rtl-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href','/assets/css/bootstrap-dark.min.css');
-            $("#app-style").attr('href','/assets/css/app-dark.min.css');
+            $("#dark-rtl-mode-switch").prop("checked", false);
+            $("#bootstrap-style").attr('href', 'assets/css/bootstrap-dark.min.css');
+            $("#app-style").attr('href', 'assets/css/app-dark.min.css');
             sessionStorage.setItem("is_visited", "dark-mode-switch");
-        } else if($("#rtl-mode-switch").prop("checked") == true && id === "rtl-mode-switch"){
+        } else if ($("#rtl-mode-switch").prop("checked") == true && id === "rtl-mode-switch") {
             $("#light-mode-switch").prop("checked", false);
             $("#dark-mode-switch").prop("checked", false);
-            $("#bootstrap-style").attr('href','/assets/css/bootstrap.rtl.css');
-            $("#app-style").attr('href','/assets/css/app.rtl.css');
+            $("#dark-rtl-mode-switch").prop("checked", false);
+            $("#bootstrap-style").attr('href', 'assets/css/bootstrap.rtl.css');
+            $("#app-style").attr('href', 'assets/css/app.rtl.css');
             $("html").attr("dir", 'rtl');
             sessionStorage.setItem("is_visited", "rtl-mode-switch");
+        } else if ($("#dark-rtl-mode-switch").prop("checked") == true && id === "dark-rtl-mode-switch") {
+            $("#light-mode-switch").prop("checked", false);
+            $("#rtl-mode-switch").prop("checked", false);
+            $("#dark-mode-switch").prop("checked", false);
+            $("#bootstrap-style").attr('href', 'assets/css/bootstrap-dark.rtl.css');
+            $("#app-style").attr('href', 'assets/css/app-dark.rtl.css');
+            $("html").attr("dir", 'rtl');
+            sessionStorage.setItem("is_visited", "dark-rtl-mode-switch");
         }
     }
 
@@ -237,7 +248,7 @@ File: Main Js File
         initRightSidebar();
         initDropdownMenu();
         initComponents();
-        //initSettings();
+        initSettings();
         initPreloader();
         Waves.init();
         initCheckAll();
