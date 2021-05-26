@@ -22,12 +22,12 @@ class CountriesController extends Controller
 
     public function index()
     {
-        return view('index');
+        return view('countries/index');
     }
 
     public function detail()
     {
-        return view('detail');
+        return view('countries/detail');
     }
 
     public function data(Request $request)

@@ -7,6 +7,8 @@ return [
     "App" => "App",
     "Profile" => "Profile",
     "Logout" => "Logout",
+    "Detail" => "Detail",
+
 
     //Authentication
     "Authentication" => "Authentication",

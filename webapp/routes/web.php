@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-//Countries
-Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries.index');
-Route::get('/country/{id}', [App\Http\Controllers\CountriesController::class, 'detail'])->name('countries.detail');
-
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::get('/index', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
@@ -32,9 +28,17 @@ Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
-Route::get('/users', 'App\Http\Controllers\UsersController@index');
+/*Route::get('/users', 'App\Http\Controllers\UsersController@index');
 Route::get('/users-update/{id}', 'App\Http\Controllers\UsersController@update');
 Route::post('/users-create', [App\Http\Controllers\UsersController::class, 'store'])->name('store');
-Route::get('/users-create', 'App\Http\Controllers\UsersController@create');
+Route::get('/users-create', 'App\Http\Controllers\UsersController@create');*/
 
+//Countries
+Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
+Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
+Route::post('/user-save/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
+
+//Countries
+Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries.index');
+Route::get('/country/{id}', [App\Http\Controllers\CountriesController::class, 'detail'])->name('country.detail');
 

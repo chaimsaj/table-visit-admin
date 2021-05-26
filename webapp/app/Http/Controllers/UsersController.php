@@ -15,42 +15,32 @@ class UsersController extends Controller
     {
         $this->userService = $userService;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $data = $this->userService->all();
 
-        return view('users.index', ["data"=>$data]);
-       //  return view('users/index')->with('data',$data);
-
-
+        return view('users/index', ["data" => $data]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function detail($id)
     {
+        $data = $this->userService->find($id);
 
-       return view('users.create');
+        return view('users/detail', ["data" => $data]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function save(Request $request, $id)
+    {
+        $data = $this->userService->find($id);
+
+        return view('users/detail', ["data" => $data]);
+    }
+
     public function store(Request $request)
     {
         try {
-       $avatarName = "";
+            $avatarName = "";
 
             if ($request->file('avatar')) {
                 $avatar = $request->file('avatar');
@@ -63,14 +53,14 @@ class UsersController extends Controller
 
             }
 
-        $user = new User();
+            $user = new User();
 
-        $user->name = $request->get('name');
-        $user->email = $request->get('email');
-        $user->password = $request->get('password');
-        $user->dob = date('Y-m-d', strtotime($request->get('dob')));
-        $user->avatar = '/images/' . $avatarName;
-        $user->save();
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = $request->get('password');
+            $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+            $user->avatar = '/images/' . $avatarName;
+            $user->save();
 
         } catch (Throwable $e) {
             return $e;
@@ -78,50 +68,5 @@ class UsersController extends Controller
         //return $request->input();
         return redirect("/users");
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

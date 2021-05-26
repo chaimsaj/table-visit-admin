@@ -5,6 +5,7 @@
 @section('content')
 
     @component('components.breadcrumb')
+        @slot('li_1') @lang('translation.Locations') @endslot
         @slot('title') @lang('translation.Countries') @endslot
     @endcomponent
 
