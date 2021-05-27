@@ -32,7 +32,7 @@
                         </h4>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a href="{{route("user.create")}}"
+                                <a href="{{route("user.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
                                         class="mdi mdi-plus me-1"></i> Add New User
                                 </a>
@@ -74,9 +74,9 @@
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         <div class="d-flex gap-3">
-                                            <a href="{{route("user.edit", $user->id)}}" class="text-success"><i
+                                            <a href="{{route("user.detail", $user->id)}}" class="text-success"><i
                                                     class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="javascript:void(0);" class="text-danger"><i
+                                            <a href="{{route("user.delete", $user->id)}}" class="text-danger"><i
                                                     class="mdi mdi-delete font-size-18"></i></a>
                                         </div>
                                     </td>

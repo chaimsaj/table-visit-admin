@@ -33,11 +33,17 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 
 //Users
 Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
-Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
-Route::post('/user/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
-Route::get('/user/delete/{id}', [App\Http\Controllers\UsersController::class, 'delete'])->name('user.delete');
+Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'edit'])->name('user.edit');
+Route::get('/user/create', [App\Http\Controllers\UsersController::class, 'create'])->name('user.create');
+Route::post('/user/update', [App\Http\Controllers\UsersController::class, 'update'])->name('user.update');
 
 //Countries
 Route::get('/countries', [App\Http\Controllers\CountriesController::class, 'index'])->name('countries');
 Route::get('/country/{id}', [App\Http\Controllers\CountriesController::class, 'detail'])->name('country.detail');
 Route::post('/country/{id}', [App\Http\Controllers\CountriesController::class, 'save'])->name('country.save');
+
+//Sample
+Route::get('/samples', [App\Http\Controllers\SamplesController::class, 'index'])->name('samples');
+Route::get('/sample/{id}', [App\Http\Controllers\SamplesController::class, 'detail'])->name('sample.detail');
+Route::post('/sample/{id}', [App\Http\Controllers\SamplesController::class, 'save'])->name('sample.save');
+Route::get('/sample/delete/{id}', [App\Http\Controllers\SamplesController::class, 'delete'])->name('sample.delete');

@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\UserServiceInterface;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redirect;
-use function PHPUnit\Framework\isEmpty;
 
 class UsersController extends Controller
 {
@@ -19,97 +17,140 @@ class UsersController extends Controller
         $this->userService = $userService;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $data = $this->userService->all();
 
         return view('users/index', ["data" => $data]);
+        //  return view('users/index')->with('data',$data);
+
+
     }
 
-    public function detail($id)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $data = $this->userService->find($id);
 
-        return view('users/detail', ["data" => $data]);
+        return view('users/create');
     }
 
-    public function save(Request $request, $id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        //$data = $this->userService->find($id);
-
-        $user = null;
-
         try {
+            $avatarName = "";
 
-            $validator = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            ]);
-
-            $validator->after(function ($validator) {
-                //$validator->errors()->add('email', 'Something is wrong with this field!');
-            });
-
-            $user = $this->userService->find($id);
-
-            if ($validator->fails() && $user == null) {
-                /*return redirect('post/create')
-                    ->withErrors($validator)
-                    ->withInput();*/
-                //return redirect()->back()->withErrors($validator)->withInput($request->all());
-                return view('users/detail', ["data" => $request])->withErrors($validator);
-            } else {
-                $avatarName = "";
-
-                if (request()->has('avatar')) {
-                    $avatar = request()->file('avatar');
-                    $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                    $avatarPath = public_path('/images/');
-                    $avatar->move($avatarPath, $avatarName);
+            if ($request->file('avatar')) {
+                $avatar = $request->file('avatar');
+                $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+                $avatarPath = public_path('/images/');
+                $avatar->move($avatarPath, $avatarName);
+                if (file_exists(public_path('/images/' . $avatarName))) {
+                    unlink(public_path('/images/' . $avatarName));
                 }
 
-                /* if ($request->file('avatar')) {
-                     $avatar = $request->file('avatar');
-                     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                     $avatarPath = public_path('/images/');
-                     $avatar->move($avatarPath, $avatarName);
-                     if (file_exists(public_path('/images/' . $avatarName))) {
-                         unlink(public_path('/images/' . $avatarName));
-                     }
-                 }*/
-
-                if ($user == null)
-                    $user = new User();
-
-                $user->name = $request->get('name');
-                $user->email = $request->get('email');
-
-                if (!empty($request->get('password')))
-                    $user->password = $request->get('password');
-
-                $user->dob = date('Y-m-d', strtotime($request->get('dob')));
-
-                if (!empty($avatarName))
-                    $user->avatar = '/images/' . $avatarName;
-                else {
-                    if ($user->id == 0)
-                        $user->avatar = "";
-                }
-
-                $user->save();
             }
 
-        } catch (Throwable $ex) {
-            return $ex;
-        }
+            $user = new User();
 
-        return redirect("users");
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = $request->get('password');
+            $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+            $user->avatar = '/images/' . $avatarName;
+            $user->save();
+
+        } catch (Throwable $e) {
+            return $e;
+        }
+        //return $request->input();
+        return redirect("/users");
+
     }
 
-    public function delete($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $this->userService->delete($id);
+        //
+    }
 
-        return redirect("users");
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $user = $this->userService->find($id);
+        return view('users/edit', ["user" => $user]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = $this->userService->find($id);
+
+            if ($request->file('avatar')) {
+                $avatar = $request->file('avatar');
+                $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+                $avatarPath = public_path('/images/');
+                $avatar->move($avatarPath, $avatarName);
+                if (file_exists(public_path($user->avatar))) {
+                    unlink(public_path($user->avatar));
+                }
+                $user->avatar = '/images/' . $avatarName;
+            }
+
+
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = $request->get('password');
+            $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+
+            $user->update();
+
+        } catch (Throwable $e) {
+            return $e;
+        }
+        //return $request->input();
+        return redirect("/users");
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
