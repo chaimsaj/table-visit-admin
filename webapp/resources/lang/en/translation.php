@@ -10,7 +10,7 @@ return [
     "Detail" => "Detail",
     "Save" => "Save",
     "Cancel" => "Cancel",
-
+    "Administration" => "Administration",
 
 
 
