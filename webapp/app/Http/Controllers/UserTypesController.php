@@ -16,12 +16,12 @@ class UserTypesController extends Controller
 
     public function index()
     {
-        //
+        return view('user-types/index');
     }
 
-    public function detail($id)
+    public function detail()
     {
-        //
+        return view('user-types/detail');
     }
 
     public function save(Request $request, $id)

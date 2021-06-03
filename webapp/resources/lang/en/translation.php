@@ -24,7 +24,7 @@ return [
     "Email_verification" => "Email verification",
     "Two_step_verification" => "Two step verification",
 
-    "TableVisit" => "Table Visit",
+    "TableVisit" => "TABLE VISIT",
 
     //Users
     "Users" => "Users",
