@@ -16,12 +16,12 @@ class CurrenciesController extends Controller
 
     public function index()
     {
-        //
+        return view('currencies/index');
     }
 
-    public function detail($id)
+    public function detail()
     {
-        //
+        return view('currencies/detail');
     }
 
     public function save(Request $request, $id)

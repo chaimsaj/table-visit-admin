@@ -310,10 +310,6 @@ var app_pages_assets = {
         folder.src + "js/pages/two-step-verification.init.js",
         folder.src + "js/pages/validation.init.js",
         folder.src + "js/pages/vector-maps.init.js",
-
-        //app
-        folder.src + "js/app/locations.js",
-        folder.src + "js/app/users.js",
     ]
 };
 
@@ -329,6 +325,7 @@ lodash(app_pages_assets).forEach(function (assets, type) {
 var app_assets = {
     js: [
         //app
+        folder.src + "js/app/localization.js",
         folder.src + "js/app/locations.js",
         folder.src + "js/app/users.js",
     ]
