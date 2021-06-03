@@ -56,10 +56,11 @@
     }
 
     .bg-overlay{
-        background: url("../images/30992.jpg");
+        background: url("../images/venue-bg.jpeg");
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
+        opacity: 1 !important;
     }
 }
 

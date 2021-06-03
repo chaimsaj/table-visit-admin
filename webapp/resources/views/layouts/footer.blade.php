@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <script>document.write(new Date().getFullYear())</script> © Table Visit
+                <script>document.write(new Date().getFullYear())</script> @lang('translation.TableVisit')
             </div>
             {{--<div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">

@@ -41,3 +41,9 @@ FLUSH PRIVILEGES;
 sudo brew services start php
 sudo nginx  
 sudo nginx -s stop
+
+// Run all Mix tasks...
+npm run dev
+
+// Run all Mix tasks and minify output...
+npm run prod

@@ -28,11 +28,36 @@ return [
 
     //Users
     "Users" => "Users",
+    "User" => "User",
+
+    "UserTypes" => "User Types",
+    "UserType" => "User Type",
 
     //Locations
     "Locations" => "Locations",
+
     "Countries" => "Countries",
     "Country" => "Country",
+    "States" => "States",
+    "State" => "State",
+    "Cities" => "Cities",
+    "City" => "City",
+
+    //Localization
+    "Localization" => "Localization",
+
+    "Languages" => "Languages",
+    "Language" => "Language",
+    "Currencies" => "Currencies",
+    "Currency" => "Currency",
+
+    //Venues
+    "Venues" => "Venues",
+
+    "Places" => "Places",
+    "Place" => "Place",
+    "PlaceTypes" => "Place Types",
+    "PlaceType" => "Place Type",
 
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",

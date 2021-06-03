@@ -10,7 +10,6 @@
                 <li class="menu-title" key="t-apps">@lang('translation.TableVisit')</li>
 
 
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-user-circle"></i>
@@ -18,6 +17,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
+                        <li><a href="{{route("user-types")}}" key="t-users">@lang('translation.UserTypes')</a></li>
                     </ul>
                 </li>
 
@@ -47,6 +47,30 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("countries")}}" key="t-countries">@lang('translation.Countries')</a></li>
+                        <li><a href="{{route("states")}}" key="t-states">@lang('translation.States')</a></li>
+                        <li><a href="{{route("cities")}}" key="t-cities">@lang('translation.Cities')</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-compass"></i>
+                        <span key="t-localization">@lang('translation.Localization')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("languages")}}" key="t-languages">@lang('translation.Languages')</a></li>
+                        <li><a href="{{route("currencies")}}" key="t-currencies">@lang('translation.Currencies')</a></li>
+                    </ul>
+                </li>
+                {{--bx bxs-drink--}}
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-building-house"></i>
+                        <span key="t-venues">@lang('translation.Venues')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("places")}}" key="t-places">@lang('translation.Places')</a></li>
+                        <li><a href="{{route("place-types")}}" key="t-currencies">@lang('translation.PlaceTypes')</a></li>
                     </ul>
                 </li>
 
