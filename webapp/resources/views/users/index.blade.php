@@ -101,8 +101,6 @@
     @endsection
 
     @section('script')
-        <!-- Required datatable js -->
-            <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-            <!-- Datatable init js -->
+        <!-- Datatable init js -->
             <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
 @endsection

@@ -56,10 +56,6 @@
     "/assets/js/pages/two-step-verification.init.js": "/assets/js/pages/two-step-verification.init.js",
     "/assets/js/pages/validation.init.js": "/assets/js/pages/validation.init.js",
     "/assets/js/pages/vector-maps.init.js": "/assets/js/pages/vector-maps.init.js",
-    "/assets/js/app/localization.js": "/assets/js/app/localization.js",
-    "/assets/js/app/locations.js": "/assets/js/app/locations.js",
-    "/assets/js/app/places.js": "/assets/js/app/places.js",
-    "/assets/js/app/users.js": "/assets/js/app/users.js",
     "/assets/css/app-dark.css": "/assets/css/app-dark.css",
     "/assets/css/app.css": "/assets/css/app.css",
     "/assets/css/icons.css": "/assets/css/icons.css",
@@ -212,5 +208,9 @@
     "/assets/css/icons.min.css": "/assets/css/icons.min.css",
     "/assets/css/app.min.css": "/assets/css/app.min.css",
     "/assets/css/app-dark.min.css": "/assets/css/app-dark.min.css",
+    "/assets/js/app/localization.js": "/assets/js/app/localization.js",
+    "/assets/js/app/locations.js": "/assets/js/app/locations.js",
+    "/assets/js/app/places.js": "/assets/js/app/places.js",
+    "/assets/js/app/users.js": "/assets/js/app/users.js",
     "/assets/js/app.min.js": "/assets/js/app.min.js"
 }

@@ -334,7 +334,7 @@ var app_assets = {
 
 lodash(app_assets).forEach(function (assets, type) {
     for (let i = 0; i < assets.length; ++i) {
-        mix.js(assets[i], out + "app");
+        mix.copy(assets[i], out + "app");
     }
     ;
 });

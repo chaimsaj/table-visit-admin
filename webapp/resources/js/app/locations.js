@@ -1,8 +1,4 @@
-(function () {
-    $(document).ready(function () {
-
-    });
-})();
+'use strict';
 
 function initCities() {
     $('#example').dataTable({
