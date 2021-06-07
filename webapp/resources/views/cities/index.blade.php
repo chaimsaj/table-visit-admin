@@ -13,4 +13,7 @@
 @section('script')
     <!-- locations -->
     <script src="{{ URL::asset('/assets/js/app/locations.js') }}"></script>
+    <script type="application/javascript">
+        initCities();
+    </script>
 @endsection

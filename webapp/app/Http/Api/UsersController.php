@@ -24,7 +24,9 @@ class UsersController extends ApiController
         try {
             //return Datatables::of($this->service->all())->make(true);
 
-            return Datatables::of($this->service->all())->setTransformer(function ($data) {
+            $query = $this->service->all();
+
+            return Datatables::of($query)->setTransformer(function ($data) {
                 return [
                     'id' => (int)$data->id,
                     'name' => $data->name,
