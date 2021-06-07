@@ -327,6 +327,7 @@ var app_assets = {
         //app
         folder.src + "js/app/localization.js",
         folder.src + "js/app/locations.js",
+        folder.src + "js/app/places.js",
         folder.src + "js/app/users.js",
     ]
 };

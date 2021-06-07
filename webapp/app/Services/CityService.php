@@ -3,24 +3,22 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use http\Message;
-use Illuminate\Database\Eloquent\Collection;
-use App\Repositories\UserRepositoryInterface;
 
-class UserService implements UserServiceInterface
+use App\Models\Country;
+use App\Repositories\CountryRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
+
+class CityService implements CityServiceInterface
 {
     private $repository;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(CityRepositoryInterface $repository)
     {
-        $this->repository = $repository;
+        $this->$repository = $repository;
     }
 
-    public function find($id): ?User
+    public function find($id): ?City
     {
-
         return $this->repository->find($id);
     }
 

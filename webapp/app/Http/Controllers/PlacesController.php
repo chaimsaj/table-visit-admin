@@ -16,12 +16,12 @@ class PlacesController extends Controller
 
     public function index()
     {
-        //
+        return view('places/index');
     }
 
-    public function detail($id)
+    public function detail()
     {
-        //
+        return view('places/detail');
     }
 
     public function save(Request $request, $id)

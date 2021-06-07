@@ -47,3 +47,5 @@ npm run dev
 
 // Run all Mix tasks and minify output...
 npm run prod
+
+php artisan make:controller StatesController --resource
