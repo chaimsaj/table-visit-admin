@@ -18,7 +18,7 @@ class CountryController extends ApiController
 
     public function list(): JsonResponse
     {
-        return response()->json($this->countryService->find(1));
+        return response()->json($this->countryService->all());
     }
 
     public function find($id): JsonResponse
