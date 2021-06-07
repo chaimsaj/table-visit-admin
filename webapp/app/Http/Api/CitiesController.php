@@ -4,15 +4,15 @@
 namespace App\Http\Api;
 
 use App\Http\Api\Base\ApiController;
+use App\Services\CityServiceInterface;
 use App\Services\CountryServiceInterface;
-use App\Services\StateServiceInterface;
 use Illuminate\Http\JsonResponse;
 
-class StateController extends ApiController
+class CitiesController extends ApiController
 {
     private $service;
 
-    public function __construct(StateServiceInterface $service)
+    public function __construct(CityServiceInterface $service)
     {
         $this->service = $service;
     }

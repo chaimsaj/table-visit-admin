@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Base\CoreController;
+use App\Http\Controllers\Base\BasicController;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class PlacesController extends CoreController
+class PlacesController extends BasicController
 {
     private $userService;
 

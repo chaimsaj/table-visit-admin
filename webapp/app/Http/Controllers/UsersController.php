@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Base\CoreController;
+use App\Http\Controllers\Base\AdminController;
 use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class UsersController extends CoreController
+class UsersController extends AdminController
 {
     private $userService;
 

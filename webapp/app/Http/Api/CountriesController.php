@@ -6,8 +6,10 @@ namespace App\Http\Api;
 use App\Http\Api\Base\ApiController;
 use App\Services\CountryServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Throwable;
+use Yajra\DataTables\DataTables;
 
-class CountryController extends ApiController
+class CountriesController extends ApiController
 {
     private $countryService;
 
@@ -18,7 +20,13 @@ class CountryController extends ApiController
 
     public function list(): JsonResponse
     {
-        return response()->json($this->countryService->all());
+        try {
+            return Datatables::of(User::all())->make(true);
+        } catch (Throwable $ex) {
+            return $ex;
+        }
+
+        //return response()->json($this->countryService->all());
     }
 
     public function find($id): JsonResponse

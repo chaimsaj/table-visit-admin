@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Base\CoreController;
+use App\Http\Controllers\Base\AdminController;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class UserTypesController extends CoreController
+class UserTypesController extends AdminController
 {
     private $userService;
 

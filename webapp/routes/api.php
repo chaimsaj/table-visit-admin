@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Http\Api\CountryController;
+use App\Http\Api\CountriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +25,5 @@ Route::middleware('api')->get('/health', function () {
 });
 
 Route::middleware('api')->group(function () {
-    //Route::resource('countries', CountryController::class);
-
-//    Route::get('countries/list', 'App\Http\Api\CountryController@list');
-//    Route::get('countries/find/{id}', 'App\Http\Api\CountryController@find');
+    Route::get('/users', [App\Http\Api\UsersController::class, 'list'])->name('api.users');
 });
