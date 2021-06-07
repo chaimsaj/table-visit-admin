@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\CoreController;
 use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CountriesController extends Controller
+class CountriesController extends CoreController
 {
     public function __construct()
     {

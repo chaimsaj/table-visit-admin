@@ -7,7 +7,7 @@ use App\Http\Api\Base\ApiController;
 use App\Services\CountryServiceInterface;
 use Illuminate\Http\JsonResponse;
 
-class CountryController extends ApiController
+class AuthController extends ApiController
 {
     private $countryService;
 

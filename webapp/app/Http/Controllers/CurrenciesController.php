@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\CoreController;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class CurrenciesController extends Controller
+class CurrenciesController extends CoreController
 {
     private $userService;
 

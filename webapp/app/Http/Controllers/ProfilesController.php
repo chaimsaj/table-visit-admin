@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\CoreController;
 use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class ProfilesController extends Controller
+class ProfilesController extends CoreController
 {
     public function updateProfile(Request $request, $id): JsonResponse
     {

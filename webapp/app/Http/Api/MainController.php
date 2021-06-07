@@ -3,9 +3,10 @@
 
 namespace App\Http\Api;
 
-use Illuminate\Routing\Controller as BaseController;
 
-class MainController extends BaseController
+use App\Http\Api\Base\ApiController;
+
+class MainController extends ApiController
 {
 
 }

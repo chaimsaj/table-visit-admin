@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\CoreController;
 use Illuminate\Http\Request;
 
-class CitiesController extends Controller
+class CitiesController extends CoreController
 {
     public function index()
     {
