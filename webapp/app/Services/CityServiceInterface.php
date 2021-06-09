@@ -3,6 +3,7 @@
 
 namespace App\Services;
 
+use App\Models\City;
 use App\Models\Country;
 use Illuminate\Database\Eloquent\Collection;
 

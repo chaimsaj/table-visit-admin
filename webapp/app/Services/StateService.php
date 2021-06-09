@@ -4,8 +4,8 @@
 namespace App\Services;
 
 
-use App\Models\Country;
-use App\Repositories\CountryRepositoryInterface;
+use App\Models\State;
+use App\Repositories\StateRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class StateService implements StateServiceInterface
@@ -14,7 +14,7 @@ class StateService implements StateServiceInterface
 
     public function __construct(StateRepositoryInterface $repository)
     {
-        $this->$repository = $repository;
+        $this->repository = $repository;
     }
 
     public function find($id): ?State

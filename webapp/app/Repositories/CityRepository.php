@@ -3,7 +3,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Country;
+use App\Models\City;
 use App\Repositories\Base\BaseRepository;
 
 class CityRepository extends BaseRepository implements CityRepositoryInterface

@@ -27,25 +27,21 @@ class CountriesController extends BasicController
 
     public function index()
     {
-        return view('countries/index');
+        $data = $this->service->all();
+        return view('countries/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
         $data = $this->service->find($id);
-
         return view('countries/detail', ["data" => $data]);
     }
 
     public function save(Request $request, $id)
     {
-        $db = null;
-
         try {
-
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
-                //'iso_code' => ['required', 'string', 'iso_code', 'max:255', 'unique:countries'],
             ]);
 
             $db = $this->service->find($id);

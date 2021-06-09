@@ -4,7 +4,9 @@
 namespace App\Services;
 
 
+use App\Models\City;
 use App\Models\Country;
+use App\Repositories\CityRepositoryInterface;
 use App\Repositories\CountryRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,7 +16,7 @@ class CityService implements CityServiceInterface
 
     public function __construct(CityRepositoryInterface $repository)
     {
-        $this->$repository = $repository;
+        $this->repository = $repository;
     }
 
     public function find($id): ?City

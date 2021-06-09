@@ -3,7 +3,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Country;
+use App\Models\State;
 use App\Repositories\Base\BaseRepository;
 
 class StateRepository extends BaseRepository implements StateRepositoryInterface

@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\BasicController;
+use App\Services\CurrencyServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
 class CurrenciesController extends BasicController
 {
-    private $userService;
+    private $service;
 
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(CurrencyServiceInterface $service)
     {
-        $this->userService = $userService;
+        $this->service = $service;
     }
 
     public function index()

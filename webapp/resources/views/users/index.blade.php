@@ -3,8 +3,6 @@
 @section('title') @lang('translation.Users') @endsection
 
 @section('css')
-    <!-- DataTables -->
-    <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
 @endsection
 
 @section('content')
@@ -32,55 +30,38 @@
                         </div><!-- end col-->
                     </div>
                     <hr/>
-                    {{--<h4 class="card-title">List</h4>
-                    <div class="row">
-                        <div class="text-sm-end">
-                            <button type="button" href="{{route("user.detail", 0)}}"
-                                    class="btn btn-success btn-rounded waves-effect waves-light mb-2 me-2"><i
-                                    class="mdi mdi-plus me-1"></i> Add New User
-                            </button>
-                        </div>
-                    </div>--}}
                     <div class="row">
                         <table id="datatable"
-                               class="table table-bordered dt-responsive  nowrap w-100 align-middle">
+                               class="table table-bordered dt-responsive nowrap w-100 align-middle">
                             <thead class="table-light">
-                            <tr>
-                                <th class="align-middle">©</th>
-                                <th class="no-sort align-middle">Avatar</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th class="no-sort align-middle">Action</th>
+                            <tr class="text-center">
+                                <th>@lang('translation.Id')</th>
+                                <th class="no-sort">@lang('translation.Avatar')</th>
+                                <th>@lang('translation.Name')</th>
+                                <th>@lang('translation.Email')</th>
+                                <th class="no-sort">@lang('translation.Delete')</th>
+                                <th class="no-sort">@lang('translation.Edit')</th>
                             </tr>
                             </thead>
-
-
                             <tbody>
-                            @foreach ($data as $user)
-                                <tr>
-                                    <td>{{ $user->id }}</td>
+                            @foreach ($data as $item)
+                                <tr class="text-center">
+                                    <td>{{ $item->id }}</td>
                                     <td><img class="rounded-circle header-profile-user"
-                                             src="{{ isset($user->avatar) ? asset($user->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
+                                             src="{{ isset($item->avatar) ? asset($item->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                                              alt=""></td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
                                     <td>
-                                        <div class="d-flex gap-3">
-                                            <a href="{{route("user.detail", $user->id)}}" class="text-success"><i
-                                                    class="mdi mdi-pencil font-size-18"></i></a>
-                                            <a href="{{route("user.delete", $user->id)}}" class="text-danger"><i
-                                                    class="mdi mdi-delete font-size-18"></i></a>
-                                        </div>
+                                        <a href="{{route("user.delete", $item->id)}}" class="text-danger"><i
+                                                class="mdi mdi-delete font-size-18"></i></a>
                                     </td>
-                                    {{--<td>
-                                        <a href="{{route("user.detail", $user->id)}}" class="btn  btn-sm edit"
-                                           title="Edit">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                        <a href="" class="btn  btn-sm deleted" title="Delete">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>--}}
+                                    <td>
+                                        {{--<div class="d-flex gap-3">
+                                        </div>--}}
+                                        <a href="{{route("user.detail", $item->id)}}" class="text-success"><i
+                                                class="mdi mdi-pencil font-size-18"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

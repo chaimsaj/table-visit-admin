@@ -4,8 +4,8 @@
 namespace App\Services;
 
 
-use App\Models\Country;
-use App\Repositories\CountryRepositoryInterface;
+use App\Models\Currency;
+use App\Repositories\CurrencyRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class CurrencyService implements CurrencyServiceInterface
@@ -14,7 +14,7 @@ class CurrencyService implements CurrencyServiceInterface
 
     public function __construct(CurrencyRepositoryInterface $repository)
     {
-        $this->$repository = $repository;
+        $this->repository = $repository;
     }
 
     public function find($id): ?Currency

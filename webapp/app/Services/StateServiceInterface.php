@@ -3,7 +3,7 @@
 
 namespace App\Services;
 
-use App\Models\Country;
+use App\Models\State;
 use Illuminate\Database\Eloquent\Collection;
 
 interface StateServiceInterface

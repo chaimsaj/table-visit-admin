@@ -14,6 +14,15 @@ return [
     "Error404" => "Error 404",
     "Error500" => "Error 500",
 
+    "Name" => "Name",
+    "Code" => "Code",
+    "Email" => "Email",
+    "DisplayOrder" => "Display order",
+    "Actions" => "Actions",
+    "Avatar" => "Avatar",
+    "Id" => "©",
+    "Edit" => "E",
+    "Delete" => "D",
 
     //Authentication
     "Authentication" => "Authentication",
