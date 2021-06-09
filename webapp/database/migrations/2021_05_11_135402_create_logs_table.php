@@ -15,7 +15,12 @@ class CreateLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('code', 10);
+            $table->string('error', 250);
+            $table->string('trace', 750);
+            $table->timestamp('created_at')->useCurrent();
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

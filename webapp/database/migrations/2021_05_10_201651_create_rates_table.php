@@ -16,6 +16,8 @@ class CreateRatesTable extends Migration
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

@@ -15,7 +15,12 @@ class CreateStateDetailsTable extends Migration
     {
         Schema::create('state_details', function (Blueprint $table) {
             $table->id();
+            $table->string('detail', 750);
             $table->timestamps();
+            $table->integer('state_id');
+            $table->integer('language_id');
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

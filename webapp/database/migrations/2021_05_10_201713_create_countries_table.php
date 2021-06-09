@@ -19,9 +19,9 @@ class CreateCountriesTable extends Migration
             $table->string('iso_code', 2)->nullable();
             $table->integer('display_order');
             $table->timestamps();
-            $table->boolean('show');
-            $table->boolean('published');
-            $table->boolean('deleted');
+            $table->boolean('show')->default(true);
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

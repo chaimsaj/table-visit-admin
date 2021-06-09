@@ -18,8 +18,8 @@ class CreateUserActionsTable extends Migration
             $table->string('name', 250);
             $table->string('action', 250);
             $table->timestamps();
-            $table->boolean('published');
-            $table->boolean('deleted');
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

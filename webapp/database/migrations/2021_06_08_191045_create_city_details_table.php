@@ -15,7 +15,12 @@ class CreateCityDetailsTable extends Migration
     {
         Schema::create('city_details', function (Blueprint $table) {
             $table->id();
+            $table->string('detail', 750);
             $table->timestamps();
+            $table->integer('city_id');
+            $table->integer('language_id');
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

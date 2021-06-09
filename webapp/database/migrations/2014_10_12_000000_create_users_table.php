@@ -20,13 +20,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->date('dob');
-            $table->string('avatar');
+            $table->date('dob')->nullable();
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->integer('user_type_id');
-            $table->boolean('published');
-            $table->boolean('deleted');
+            $table->integer('auth_mode');
+            $table->string('auth_data', 250)->nullable();
+            $table->integer('user_type_id')->nullable();
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

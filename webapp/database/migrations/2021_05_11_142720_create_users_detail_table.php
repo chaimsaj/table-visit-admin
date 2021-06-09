@@ -16,6 +16,8 @@ class CreateUsersDetailTable extends Migration
         Schema::create('users_detail', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

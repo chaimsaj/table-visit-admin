@@ -20,10 +20,10 @@ class CreateCitiesTable extends Migration
             $table->integer('display_order');
             $table->timestamps();
             $table->integer('country_id');
-            $table->integer('state_id');
-            $table->boolean('show');
-            $table->boolean('published');
-            $table->boolean('deleted');
+            $table->integer('state_id')->nullable();
+            $table->boolean('show')->default(true);
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 

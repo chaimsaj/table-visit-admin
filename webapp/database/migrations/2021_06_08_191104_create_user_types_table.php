@@ -18,8 +18,8 @@ class CreateUserTypesTable extends Migration
             $table->string('name', 250);
             $table->integer('display_order');
             $table->timestamps();
-            $table->boolean('published');
-            $table->boolean('deleted');
+            $table->boolean('published')->default(true);
+            $table->boolean('deleted')->default(false);
         });
     }
 
