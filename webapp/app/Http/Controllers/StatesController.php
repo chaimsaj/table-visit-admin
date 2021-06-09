@@ -47,7 +47,7 @@ class StatesController extends AdminController
 
                 $db->name = $request->get('name');
                 $db->iso_code = $request->get('iso_code');
-                $db->display_order = intval($request->get('iso_code'));
+                $db->display_order = intval($request->get('display_order'));
                 $db->country_id = 0;
 
                 $db->save();

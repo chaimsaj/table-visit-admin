@@ -23,6 +23,7 @@ return [
     "Id" => "©",
     "Edit" => "E",
     "Delete" => "D",
+    "Information" => "Information",
 
     //Authentication
     "Authentication" => "Authentication",

@@ -54,7 +54,7 @@ class CountriesController extends BasicController
 
                 $db->name = $request->get('name');
                 $db->iso_code = $request->get('iso_code');
-                $db->display_order = intval($request->get('iso_code'));
+                $db->display_order = intval($request->get('display_order'));
 
                 $db->save();
             }

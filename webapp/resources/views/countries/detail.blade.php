@@ -13,7 +13,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Information</h4>
+                    <h4 class="card-title">@lang('translation.Information')</h4>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card">

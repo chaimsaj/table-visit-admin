@@ -1,0 +1,17 @@
+ssh root@74.117.181.34
+8Aday258NLF6xhc0KX
+
+mariadb
+lO2V4Zd49TNx6nh9Zj
+
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-8
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-7
+https://www.digitalocean.com/community/tutorials/how-to-configure-vsftpd-to-use-ssl-tls-on-a-centos-vps
+
+topdevrank.com
+
+sudo adduser ftptablev
+sudo passwd ftptablev
+8Aday258NLF6xhc0KX
+
+/usr/share/nginx/html
