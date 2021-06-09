@@ -15,7 +15,8 @@ class CreateMediaFilesTable extends Migration
     {
         Schema::create('media_files', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });

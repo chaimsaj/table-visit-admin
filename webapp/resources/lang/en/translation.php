@@ -11,18 +11,20 @@ return [
     "Save" => "Save",
     "Cancel" => "Cancel",
     "Administration" => "Administration",
-
+    "Error404" => "Error 404",
+    "Error500" => "Error 500",
 
 
     //Authentication
     "Authentication" => "Authentication",
     "Login" => "Login",
     "Register" => "Register",
-    "Recover_Password" => "Recover Password",
-    "Lock_Screen" => "Lock Screen",
+    "RecoverPassword" => "Recover Password",
+    "LockScreen" => "Lock Screen",
     "Confirm_Mail" => "Confirm Mail",
     "Email_verification" => "Email verification",
     "Two_step_verification" => "Two step verification",
+    "VerifyPassword" => "Verify Password",
 
     "TableVisit" => "TABLE VISIT",
 
@@ -130,7 +132,7 @@ return [
     "Authentication" => "Authentication",
     "Login" => "Login",
     "Register" => "Register",
-    "Recover_Password" => "Recover Password",
+    "RecoverPassword" => "Recover Password",
     "Lock_Screen" => "Lock Screen",
     "Confirm_Mail" => "Confirm Mail",
     "Email_verification" => "Email verification",

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\AuthModeEnum;
+use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Services\UserServiceInterface;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -14,6 +17,7 @@ class UsersController extends AdminController
 
     public function __construct(UserServiceInterface $userService)
     {
+        $this->middleware('auth');
         $this->userService = $userService;
     }
 
@@ -40,6 +44,7 @@ class UsersController extends AdminController
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
             ]);
 
             $validator->after(function ($validator) {
@@ -78,12 +83,16 @@ class UsersController extends AdminController
                     $user = new User();
 
                 $user->name = $request->get('name');
+                $user->last_name = '';
                 $user->email = $request->get('email');
 
                 if (!empty($request->get('password')))
-                    $user->password = $request->get('password');
+                    $user->password = Hash::make($request->get('password'));
 
-                $user->dob = date('Y-m-d', strtotime($request->get('dob')));
+                $user->auth_mode = AuthModeEnum::Basic;
+                $user->user_type_id = UserTypeEnum::Admin;
+
+                //$user->dob = date('Y-m-d', strtotime($request->get('dob')));
 
                 if (!empty($avatarName))
                     $user->avatar = '/images/' . $avatarName;

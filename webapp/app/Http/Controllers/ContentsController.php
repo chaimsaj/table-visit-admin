@@ -11,4 +11,9 @@ class ContentsController extends BasicController
     {
         return view('contents/terms');
     }
+
+    public function lockScreen()
+    {
+        return view('contents/lock-screen');
+    }
 }

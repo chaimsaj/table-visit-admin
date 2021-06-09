@@ -15,14 +15,6 @@
     @endcomponent
 
     <div class="row">
-
-        {{--@foreach ($data as $user)
-            <p>This is user {{ $user->id }}</p>
-        @endforeach--}}
-
-        {{-- {{ $data->name }}--}}
-
-
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -34,7 +26,7 @@
                             <div class="text-sm-end">
                                 <a href="{{route("user.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
-                                        class="mdi mdi-plus me-1"></i> Add New User
+                                        class="mdi mdi-plus me-1"></i> Add new
                                 </a>
                             </div>
                         </div><!-- end col-->

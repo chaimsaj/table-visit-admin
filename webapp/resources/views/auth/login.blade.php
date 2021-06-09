@@ -5,8 +5,7 @@
 @endsection
 
 @section('css')
-    <!-- owl.carousel css -->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/libs/owl.carousel/owl.carousel.min.css') }}">
+
 @endsection
 
 @section('body')
@@ -80,7 +79,7 @@
                                                         class="input-group auth-pass-inputgroup @error('password') is-invalid @enderror">
                                                         <input type="password" name="password"
                                                                class="form-control  @error('password') is-invalid @enderror"
-                                                               id="userpassword" value="123456"
+                                                               id="userpassword" value="123412"
                                                                placeholder="Enter password"
                                                                aria-label="Password" aria-describedby="password-addon">
                                                         <button class="btn btn-light " type="button"
@@ -141,8 +140,6 @@
 
     @endsection
     @section('script')
-        <!-- owl.carousel js -->
-        <script src="{{ URL::asset('/assets/libs/owl.carousel/owl.carousel.min.js') }}"></script>
-        <!-- auth-2-carousel init -->
-        <script src="{{ URL::asset('/assets/js/pages/auth-2-carousel.init.js') }}"></script>
-@endsection
+        <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+        <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
+    @endsection

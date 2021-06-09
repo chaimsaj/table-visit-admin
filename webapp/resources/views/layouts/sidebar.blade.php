@@ -85,9 +85,9 @@
 
                         <li><a href="#" key="t-login">@lang('translation.Login')</a></li>
                         <li><a href="#" key="t-register">@lang('translation.Register')</a></li>
-                        <li><a href="#" key="t-recover-password">@lang('translation.Recover_Password')</a>
+                        <li><a href="#" key="t-recover-password">@lang('translation.RecoverPassword')</a>
                         </li>
-                        <li><a href="#" key="t-lock-screen">@lang('translation.Lock_Screen')</a></li>
+                        <li><a href="{{route("content.lock-screen")}}" key="t-lock-screen">@lang('translation.LockScreen')</a></li>
                     </ul>
                 </li>
             </ul>

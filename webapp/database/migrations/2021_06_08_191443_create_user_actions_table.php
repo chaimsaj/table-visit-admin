@@ -17,7 +17,8 @@ class CreateUserActionsTable extends Migration
             $table->id();
             $table->string('name', 250);
             $table->string('action', 250);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });

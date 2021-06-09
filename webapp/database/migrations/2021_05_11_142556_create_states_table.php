@@ -18,7 +18,8 @@ class CreateStatesTable extends Migration
             $table->string('name', 250);
             $table->string('iso_code', 3)->nullable();
             $table->integer('display_order');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('country_id');
             $table->boolean('show')->default(true);
             $table->boolean('published')->default(true);

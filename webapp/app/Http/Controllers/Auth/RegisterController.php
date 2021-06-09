@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Core\AuthModeEnum;
+use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\BasicController;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Cassandra\Type\UserType;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -46,7 +49,7 @@ class RegisterController extends BasicController
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -55,18 +58,18 @@ class RegisterController extends BasicController
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'dob' => ['required', 'date', 'before:today'],
-            'avatar' => ['required', 'image' ,'mimes:jpg,jpeg,png','max:1024'],
+            /*'dob' => ['required', 'date', 'before:today'],
+            'avatar' => ['required', 'image' ,'mimes:jpg,jpeg,png','max:1024'],*/
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
         if (request()->has('avatar')) {
             $avatar = request()->file('avatar');
@@ -77,10 +80,13 @@ class RegisterController extends BasicController
 
         return User::create([
             'name' => $data['name'],
+            'last_name' => '',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'dob' => date('Y-m-d', strtotime($data['dob'])),
-            'avatar' => "/images/" . $avatarName,
+            'auth_mode' => AuthModeEnum::Basic,
+            'user_type_id' => UserTypeEnum::Admin,
+            /*'dob' => date('Y-m-d', strtotime($data['dob'])),
+            'avatar' => "/images/" . $avatarName,*/
         ]);
     }
 }

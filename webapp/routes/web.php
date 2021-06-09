@@ -41,6 +41,10 @@ Route::get('/sample/{id}', [App\Http\Controllers\SamplesController::class, 'deta
 Route::post('/sample/{id}', [App\Http\Controllers\SamplesController::class, 'save'])->name('sample.save');
 Route::get('/sample/delete/{id}', [App\Http\Controllers\SamplesController::class, 'delete'])->name('sample.delete');
 
+//Contents
+Route::get('/content/lock-screen', [App\Http\Controllers\ContentsController::class, 'lockScreen'])->name('content.lock-screen');
+Route::post('/content/terms', [App\Http\Controllers\SamplesController::class, 'terms'])->name('content.terms');
+
 //Users
 Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->name('users');
 Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');

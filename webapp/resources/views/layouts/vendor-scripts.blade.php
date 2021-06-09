@@ -6,8 +6,12 @@
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js')}}"></script>
 
 {{--APP--}}
-<!-- Required datatable js -->
+<!-- datatables -->
 <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
+
+<!-- validation -->
+<script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
 
 {{--<script>
     $('#change-password').on('submit',function(event){

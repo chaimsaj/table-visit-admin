@@ -1,7 +1,7 @@
 @extends('layouts.master-without-nav')
 
 @section('title')
-    @lang('translation.VerifyPassword')
+    @lang('translation.LockScreen')
 @endsection
 
 @section('css')
@@ -35,50 +35,55 @@
                                 <div class="d-flex flex-column h-100">
                                     <div class="mb-4 mb-md-5">
                                         <a href="index" class="d-block auth-logo">
-                                            <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt="" height="18"
-                                                class="auth-logo-dark">
-                                            <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt="" height="18"
-                                                class="auth-logo-light">
+                                            <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt=""
+                                                 height="18"
+                                                 class="auth-logo-dark">
+                                            <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt=""
+                                                 height="18"
+                                                 class="auth-logo-light">
                                         </a>
                                     </div>
                                     <div class="my-auto">
 
                                         <div>
-                                            <h5 class="text-primary">@lang('translation.VerifyPassword')</h5>
-                                            <p class="text-muted">Re-Password now</p>
+                                            <h5 class="text-primary">Lock screen</h5>
+                                            <p class="text-muted">Enter your password to unlock the screen!</p>
                                         </div>
 
                                         <div class="mt-4">
-                                            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                                                @csrf
+                                            <form class="form-horizontal" action="{{ route('login') }}">
+
+                                                {{--<div class="user-thumb text-center mb-4">
+                                                    <img src="assets/images/users/avatar-1.jpg"
+                                                         class="rounded-circle img-thumbnail avatar-md" alt="thumbnail">
+                                                    <h5 class="font-size-15 mt-3">Maria Laird</h5>
+                                                </div>--}}
+
+
                                                 <div class="mb-3">
-                                                    <label for="username">email</label>
-                                                    <input name="email" type="email"
-                                                        class="form-control @error('email') is-invalid @enderror"
-                                                        @if (old('email'))
-                                                    value="{{ old('email') }}" @endif id="email"
-                                                    placeholder="Enter email" autocomplete="email" autofocus>
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
+                                                    <label for="userpassword">Password</label>
+                                                    <input type="password" class="form-control" id="userpassword"
+                                                           placeholder="Enter password">
                                                 </div>
 
                                                 <div class="text-end">
                                                     <button class="btn btn-primary w-md waves-effect waves-light"
-                                                        type="submit">Reset</button>
+                                                            type="submit">Unlock
+                                                    </button>
                                                 </div>
+
                                             </form>
                                             <div class="mt-5 text-center">
-                                                <p>Remember It ? <a href="{{ url('login') }}"
-                                                        class="font-weight-medium text-primary"> Sign In here</a> </p>
+                                                <p>Not you ? return <a href="{{ route('login') }}"
+                                                                       class="fw-medium text-primary">
+                                                        Sign In </a></p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="mt-4 mt-md-5 text-center">
-                                        <p class="mb-0"><script>
+                                        <p class="mb-0">
+                                            <script>
                                                 document.write(new Date().getFullYear())
 
                                             </script>
@@ -86,6 +91,8 @@
                                         </p>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -96,9 +103,7 @@
             <!-- end container-fluid -->
         </div>
 
-    @endsection
+@endsection
+@section('script')
 
-    @section('script')
-        <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
-        <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
-    @endsection
+@endsection

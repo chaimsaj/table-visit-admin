@@ -5,9 +5,7 @@
 @endsection
 
 @section('css')
-    <!-- owl.carousel css -->
-    <link rel="stylesheet" href="{{ URL::asset('/assets/libs/owl.carousel/owl.carousel.min.css') }}" />
-    <link href="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('body')
@@ -51,12 +49,12 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form method="POST" class="form-horizontal" action="{{ route('register') }}" enctype="multipart/form-data">
+                                            <form method="POST" class="form-horizontal custom-validation" action="{{ route('register') }}" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="useremail" class="form-label">Email</label>
                                                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail"
-                                                    value="{{ old('email') }}" name="email" placeholder="Enter email" autofocus required>
+                                                    value="{{ old('email') }}" name="email" placeholder="Enter Email" autofocus required>
                                                     @error('email')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -65,10 +63,10 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Username</label>
+                                                    <label for="username" class="form-label">Name</label>
                                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                                     value="{{ old('name') }}" id="username" name="name" autofocus required
-                                                        placeholder="Enter username">
+                                                        placeholder="Enter Name">
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -79,7 +77,7 @@
                                                 <div class="mb-3">
                                                     <label for="userpassword" class="form-label">Password</label>
                                                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="userpassword" name="password"
-                                                        placeholder="Enter password" autofocus required>
+                                                        placeholder="Enter Password" autofocus required>
                                                         @error('password')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -90,7 +88,7 @@
                                                 <div class="mb-3">
                                                     <label for="confirmpassword" class="form-label">Confirm Password</label>
                                                     <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="confirmpassword"
-                                                    name="password_confirmation" placeholder="Enter Confirm password" autofocus required>
+                                                    name="password_confirmation" placeholder="Enter Confirm Password" autofocus required>
                                                     @error('password_confirmation')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -98,7 +96,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="mb-3">
+                                                {{--<div class="mb-3">
                                                     <label for="userdob">Date of Birth</label>
                                                     <div class="input-group" id="datepicker1">
                                                         <input type="text" class="form-control @error('dob') is-invalid @enderror" placeholder="dd-mm-yyyy"
@@ -111,9 +109,9 @@
                                                             </span>
                                                         @enderror
                                                     </div>
-                                                </div>
+                                                </div>--}}
 
-                                                <div class="mb-3">
+                                                {{--<div class="mb-3">
                                                     <label for="avatar">Profile Picture</label>
                                                     <div class="input-group">
                                                         <input type="file" class="form-control @error('avatar') is-invalid @enderror" id="inputGroupFile02" name="avatar" autofocus required>
@@ -124,7 +122,7 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
-                                                </div>
+                                                </div>--}}
 
                                                 <div class="mt-4 d-grid">
                                                     <button class="btn btn-primary waves-effect waves-light"
@@ -168,9 +166,6 @@
 
     @endsection
     @section('script')
-        <script src="{{ URL::asset('/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-        <!-- owl.carousel js -->
-        <script src="{{ URL::asset('/assets/libs/owl.carousel/owl.carousel.min.js') }}"></script>
-        <!-- auth-2-carousel init -->
-        <script src="{{ URL::asset('/assets/js/pages/auth-2-carousel.init.js') }}"></script>
+        <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+        <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
     @endsection

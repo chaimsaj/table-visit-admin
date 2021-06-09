@@ -13,7 +13,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Detail</h4>
+                    <h4 class="card-title">Information</h4>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="card">
@@ -25,14 +25,15 @@
                                         <img class="rounded-circle header-profile-user"
                                              src="{{ isset($data->avatar) ? asset($data->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                                              alt="">
-                                        <div class="mb-3">
+                                        <hr />
+                                        {{--<div class="mb-3">
                                             <label for="avatar">Profile Picture</label>
                                             <div class="input-group">
                                                 <input type="file" name="avatar" class="form-control">
                                                 <label class="input-group-text" for="avatar">Upload</label>
                                             </div>
 
-                                        </div>
+                                        </div>--}}
                                         <div class="mb-3">
                                             <label class="form-label">Name</label>
                                             <input type="text" name="name"
@@ -101,6 +102,5 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
+
 @endsection

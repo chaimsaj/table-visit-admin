@@ -16,7 +16,8 @@ class CreateCityDetailsTable extends Migration
         Schema::create('city_details', function (Blueprint $table) {
             $table->id();
             $table->string('detail', 750);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('city_id');
             $table->integer('language_id');
             $table->boolean('published')->default(true);
