@@ -15,3 +15,5 @@ sudo passwd ftptablev
 8Aday258NLF6xhc0KX
 
 /usr/share/nginx/html
+
+sudo chown -R ftptablev.ftptablev /usr/share/nginx/html/
