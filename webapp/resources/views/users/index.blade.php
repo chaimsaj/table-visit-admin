@@ -74,6 +74,5 @@
     @endsection
 
     @section('script')
-        <!-- Datatable init js -->
             <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
 @endsection

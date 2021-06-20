@@ -3,30 +3,23 @@
 
 namespace App\Http\Api;
 
-use App\AppModels\ApiModel;
-use App\Core\ApiCodeEnum;
 use App\Http\Api\Base\ApiController;
-use App\Services\CityServiceInterface;
 use App\Services\CountryServiceInterface;
+use App\Services\StateServiceInterface;
 use Illuminate\Http\JsonResponse;
 
-class CitiesController extends ApiController
+class PlaceTypesController extends ApiController
 {
     private $service;
 
-    public function __construct(CityServiceInterface $service)
+    public function __construct(StateServiceInterface $service)
     {
         $this->service = $service;
     }
 
     public function list(): JsonResponse
     {
-        $response = new ApiModel();
-
-        $response->setData($this->service->all());
-        $response->setCode(ApiCodeEnum::OK);
-
-        return response()->json($response);
+        return response()->json($this->service->all());
     }
 
     public function find($id): JsonResponse

@@ -33,4 +33,14 @@ class CityService implements CityServiceInterface
     {
         return $this->repository->delete($id);
     }
+
+    public function actives(): Collection
+    {
+        return $this->repository->all();
+    }
+
+    public function published(): Collection
+    {
+        return $this->repository->all();
+    }
 }

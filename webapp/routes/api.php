@@ -26,4 +26,7 @@ Route::middleware('api')->get('/health', function () {
 
 Route::middleware('api')->group(function () {
     Route::get('/users', [App\Http\Api\UsersController::class, 'list'])->name('api.users');
+
+    Route::get('/cities', [App\Http\Api\CitiesController::class, 'list'])->name('api.cities');
+    Route::get('/city/{id}', [App\Http\Api\CitiesController::class, 'find'])->name('api.city.find');
 });
