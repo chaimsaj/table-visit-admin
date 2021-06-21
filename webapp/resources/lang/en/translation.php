@@ -13,6 +13,8 @@ return [
     "Administration" => "Administration",
     "Error404" => "Error 404",
     "Error500" => "Error 500",
+    "Select" => "Select..",
+
 
     "Name" => "Name",
     "Code" => "Code",

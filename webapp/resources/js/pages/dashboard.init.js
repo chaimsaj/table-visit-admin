@@ -118,11 +118,11 @@ var options = {
 
 }
 
-var chart = new ApexCharts(
+/*var chart = new ApexCharts(
     document.querySelector("#radialBar-chart"),
     options
 );
 
-chart.render();
+chart.render();*/
 
 

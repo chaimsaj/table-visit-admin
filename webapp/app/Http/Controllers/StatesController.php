@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\AppConstant;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\State;
+use App\Services\CountryServiceInterface;
 use App\Services\StateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,23 +13,35 @@ use Illuminate\Support\Facades\Validator;
 class StatesController extends AdminController
 {
     private $service;
+    private $countryService;
 
-    public function __construct(StateServiceInterface $service)
+    public function __construct(StateServiceInterface $service, CountryServiceInterface $countryService)
     {
-        $this->middleware('auth');
         $this->service = $service;
+        $this->countryService = $countryService;
     }
 
     public function index()
     {
         $data = $this->service->all();
-        return view('states/index', ["data" => $data]);
+        $countries = $this->countryService->all();
+
+        $data->each(function ($item, $key) {
+            $country = $this->countryService->find($item->country_id);
+            if ($country)
+                $item->country_name = $country->name;
+            else
+                $item->country_name = AppConstant::getDash();
+        });
+
+        return view('states/index', ["data" => $data, "countries" => $countries]);
     }
 
     public function detail($id)
     {
         $data = $this->service->find($id);
-        return view('states/detail', ["data" => $data]);
+        $countries = $this->countryService->all();
+        return view('states/detail', ["data" => $data, "countries" => $countries]);
     }
 
     public function save(Request $request, $id)
@@ -35,6 +49,7 @@ class StatesController extends AdminController
         try {
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
+                'display_order' => ['required', 'int'],
             ]);
 
             $db = $this->service->find($id);
@@ -48,7 +63,9 @@ class StatesController extends AdminController
                 $db->name = $request->get('name');
                 $db->iso_code = $request->get('iso_code');
                 $db->display_order = intval($request->get('display_order'));
-                $db->country_id = 0;
+                $db->country_id = $request->get('country_id');
+                $db->published = $request->get('published') == "on";
+                $db->show = $request->get('show') == "on";
 
                 $db->save();
             }

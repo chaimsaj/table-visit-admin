@@ -54,7 +54,7 @@
                                                 @lang('translation.Save')
                                             </button>
                                             <a href="{{route("countries")}}"
-                                               class="btn btn-secondary waves-effect">
+                                               class="btn btn-danger waves-effect">
                                                 @lang('translation.Cancel')
                                             </a>
                                         </div>

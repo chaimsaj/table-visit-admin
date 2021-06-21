@@ -50,7 +50,7 @@
     <!-- END layout-wrapper -->
 
     <!-- Right Sidebar -->
-    @include('layouts.right-sidebar')
+    {{--@include('layouts.right-sidebar')--}}
     <!-- /Right-bar -->
 
     <!-- JAVASCRIPT -->

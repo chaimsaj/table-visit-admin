@@ -34,6 +34,7 @@
                             <th>@lang('translation.Name')</th>
                             <th>@lang('translation.Code')</th>
                             <th>@lang('translation.DisplayOrder')</th>
+                            <th>@lang('translation.Country')</th>
                             <th class="no-sort">@lang('translation.Delete')</th>
                             <th class="no-sort">@lang('translation.Edit')</th>
                         </tr>
@@ -47,6 +48,7 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->iso_code }}</td>
                                 <td>{{ $item->display_order }}</td>
+                                <td>{{ $item->country_name }}</td>
                                 <td>
                                     <a href="{{route("state.delete", $item->id)}}" class="text-danger"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
@@ -65,6 +67,13 @@
     </div>
 @endsection
 @section('script')
+    <!-- Datatable init js -->
+    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
     <!-- locations -->
     <script src="{{ URL::asset('/assets/js/app/locations.js') }}"></script>
+    <script type="application/javascript">
+        (function () {
+            initStates();
+        })();
+    </script>
 @endsection

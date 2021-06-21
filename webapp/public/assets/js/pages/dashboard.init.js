@@ -105,7 +105,11 @@ var options = {
   series: [67],
   labels: ['Series A']
 };
-var chart = new ApexCharts(document.querySelector("#radialBar-chart"), options);
-chart.render();
+/*var chart = new ApexCharts(
+    document.querySelector("#radialBar-chart"),
+    options
+);
+
+chart.render();*/
 /******/ })()
 ;
