@@ -24,7 +24,7 @@ class CitiesController extends ApiController
         $response = new ApiModel();
 
         $response->setData($this->service->all());
-        $response->setCode(ApiCodeEnum::OK);
+        $response->setCode(ApiCodeEnum::Ok);
 
         return response()->json($response);
     }

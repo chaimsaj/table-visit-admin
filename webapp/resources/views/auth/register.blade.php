@@ -63,12 +63,24 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Name</label>
+                                                    <label for="name" class="form-label">Name</label>
                                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                                    value="{{ old('name') }}" id="username" name="name" autofocus required
+                                                    value="{{ old('name') }}" id="name" name="name" autofocus required
                                                         placeholder="Enter Name">
                                                     @error('name')
                                                         <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="last_name" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control @error('last_name') is-invalid @enderror"
+                                                           value="{{ old('last_name') }}" id="last_name" name="last_name" autofocus required
+                                                           placeholder="Enter Last Name">
+                                                    @error('last_name')
+                                                    <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror

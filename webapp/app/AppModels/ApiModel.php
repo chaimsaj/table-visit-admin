@@ -8,6 +8,9 @@ class ApiModel
     public int $code;
     public string $error;
     public object $data;
+    public ?int $timestamp;
+    public string $token;
+    public string $message;
 
     /**
      * @param int $code
@@ -55,5 +58,53 @@ class ApiModel
     public function getData(): object
     {
         return $this->data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimestamp(): ?int
+    {
+        return $this->timestamp;
+    }
+
+    /**
+     * @param int|null $timestamp
+     */
+    public function setTimestamp(?int $timestamp): void
+    {
+        $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
     }
 }
