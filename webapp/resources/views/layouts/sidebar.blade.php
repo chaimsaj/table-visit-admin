@@ -17,7 +17,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
-                        <li><a href="{{route("user-types")}}" key="t-users">@lang('translation.UserTypes')</a></li>
+                        {{--<li><a href="{{route("user-types")}}" key="t-users">@lang('translation.UserTypes')</a></li>--}}
                     </ul>
                 </li>
 

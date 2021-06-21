@@ -66,12 +66,26 @@
                                             </div>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <label class="form-label">User Type</label>
+                                            <div>
+                                                <select class="form-select" name="user_type_id">
+                                                    <option value="0">@lang('translation.Select')</option>
+                                                    @foreach($user_types as $user_type)
+                                                        <option value="{{ $user_type->key }}" {{ ($data && $data->user_type_id == $user_type->key) ? 'selected' : '' }}>
+                                                            {{ $user_type->value }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="d-flex flex-wrap gap-2">
                                             <button type="submit" class="btn btn-success waves-effect waves-light">
                                                 @lang('translation.Save')
                                             </button>
                                             <a href="{{route("users")}}"
-                                               class="btn btn-secondary waves-effect">
+                                               class="btn btn-danger waves-effect">
                                                 @lang('translation.Cancel')
                                             </a>
                                         </div>

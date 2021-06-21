@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AppModels\KeyValueModel;
 use App\Core\AuthModeEnum;
 use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
@@ -25,14 +26,34 @@ class UsersController extends AdminController
     {
         $data = $this->userService->all();
 
-        return view('users/index', ["data" => $data]);
+        $admin = new KeyValueModel();
+        $admin->setKey(UserTypeEnum::Admin);
+        $admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
+
+        $guest = new KeyValueModel();
+        $guest->setKey(UserTypeEnum::Guest);
+        $guest->setValue(UserTypeEnum::toString(UserTypeEnum::Guest));
+
+        $user_types = collect([$admin, $guest]);
+
+        return view('users/index', ["data" => $data, "user_types" => $user_types]);
     }
 
     public function detail($id)
     {
+        $admin = new KeyValueModel();
+        $admin->setKey(UserTypeEnum::Admin);
+        $admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
+
+        $guest = new KeyValueModel();
+        $guest->setKey(UserTypeEnum::Guest);
+        $guest->setValue(UserTypeEnum::toString(UserTypeEnum::Guest));
+
+        $user_types = collect([$admin, $guest]);
+
         $data = $this->userService->find($id);
 
-        return view('users/detail', ["data" => $data]);
+        return view('users/detail', ["data" => $data, "user_types" => $user_types]);
     }
 
     public function save(Request $request, $id)
