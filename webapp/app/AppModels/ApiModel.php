@@ -6,19 +6,9 @@ namespace App\AppModels;
 class ApiModel
 {
     public int $code;
-    public string $error;
     public object $data;
     public ?int $timestamp;
-    public string $token;
     public string $message;
-
-    /**
-     * @param int $code
-     */
-    public function setCode(int $code): void
-    {
-        $this->code = $code;
-    }
 
     /**
      * @return int
@@ -29,27 +19,11 @@ class ApiModel
     }
 
     /**
-     * @param string $error
+     * @param int $code
      */
-    public function setError(string $error): void
+    public function setCode(int $code): void
     {
-        $this->error = $error;
-    }
-
-    /**
-     * @return string
-     */
-    public function getError(): string
-    {
-        return $this->error;
-    }
-
-    /**
-     * @param object $data
-     */
-    public function setData(object $data): void
-    {
-        $this->data = $data;
+        $this->code = $code;
     }
 
     /**
@@ -61,7 +35,15 @@ class ApiModel
     }
 
     /**
-     * @return int
+     * @param object $data
+     */
+    public function setData(object $data): void
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return int|null
      */
     public function getTimestamp(): ?int
     {
@@ -79,22 +61,6 @@ class ApiModel
     /**
      * @return string
      */
-    public function getToken(): string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     */
-    public function setToken(string $token): void
-    {
-        $this->token = $token;
-    }
-
-    /**
-     * @return string
-     */
     public function getMessage(): string
     {
         return $this->message;
@@ -107,4 +73,6 @@ class ApiModel
     {
         $this->message = $message;
     }
+
+
 }

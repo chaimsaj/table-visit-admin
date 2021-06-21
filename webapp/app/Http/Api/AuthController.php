@@ -4,6 +4,7 @@
 namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
+use App\AppModels\TokenModel;
 use App\Core\ApiCodeEnum;
 use App\Core\AuthModeEnum;
 use App\Core\BaseEnum;
@@ -31,9 +32,13 @@ class AuthController extends ApiController
 
         if (Auth::attempt($credentials)) {
 
-            $token = $request->user()->createToken('auth_token');
+            $auth_token = $request->user()->createToken('auth_token');
 
-            $response->setToken($token->plainTextToken);
+            $token = new TokenModel();
+            $token->setAccessToken($auth_token->plainTextToken);
+            $token->setTokenType('Bearer');
+
+            $response->setData($token);
             $response->setCode(ApiCodeEnum::Ok);
             $response->setMessage(ApiCodeEnum::toString(ApiCodeEnum::Ok));
         }
@@ -46,6 +51,15 @@ class AuthController extends ApiController
         if (Auth::check()) {
             $request->user()->currentAccessToken()->delete();
         }
+
+        // Revoke all tokens...
+        //$user->tokens()->delete();
+
+        // Revoke the token that was used to authenticate the current request...
+        //$request->user()->currentAccessToken()->delete();
+
+        // Revoke a specific token...
+        //$user->tokens()->where('id', $tokenId)->delete();
 
         $response = new ApiModel();
         $response->setCode(ApiCodeEnum::Ok);
