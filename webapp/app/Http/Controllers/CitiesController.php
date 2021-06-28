@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class CitiesController extends BasicController
 {
-    private $service;
+    private CityServiceInterface $service;
 
     public function __construct(CityServiceInterface $service)
     {
