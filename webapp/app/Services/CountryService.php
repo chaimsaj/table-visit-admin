@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CountryService implements CountryServiceInterface
 {
-    private $repository;
+    private CountryRepositoryInterface $repository;
 
     public function __construct(CountryRepositoryInterface $repository)
     {

@@ -3,13 +3,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Currency;
+use App\Models\City;
+use App\Models\Rate;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
 
-class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInterface
+class RateRepository extends BaseRepository implements RateRepositoryInterface
 {
-    public function __construct(Currency $model)
+    public function __construct(Rate $model)
     {
         parent::__construct($model);
     }
@@ -21,8 +22,6 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
 
     public function published(): Collection
     {
-        return $this->model->all('active', 1)
-            ->where('published', 1)
-            ->get();
+
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CityService implements CityServiceInterface
 {
-    private $repository;
+    private CityRepositoryInterface $repository;
 
     public function __construct(CityRepositoryInterface $repository)
     {

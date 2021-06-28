@@ -12,7 +12,7 @@ use Illuminate\Http\JsonResponse;
 
 class CitiesController extends ApiController
 {
-    private $service;
+    private CityServiceInterface $service;
 
     public function __construct(CityServiceInterface $service)
     {

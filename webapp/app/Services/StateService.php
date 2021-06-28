@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class StateService implements StateServiceInterface
 {
-    private $repository;
+    private StateRepositoryInterface $repository;
 
     public function __construct(StateRepositoryInterface $repository)
     {

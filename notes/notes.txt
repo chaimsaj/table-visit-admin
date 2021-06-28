@@ -1,8 +1,25 @@
+sudo chmod -R 777 /Volumes/DATA/project/brewtopia-admin/storage/logs/laravel.log
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/public
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/bootstrap/cache
+sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage/logs/laravel.log
+
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage/logs/laravel.log
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/public
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/bootstrap/cache
 sudo chmod -R 777 /Volumes/DATA/project/table-visit-admin/webapp/storage/logs/laravel.log
+
+sudo chmod -R 777 /usr/share/nginx/html/brewtopia/storage
+sudo chmod -R 777 /usr/share/nginx/html/brewtopia/storage/logs/laravel.log
+sudo chmod -R 777 /usr/share/nginx/html/brewtopia/public
+
+sudo chown -R nginx.nginx /usr/share/nginx/html/
+
+sudo chmod -R 777 /etc/php-fpm.d/www.conf
+
+
+sudo certbot --nginx -d ec2-18-133-255-173.eu-west-2.compute.amazonaws.com
 
 chown -R www-data:www-data "/Volumes/DATA/project/table-visit-admin/webapp"
 
@@ -50,3 +67,36 @@ npm run dev
 npm run prod
 
 php artisan make:controller StatesController --resource
+
+brewtopia
+mariadb
+tyhsCNg4VLwl
+
+
+sudo chown -R nginx /usr/share/nginx/html/brewtopia/storage/logs/laravel.log
+sudo chown -wx nginx.nginx /usr/share/nginx/html/brewtopia/storage/logs/laravel.log
+
+
+curl -sL https://rpm.nodesource.com/setup_12.x | bash -
+
+chmod -wx nginx /usr/share/nginx/html/brewtopia/storage
+chmod -wx nginx /usr/share/nginx/html/brewtopia/storage
+
+sudo chmod -wx nginx /usr/share/nginx/html/brewtopia/storage/logs
+
+rm -rf '/usr/share/nginx/html/brewtopia/storage'
+
+sudo usermod -aG adm nginx
+
+ls -l '/usr/share/nginx/html/brewtopia/storage'
+
+chgrp -R centos /usr/share/nginx/html/brewtopia/storage/logs/laravel.log
+
+
+sestatus
+sudo setenforce Permissive
+sudo chown -R nginx:nginx storage bootstrap/cache
+sudo chmod -R 775 storage
+sudo chmod -R 775 bootstrap/cache
+
+brewtopia-centos

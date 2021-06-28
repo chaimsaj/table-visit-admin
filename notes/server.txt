@@ -108,4 +108,4 @@ mysql -u root -p pBJRetR2EKPg
 
 mv /etc/php-fpm.d/www.conf.rpmsave /etc/php-fpm.d/www.conf
 
-sudo chown -wx nginx.nginx /usr/share/nginx/html/table-visit/storage/logs/laravel.log
+sudo chown -R nginx.nginx /usr/share/nginx/html/table-visit/storage/logs/laravel.log

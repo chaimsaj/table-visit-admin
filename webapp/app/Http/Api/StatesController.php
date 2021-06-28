@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 
 class StatesController extends ApiController
 {
-    private $service;
+    private StateServiceInterface $service;
 
     public function __construct(StateServiceInterface $service)
     {

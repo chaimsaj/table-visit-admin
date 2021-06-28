@@ -5,11 +5,22 @@ namespace App\Repositories;
 
 use App\Models\Country;
 use App\Repositories\Base\BaseRepository;
+use Illuminate\Support\Collection;
 
 class CountryRepository extends BaseRepository implements CountryRepositoryInterface
 {
     public function __construct(Country $model)
     {
         parent::__construct($model);
+    }
+
+    public function actives(): Collection
+    {
+        return $this->model->all('active', 1);
+    }
+
+    public function published(): Collection
+    {
+
     }
 }
