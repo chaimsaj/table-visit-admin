@@ -328,6 +328,7 @@ var app_assets = {
         folder.src + "js/app/localization.js",
         folder.src + "js/app/locations.js",
         folder.src + "js/app/places.js",
+        folder.src + "js/app/reservations.js",
         folder.src + "js/app/settings.js",
         folder.src + "js/app/table-services.js",
         folder.src + "js/app/users.js",

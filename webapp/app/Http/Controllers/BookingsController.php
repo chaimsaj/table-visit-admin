@@ -20,12 +20,12 @@ class BookingsController extends AdminController
 
     public function index()
     {
-        return view('places/index');
+        return view('bookings/index');
     }
 
     public function detail()
     {
-        return view('places/detail');
+        return view('bookings/detail');
     }
 
     public function save(Request $request, $id)

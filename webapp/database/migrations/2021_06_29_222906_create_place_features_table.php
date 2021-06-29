@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentsTable extends Migration
+class CreatePlaceFeaturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('place_features', function (Blueprint $table) {
             $table->id();
-            $table->integer('place_id')->nullable();
-            $table->integer('user_id');
+            $table->string('name', 250);
+            $table->integer('display_order');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->boolean('show')->default(true);
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });
@@ -31,6 +32,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('place_features');
     }
 }

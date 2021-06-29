@@ -32,6 +32,12 @@
     </div>
 @endsection
 @section('script')
-    <!-- locations -->
+    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <!-- places -->
     <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
+    <script type="application/javascript">
+        (function () {
+            initPlaceTypes();
+        })();
+    </script>
 @endsection

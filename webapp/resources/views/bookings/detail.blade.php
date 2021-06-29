@@ -1,21 +1,26 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Places') @endsection
+@section('title') @lang('translation.Booking') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.Venues') @endslot
-        @slot('title') @lang('translation.Place') @endslot
+        @slot('li_1') @lang('translation.Booking') @endslot
+        @slot('title') @lang('translation.Reservations') @endslot
     @endcomponent
+
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">@lang('translation.Information')</h4>
                     <div class="row">
-                        <div class="col-xl-12">
-                            <div>Coming soon..</div>
+                        <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div>Coming soon..</div>
+                                </div>
+                            </div> <!-- end col -->
                         </div>
                     </div>
                 </div>
@@ -24,11 +29,11 @@
     </div>
 @endsection
 @section('script')
-    <!-- places -->
-    <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
+    <!-- reservations -->
+    <script src="{{ URL::asset('/assets/js/app/reservations.js') }}"></script>
     <script type="application/javascript">
         (function () {
-            initPlace();
+            initBooking();
         })();
     </script>
 @endsection

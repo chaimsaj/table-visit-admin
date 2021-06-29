@@ -11,6 +11,11 @@
 
 @endsection
 @section('script')
-    <!-- locations -->
+    <!-- places -->
     <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
+    <script type="application/javascript">
+        (function () {
+            initPlaceType();
+        })();
+    </script>
 @endsection

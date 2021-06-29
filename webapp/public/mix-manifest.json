@@ -211,6 +211,7 @@
     "/assets/js/app/localization.js": "/assets/js/app/localization.js",
     "/assets/js/app/locations.js": "/assets/js/app/locations.js",
     "/assets/js/app/places.js": "/assets/js/app/places.js",
+    "/assets/js/app/reservations.js": "/assets/js/app/reservations.js",
     "/assets/js/app/settings.js": "/assets/js/app/settings.js",
     "/assets/js/app/table-services.js": "/assets/js/app/table-services.js",
     "/assets/js/app/users.js": "/assets/js/app/users.js",

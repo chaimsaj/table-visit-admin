@@ -7,24 +7,25 @@ use App\Http\Controllers\Base\BasicController;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class PaymentsController extends AdminController
+class PlaceFeaturesController extends AdminController
 {
-    private UserServiceInterface $service;
+    private $service;
 
     public function __construct(UserServiceInterface $service)
     {
         parent::__construct();
+
         $this->service = $service;
     }
 
     public function index()
     {
-        return view('payments/index');
+        return view('place-features/index');
     }
 
     public function detail()
     {
-        return view('payments/detail');
+        return view('place-features/detail');
     }
 
     public function save(Request $request, $id)

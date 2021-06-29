@@ -1,13 +1,14 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Places') @endsection
+@section('title') @lang('translation.PlaceFeature') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
         @slot('li_1') @lang('translation.Venues') @endslot
-        @slot('title') @lang('translation.Place') @endslot
+        @slot('title') @lang('translation.PlaceFeature') @endslot
     @endcomponent
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -28,7 +29,7 @@
     <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
     <script type="application/javascript">
         (function () {
-            initPlace();
+            initPlaceFeature();
         })();
     </script>
 @endsection

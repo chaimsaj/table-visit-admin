@@ -35,6 +35,19 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 //Route::get('/user/create', [App\Http\Controllers\UsersController::class, 'create'])->name('user.create');
 //Route::post('/user/update', [App\Http\Controllers\UsersController::class, 'update'])->name('user.update');
 
+//Reservations
+//Bookings
+Route::get('/bookings', [App\Http\Controllers\BookingsController::class, 'index'])->name('bookings');
+Route::get('/booking/{id}', [App\Http\Controllers\BookingsController::class, 'detail'])->name('booking.detail');
+Route::post('/booking/{id}', [App\Http\Controllers\BookingsController::class, 'save'])->name('booking.save');
+Route::get('/booking/delete/{id}', [App\Http\Controllers\BookingsController::class, 'delete'])->name('booking.delete');
+
+//Payments
+Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');
+Route::get('/payment/{id}', [App\Http\Controllers\PaymentsController::class, 'detail'])->name('payment.detail');
+Route::post('/payment/{id}', [App\Http\Controllers\PaymentsController::class, 'save'])->name('payment.save');
+Route::get('/payment/delete/{id}', [App\Http\Controllers\PaymentsController::class, 'delete'])->name('payment.delete');
+
 //Sample
 Route::get('/samples', [App\Http\Controllers\SamplesController::class, 'index'])->name('samples');
 Route::get('/sample/{id}', [App\Http\Controllers\SamplesController::class, 'detail'])->name('sample.detail');
@@ -96,11 +109,23 @@ Route::get('/place/{id}', [App\Http\Controllers\PlacesController::class, 'detail
 Route::post('/place/{id}', [App\Http\Controllers\PlacesController::class, 'save'])->name('place.save');
 Route::get('/place/delete/{id}', [App\Http\Controllers\PlacesController::class, 'delete'])->name('place.delete');
 
-//PlaceTypes
+//Place Types
 Route::get('/place-types', [App\Http\Controllers\PlaceTypesController::class, 'index'])->name('place-types');
 Route::get('/place-type/{id}', [App\Http\Controllers\PlaceTypesController::class, 'detail'])->name('place-type.detail');
 Route::post('/place-type/{id}', [App\Http\Controllers\PlaceTypesController::class, 'save'])->name('place-type.save');
 Route::get('/place-type/delete/{id}', [App\Http\Controllers\PlaceTypesController::class, 'delete'])->name('place-type.delete');
+
+//Place Features
+Route::get('/place-features', [App\Http\Controllers\PlaceFeaturesController::class, 'index'])->name('place-features');
+Route::get('/place-feature/{id}', [App\Http\Controllers\PlaceFeaturesController::class, 'detail'])->name('place-feature.detail');
+Route::post('/place-feature/{id}', [App\Http\Controllers\PlaceFeaturesController::class, 'save'])->name('place-feature.save');
+Route::get('/place-feature/delete/{id}', [App\Http\Controllers\PlaceFeaturesController::class, 'delete'])->name('place-feature.delete');
+
+//Place Music
+Route::get('/place-music-list', [App\Http\Controllers\PlaceMusicController::class, 'index'])->name('place-music-list');
+Route::get('/place-music/{id}', [App\Http\Controllers\PlaceMusicController::class, 'detail'])->name('place-music.detail');
+Route::post('/place-music/{id}', [App\Http\Controllers\PlaceMusicController::class, 'save'])->name('place-music.save');
+Route::get('/place-music/delete/{id}', [App\Http\Controllers\PlaceMusicController::class, 'delete'])->name('place-music.delete');
 
 //Logs
 Route::get('/logs', [App\Http\Controllers\LogController::class, 'index'])->name('logs');

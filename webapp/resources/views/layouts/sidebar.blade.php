@@ -71,8 +71,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("places")}}" key="t-places">@lang('translation.Places')</a></li>
-                        <li><a href="{{route("place-types")}}" key="t-place-types">@lang('translation.PlaceTypes')</a>
-                        </li>
+                        <li><a href="{{route("place-types")}}" key="t-place-types">@lang('translation.Types')</a></li>
+                        <li><a href="{{route("place-features")}}" key="t-place-features">@lang('translation.Features')</a></li>
+                        <li><a href="{{route("place-music-list")}}" key="t-place-music-list">@lang('translation.Music')</a></li>
                     </ul>
                 </li>
 
@@ -83,6 +84,17 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("services")}}" key="t-services">@lang('translation.Services')</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-purchase-tag-alt"></i>
+                        <span key="t-reservations">@lang('translation.Reservations')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("bookings")}}" key="t-bookings">@lang('translation.Bookings')</a></li>
+                        <li><a href="{{route("payments")}}" key="t-payments">@lang('translation.Payments')</a></li>
                     </ul>
                 </li>
 

@@ -80,8 +80,23 @@ return [
 
     "Places" => "Places",
     "Place" => "Place",
+
+    "Types" => "Types",
     "PlaceTypes" => "Place Types",
     "PlaceType" => "Place Type",
+
+    "Features" => "Features",
+    "PlaceFeatures" => "Place Features",
+    "PlaceFeature" => "Place Feature",
+
+    "Music" => "Music",
+    "PlaceMusic" => "Place Music",
+
+    "Reservations" => "Reservations",
+    "Booking" => "Booking",
+    "Bookings" => "Bookings",
+    "Payment" => "Payment",
+    "Payments" => "Payments",
 
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",
