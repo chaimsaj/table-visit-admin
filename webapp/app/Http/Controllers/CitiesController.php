@@ -19,6 +19,8 @@ class CitiesController extends AdminController
         , CountryServiceInterface $countryService
         , StateServiceInterface $stateService)
     {
+        parent::__construct();
+
         $this->service = $service;
         $this->countryService = $countryService;
         $this->stateService = $stateService;

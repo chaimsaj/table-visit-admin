@@ -11,23 +11,25 @@ use Illuminate\Http\Request;
 
 class SamplesController extends AdminController
 {
-    private $userService;
+    private UserServiceInterface $service;
 
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(UserServiceInterface $service)
     {
-        $this->userService = $userService;
+        parent::__construct();
+
+        $this->service = $service;
     }
 
     public function index()
     {
-        $data = $this->userService->all();
+        $data = $this->service->all();
 
         return view('samples/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->userService->find($id);
+        $data = $this->service->find($id);
 
         return view('samples/detail', ["data" => $data]);
     }
@@ -47,7 +49,7 @@ class SamplesController extends AdminController
                 //$validator->errors()->add('email', 'Something is wrong with this field!');
             });
 
-            $user = $this->userService->find($id);
+            $user = $this->service->find($id);
 
             if ($validator->fails() && $user == null) {
                 /*return redirect('post/create')
@@ -105,7 +107,7 @@ class SamplesController extends AdminController
 
     public function delete($id)
     {
-        $this->userService->delete($id);
+        $this->service->delete($id);
 
         return redirect("samples");
     }

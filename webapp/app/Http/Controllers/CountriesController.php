@@ -22,6 +22,8 @@ class CountriesController extends AdminController
 
     public function __construct(CountryServiceInterface $service)
     {
+        parent::__construct();
+        
         $this->service = $service;
     }
 

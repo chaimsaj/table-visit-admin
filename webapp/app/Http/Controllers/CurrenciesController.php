@@ -14,6 +14,8 @@ class CurrenciesController extends AdminController
 
     public function __construct(CurrencyServiceInterface $service)
     {
+        parent::__construct();
+
         $this->service = $service;
     }
 

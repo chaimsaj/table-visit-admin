@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 
 class PaymentsController extends AdminController
 {
-    private $userService;
+    private UserServiceInterface $service;
 
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(UserServiceInterface $service)
     {
-        $this->userService = $userService;
+        parent::__construct();
+        $this->service = $service;
     }
 
     public function index()

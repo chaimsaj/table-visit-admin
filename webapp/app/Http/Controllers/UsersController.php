@@ -18,6 +18,7 @@ class UsersController extends AdminController
 
     public function __construct(UserServiceInterface $service)
     {
+        parent::__construct();
         $this->service = $service;
     }
 

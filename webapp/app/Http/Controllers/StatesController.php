@@ -17,6 +17,8 @@ class StatesController extends AdminController
 
     public function __construct(StateServiceInterface $service, CountryServiceInterface $countryService)
     {
+        parent::__construct();
+
         $this->service = $service;
         $this->countryService = $countryService;
     }

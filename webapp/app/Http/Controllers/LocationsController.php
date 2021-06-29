@@ -13,6 +13,8 @@ class LocationsController extends AdminController
 
     public function __construct(UserServiceInterface $userService)
     {
+        parent::__construct();
+
         $this->userService = $userService;
     }
 
