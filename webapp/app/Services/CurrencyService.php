@@ -41,4 +41,9 @@ class CurrencyService implements CurrencyServiceInterface
     {
         return $this->repository->published();
     }
+
+    public function deleteLogic($id): bool
+    {
+        return $this->repository->deleteLogic($id);
+    }
 }

@@ -9,8 +9,7 @@ use Illuminate\Support\Collection;
 interface StateRepositoryInterface extends BaseRepositoryInterface
 {
     public function actives(): Collection;
-
     public function published(): Collection;
-
     public function publishedByCountry($country_id): Collection;
+    public function deleteLogic($id): bool;
 }

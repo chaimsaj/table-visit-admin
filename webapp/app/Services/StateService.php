@@ -46,4 +46,9 @@ class StateService implements StateServiceInterface
     {
         return $this->repository->publishedByCountry($country_id);
     }
+
+    public function deleteLogic($id): bool
+    {
+        return $this->repository->deleteLogic($id);
+    }
 }

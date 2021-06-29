@@ -13,6 +13,6 @@ interface CurrencyServiceInterface
     public function all(): Collection;
     public function delete($id): bool;
     public function actives(): Collection;
-
     public function published(): Collection;
+    public function deleteLogic($id): bool;
 }

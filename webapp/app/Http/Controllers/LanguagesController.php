@@ -65,7 +65,7 @@ class LanguagesController extends AdminController
 
     public function delete($id)
     {
-        $this->service->delete($id);
+        $this->service->deleteLogic($id);
 
         return redirect("languages");
     }

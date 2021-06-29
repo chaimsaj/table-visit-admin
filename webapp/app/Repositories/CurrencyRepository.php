@@ -25,4 +25,24 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
             ->where('published', 1)
             ->get();
     }
+
+    public function deleteLogic($id): bool
+    {
+        try {
+
+            $model = $this->find($id);
+
+            if ($model != null) {
+                $model->published = 0;
+                $model->show = 0;
+                $model->deleted = 1;
+
+                $model->save();
+            }
+
+            return true;
+        } catch (Throwable $ex) {
+            return false;
+        }
+    }
 }

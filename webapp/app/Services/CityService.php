@@ -43,4 +43,9 @@ class CityService implements CityServiceInterface
     {
         return $this->repository->all();
     }
+
+    public function deleteLogic($id): bool
+    {
+        return $this->repository->deleteLogic($id);
+    }
 }

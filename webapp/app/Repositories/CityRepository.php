@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\City;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class CityRepository extends BaseRepository implements CityRepositoryInterface
 {
@@ -24,5 +25,25 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->get();
+    }
+
+    public function deleteLogic($id): bool
+    {
+        try {
+
+            $model = $this->find($id);
+
+            if ($model != null) {
+                $model->published = 0;
+                $model->show = 0;
+                $model->deleted = 1;
+
+                $model->save();
+            }
+
+            return true;
+        } catch (Throwable $ex) {
+            return false;
+        }
     }
 }
