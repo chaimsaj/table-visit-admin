@@ -3,7 +3,6 @@
 
 namespace App\Providers;
 
-use App\Models\Language;
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
 use App\Repositories\BookingRepository;
@@ -26,8 +25,14 @@ use App\Repositories\PaymentRepository;
 use App\Repositories\PaymentRepositoryInterface;
 use App\Repositories\PlaceDetailRepository;
 use App\Repositories\PlaceDetailRepositoryInterface;
+use App\Repositories\PlaceFeatureRepository;
+use App\Repositories\PlaceFeatureRepositoryInterface;
+use App\Repositories\PlaceMusicRepository;
+use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepository;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\PlaceTypeRepository;
+use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\RateRepository;
 use App\Repositories\RateRepositoryInterface;
 use App\Repositories\ServiceRepository;
@@ -46,6 +51,12 @@ use App\Services\LanguageService;
 use App\Services\LanguageServiceInterface;
 use App\Services\LogService;
 use App\Services\LogServiceInterface;
+use App\Services\PlaceFeatureService;
+use App\Services\PlaceFeatureServiceInterface;
+use App\Services\PlaceMusicService;
+use App\Services\PlaceMusicServiceInterface;
+use App\Services\PlaceTypeService;
+use App\Services\PlaceTypeServiceInterface;
 use App\Services\StateService;
 use App\Services\StateServiceInterface;
 use App\Services\UserService;
@@ -73,7 +84,10 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(MediaFileRepositoryInterface::class, MediaFileRepository::class);
         $this->app->bind(PaymentRepositoryInterface::class, PaymentRepository::class);
         $this->app->bind(PlaceDetailRepositoryInterface::class, PlaceDetailRepository::class);
+        $this->app->bind(PlaceFeatureRepositoryInterface::class, PlaceFeatureRepository::class);
+        $this->app->bind(PlaceMusicRepositoryInterface::class, PlaceMusicRepository::class);
         $this->app->bind(PlaceRepositoryInterface::class, PlaceRepository::class);
+        $this->app->bind(PlaceTypeRepositoryInterface::class, PlaceTypeRepository::class);
         $this->app->bind(RateRepositoryInterface::class, RateRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(StateRepositoryInterface::class, StateRepository::class);
@@ -87,6 +101,11 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(LanguageServiceInterface::class, LanguageService::class);
 
         $this->app->bind(LogServiceInterface::class, LogService::class);
+
+        $this->app->bind(PlaceFeatureServiceInterface::class, PlaceFeatureService::class);
+        $this->app->bind(PlaceMusicServiceInterface::class, PlaceMusicService::class);
+        $this->app->bind(PlaceTypeServiceInterface::class, PlaceTypeService::class);
+
         /*$this->app->bind(LocationServiceInterface::class, LocationService::class);
         $this->app->bind(MediaFileServiceInterface::class, MediaFileService::class);
         $this->app->bind(PaymentServiceInterface::class, PaymentService::class);

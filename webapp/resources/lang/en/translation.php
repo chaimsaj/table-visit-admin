@@ -50,6 +50,8 @@ return [
 
     "TableVisit" => "TABLE VISIT",
 
+    "AddNew" => "Add New",
+
     //Users
     "Users" => "Users",
     "User" => "User",
