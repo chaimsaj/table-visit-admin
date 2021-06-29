@@ -15,10 +15,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class CountriesController extends AdminController
 {
-    private $service;
+    private CountryServiceInterface $service;
 
     public function __construct(CountryServiceInterface $service)
     {

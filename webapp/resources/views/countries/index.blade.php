@@ -65,7 +65,6 @@
     </div>
 @endsection
 @section('script')
-    <!-- Datatable init js -->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
     <!-- locations -->
     <script src="{{ URL::asset('/assets/js/app/locations.js') }}"></script>

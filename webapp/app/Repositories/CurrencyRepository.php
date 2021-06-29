@@ -16,12 +16,13 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
 
     public function actives(): Collection
     {
-        return $this->model->all('active', 1);
+        return $this->model->where('deleted', 0)->get();
     }
 
     public function published(): Collection
     {
-        return $this->model->all('active', 1)
-            ->where('published', 1);
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->get();
     }
 }

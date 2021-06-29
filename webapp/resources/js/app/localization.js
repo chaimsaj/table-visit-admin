@@ -1,6 +1,13 @@
-(function () {
-    $(document).ready(function () {
+'use strict';
 
-    });
-})();
+function initLanguages() {
+}
 
+function initLanguage() {
+}
+
+function initCurrencies() {
+}
+
+function initCurrency() {
+}

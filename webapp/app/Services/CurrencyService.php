@@ -31,4 +31,14 @@ class CurrencyService implements CurrencyServiceInterface
     {
         return $this->repository->delete($id);
     }
+
+    public function actives(): Collection
+    {
+        return $this->repository->actives();
+    }
+
+    public function published(): Collection
+    {
+        return $this->repository->published();
+    }
 }

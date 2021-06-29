@@ -12,4 +12,7 @@ interface LanguageServiceInterface
     public function find($id): ?Language;
     public function all(): Collection;
     public function delete($id): bool;
+    public function actives(): Collection;
+
+    public function published(): Collection;
 }
