@@ -23,13 +23,13 @@ class CountriesController extends AdminController
     public function __construct(CountryServiceInterface $service)
     {
         parent::__construct();
-        
+
         $this->service = $service;
     }
 
     public function index()
     {
-        $data = $this->service->all();
+        $data = $this->service->actives();
         return view('countries/index', ["data" => $data]);
     }
 
@@ -57,6 +57,8 @@ class CountriesController extends AdminController
                 $db->name = $request->get('name');
                 $db->iso_code = $request->get('iso_code');
                 $db->display_order = intval($request->get('display_order'));
+                $db->published = $request->get('published') == "on";
+                $db->show = $request->get('show') == "on";
 
                 $db->save();
             }

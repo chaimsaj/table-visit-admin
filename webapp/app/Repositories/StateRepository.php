@@ -16,12 +16,21 @@ class StateRepository extends BaseRepository implements StateRepositoryInterface
 
     public function actives(): Collection
     {
-        return $this->model->all('active', 1);
+        return $this->model->where('deleted', 0)->get();
     }
 
     public function published(): Collection
     {
-        return $this->model->all('active', 1)
-            ->where('published', 1);
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->get();
+    }
+
+    public function publishedByCountry($country_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('country_id', $country_id)
+            ->get();
     }
 }

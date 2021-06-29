@@ -11,4 +11,6 @@ interface StateRepositoryInterface extends BaseRepositoryInterface
     public function actives(): Collection;
 
     public function published(): Collection;
+
+    public function publishedByCountry($country_id): Collection;
 }

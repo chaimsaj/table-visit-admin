@@ -41,4 +41,9 @@ class StateService implements StateServiceInterface
     {
         return $this->repository->published();
     }
+
+    public function publishedByCountry($country_id): Collection
+    {
+        return $this->repository->publishedByCountry($country_id);
+    }
 }

@@ -19,7 +19,7 @@ class StatesController extends ApiController
 
     public function list(): JsonResponse
     {
-        return response()->json($this->service->all());
+        return response()->json($this->service->actives());
     }
 
     public function find($id): JsonResponse

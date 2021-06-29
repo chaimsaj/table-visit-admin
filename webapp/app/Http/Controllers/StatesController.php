@@ -9,6 +9,7 @@ use App\Services\CountryServiceInterface;
 use App\Services\StateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class StatesController extends AdminController
 {
@@ -25,7 +26,7 @@ class StatesController extends AdminController
 
     public function index()
     {
-        $data = $this->service->all();
+        $data = $this->service->actives();
 
         $data->each(function ($item, $key) {
             $country = $this->countryService->find($item->country_id);
@@ -41,7 +42,7 @@ class StatesController extends AdminController
     public function detail($id)
     {
         $data = $this->service->find($id);
-        $countries = $this->countryService->pu();
+        $countries = $this->countryService->published();
         return view('states/detail', ["data" => $data, "countries" => $countries]);
     }
 

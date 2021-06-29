@@ -49,6 +49,32 @@
                                             </div>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                               {{($data && $data->published == 1) ? 'checked' : ''}}
+                                                               id="published"
+                                                               name="published">
+                                                        <label class="form-check-label" for="published">
+                                                            Published
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="show"
+                                                               {{($data && $data->show == 1) ? 'checked' : ''}}
+                                                               name="show">
+                                                        <label class="form-check-label" for="show">
+                                                            Show
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="d-flex flex-wrap gap-2">
                                             <button type="submit" class="btn btn-success waves-effect waves-light">
                                                 @lang('translation.Save')

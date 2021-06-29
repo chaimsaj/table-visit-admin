@@ -89,7 +89,7 @@
                                             <button type="submit" class="btn btn-success waves-effect waves-light">
                                                 @lang('translation.Save')
                                             </button>
-                                            <a href="{{route("countries")}}"
+                                            <a href="{{route("states")}}"
                                                class="btn btn-danger waves-effect">
                                                 @lang('translation.Cancel')
                                             </a>
