@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class PaymentsController extends BasicController
+class PaymentsController extends AdminController
 {
     private $userService;
 

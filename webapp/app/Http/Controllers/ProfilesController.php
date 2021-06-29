@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Services\UserServiceInterface;
 use App\Models\User;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class ProfilesController extends BasicController
+class ProfilesController extends AdminController
 {
     public function updateProfile(Request $request, $id): JsonResponse
     {

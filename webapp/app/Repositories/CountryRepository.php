@@ -21,6 +21,7 @@ class CountryRepository extends BaseRepository implements CountryRepositoryInter
 
     public function published(): Collection
     {
-
+        return $this->model->all('active', 1)
+            ->where('published', 1);
     }
 }

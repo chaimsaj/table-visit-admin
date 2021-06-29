@@ -2,19 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Services\CityServiceInterface;
+use App\Services\CountryServiceInterface;
 use App\Services\StateServiceInterface;
 use Illuminate\Http\Request;
 
-class CitiesController extends BasicController
+class CitiesController extends AdminController
 {
     private CityServiceInterface $service;
+    private CountryServiceInterface $countryService;
+    private StateServiceInterface $stateService;
 
-    public function __construct(CityServiceInterface $service)
+    public function __construct(CityServiceInterface $service
+        , CountryServiceInterface $countryService
+        , StateServiceInterface $stateService)
     {
-        $this->middleware('auth');
         $this->service = $service;
+        $this->countryService = $countryService;
+        $this->stateService = $stateService;
     }
 
     public function index()

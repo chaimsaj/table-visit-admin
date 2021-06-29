@@ -11,7 +11,7 @@ use Illuminate\Http\Response;
 
 class BackupController extends BasicController
 {
-    private $userService;
+    private UserServiceInterface $userService;
 
     public function __construct(UserServiceInterface $userService)
     {

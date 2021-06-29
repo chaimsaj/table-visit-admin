@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\AuthModeEnum;
 use App\Core\UserTypeEnum;
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Country;
 use App\Services\CountryServiceInterface;
@@ -15,13 +16,12 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class CountriesController extends BasicController
+class CountriesController extends AdminController
 {
     private $service;
 
     public function __construct(CountryServiceInterface $service)
     {
-        $this->middleware('auth');
         $this->service = $service;
     }
 

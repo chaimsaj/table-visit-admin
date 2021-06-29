@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use Illuminate\Http\Request;
 
-class ContentsController extends BasicController
+class ContentsController extends AdminController
 {
     public function terms()
     {

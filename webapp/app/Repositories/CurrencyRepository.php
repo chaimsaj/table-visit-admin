@@ -22,7 +22,6 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
     public function published(): Collection
     {
         return $this->model->all('active', 1)
-            ->where('published', 1)
-            ->get();
+            ->where('published', 1);
     }
 }

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class BookingsController extends BasicController
+class BookingsController extends AdminController
 {
-    private $userService;
+    private UserServiceInterface $userService;
 
     public function __construct(UserServiceInterface $userService)
     {

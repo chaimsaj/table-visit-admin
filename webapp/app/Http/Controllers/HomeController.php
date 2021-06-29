@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +11,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
-class HomeController extends BasicController
+class HomeController extends AdminController
 {
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     public function index(Request $request)

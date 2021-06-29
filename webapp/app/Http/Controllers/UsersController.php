@@ -14,17 +14,16 @@ use Illuminate\Http\Request;
 
 class UsersController extends AdminController
 {
-    private $userService;
+    private UserServiceInterface $service;
 
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(UserServiceInterface $service)
     {
-        $this->middleware('auth');
-        $this->userService = $userService;
+        $this->service = $service;
     }
 
     public function index()
     {
-        $data = $this->userService->all();
+        $data = $this->service->all();
 
         $admin = new KeyValueModel();
         $admin->setKey(UserTypeEnum::Admin);
@@ -51,7 +50,7 @@ class UsersController extends AdminController
 
         $user_types = collect([$admin, $guest]);
 
-        $data = $this->userService->find($id);
+        $data = $this->service->find($id);
 
         return view('users/detail', ["data" => $data, "user_types" => $user_types]);
     }
@@ -72,7 +71,7 @@ class UsersController extends AdminController
                 //$validator->errors()->add('email', 'Something is wrong with this field!');
             });
 
-            $user = $this->userService->find($id);
+            $user = $this->service->find($id);
 
             if ($validator->fails() && $user == null) {
                 /*return redirect('post/create')
@@ -134,7 +133,7 @@ class UsersController extends AdminController
 
     public function delete($id)
     {
-        $this->userService->delete($id);
+        $this->service->delete($id);
 
         return redirect("users");
     }

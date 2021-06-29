@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class StatesController extends AdminController
 {
-    private $service;
-    private $countryService;
+    private StateServiceInterface $service;
+    private CountryServiceInterface $countryService;
 
     public function __construct(StateServiceInterface $service, CountryServiceInterface $countryService)
     {
@@ -24,7 +24,6 @@ class StatesController extends AdminController
     public function index()
     {
         $data = $this->service->all();
-        $countries = $this->countryService->all();
 
         $data->each(function ($item, $key) {
             $country = $this->countryService->find($item->country_id);
@@ -34,13 +33,13 @@ class StatesController extends AdminController
                 $item->country_name = AppConstant::getDash();
         });
 
-        return view('states/index', ["data" => $data, "countries" => $countries]);
+        return view('states/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
         $data = $this->service->find($id);
-        $countries = $this->countryService->all();
+        $countries = $this->countryService->pu();
         return view('states/detail', ["data" => $data, "countries" => $countries]);
     }
 

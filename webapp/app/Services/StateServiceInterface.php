@@ -11,4 +11,6 @@ interface StateServiceInterface
     public function find($id): ?State;
     public function all(): Collection;
     public function delete($id): bool;
+    public function actives(): Collection;
+    public function published(): Collection;
 }

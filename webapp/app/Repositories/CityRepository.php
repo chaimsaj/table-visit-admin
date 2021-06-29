@@ -21,6 +21,7 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
 
     public function published(): Collection
     {
-
+        return $this->model->all('active', 1)
+            ->where('published', 1);
     }
 }
