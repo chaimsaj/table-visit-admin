@@ -18,6 +18,8 @@ use App\Repositories\LanguageRepository;
 use App\Repositories\LanguageRepositoryInterface;
 use App\Repositories\LocationRepository;
 use App\Repositories\LocationRepositoryInterface;
+use App\Repositories\LogRepository;
+use App\Repositories\LogRepositoryInterface;
 use App\Repositories\MediaFileRepository;
 use App\Repositories\MediaFileRepositoryInterface;
 use App\Repositories\PaymentRepository;
@@ -42,6 +44,8 @@ use App\Services\CurrencyService;
 use App\Services\CurrencyServiceInterface;
 use App\Services\LanguageService;
 use App\Services\LanguageServiceInterface;
+use App\Services\LogService;
+use App\Services\LogServiceInterface;
 use App\Services\StateService;
 use App\Services\StateServiceInterface;
 use App\Services\UserService;
@@ -65,6 +69,7 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(CurrencyRepositoryInterface::class, CurrencyRepository::class);
         $this->app->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
         $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
+        $this->app->bind(LogRepositoryInterface::class, LogRepository::class);
         $this->app->bind(MediaFileRepositoryInterface::class, MediaFileRepository::class);
         $this->app->bind(PaymentRepositoryInterface::class, PaymentRepository::class);
         $this->app->bind(PlaceDetailRepositoryInterface::class, PlaceDetailRepository::class);
@@ -80,6 +85,8 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(CountryServiceInterface::class, CountryService::class);
         $this->app->bind(CurrencyServiceInterface::class, CurrencyService::class);
         $this->app->bind(LanguageServiceInterface::class, LanguageService::class);
+
+        $this->app->bind(LogServiceInterface::class, LogService::class);
         /*$this->app->bind(LocationServiceInterface::class, LocationService::class);
         $this->app->bind(MediaFileServiceInterface::class, MediaFileService::class);
         $this->app->bind(PaymentServiceInterface::class, PaymentService::class);

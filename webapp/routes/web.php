@@ -101,3 +101,15 @@ Route::get('/place-types', [App\Http\Controllers\PlaceTypesController::class, 'i
 Route::get('/place-type/{id}', [App\Http\Controllers\PlaceTypesController::class, 'detail'])->name('place-type.detail');
 Route::post('/place-type/{id}', [App\Http\Controllers\PlaceTypesController::class, 'save'])->name('place-type.save');
 Route::get('/place-type/delete/{id}', [App\Http\Controllers\PlaceTypesController::class, 'delete'])->name('place-type.delete');
+
+//Logs
+Route::get('/logs', [App\Http\Controllers\LogController::class, 'index'])->name('logs');
+Route::get('/log/{id}', [App\Http\Controllers\LogController::class, 'detail'])->name('log.detail');
+Route::get('/log/delete/{id}', [App\Http\Controllers\LogController::class, 'delete'])->name('log.delete');
+
+//Services
+//Services
+Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
+Route::get('/service/{id}', [App\Http\Controllers\ServicesController::class, 'detail'])->name('service.detail');
+Route::post('/service/{id}', [App\Http\Controllers\ServicesController::class, 'save'])->name('service.save');
+Route::get('/service/delete/{id}', [App\Http\Controllers\ServicesController::class, 'delete'])->name('service.delete');

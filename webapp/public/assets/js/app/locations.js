@@ -18,7 +18,7 @@ function initCities() {
 function initCity() {
     $('#country_id').change(function () {
         const id = $(this).val();
-
+        const selected_id = parseInt($(this).data('selected'));
         // Empty the dropdown
         //$('#state_id').find('option').not(':first').remove();
 
@@ -28,7 +28,7 @@ function initCity() {
 
         $.ajax({
             url: '/api/admin/locations/load_states/' + id,
-            type: 'get',
+            type: 'GET',
             dataType: 'json',
             success: function (response) {
                 let len = 0;
@@ -40,7 +40,8 @@ function initCity() {
                     for (let i = 0; i < len; i++) {
                         let id = response.data[i].id;
                         let name = response.data[i].name;
-                        let option = "<option value='" + id + "'>" + name + "</option>";
+                        let selected = id == selected_id ? 'selected' : '';
+                        let option = "<option " + selected + " value='" + id + "'>" + name + "</option>";
                         $("#state_id").append(option);
                     }
                 }

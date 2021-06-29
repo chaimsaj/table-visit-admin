@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\Currency;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInterface
 {
@@ -42,6 +43,7 @@ class CurrencyRepository extends BaseRepository implements CurrencyRepositoryInt
 
             return true;
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             return false;
         }
     }

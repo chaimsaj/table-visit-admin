@@ -3,16 +3,21 @@
 
 namespace App\Repositories\Base;
 
+use App\Repositories\LogRepository;
+use App\Repositories\LogRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-    protected $model;
+    protected LogRepositoryInterface $logger;
+
+    protected Model $model;
 
     public function __construct(Model $model)
     {
         $this->model = $model;
+        //$this->logger = new LogRepository();
     }
 
     public function create(array $attributes): Model
@@ -30,10 +35,10 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->all();
     }
 
-    public function logicDelete($id): bool
+    /*public function logicDelete($id): bool
     {
         return $this->find($id)->delete();
-    }
+    }*/
 
     public function restore($id): bool
     {

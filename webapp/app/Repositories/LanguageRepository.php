@@ -7,6 +7,7 @@ use App\Models\Currency;
 use App\Models\Language;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class LanguageRepository extends BaseRepository implements LanguageRepositoryInterface
 {
@@ -43,6 +44,7 @@ class LanguageRepository extends BaseRepository implements LanguageRepositoryInt
 
             return true;
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             return false;
         }
     }

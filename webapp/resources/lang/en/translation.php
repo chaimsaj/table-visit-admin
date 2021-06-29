@@ -14,7 +14,17 @@ return [
     "Error404" => "Error 404",
     "Error500" => "Error 500",
     "Select" => "Select..",
-
+    "Logs" => "Logs",
+    "Log" => "Log",
+    "System" => "System",
+    "Error" => "Error",
+    "Trace" => "Trace",
+    "Date" => "Date",
+    "Settings" => "Settings",
+    "Services"  => "Services",
+    "Service"  => "Service",
+    "Tables"  => "Tables",
+    "TableServices"  => "Table Services",
 
     "Name" => "Name",
     "Code" => "Code",

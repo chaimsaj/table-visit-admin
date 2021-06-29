@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\State;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class StateRepository extends BaseRepository implements StateRepositoryInterface
 {
@@ -50,6 +51,7 @@ class StateRepository extends BaseRepository implements StateRepositoryInterface
 
             return true;
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             return false;
         }
     }

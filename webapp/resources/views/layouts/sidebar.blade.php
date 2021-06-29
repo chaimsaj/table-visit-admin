@@ -59,10 +59,11 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("languages")}}" key="t-languages">@lang('translation.Languages')</a></li>
-                        <li><a href="{{route("currencies")}}" key="t-currencies">@lang('translation.Currencies')</a></li>
+                        <li><a href="{{route("currencies")}}" key="t-currencies">@lang('translation.Currencies')</a>
+                        </li>
                     </ul>
                 </li>
-                {{--bx bxs-drink--}}
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-building-house"></i>
@@ -70,7 +71,18 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("places")}}" key="t-places">@lang('translation.Places')</a></li>
-                        <li><a href="{{route("place-types")}}" key="t-currencies">@lang('translation.PlaceTypes')</a></li>
+                        <li><a href="{{route("place-types")}}" key="t-place-types">@lang('translation.PlaceTypes')</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bxs-drink"></i>
+                        <span key="t-table-services">@lang('translation.TableServices')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("services")}}" key="t-services">@lang('translation.Services')</a></li>
                     </ul>
                 </li>
 
@@ -87,9 +99,21 @@
                         <li><a href="#" key="t-register">@lang('translation.Register')</a></li>
                         <li><a href="#" key="t-recover-password">@lang('translation.RecoverPassword')</a>
                         </li>
-                        <li><a href="{{route("content.lock-screen")}}" key="t-lock-screen">@lang('translation.LockScreen')</a></li>
+                        <li><a href="{{route("content.lock-screen")}}"
+                               key="t-lock-screen">@lang('translation.LockScreen')</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-cog"></i>
+                        <span key="t-logs">@lang('translation.Settings')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("logs")}}" key="t-users">@lang('translation.Logs')</a></li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
         <!-- Sidebar -->

@@ -57,7 +57,7 @@ class CurrenciesController extends AdminController
             }
 
         } catch (Throwable $ex) {
-            return $ex;
+            $this->logger->save($ex);
         }
 
         return redirect("currencies");

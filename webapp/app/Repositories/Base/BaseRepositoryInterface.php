@@ -14,7 +14,7 @@ interface BaseRepositoryInterface
 
     public function all(): Collection;
 
-    public function logicDelete($id): bool;
+    //public function logicDelete($id): bool;
 
     public function restore($id): bool;
 

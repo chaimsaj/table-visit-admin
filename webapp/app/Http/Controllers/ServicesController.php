@@ -20,12 +20,12 @@ class ServicesController extends AdminController
 
     public function index()
     {
-        return view('places/index');
+        return view('services/index');
     }
 
     public function detail()
     {
-        return view('places/detail');
+        return view('services/detail');
     }
 
     public function save(Request $request, $id)

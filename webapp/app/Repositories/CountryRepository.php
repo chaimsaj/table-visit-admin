@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\Country;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class CountryRepository extends BaseRepository implements CountryRepositoryInterface
 {
@@ -42,6 +43,7 @@ class CountryRepository extends BaseRepository implements CountryRepositoryInter
 
             return true;
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             return false;
         }
     }
