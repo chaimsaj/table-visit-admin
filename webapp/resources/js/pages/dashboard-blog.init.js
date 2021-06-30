@@ -15,7 +15,7 @@ var options = {
         data: [30, 11, 22, 18, 32, 23, 58, 45, 30, 36, 15, 34]
     }],
     chart: {
-        height: 365,
+        height: 367,
         type: 'area',
         toolbar: {
             show: false
