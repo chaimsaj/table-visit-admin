@@ -220,7 +220,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-start">
-                        <h5 class="card-title mb-3 me-2">Users</h5>
+                        <h5 class="card-title mb-3 me-2">Chats</h5>
 
                         {{--<div class="dropdown ms-auto">
                             <a class="text-muted dropdown-toggle font-size-16" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
@@ -243,7 +243,7 @@
                             <h4 class="mb-3">0</h4>
                         </div>
                         <div class="ms-auto align-self-end">
-                            <i class="bx bx-user display-4 text-light"></i>
+                            <i class="bx bx-chat display-4 text-light"></i>
                         </div>
                     </div>
                 </div>
