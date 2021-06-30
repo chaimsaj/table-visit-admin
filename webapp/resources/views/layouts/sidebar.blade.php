@@ -9,6 +9,12 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-apps">@lang('translation.Administration')</li>
 
+                <li>
+                    <a href="{{route("root")}}" class="waves-effect">
+                        <i class="bx bxs-dashboard"></i>
+                        <span key="t-dashboard">@lang('translation.Dashboard')</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

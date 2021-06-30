@@ -30,7 +30,7 @@ var third_party_assets = {
             "assets": ["./node_modules/select2/dist/js/select2.min.js", "./node_modules/select2/dist/css/select2.min.css"]
         },
         {"name": "chart-js", "assets": ["./node_modules/chart.js/dist/Chart.bundle.min.js"]},
-        {"name": "apexcharts", "assets": ["./node_modules/apexcharts/dist/apexcharts.min.js"]},
+        //{"name": "apexcharts", "assets": ["./node_modules/apexcharts/dist/apexcharts.min.js"]},
         {
             "name": "datatables", "assets": ["./node_modules/datatables.net/js/jquery.dataTables.min.js",
                 "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js",
