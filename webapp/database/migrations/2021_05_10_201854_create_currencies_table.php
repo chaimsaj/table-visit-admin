@@ -15,7 +15,7 @@ class CreateCurrenciesTable extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 250);
+            $table->string('name', 255);
             $table->string('iso_code', 3)->nullable();
             $table->integer('display_order');
             $table->timestamp('created_at')->useCurrent();

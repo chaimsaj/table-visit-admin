@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('auth_mode');
-            $table->string('auth_data', 250)->nullable();
+            $table->string('auth_data', 255)->nullable();
             $table->integer('user_type_id')->nullable();
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);

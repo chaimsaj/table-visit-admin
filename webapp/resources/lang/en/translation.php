@@ -21,10 +21,10 @@ return [
     "Trace" => "Trace",
     "Date" => "Date",
     "Settings" => "Settings",
-    "Services"  => "Services",
-    "Service"  => "Service",
-    "Tables"  => "Tables",
-    "TableServices"  => "Table Services",
+    "Services" => "Services",
+    "Service" => "Service",
+    "Tables" => "Tables",
+    "TableServices" => "Table Services",
 
     "Name" => "Name",
     "Code" => "Code",
@@ -36,6 +36,7 @@ return [
     "Edit" => "E",
     "Delete" => "D",
     "Information" => "Information",
+    "Image" => "Image",
 
     //Authentication
     "Authentication" => "Authentication",

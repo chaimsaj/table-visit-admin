@@ -15,8 +15,8 @@ class CreateUserActionsTable extends Migration
     {
         Schema::create('user_actions', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 250);
-            $table->string('action', 250);
+            $table->string('name', 255);
+            $table->string('action', 255);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->boolean('published')->default(true);

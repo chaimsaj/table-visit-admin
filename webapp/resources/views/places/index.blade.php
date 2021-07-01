@@ -20,12 +20,47 @@
                             <div class="text-sm-end">
                                 <a href="{{route("place.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
-                                        class="mdi mdi-plus me-1"></i> Add new
+                                        class="mdi mdi-plus me-1"></i> @lang('translation.AddNew')
                                 </a>
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
                     <hr/>
+                    <table id="datatable"
+                           class="table table-bordered dt-responsive nowrap w-100 align-middle">
+                        <thead class="table-light">
+                        <tr class="text-center">
+                            <th>@lang('translation.Id')</th>
+                            <th>@lang('translation.Image')</th>
+                            <th>@lang('translation.Name')</th>
+                            <th>@lang('translation.DisplayOrder')</th>
+                            <th>@lang('translation.City')</th>
+                            <th class="no-sort">@lang('translation.Delete')</th>
+                            <th class="no-sort">@lang('translation.Edit')</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        @foreach ($data as $item)
+                            <tr class="text-center">
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->image_path }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->display_order }}</td>
+                                <td>{{ $item->city_name }}</td>
+                                <td>
+                                    <a href="{{route("place.delete", $item->id)}}" class="text-danger"><i
+                                            class="mdi mdi-delete font-size-18"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{{route("place.detail", $item->id)}}" class="text-success"><i
+                                            class="mdi mdi-pencil font-size-18"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
