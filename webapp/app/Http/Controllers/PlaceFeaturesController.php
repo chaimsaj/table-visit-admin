@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
-use App\Services\CountryServiceInterface;
-use App\Services\UserServiceInterface;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\PlaceFeature;
+use App\Repositories\PlaceFeatureRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class PlaceFeaturesController extends AdminController
 {
-    private CountryServiceInterface $service;
+    private PlaceFeatureRepositoryInterface $service;
 
-    public function __construct(CountryServiceInterface $service)
+    public function __construct(PlaceFeatureRepositoryInterface $service)
     {
         parent::__construct();
 
@@ -24,13 +23,13 @@ class PlaceFeaturesController extends AdminController
     public function index()
     {
         $data = $this->service->actives();
-        return view('countries/index', ["data" => $data]);
+        return view('place-features/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
         $data = $this->service->find($id);
-        return view('countries/detail', ["data" => $data]);
+        return view('place-features/detail', ["data" => $data]);
     }
 
     public function save(Request $request, $id)
@@ -43,13 +42,12 @@ class PlaceFeaturesController extends AdminController
             $db = $this->service->find($id);
 
             if ($validator->fails() && $db == null) {
-                return view('countries/detail', ["data" => $request])->withErrors($validator);
+                return view('place-features/detail', ["data" => $request])->withErrors($validator);
             } else {
                 if ($db == null)
-                    $db = new Country();
+                    $db = new PlaceFeature();
 
                 $db->name = $request->get('name');
-                $db->iso_code = $request->get('iso_code');
                 $db->display_order = intval($request->get('display_order'));
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
@@ -61,13 +59,13 @@ class PlaceFeaturesController extends AdminController
             $this->logger->save($ex);
         }
 
-        return redirect("countries");
+        return redirect("place-features");
     }
 
     public function delete($id)
     {
         $this->service->deleteLogic($id);
 
-        return redirect("countries");
+        return redirect("place-features");
     }
 }

@@ -55,6 +55,8 @@ use App\Services\PlaceFeatureService;
 use App\Services\PlaceFeatureServiceInterface;
 use App\Services\PlaceMusicService;
 use App\Services\PlaceMusicServiceInterface;
+use App\Services\PlaceService;
+use App\Services\PlaceServiceInterface;
 use App\Services\PlaceTypeService;
 use App\Services\PlaceTypeServiceInterface;
 use App\Services\StateService;
@@ -104,6 +106,7 @@ class ApplicationServiceProvider extends ServiceProvider
 
         $this->app->bind(PlaceFeatureServiceInterface::class, PlaceFeatureService::class);
         $this->app->bind(PlaceMusicServiceInterface::class, PlaceMusicService::class);
+        $this->app->bind(PlaceServiceInterface::class, PlaceService::class);
         $this->app->bind(PlaceTypeServiceInterface::class, PlaceTypeService::class);
 
         /*$this->app->bind(LocationServiceInterface::class, LocationService::class);

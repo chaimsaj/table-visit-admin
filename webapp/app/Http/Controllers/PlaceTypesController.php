@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
+use App\Models\PlaceType;
 use App\Services\CountryServiceInterface;
+use App\Services\PlaceTypeServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class PlaceTypesController extends AdminController
 {
-    private CountryServiceInterface $service;
+    private PlaceTypeServiceInterface $service;
 
-    public function __construct(CountryServiceInterface $service)
+    public function __construct(PlaceTypeServiceInterface $service)
     {
         parent::__construct();
 
@@ -24,13 +27,13 @@ class PlaceTypesController extends AdminController
     public function index()
     {
         $data = $this->service->actives();
-        return view('countries/index', ["data" => $data]);
+        return view('place-types/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
         $data = $this->service->find($id);
-        return view('countries/detail', ["data" => $data]);
+        return view('place-types/detail', ["data" => $data]);
     }
 
     public function save(Request $request, $id)
@@ -43,13 +46,12 @@ class PlaceTypesController extends AdminController
             $db = $this->service->find($id);
 
             if ($validator->fails() && $db == null) {
-                return view('countries/detail', ["data" => $request])->withErrors($validator);
+                return view('place-types/detail', ["data" => $request])->withErrors($validator);
             } else {
                 if ($db == null)
-                    $db = new Country();
+                    $db = new PlaceType();
 
                 $db->name = $request->get('name');
-                $db->iso_code = $request->get('iso_code');
                 $db->display_order = intval($request->get('display_order'));
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
@@ -61,13 +63,13 @@ class PlaceTypesController extends AdminController
             $this->logger->save($ex);
         }
 
-        return redirect("countries");
+        return redirect("place-types");
     }
 
     public function delete($id)
     {
         $this->service->deleteLogic($id);
 
-        return redirect("countries");
+        return redirect("place-types");
     }
 }
