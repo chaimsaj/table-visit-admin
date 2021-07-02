@@ -8,7 +8,18 @@
         @slot('li_1') @lang('translation.TableServices') @endslot
         @slot('title') @lang('translation.Service') @endslot
     @endcomponent
-
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@lang('translation.Information')</h4>
+                    <div class="row">
+                        <div>Coming soon..</div>
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+    </div>
 @endsection
 @section('script')
     <!-- table-services -->

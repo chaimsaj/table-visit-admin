@@ -15,13 +15,7 @@
                 <div class="card-body">
                     <h4 class="card-title">@lang('translation.Information')</h4>
                     <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div>Coming soon..</div>
-                                </div>
-                            </div> <!-- end col -->
-                        </div>
+                        <div>Coming soon..</div>
                     </div>
                 </div>
             </div> <!-- end col -->

@@ -38,6 +38,10 @@ return [
     "Information" => "Information",
     "Image" => "Image",
 
+    "Data" => "Data",
+    "Details" => "Details",
+    "Images" => "Images",
+
     //Authentication
     "Authentication" => "Authentication",
     "Login" => "Login",

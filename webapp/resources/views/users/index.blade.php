@@ -24,7 +24,7 @@
                             <div class="text-sm-end">
                                 <a href="{{route("user.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
-                                        class="mdi mdi-plus me-1"></i> Add new
+                                        class="mdi mdi-plus me-1"></i> @lang('translation.AddNew')
                                 </a>
                             </div>
                         </div><!-- end col-->
@@ -47,7 +47,7 @@
                             @foreach ($data as $item)
                                 <tr class="text-center">
                                     <td>{{ $item->id }}</td>
-                                    <td><img class="rounded-circle header-profile-user"
+                                    <td><img class="rounded avatar-sm"
                                              src="{{ isset($item->avatar) ? asset($item->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                                              alt=""></td>
                                     <td>{{ $item->name }}</td>

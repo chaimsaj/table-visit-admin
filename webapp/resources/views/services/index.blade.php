@@ -20,12 +20,14 @@
                             <div class="text-sm-end">
                                 <a href="{{route("service.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
-                                        class="mdi mdi-plus me-1"></i> Add new
+                                        class="mdi mdi-plus me-1"></i>
+                                    @lang('translation.AddNew')
                                 </a>
                             </div>
                         </div><!-- end col-->
                     </div>
                     <hr/>
+                    <div>Coming soon..</div>
                 </div>
             </div>
         </div>
