@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Core\AppConstant;
+use App\Helpers\AppHelper;
+use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
@@ -13,6 +15,7 @@ use App\Services\PlaceServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\Console\Input\Input;
@@ -80,16 +83,15 @@ class PlacesController extends AdminController
                 $db->save();
 
                 if (request()->has('image_path')) {
+                    MediaHelper::deletePlacesImage($db->image_path);
+
                     $image_file = request()->file('image_path');
-                    $image_name = time() . '.' . $image_file->getClientOriginalExtension();
+                    $code = AppHelper::getCode($db->id);
+                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
-                    $image_path = 'places/' . $db->id;
+                    Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
 
-                    make_dir($image_path);
-
-                    Image::make($image_file)->save($image_path . '/' . $image_name);
-
-                    $db->name = $image_name;
+                    $db->image_path = $image_name;
 
                     $db->save();
 
@@ -102,11 +104,6 @@ class PlacesController extends AdminController
         }
 
         return redirect("places");
-    }
-
-    function make_dir($path): bool
-    {
-        return is_dir($path) || mkdir($path);
     }
 
     public function delete($id)

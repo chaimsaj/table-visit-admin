@@ -3,13 +3,51 @@
 
 namespace App\Helpers;
 
-use Intervention\Image\Image;
-use Intervention\Image\Filters\FilterInterface;
+use Illuminate\Support\Facades\File;
 
-class MediaHelper implements FilterInterface
+class MediaHelper
 {
-    public function applyFilter(Image $image): Image
+    static function getPlacesPath($image = null): string
     {
-        return $image->fit(120, 90)->encode('jpg', 20);
+        $image_path = public_path('images/places');
+
+        if (!File::exists($image_path)) {
+            File::makeDirectory($image_path);
+        }
+
+        return $image_path . '/' . $image;
+    }
+
+    static function deletePlacesImage($image): void
+    {
+        if (isset($image)) {
+            $image_path = MediaHelper::getPlacesPath() . '/' . $image;
+
+            if (File::exists($image_path)) {
+                File::delete($image_path);
+            }
+        }
+    }
+
+    static function getUsersPath($image = null): string
+    {
+        $image_path = public_path('images/users');
+
+        if (!File::exists($image_path)) {
+            File::makeDirectory($image_path);
+        }
+
+        return $image_path . '/' . $image;
+    }
+
+    static function deleteUsersImage($image): void
+    {
+        if (isset($image)) {
+            $image_path = MediaHelper::getUsersPath() . '/' . $image;
+
+            if (File::exists($image_path)) {
+                File::delete($image_path);
+            }
+        }
     }
 }
