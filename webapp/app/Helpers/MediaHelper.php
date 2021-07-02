@@ -3,7 +3,9 @@
 
 namespace App\Helpers;
 
+use App\Core\MediaSizeEnum;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\URL;
 
 class MediaHelper
 {
@@ -49,5 +51,13 @@ class MediaHelper
                 File::delete($image_path);
             }
         }
+    }
+
+    static function getImageUrl($image, $size = MediaSizeEnum::small): string
+    {
+        if (isset($image))
+            return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . $image);
+        else
+            return asset('/assets/images/users/avatar-1.jpg');
     }
 }

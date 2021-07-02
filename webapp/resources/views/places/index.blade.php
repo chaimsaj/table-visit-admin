@@ -45,7 +45,11 @@
                         @foreach ($data as $item)
                             <tr class="text-center">
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->image_path }}</td>
+                                <td>
+                                    <img class="rounded avatar-sm"
+                                         src="{{\App\Helpers\MediaHelper::getImageUrl($item->image_path)}}"
+                                         alt=""/>
+                                </td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->display_order }}</td>
                                 <td>{{ $item->city_name }}</td>

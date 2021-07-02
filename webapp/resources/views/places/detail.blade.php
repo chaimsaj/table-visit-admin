@@ -55,6 +55,12 @@
                                                   action="{{route("place.save", $data->id ?? 0)}}"
                                                   enctype="multipart/form-data">
                                                 @csrf
+                                                @if(isset($data))
+                                                    <img class="rounded avatar-md"
+                                                         src="{{\App\Helpers\MediaHelper::getImageUrl($data->image_path, \App\Core\MediaSizeEnum::medium)}}"
+                                                         alt=""/>
+                                                @endif
+                                                <hr/>
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
                                                     <input type="text" name="name"

@@ -31,8 +31,9 @@ return [
     */
 
     'paths' => [
-        public_path('upload'),
-        public_path('media'),
+        public_path('images/places'),
+        public_path('images/users'),
+        public_path('images/services'),
         // public_path('images')
     ],
 
@@ -69,5 +70,5 @@ return [
     */
 
     // 'lifetime' => 43200,
-    'lifetime' => 1,
+    'lifetime' => 0,
 ];

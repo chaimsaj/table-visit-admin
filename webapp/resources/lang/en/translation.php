@@ -39,6 +39,7 @@ return [
     "Image" => "Image",
     "MainImage" => "Main Image",
     "Upload" => "Upload",
+    "ProfilePicture" => "Profile Picture",
 
     "Data" => "Data",
     "Details" => "Details",

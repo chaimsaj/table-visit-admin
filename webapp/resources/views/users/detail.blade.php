@@ -20,18 +20,12 @@
                                   action="{{route("user.save", $data->id ?? 0)}}"
                                   enctype="multipart/form-data">
                                 @csrf
-                                <img class="rounded avatar-md"
-                                     src="{{ isset($data->avatar) ? asset($data->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
-                                     alt="">
-                                <hr />
-                                {{--<div class="mb-3">
-                                    <label for="avatar">Profile Picture</label>
-                                    <div class="input-group">
-                                        <input type="file" name="avatar" class="form-control">
-                                        <label class="input-group-text" for="avatar">Upload</label>
-                                    </div>
-
-                                </div>--}}
+                                @if(isset($data))
+                                    <img class="rounded avatar-md"
+                                         src="{{\App\Helpers\MediaHelper::getImageUrl($data->avatar, \App\Core\MediaSizeEnum::medium)}}"
+                                         alt=""/>
+                                @endif
+                                <hr/>
                                 <div class="mb-3">
                                     <label class="form-label">Name</label>
                                     <input type="text" name="name"
@@ -40,17 +34,28 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" name="last_name"
+                                           value="{{$data->last_name ?? ''}}"
+                                           class="form-control" value="" required placeholder="Last Name"/>
+                                </div>
+
+                                <div class="mb-3">
                                     <label class="form-label">Password</label>
                                     <div>
-                                        <input type="password" name="password"
-                                               id="password" class="form-control"
-                                               {{!isset($data->id) ? 'required' : ''}} placeholder="Password"/>
-                                    </div>
-                                    <div class="mt-2">
-                                        <input type="password"
-                                               class="form-control"
-                                               {{!isset($data->id) ? 'required' : ''}} data-parsley-equalto="#password"
-                                               placeholder="Re-Type Password"/>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="password" name="password"
+                                                       id="password" class="form-control"
+                                                       {{!isset($data->id) ? 'required' : ''}} placeholder="Password"/>
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="password"
+                                                       class="form-control"
+                                                       {{!isset($data->id) ? 'required' : ''}} data-parsley-equalto="#password"
+                                                       placeholder="Re-Type Password"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -64,17 +69,42 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-4">
+                                <div class="mb-3">
+                                    <label for="avatar">@lang('translation.ProfilePicture')</label>
+                                    <div class="input-group">
+                                        <input type="file" name="avatar" class="form-control">
+                                        <label class="input-group-text" for="avatar">@lang('translation.Upload')</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
                                     <label class="form-label">User Type</label>
                                     <div>
                                         <select class="form-select" name="user_type_id">
                                             <option value="0">@lang('translation.Select')</option>
                                             @foreach($user_types as $user_type)
-                                                <option value="{{ $user_type->key }}" {{ ($data && $data->user_type_id == $user_type->key) ? 'selected' : '' }}>
+                                                <option
+                                                    value="{{ $user_type->key }}" {{ ($data && $data->user_type_id == $user_type->key) ? 'selected' : '' }}>
                                                     {{ $user_type->value }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                       {{($data && $data->published == 1) ? 'checked' : ''}}
+                                                       id="published"
+                                                       name="published">
+                                                <label class="form-check-label" for="published">
+                                                    Published
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 

@@ -47,9 +47,14 @@
                             @foreach ($data as $item)
                                 <tr class="text-center">
                                     <td>{{ $item->id }}</td>
-                                    <td><img class="rounded avatar-sm"
+                                    {{--<td><img class="rounded avatar-sm"
                                              src="{{ isset($item->avatar) ? asset($item->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
-                                             alt=""></td>
+                                             alt=""></td>--}}
+                                    <td>
+                                        <img class="rounded avatar-sm"
+                                             src="{{\App\Helpers\MediaHelper::getImageUrl($item->avatar)}}"
+                                             alt=""/>
+                                    </td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>
@@ -71,8 +76,8 @@
             </div>
         </div> <!-- end col -->
 
-    @endsection
+        @endsection
 
-    @section('script')
+        @section('script')
             <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
 @endsection

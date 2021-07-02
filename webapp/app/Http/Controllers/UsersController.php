@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\AppModels\KeyValueModel;
 use App\Core\AuthModeEnum;
+use App\Core\MediaFileTypeEnum;
 use App\Core\UserTypeEnum;
+use App\Helpers\AppHelper;
+use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Services\LogServiceInterface;
 use App\Services\UserServiceInterface;
@@ -12,6 +15,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Throwable;
 
 class UsersController extends AdminController
 {
@@ -61,8 +66,6 @@ class UsersController extends AdminController
 
     public function save(Request $request, $id)
     {
-        $user = null;
-
         try {
 
             $validator = Validator::make($request->all(), [
@@ -75,57 +78,42 @@ class UsersController extends AdminController
                 //$validator->errors()->add('email', 'Something is wrong with this field!');
             });
 
-            $user = $this->service->find($id);
+            $db = $this->service->find($id);
 
-            if ($validator->fails() && $user == null) {
-                /*return redirect('post/create')
-                    ->withErrors($validator)
-                    ->withInput();*/
-                //return redirect()->back()->withErrors($validator)->withInput($request->all());
+            if ($validator->fails() && $db == null) {
                 return view('users/detail', ["data" => $request])->withErrors($validator);
             } else {
-                $avatarName = "";
+                if ($db == null)
+                    $db = new User();
 
-                if (request()->has('avatar')) {
-                    $avatar = request()->file('avatar');
-                    $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                    $avatarPath = public_path('/images/');
-                    $avatar->move($avatarPath, $avatarName);
-                }
-
-                /* if ($request->file('avatar')) {
-                     $avatar = $request->file('avatar');
-                     $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
-                     $avatarPath = public_path('/images/');
-                     $avatar->move($avatarPath, $avatarName);
-                     if (file_exists(public_path('/images/' . $avatarName))) {
-                         unlink(public_path('/images/' . $avatarName));
-                     }
-                 }*/
-
-                if ($user == null)
-                    $user = new User();
-
-                $user->name = $request->get('name');
-                $user->last_name = '';
-                $user->email = $request->get('email');
+                $db->name = $request->get('name');
+                $db->last_name = $request->get('last_name');
+                $db->email = $request->get('email');
 
                 if (!empty($request->get('password')))
-                    $user->password = Hash::make($request->get('password'));
+                    $db->password = Hash::make($request->get('password'));
 
-                $user->auth_mode = AuthModeEnum::Basic;
-                $user->user_type_id = UserTypeEnum::Admin;
+                $db->auth_mode = AuthModeEnum::Basic;
+                $db->user_type_id = UserTypeEnum::Admin;
+                $db->published = $request->get('published') == "on";
 
-                //$user->dob = date('Y-m-d', strtotime($request->get('dob')));
+                //$db->dob = date('Y-m-d', strtotime($request->get('dob')));
 
-                if (!empty($avatarName))
-                    $user->avatar = '/images/' . $avatarName;
-                else {
-                    if ($user->id == 0)
-                        $user->avatar = "";
+                $db->save();
+
+                if (request()->has('avatar')) {
+                    MediaHelper::deleteUsersImage($db->avatar);
+
+                    $image_file = request()->file('avatar');
+                    $code = AppHelper::getCode($db->id, MediaFileTypeEnum::Users);
+                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+
+                    Image::make($image_file)->save(MediaHelper::getUsersPath($image_name));
+
+                    $db->avatar = $image_name;
+
+                    $db->save();
                 }
-
-                $user->save();
             }
 
         } catch (Throwable $ex) {
