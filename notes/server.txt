@@ -12,6 +12,11 @@ d7LFhnPmbwuIln3l
 mariadb
 pBJRetR2EKPg
 
+mysql -h localhost -u root -p table-visit
+
+DROP DATABASE `table-visit`;
+CREATE DATABASE `table-visit`;
+
 /usr/share/nginx/html/topdevrank.com/storage/logs/laravel.log
 
 sudo chown -R nginx.nginx /usr/share/nginx/html/topdevrank.com/
