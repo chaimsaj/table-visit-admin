@@ -24,6 +24,7 @@ class CountryRepository extends BaseRepository implements CountryRepositoryInter
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
+            ->orderBy('name', 'asc')
             ->get();
     }
 

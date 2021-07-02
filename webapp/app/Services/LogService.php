@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Log;
 use App\Repositories\LogRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Throwable;
 
 class LogService implements LogServiceInterface
 {
@@ -45,5 +46,10 @@ class LogService implements LogServiceInterface
     public function deleteLogic($id): bool
     {
         return $this->repository->deleteLogic($id);
+    }
+
+    public function save(Throwable $ex): void
+    {
+        $this->repository->save($ex);
     }
 }

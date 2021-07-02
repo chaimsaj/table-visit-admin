@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\User;
+use App\Services\LogServiceInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends AdminController
 {
-    public function __construct()
+    public function __construct(LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
     }
 
     public function index(Request $request)

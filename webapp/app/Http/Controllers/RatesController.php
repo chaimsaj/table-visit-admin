@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
+use App\Services\LogServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,10 @@ class RatesController extends AdminController
 {
     private $userService;
 
-    public function __construct(UserServiceInterface $userService)
+    public function __construct(UserServiceInterface $userService,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->userService = $userService;
     }

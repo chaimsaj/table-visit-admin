@@ -8,6 +8,7 @@ use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Country;
 use App\Services\CountryServiceInterface;
+use App\Services\LogServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -21,9 +22,10 @@ class CountriesController extends AdminController
 {
     private CountryServiceInterface $service;
 
-    public function __construct(CountryServiceInterface $service)
+    public function __construct(CountryServiceInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
     }

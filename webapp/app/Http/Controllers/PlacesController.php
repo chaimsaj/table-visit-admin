@@ -2,37 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\AppConstant;
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
+use App\Services\CityServiceInterface;
+use App\Services\CountryServiceInterface;
+use App\Services\LogServiceInterface;
 use App\Services\PlaceServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
+use Symfony\Component\Console\Input\Input;
 use Throwable;
 
 class PlacesController extends AdminController
 {
     private PlaceServiceInterface $service;
+    private CityServiceInterface $cityService;
 
-    public function __construct(PlaceServiceInterface $service)
+    public function __construct(PlaceServiceInterface $service,
+                                CityServiceInterface $cityService,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
+        $this->cityService = $cityService;
     }
 
     public function index()
     {
         $data = $this->service->actives();
+
+        $data->each(function ($item, $key) {
+            $city = $this->cityService->find($item->city_id);
+            if ($city)
+                $item->city_name = $city->name;
+            else
+                $item->city_name = AppConstant::getDash();
+        });
+
         return view('places/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
         $data = $this->service->find($id);
-        return view('places/detail', ["data" => $data]);
+        $cities = $this->cityService->published();
+
+        return view('places/detail', ["data" => $data, "cities" => $cities]);
     }
 
     public function save(Request $request, $id)
@@ -52,10 +73,28 @@ class PlacesController extends AdminController
 
                 $db->name = $request->get('name');
                 $db->display_order = intval($request->get('display_order'));
+                $db->city_id = $request->get('city_id');
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
 
                 $db->save();
+
+                if (request()->has('image_path')) {
+                    $image_file = request()->file('image_path');
+                    $image_name = time() . '.' . $image_file->getClientOriginalExtension();
+
+                    $image_path = 'places/' . $db->id;
+
+                    make_dir($image_path);
+
+                    Image::make($image_file)->save($image_path . '/' . $image_name);
+
+                    $db->name = $image_name;
+
+                    $db->save();
+
+                    // Image::make(Input::file('image_path'))->resize(300, 200)->save('foo.jpg');
+                }
             }
 
         } catch (Throwable $ex) {
@@ -63,6 +102,11 @@ class PlacesController extends AdminController
         }
 
         return redirect("places");
+    }
+
+    function make_dir($path): bool
+    {
+        return is_dir($path) || mkdir($path);
     }
 
     public function delete($id)

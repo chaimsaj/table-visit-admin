@@ -24,6 +24,7 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
+            ->orderBy('name', 'asc')
             ->get();
     }
 

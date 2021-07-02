@@ -10,14 +10,11 @@ use Illuminate\Support\Collection;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-    protected LogRepositoryInterface $logger;
-
     protected Model $model;
 
     public function __construct(Model $model)
     {
         $this->model = $model;
-        //$this->logger = new LogRepository();
     }
 
     public function create(array $attributes): Model

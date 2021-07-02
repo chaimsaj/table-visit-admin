@@ -7,6 +7,7 @@ use App\Models\Country;
 use App\Models\Currency;
 use App\Models\Log;
 use Illuminate\Database\Eloquent\Collection;
+use Throwable;
 
 interface LogServiceInterface
 {
@@ -16,4 +17,5 @@ interface LogServiceInterface
     public function actives(): Collection;
     public function published(): Collection;
     public function deleteLogic($id): bool;
+    public function save(Throwable $ex): void;
 }

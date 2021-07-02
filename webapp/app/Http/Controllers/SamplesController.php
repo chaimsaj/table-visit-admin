@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
+use App\Services\LogServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -13,9 +14,10 @@ class SamplesController extends AdminController
 {
     private UserServiceInterface $service;
 
-    public function __construct(UserServiceInterface $service)
+    public function __construct(UserServiceInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
     }

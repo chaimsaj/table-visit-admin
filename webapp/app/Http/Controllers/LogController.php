@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Base\AdminController;
+use Illuminate\Routing\Controller as BaseController;
 use App\Services\LogServiceInterface;
 
-class LogController extends AdminController
+class LogController extends BaseController
 {
     private LogServiceInterface $service;
 
     public function __construct(LogServiceInterface $service)
     {
-        parent::__construct();
-
         $this->service = $service;
     }
 

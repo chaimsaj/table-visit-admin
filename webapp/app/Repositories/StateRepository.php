@@ -24,6 +24,7 @@ class StateRepository extends BaseRepository implements StateRepositoryInterface
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
+            ->orderBy('name', 'asc')
             ->get();
     }
 

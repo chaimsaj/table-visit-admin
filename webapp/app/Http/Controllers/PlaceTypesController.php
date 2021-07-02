@@ -6,6 +6,7 @@ use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\PlaceType;
 use App\Services\CountryServiceInterface;
+use App\Services\LogServiceInterface;
 use App\Services\PlaceTypeServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -17,9 +18,10 @@ class PlaceTypesController extends AdminController
 {
     private PlaceTypeServiceInterface $service;
 
-    public function __construct(PlaceTypeServiceInterface $service)
+    public function __construct(PlaceTypeServiceInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
     }

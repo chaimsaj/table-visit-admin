@@ -6,6 +6,7 @@ use App\Core\AppConstant;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\State;
 use App\Services\CountryServiceInterface;
+use App\Services\LogServiceInterface;
 use App\Services\StateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +17,11 @@ class StatesController extends AdminController
     private StateServiceInterface $service;
     private CountryServiceInterface $countryService;
 
-    public function __construct(StateServiceInterface $service, CountryServiceInterface $countryService)
+    public function __construct(StateServiceInterface $service,
+                                CountryServiceInterface $countryService,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
         $this->countryService = $countryService;

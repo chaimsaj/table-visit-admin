@@ -8,6 +8,7 @@ use App\Http\Controllers\Base\BasicController;
 use App\Models\City;
 use App\Services\CityServiceInterface;
 use App\Services\CountryServiceInterface;
+use App\Services\LogServiceInterface;
 use App\Services\StateServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -21,11 +22,12 @@ class CitiesController extends AdminController
     private CountryServiceInterface $countryService;
     private StateServiceInterface $stateService;
 
-    public function __construct(CityServiceInterface $service
-        , CountryServiceInterface $countryService
-        , StateServiceInterface $stateService)
+    public function __construct(CityServiceInterface $service,
+                                CountryServiceInterface $countryService,
+                                StateServiceInterface $stateService,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
         $this->countryService = $countryService;

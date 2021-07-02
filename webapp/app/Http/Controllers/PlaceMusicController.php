@@ -7,6 +7,7 @@ use App\Http\Controllers\Base\BasicController;
 use App\Models\PlaceMusic;
 use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Services\CountryServiceInterface;
+use App\Services\LogServiceInterface;
 use App\Services\UserServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -17,9 +18,10 @@ class PlaceMusicController extends AdminController
 {
     private PlaceMusicRepositoryInterface $service;
 
-    public function __construct(PlaceMusicRepositoryInterface $service)
+    public function __construct(PlaceMusicRepositoryInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
     }

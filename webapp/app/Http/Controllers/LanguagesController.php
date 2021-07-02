@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Language;
 use App\Services\LanguageServiceInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -13,9 +14,10 @@ class LanguagesController extends AdminController
 {
     private LanguageServiceInterface $service;
 
-    public function __construct(LanguageServiceInterface $service)
+    public function __construct(LanguageServiceInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
     }

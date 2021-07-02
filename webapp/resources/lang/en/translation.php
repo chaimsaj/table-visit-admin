@@ -37,6 +37,8 @@ return [
     "Delete" => "D",
     "Information" => "Information",
     "Image" => "Image",
+    "MainImage" => "Main Image",
+    "Upload" => "Upload",
 
     "Data" => "Data",
     "Details" => "Details",
@@ -98,6 +100,7 @@ return [
 
     "Music" => "Music",
     "PlaceMusic" => "Place Music",
+
 
     "Reservations" => "Reservations",
     "Booking" => "Booking",

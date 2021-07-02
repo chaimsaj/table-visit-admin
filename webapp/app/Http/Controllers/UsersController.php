@@ -6,6 +6,7 @@ use App\AppModels\KeyValueModel;
 use App\Core\AuthModeEnum;
 use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
+use App\Services\LogServiceInterface;
 use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -16,9 +17,11 @@ class UsersController extends AdminController
 {
     private UserServiceInterface $service;
 
-    public function __construct(UserServiceInterface $service)
+    public function __construct(UserServiceInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
+
         $this->service = $service;
     }
 

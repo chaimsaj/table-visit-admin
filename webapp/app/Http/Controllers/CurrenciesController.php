@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Currency;
 use App\Services\CurrencyServiceInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -13,9 +14,10 @@ class CurrenciesController extends AdminController
 {
     private CurrencyServiceInterface $service;
 
-    public function __construct(CurrencyServiceInterface $service)
+    public function __construct(CurrencyServiceInterface $service,
+                                LogServiceInterface $logger)
     {
-        parent::__construct();
+        parent::__construct($logger);
 
         $this->service = $service;
     }
