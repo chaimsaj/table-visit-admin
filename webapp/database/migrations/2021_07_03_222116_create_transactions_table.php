@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 255);
-            $table->integer('display_order');
+            $table->string('code', 50);
+            $table->string('transaction_detail', 750);
+            $table->integer('transaction_status');
+            $table->uuid('unique_id')->unique();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-            $table->integer('place_id');
-            $table->boolean('show')->default(true);
+            $table->timestamp('approved_at')->nullable();
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });
@@ -33,6 +34,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('transactions');
     }
 }
