@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class UserType extends Model
+class Service extends Model
 {
     use HasFactory;
 
@@ -14,5 +14,5 @@ class UserType extends Model
      *
      * @var string
      */
-    protected $table = 'user_types';
+    protected $table = 'service_types';
 }
