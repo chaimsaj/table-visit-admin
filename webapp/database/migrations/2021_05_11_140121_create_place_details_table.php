@@ -15,8 +15,11 @@ class CreatePlaceDetailsTable extends Migration
     {
         Schema::create('place_details', function (Blueprint $table) {
             $table->id();
+            $table->longText('detail');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->integer('place_id');
+            $table->integer('language_id');
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });

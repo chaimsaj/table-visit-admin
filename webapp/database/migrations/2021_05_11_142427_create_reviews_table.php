@@ -15,9 +15,13 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->string('review', 2500);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->boolean('show')->default(true);
+            $table->integer('user_id');
+            $table->integer('place_id');
+            $table->integer('rating_id');
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });

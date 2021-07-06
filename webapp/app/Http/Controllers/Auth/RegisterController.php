@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Core\AuthModeEnum;
+use App\Core\GenderEnum;
 use App\Core\MediaFileTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
@@ -81,6 +82,7 @@ class RegisterController extends BasicController
         $db->password = Hash::make($data['password']);
         $db->auth_mode = AuthModeEnum::Basic;
         $db->user_type_id = UserTypeEnum::Admin;
+        $db->gender = GenderEnum::Undefined;
 
         $db->save();
 

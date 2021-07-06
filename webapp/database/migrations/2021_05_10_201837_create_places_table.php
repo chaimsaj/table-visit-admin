@@ -24,6 +24,9 @@ class CreatePlacesTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('city_id');
+            $table->boolean('open')->default(true);
+            $table->boolean('accept_reservations')->default(true);
+            $table->timestamp('close_until')->nullable();
             $table->boolean('show')->default(true);
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);

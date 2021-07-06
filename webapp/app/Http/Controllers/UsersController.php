@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AppModels\KeyValueModel;
 use App\Core\AuthModeEnum;
+use App\Core\GenderEnum;
 use App\Core\MediaFileTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
@@ -95,6 +96,7 @@ class UsersController extends AdminController
 
                 $db->auth_mode = AuthModeEnum::Basic;
                 $db->user_type_id = UserTypeEnum::Admin;
+                $db->gender = GenderEnum::Undefined;
                 $db->published = $request->get('published') == "on";
 
                 //$db->dob = date('Y-m-d', strtotime($request->get('dob')));

@@ -15,7 +15,7 @@ class CreateCountryDetailsTable extends Migration
     {
         Schema::create('country_details', function (Blueprint $table) {
             $table->id();
-            $table->string('detail', 750);
+            $table->longText('detail');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('country_id');

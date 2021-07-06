@@ -21,6 +21,9 @@ class CreateBookingsTable extends Migration
             $table->timestamp('date');
             $table->string('comment', 750);
             $table->integer('booking_status');
+            $table->string('confirmation_code', 50);
+            $table->boolean('is_special')->default(true);
+            $table->string('special_comment', 750);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->timestamp('canceled_at')->nullable();
