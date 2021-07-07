@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\AppModels\KeyValueModel;
 use App\Core\AuthModeEnum;
 use App\Core\GenderEnum;
-use App\Core\MediaFileTypeEnum;
+use App\Core\MediaObjectTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
@@ -107,7 +107,7 @@ class UsersController extends AdminController
                     MediaHelper::deleteUsersImage($db->avatar);
 
                     $image_file = request()->file('avatar');
-                    $code = AppHelper::getCode($db->id, MediaFileTypeEnum::Users);
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
                     $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
                     Image::make($image_file)->save(MediaHelper::getUsersPath($image_name));

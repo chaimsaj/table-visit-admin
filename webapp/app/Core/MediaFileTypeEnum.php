@@ -6,7 +6,9 @@ namespace App\Core;
 
 class MediaFileTypeEnum extends BaseEnum
 {
-    const Users = 1;
-    const Places = 2;
-    const Services = 3;
+    const Undefined = 0;
+    const Main = 1;
+    const FoodMenu = 2;
+    const FloorPlan = 3;
+    const Gallery = 4;
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatesTable extends Migration
+class CreateContentPageDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CreateRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rates', function (Blueprint $table) {
+        Schema::create('content_page_details', function (Blueprint $table) {
             $table->id();
-            $table->decimal('rate', 8, 2);
+            $table->string('title', 255);
+            $table->string('introduction', 500);
+            $table->longText('detail');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-            $table->integer('service_id');
-            $table->integer('place_id');
-            $table->boolean('show')->default(true);
+            $table->integer('content_page_type')->nullable();
+            $table->integer('content_page_id');
+            $table->integer('language_id');
             $table->boolean('published')->default(true);
             $table->boolean('deleted')->default(false);
         });
@@ -33,6 +35,6 @@ class CreateRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rates');
+        Schema::dropIfExists('content_page_details');
     }
 }

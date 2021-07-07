@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\AppConstant;
-use App\Core\MediaFileTypeEnum;
+use App\Core\MediaObjectTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
@@ -87,7 +87,7 @@ class PlacesController extends AdminController
                     MediaHelper::deletePlacesImage($db->image_path);
 
                     $image_file = request()->file('image_path');
-                    $code = AppHelper::getCode($db->id, MediaFileTypeEnum::Places);
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
                     $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
                     Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
