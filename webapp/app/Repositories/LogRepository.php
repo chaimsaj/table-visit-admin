@@ -31,6 +31,8 @@ class LogRepository extends BaseRepository implements LogRepositoryInterface
 
     public function save(Throwable $ex): void
     {
+        Illuminate\Support\Facades\Log::error($ex->getMessage());
+
         try {
             $db = new Log();
 
@@ -51,6 +53,7 @@ class LogRepository extends BaseRepository implements LogRepositoryInterface
 
             $db->save();
         } catch (Throwable $e) {
+            Illuminate\Support\Facades\Log::error($e->getMessage());
         }
     }
 }
