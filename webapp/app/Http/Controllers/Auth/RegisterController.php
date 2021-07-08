@@ -83,6 +83,7 @@ class RegisterController extends BasicController
         $db->auth_mode = AuthModeEnum::Basic;
         $db->user_type_id = UserTypeEnum::Admin;
         $db->gender = GenderEnum::Undefined;
+        $db->email_verified_at = now();
 
         $db->save();
 

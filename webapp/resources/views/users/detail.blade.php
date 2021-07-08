@@ -16,12 +16,12 @@
                     <h4 class="card-title">Information</h4>
                     <div class="row">
                         <div class="col-xl-6">
-                            <form method="POST" class="form-horizontal custom-validation"
+                            <form autocomplete="off" method="POST" class="form-horizontal custom-validation"
                                   action="{{route("user.save", $data->id ?? 0)}}"
                                   enctype="multipart/form-data">
                                 @csrf
                                 @if(isset($data))
-                                    <img class="rounded avatar-md"
+                                    <img class="rounded avatar-md mt-2"
                                          src="{{\App\Helpers\MediaHelper::getImageUrl($data->avatar, \App\Core\MediaSizeEnum::medium)}}"
                                          alt=""/>
                                 @endif

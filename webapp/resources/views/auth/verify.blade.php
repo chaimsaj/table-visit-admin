@@ -49,7 +49,7 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                                            <form autocomplete="off" class="form-horizontal" method="POST" action="{{ route('login') }}">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="username">email</label>

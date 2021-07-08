@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <h4 class="card-title">@lang('translation.Information')</h4>
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-12 mt-2">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#data" role="tab">
@@ -51,12 +51,13 @@
                                 <div class="tab-pane active p-2" id="data" role="tabpanel">
                                     <div class="row">
                                         <div class="col-xl-6">
-                                            <form method="POST" class="form-horizontal custom-validation"
+                                            <form autocomplete="off" method="POST"
+                                                  class="form-horizontal custom-validation"
                                                   action="{{route("place.save", $data->id ?? 0)}}"
                                                   enctype="multipart/form-data">
                                                 @csrf
                                                 @if(isset($data))
-                                                    <img class="rounded avatar-md"
+                                                    <img class="rounded avatar-md mt-2"
                                                          src="{{\App\Helpers\MediaHelper::getImageUrl($data->image_path, \App\Core\MediaSizeEnum::medium)}}"
                                                          alt=""/>
                                                 @endif
@@ -69,7 +70,15 @@
                                                            placeholder="Name"/>
                                                 </div>
 
-                                                <div class="mb-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Address</label>
+                                                    <input type="text" name="address"
+                                                           value="{{$data->address ?? ''}}"
+                                                           class="form-control" value="" required
+                                                           placeholder="Address"/>
+                                                </div>
+
+                                                <div class="mb-3">
                                                     <label class="form-label">Display order</label>
                                                     <div>
                                                         <input name="display_order" type="display_order"
@@ -106,7 +115,7 @@
 
                                                 <div class="mb-4">
                                                     <div class="row">
-                                                        <div class="col-6">
+                                                        <div class="col-3">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                        {{($data && $data->published == 1) ? 'checked' : ''}}
@@ -117,7 +126,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6">
+                                                        <div class="col-3">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                        id="show"
@@ -125,6 +134,29 @@
                                                                        name="show">
                                                                 <label class="form-check-label" for="show">
                                                                     Show
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       id="accept_reservations"
+                                                                       {{($data && $data->accept_reservations == 1) ? 'checked' : ''}}
+                                                                       name="accept_reservations">
+                                                                <label class="form-check-label"
+                                                                       for="accept_reservations">
+                                                                    Reservations
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       id="open"
+                                                                       {{($data && $data->open == 1) ? 'checked' : ''}}
+                                                                       name="open">
+                                                                <label class="form-check-label" for="open">
+                                                                    Open
                                                                 </label>
                                                             </div>
                                                         </div>

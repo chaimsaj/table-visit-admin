@@ -54,11 +54,19 @@ class UsersController extends AdminController
         $admin->setKey(UserTypeEnum::Admin);
         $admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
 
+        $place_admin = new KeyValueModel();
+        $place_admin->setKey(UserTypeEnum::PlaceAdmin);
+        $place_admin->setValue(UserTypeEnum::toString(UserTypeEnum::PlaceAdmin));
+
+        $place_employee = new KeyValueModel();
+        $place_employee->setKey(UserTypeEnum::PlaceEmployee);
+        $place_employee->setValue(UserTypeEnum::toString(UserTypeEnum::PlaceEmployee));
+
         $guest = new KeyValueModel();
         $guest->setKey(UserTypeEnum::Guest);
         $guest->setValue(UserTypeEnum::toString(UserTypeEnum::Guest));
 
-        $user_types = collect([$admin, $guest]);
+        $user_types = collect([$admin, $place_admin, $place_employee, $guest]);
 
         $data = $this->service->find($id);
 
@@ -95,9 +103,12 @@ class UsersController extends AdminController
                     $db->password = Hash::make($request->get('password'));
 
                 $db->auth_mode = AuthModeEnum::Basic;
-                $db->user_type_id = UserTypeEnum::Admin;
+                $db->user_type_id = intval($request->get('user_type_id'));
                 $db->gender = GenderEnum::Undefined;
                 $db->published = $request->get('published') == "on";
+
+                if ($db->email_verified_at == null)
+                    $db->email_verified_at = now();
 
                 //$db->dob = date('Y-m-d', strtotime($request->get('dob')));
 

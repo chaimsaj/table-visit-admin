@@ -51,7 +51,7 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form class="form-horizontal" action="{{ route('login') }}">
+                                            <form autocomplete="off" class="form-horizontal" action="{{ route('login') }}">
 
                                                 {{--<div class="user-thumb text-center mb-4">
                                                     <img src="assets/images/users/avatar-1.jpg"

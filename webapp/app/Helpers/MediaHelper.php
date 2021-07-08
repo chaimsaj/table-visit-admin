@@ -58,6 +58,8 @@ class MediaHelper
         if (isset($image))
             return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . $image);
         else
-            return asset('/assets/images/users/avatar-1.jpg');
+            return URL::to('media/' . MediaSizeEnum::toString(MediaSizeEnum::custom) . '/no-image-available.png');
+
+        // MediaHelper::getImageUrl(asset('/assets/images/default-image.jpeg'));
     }
 }

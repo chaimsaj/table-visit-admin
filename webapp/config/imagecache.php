@@ -34,6 +34,7 @@ return [
         public_path('images/places'),
         public_path('images/users'),
         public_path('images/services'),
+        public_path('images/shared'),
         // public_path('images')
     ],
 

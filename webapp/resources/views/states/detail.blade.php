@@ -15,7 +15,7 @@
                     <h4 class="card-title">@lang('translation.Information')</h4>
                     <div class="row">
                         <div class="col-xl-6">
-                            <form method="POST" class="form-horizontal custom-validation"
+                            <form autocomplete="off" method="POST" class="form-horizontal custom-validation"
                                   action="{{route("state.save", $data->id ?? 0)}}"
                                   enctype="multipart/form-data">
                                 @csrf

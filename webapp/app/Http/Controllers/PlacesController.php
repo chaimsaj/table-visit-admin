@@ -65,6 +65,7 @@ class PlacesController extends AdminController
         try {
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
             ]);
 
             $db = $this->service->find($id);
@@ -76,10 +77,13 @@ class PlacesController extends AdminController
                     $db = new Place();
 
                 $db->name = $request->get('name');
+                $db->address = $request->get('address');
                 $db->display_order = intval($request->get('display_order'));
                 $db->city_id = $request->get('city_id');
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
+                $db->accept_reservations = $request->get('accept_reservations') == "on";
+                $db->open = $request->get('open') == "on";
 
                 $db->save();
 

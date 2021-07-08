@@ -49,7 +49,7 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form method="POST" class="form-horizontal custom-validation" action="{{ route('register') }}" enctype="multipart/form-data">
+                                            <form autocomplete="off" method="POST" class="form-horizontal custom-validation" action="{{ route('register') }}" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="useremail" class="form-label">Email</label>
