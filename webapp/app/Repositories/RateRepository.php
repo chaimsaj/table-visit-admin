@@ -4,13 +4,13 @@
 namespace App\Repositories;
 
 use App\Models\City;
-use App\Models\Rate;
+use App\Models\ServiceRate;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
 
 class RateRepository extends BaseRepository implements RateRepositoryInterface
 {
-    public function __construct(Rate $model)
+    public function __construct(ServiceRate $model)
     {
         parent::__construct($model);
     }

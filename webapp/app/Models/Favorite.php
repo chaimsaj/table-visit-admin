@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class State extends Model
+class Favorite extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'states';
+    protected $table = 'favorites';
 }
