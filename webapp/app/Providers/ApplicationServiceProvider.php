@@ -75,6 +75,8 @@ use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\UserToPlaceRepository;
 use App\Repositories\UserToPlaceRepositoryInterface;
+use App\Services\BookingService;
+use App\Services\BookingServiceInterface;
 use App\Services\CityService;
 use App\Services\CityServiceInterface;
 use App\Services\CountryService;
@@ -97,6 +99,8 @@ use App\Services\StateService;
 use App\Services\StateServiceInterface;
 use App\Services\UserService;
 use App\Services\UserServiceInterface;
+use App\Services\UserToPlaceService;
+use App\Services\UserToPlaceServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class ApplicationServiceProvider extends ServiceProvider
@@ -148,28 +152,19 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(UserToPlaceRepositoryInterface::class, UserToPlaceRepository::class);
 
         //Services
-        //$this->app->bind(BookingServiceInterface::class, BookingService::class);
+        $this->app->bind(BookingServiceInterface::class, BookingService::class);
         $this->app->bind(CityServiceInterface::class, CityService::class);
         $this->app->bind(CountryServiceInterface::class, CountryService::class);
         $this->app->bind(CurrencyServiceInterface::class, CurrencyService::class);
         $this->app->bind(LanguageServiceInterface::class, LanguageService::class);
-
         $this->app->bind(LogServiceInterface::class, LogService::class);
-
         $this->app->bind(PlaceFeatureServiceInterface::class, PlaceFeatureService::class);
         $this->app->bind(PlaceMusicServiceInterface::class, PlaceMusicService::class);
         $this->app->bind(PlaceServiceInterface::class, PlaceService::class);
         $this->app->bind(PlaceTypeServiceInterface::class, PlaceTypeService::class);
-
-        /*$this->app->bind(LocationServiceInterface::class, LocationService::class);
-        $this->app->bind(MediaFileServiceInterface::class, MediaFileService::class);
-        $this->app->bind(PaymentServiceInterface::class, PaymentService::class);
-        $this->app->bind(PlaceDetailServiceInterface::class, PlaceDetailService::class);
-        $this->app->bind(PlaceServiceInterface::class, PlaceService::class);
-        $this->app->bind(RateServiceInterface::class, RateService::class);
-        $this->app->bind(ServiceServiceInterface::class, ServiceService::class);*/
         $this->app->bind(StateServiceInterface::class, StateService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
+        $this->app->bind(UserToPlaceServiceInterface::class, UserToPlaceService::class);
     }
 
     /**
