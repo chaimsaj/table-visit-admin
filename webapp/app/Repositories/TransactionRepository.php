@@ -4,13 +4,17 @@
 namespace App\Repositories;
 
 use App\Models\City;
+use App\Models\Favorite;
 use App\Models\ServiceRate;
+use App\Models\Service;
+use App\Models\ServiceType;
+use App\Models\Transaction;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
 
-class RateRepository extends BaseRepository implements RateRepositoryInterface
+class TransactionRepository extends BaseRepository implements TransactionRepositoryInterface
 {
-    public function __construct(ServiceRate $model)
+    public function __construct(Transaction $model)
     {
         parent::__construct($model);
     }

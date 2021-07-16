@@ -12,7 +12,7 @@ use Yajra\DataTables\DataTables;
 
 class UsersController extends ApiController
 {
-    private $service;
+    private UserServiceInterface $service;
 
     public function __construct(UserServiceInterface $service)
     {
