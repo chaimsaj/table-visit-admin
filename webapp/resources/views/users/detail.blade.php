@@ -156,9 +156,8 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane p-2" id="places" role="tabpanel">
-                                    <p class="mb-0">
-                                        Coming soon..
-                                    </p>
+                                    @component('components.user-places')
+                                    @endcomponent
                                 </div>
                             </div>
                         </div>

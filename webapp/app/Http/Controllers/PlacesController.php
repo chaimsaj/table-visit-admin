@@ -9,6 +9,8 @@ use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
+use App\Repositories\CityRepositoryInterface;
+use App\Repositories\PlaceRepositoryInterface;
 use App\Services\CityServiceInterface;
 use App\Services\CountryServiceInterface;
 use App\Services\LogServiceInterface;
@@ -24,8 +26,8 @@ use Throwable;
 
 class PlacesController extends AdminController
 {
-    private PlaceServiceInterface $service;
-    private CityServiceInterface $cityService;
+    private PlaceRepositoryInterface $repository;
+    private CityRepositoryInterface $cityRepository;
 
     public function __construct(PlaceServiceInterface $service,
                                 CityServiceInterface $cityService,
@@ -33,13 +35,13 @@ class PlacesController extends AdminController
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
         $this->cityService = $cityService;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
 
         $data->each(function ($item, $key) {
             $city = $this->cityService->find($item->city_id);
@@ -54,7 +56,7 @@ class PlacesController extends AdminController
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         $cities = $this->cityService->published();
 
         return view('places/detail', ["data" => $data, "cities" => $cities]);
@@ -68,7 +70,7 @@ class PlacesController extends AdminController
                 'address' => ['required', 'string', 'max:255'],
             ]);
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('places/detail', ["data" => $request])->withErrors($validator);
@@ -113,7 +115,7 @@ class PlacesController extends AdminController
 
     public function delete($id)
     {
-        $this->service->deleteLogic($id);
+        $this->repository->deleteLogic($id);
 
         return redirect("places");
     }

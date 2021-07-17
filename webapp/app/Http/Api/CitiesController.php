@@ -16,14 +16,14 @@ class CitiesController extends ApiController
 
     public function __construct(CityServiceInterface $service)
     {
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function list(): JsonResponse
     {
         $response = new ApiModel();
 
-        $response->setData($this->service->actives());
+        $response->setData($this->repository->actives());
         $response->setCode(ApiCodeEnum::Ok);
 
         return response()->json($response);
@@ -31,6 +31,6 @@ class CitiesController extends ApiController
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->service->find($id));
+        return response()->json($this->repository->find($id));
     }
 }

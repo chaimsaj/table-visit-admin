@@ -2,43 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\AuthModeEnum;
-use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
 use App\Models\Country;
-use App\Services\CountryServiceInterface;
+use App\Repositories\CountryRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\UserServiceInterface;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class CountriesController extends AdminController
 {
-    private CountryServiceInterface $service;
+    private CountryRepositoryInterface $repository;
 
-    public function __construct(CountryServiceInterface $service,
+    public function __construct(CountryRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
         return view('countries/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         return view('countries/detail', ["data" => $data]);
     }
 
@@ -49,7 +41,7 @@ class CountriesController extends AdminController
                 'name' => ['required', 'string', 'max:255'],
             ]);
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('countries/detail', ["data" => $request])->withErrors($validator);
@@ -63,7 +55,9 @@ class CountriesController extends AdminController
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
 
-                $db->save();
+                $this->repository->save($db);
+
+                //$db->save();
             }
 
         } catch (Throwable $ex) {
@@ -75,7 +69,7 @@ class CountriesController extends AdminController
 
     public function delete($id)
     {
-        $this->service->deleteLogic($id);
+        $this->repository->deleteLogic($id);
 
         return redirect("countries");
     }

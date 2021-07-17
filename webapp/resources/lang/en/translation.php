@@ -59,6 +59,7 @@ return [
     "TableVisit" => "TABLE VISIT",
 
     "AddNew" => "Add New",
+    "Add" => "Add",
 
     //Users
     "Users" => "Users",

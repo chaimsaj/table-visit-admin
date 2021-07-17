@@ -7,6 +7,7 @@ use App\Repositories\LogRepository;
 use App\Repositories\LogRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class BaseRepository implements BaseRepositoryInterface
 {
@@ -32,18 +33,36 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->all();
     }
 
-    /*public function logicDelete($id): bool
-    {
-        return $this->find($id)->delete();
-    }*/
-
     public function restore($id): bool
     {
         return $this->findOnlyTrashedById($id)->restore();
     }
 
+    public function save(Model $model): bool
+    {
+        return $model->save();
+    }
+
     public function delete($id): bool
     {
         return $this->find($id)->forceDelete();
+    }
+
+    public function deleteLogic($id): bool
+    {
+        try {
+            $for_delete = $this->model->find($id);
+
+            if (isset($for_delete)) {
+                $for_delete->published = 0;
+                $for_delete->show = 0;
+                $for_delete->deleted = 1;
+
+                $this->save($for_delete);
+                return true;
+            }
+        } catch (Throwable $ex) {
+            return false;
+        }
     }
 }

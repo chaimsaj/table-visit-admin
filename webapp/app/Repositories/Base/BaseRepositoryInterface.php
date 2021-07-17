@@ -14,10 +14,11 @@ interface BaseRepositoryInterface
 
     public function all(): Collection;
 
-    //public function logicDelete($id): bool;
-
     public function restore($id): bool;
+
+    public function save(Model $model): bool;
 
     public function delete($id): bool;
 
+    public function deleteLogic($id): bool;
 }

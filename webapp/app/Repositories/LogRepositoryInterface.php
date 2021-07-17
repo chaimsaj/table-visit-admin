@@ -11,5 +11,4 @@ interface LogRepositoryInterface extends BaseRepositoryInterface
 {
     public function actives(): Collection;
     public function published(): Collection;
-    public function save(Throwable $ex): void;
 }

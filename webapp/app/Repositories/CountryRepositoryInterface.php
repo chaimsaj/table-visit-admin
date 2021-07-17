@@ -10,5 +10,4 @@ interface CountryRepositoryInterface extends BaseRepositoryInterface
 {
     public function actives(): Collection;
     public function published(): Collection;
-    public function deleteLogic($id): bool;
 }

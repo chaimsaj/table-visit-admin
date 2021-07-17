@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Currency;
+use App\Repositories\CurrencyRepositoryInterface;
 use App\Services\CurrencyServiceInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
@@ -12,25 +13,25 @@ use Throwable;
 
 class CurrenciesController extends AdminController
 {
-    private CurrencyServiceInterface $service;
+    private CurrencyRepositoryInterface $repository;
 
-    public function __construct(CurrencyServiceInterface $service,
+    public function __construct(CurrencyRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
         return view('currencies/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         return view('currencies/detail', ["data" => $data]);
     }
 
@@ -41,7 +42,7 @@ class CurrenciesController extends AdminController
                 'name' => ['required', 'string', 'max:255'],
             ]);
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('currencies/detail', ["data" => $request])->withErrors($validator);
@@ -67,7 +68,7 @@ class CurrenciesController extends AdminController
 
     public function delete($id)
     {
-        $this->service->deleteLogic($id);
+        $this->repository->deleteLogic($id);
 
         return redirect("currencies");
     }

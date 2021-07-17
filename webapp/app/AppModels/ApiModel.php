@@ -73,6 +73,4 @@ class ApiModel
     {
         $this->message = $message;
     }
-
-
 }

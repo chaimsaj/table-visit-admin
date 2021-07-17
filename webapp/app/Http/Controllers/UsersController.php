@@ -28,12 +28,12 @@ class UsersController extends AdminController
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $data = $this->service->all();
+        $data = $this->repository->all();
 
         $admin = new KeyValueModel();
         $admin->setKey(UserTypeEnum::Admin);
@@ -68,7 +68,7 @@ class UsersController extends AdminController
 
         $user_types = collect([$admin, $place_admin, $place_employee, $guest]);
 
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
 
         return view('users/detail', ["data" => $data, "user_types" => $user_types]);
     }
@@ -87,7 +87,7 @@ class UsersController extends AdminController
                 //$validator->errors()->add('email', 'Something is wrong with this field!');
             });
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('users/detail', ["data" => $request])->withErrors($validator);
@@ -138,7 +138,7 @@ class UsersController extends AdminController
 
     public function delete($id)
     {
-        $this->service->delete($id);
+        $this->repository->delete($id);
 
         return redirect("users");
     }

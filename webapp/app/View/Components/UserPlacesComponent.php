@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class breadcrumb extends Component
+class UserPlacesComponent extends Component
 {
     public function __construct()
     {
@@ -13,6 +13,6 @@ class breadcrumb extends Component
 
     public function render()
     {
-        return view('components.breadcrumb');
+        return view('user.places');
     }
 }
