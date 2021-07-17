@@ -112,7 +112,7 @@ class UsersController extends AdminController
 
                 //$db->dob = date('Y-m-d', strtotime($request->get('dob')));
 
-                $db->save();
+                $this->repository->save($db);
 
                 if (request()->has('avatar')) {
                     MediaHelper::deleteUsersImage($db->avatar);
@@ -125,7 +125,7 @@ class UsersController extends AdminController
 
                     $db->avatar = $image_name;
 
-                    $db->save();
+                    $this->repository->save($db);
                 }
             }
 

@@ -54,7 +54,7 @@ class PlaceTypesController extends AdminController
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
 
-                $db->save();
+                $this->repository->save($db);
             }
 
         } catch (Throwable $ex) {

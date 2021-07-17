@@ -42,7 +42,7 @@ class UserToPlacesController extends AdminController
                 $db->place_id = $request->get('place_id');
                 $db->published = $request->get('published') == "on";
 
-                $db->save();
+                $this->repository->save($db);
             }
 
         } catch (Throwable $ex) {

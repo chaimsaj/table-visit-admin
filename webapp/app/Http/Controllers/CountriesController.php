@@ -57,8 +57,6 @@ class CountriesController extends AdminController
                 $db->show = $request->get('show') == "on";
 
                 $this->repository->save($db);
-
-                //$db->save();
             }
 
         } catch (Throwable $ex) {

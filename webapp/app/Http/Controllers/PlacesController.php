@@ -81,7 +81,7 @@ class PlacesController extends AdminController
                 $db->accept_reservations = $request->get('accept_reservations') == "on";
                 $db->open = $request->get('open') == "on";
 
-                $db->save();
+                $this->repository->save($db);
 
                 if (request()->has('image_path')) {
                     MediaHelper::deletePlacesImage($db->image_path);
@@ -94,7 +94,7 @@ class PlacesController extends AdminController
 
                     $db->image_path = $image_name;
 
-                    $db->save();
+                    $this->repository->save($db);
 
                     // Image::make(Input::file('image_path'))->resize(300, 200)->save('foo.jpg');
                 }
