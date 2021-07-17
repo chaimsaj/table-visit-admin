@@ -17,7 +17,7 @@ class PaymentsController extends AdminController
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()

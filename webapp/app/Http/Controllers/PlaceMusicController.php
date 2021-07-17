@@ -23,18 +23,18 @@ class PlaceMusicController extends AdminController
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
         return view('place-music/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         return view('place-music/detail', ["data" => $data]);
     }
 
@@ -45,7 +45,7 @@ class PlaceMusicController extends AdminController
                 'name' => ['required', 'string', 'max:255'],
             ]);
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('place-music/detail', ["data" => $request])->withErrors($validator);
@@ -70,7 +70,7 @@ class PlaceMusicController extends AdminController
 
     public function delete($id)
     {
-        $this->service->deleteLogic($id);
+        $this->repository->deleteLogic($id);
 
         return redirect("place-music-list");
     }

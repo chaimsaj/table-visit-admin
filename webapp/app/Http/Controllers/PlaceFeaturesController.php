@@ -19,18 +19,18 @@ class PlaceFeaturesController extends AdminController
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
         return view('place-features/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         return view('place-features/detail', ["data" => $data]);
     }
 
@@ -41,7 +41,7 @@ class PlaceFeaturesController extends AdminController
                 'name' => ['required', 'string', 'max:255'],
             ]);
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('place-features/detail', ["data" => $request])->withErrors($validator);
@@ -66,7 +66,7 @@ class PlaceFeaturesController extends AdminController
 
     public function delete($id)
     {
-        $this->service->deleteLogic($id);
+        $this->repository->deleteLogic($id);
 
         return redirect("place-features");
     }

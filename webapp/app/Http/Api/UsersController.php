@@ -16,15 +16,15 @@ class UsersController extends ApiController
 
     public function __construct(UserServiceInterface $service)
     {
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function list(): JsonResponse
     {
         try {
-            //return Datatables::of($this->service->all())->make(true);
+            //return Datatables::of($this->repository->all())->make(true);
 
-            $query = $this->service->all();
+            $query = $this->repository->all();
 
             return Datatables::of($query)->setTransformer(function ($data) {
                 return [

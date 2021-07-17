@@ -23,13 +23,13 @@ class StatesController extends AdminController
     {
         parent::__construct($logger);
 
-        $this->service = $service;
+        $this->repository = $repository;
         $this->countryService = $countryService;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
 
         $data->each(function ($item, $key) {
             $country = $this->countryService->find($item->country_id);
@@ -44,7 +44,7 @@ class StatesController extends AdminController
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         $countries = $this->countryService->published();
         return view('states/detail', ["data" => $data, "countries" => $countries]);
     }
@@ -57,7 +57,7 @@ class StatesController extends AdminController
                 'display_order' => ['required', 'int'],
             ]);
 
-            $db = $this->service->find($id);
+            $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('states/detail', ["data" => $request])->withErrors($validator);
@@ -84,7 +84,7 @@ class StatesController extends AdminController
 
     public function delete($id)
     {
-        $this->service->deleteLogic($id);
+        $this->repository->deleteLogic($id);
         return redirect("states");
     }
 }

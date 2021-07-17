@@ -11,24 +11,24 @@ class LogController extends BaseController
 
     public function __construct(LogServiceInterface $service)
     {
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function index()
     {
-        $data = $this->service->actives();
+        $data = $this->repository->actives();
         return view('logs/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->service->find($id);
+        $data = $this->repository->find($id);
         return view('logs/detail', ["data" => $data]);
     }
 
     public function delete($id)
     {
-        $this->service->delete($id);
+        $this->repository->delete($id);
 
         return redirect("logs");
     }

@@ -14,16 +14,16 @@ class PlaceTypesController extends ApiController
 
     public function __construct(StateServiceInterface $service)
     {
-        $this->service = $service;
+        $this->repository = $repository;
     }
 
     public function list(): JsonResponse
     {
-        return response()->json($this->service->all());
+        return response()->json($this->repository->all());
     }
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->service->find($id));
+        return response()->json($this->repository->find($id));
     }
 }
