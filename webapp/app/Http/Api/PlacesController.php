@@ -4,15 +4,14 @@
 namespace App\Http\Api;
 
 use App\Http\Api\Base\ApiController;
-use App\Services\CountryServiceInterface;
-use App\Services\StateServiceInterface;
+use App\Repositories\StateRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 class PlacesController extends ApiController
 {
-    private StateServiceInterface $service;
+    private StateRepositoryInterface $repository;
 
-    public function __construct(StateServiceInterface $service)
+    public function __construct(StateRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

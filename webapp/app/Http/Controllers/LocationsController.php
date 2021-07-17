@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
+use App\Repositories\LocationRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
 class LocationsController extends AdminController
 {
-    private UserServiceInterface $userService;
+    private LocationRepositoryInterface $repository;
 
-    public function __construct(UserServiceInterface $userService,
+    public function __construct(LocationRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->userService = $userService;
+        $this->repository = $repository;
     }
 
     public function index()

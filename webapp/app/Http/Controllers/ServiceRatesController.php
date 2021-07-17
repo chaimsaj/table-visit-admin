@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
+use App\Repositories\ServiceRateRepository;
 use App\Services\LogServiceInterface;
-use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
-class RatesController extends AdminController
+class ServiceRatesController extends AdminController
 {
-    private $userService;
+    private ServiceRateRepository $repository;
 
-    public function __construct(UserServiceInterface $userService,
+    public function __construct(ServiceRateRepository $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->userService = $userService;
+        $this->repository = $repository;
     }
 
     public function index()

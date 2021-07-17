@@ -11,14 +11,8 @@ use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
-use App\Services\CityServiceInterface;
-use App\Services\CountryServiceInterface;
 use App\Services\LogServiceInterface;
-use App\Services\PlaceServiceInterface;
-use App\Services\UserServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\Console\Input\Input;
@@ -29,14 +23,14 @@ class PlacesController extends AdminController
     private PlaceRepositoryInterface $repository;
     private CityRepositoryInterface $cityRepository;
 
-    public function __construct(PlaceServiceInterface $service,
-                                CityServiceInterface $cityService,
+    public function __construct(PlaceRepositoryInterface $repository,
+                                CityRepositoryInterface $cityRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
         $this->repository = $repository;
-        $this->cityService = $cityService;
+        $this->cityRepository = $cityRepository;
     }
 
     public function index()
@@ -44,7 +38,7 @@ class PlacesController extends AdminController
         $data = $this->repository->actives();
 
         $data->each(function ($item, $key) {
-            $city = $this->cityService->find($item->city_id);
+            $city = $this->cityRepository->find($item->city_id);
             if ($city)
                 $item->city_name = $city->name;
             else
@@ -57,7 +51,7 @@ class PlacesController extends AdminController
     public function detail($id)
     {
         $data = $this->repository->find($id);
-        $cities = $this->cityService->published();
+        $cities = $this->cityRepository->published();
 
         return view('places/detail', ["data" => $data, "cities" => $cities]);
     }

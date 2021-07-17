@@ -7,9 +7,9 @@ use App\Services\LogServiceInterface;
 
 class LogController extends BaseController
 {
-    private LogServiceInterface $service;
+    private LogServiceInterface $repository;
 
-    public function __construct(LogServiceInterface $service)
+    public function __construct(LogServiceInterface $repository)
     {
         $this->repository = $repository;
     }

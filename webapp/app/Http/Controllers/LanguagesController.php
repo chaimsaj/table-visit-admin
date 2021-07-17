@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Language;
-use App\Services\LanguageServiceInterface;
+use App\Repositories\LanguageRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,9 +12,9 @@ use Throwable;
 
 class LanguagesController extends AdminController
 {
-    private LanguageServiceInterface $service;
+    private LanguageRepositoryInterface $repository;
 
-    public function __construct(LanguageServiceInterface $service,
+    public function __construct(LanguageRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
@@ -55,7 +55,7 @@ class LanguagesController extends AdminController
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
 
-                $db->save();
+                $this->repository->save($db);
             }
 
         } catch (Throwable $ex) {

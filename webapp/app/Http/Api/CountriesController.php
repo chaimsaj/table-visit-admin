@@ -4,19 +4,16 @@
 namespace App\Http\Api;
 
 use App\Http\Api\Base\ApiController;
-use App\Services\CityServiceInterface;
-use App\Services\CountryServiceInterface;
+use App\Repositories\CountryRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Throwable;
-use Yajra\DataTables\DataTables;
 
 class CountriesController extends ApiController
 {
-    private CountryServiceInterface $service;
+    private CountryRepositoryInterface $repository;
 
-    public function __construct(CountryServiceInterface $countryService)
+    public function __construct(CountryRepositoryInterface $repository)
     {
-        $this->repository = $countryService;
+        $this->repository = $repository;
     }
 
     public function list(): JsonResponse

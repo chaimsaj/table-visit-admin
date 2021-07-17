@@ -3,22 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
 use App\Models\PlaceType;
-use App\Services\CountryServiceInterface;
+use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\PlaceTypeServiceInterface;
-use App\Services\UserServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class PlaceTypesController extends AdminController
 {
-    private PlaceTypeServiceInterface $service;
+    private PlaceTypeRepositoryInterface $repository;
 
-    public function __construct(PlaceTypeServiceInterface $service,
+    public function __construct(PlaceTypeRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);

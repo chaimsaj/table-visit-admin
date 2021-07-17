@@ -3,8 +3,9 @@
 
 namespace App\Services;
 
-use App\Models\Log;
 use App\Repositories\LogRepositoryInterface;
+use Illuminate\Support\Facades\Log;
+use App\Models;
 use Throwable;
 
 class LogService implements LogServiceInterface
@@ -18,10 +19,10 @@ class LogService implements LogServiceInterface
 
     public function save(Throwable $ex): void
     {
-        Illuminate\Support\Facades\Log::error($ex->getMessage());
+        Log::error($ex->getMessage());
 
         try {
-            $db = new Log();
+            $db = new Models\Log();
 
             $message = $ex->getMessage();
 
@@ -40,7 +41,7 @@ class LogService implements LogServiceInterface
 
             $this->repository->save($db);
         } catch (Throwable $e) {
-            Illuminate\Support\Facades\Log::error($e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }

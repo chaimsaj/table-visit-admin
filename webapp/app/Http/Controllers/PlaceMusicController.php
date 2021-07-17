@@ -3,22 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
 use App\Models\PlaceMusic;
 use App\Repositories\PlaceMusicRepositoryInterface;
-use App\Services\CountryServiceInterface;
 use App\Services\LogServiceInterface;
-use App\Services\UserServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class PlaceMusicController extends AdminController
 {
-    private PlaceMusicRepositoryInterface $service;
+    private PlaceMusicRepositoryInterface $repository;
 
-    public function __construct(PlaceMusicRepositoryInterface $service,
+    public function __construct(PlaceMusicRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);

@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\ApiCodeEnum;
-use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
-use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
 class UserTypesController extends AdminController

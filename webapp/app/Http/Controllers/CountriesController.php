@@ -39,6 +39,7 @@ class CountriesController extends AdminController
         try {
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
+                'iso_code' => ['required', 'string', 'max:2'],
             ]);
 
             $db = $this->repository->find($id);

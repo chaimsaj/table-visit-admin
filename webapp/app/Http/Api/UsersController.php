@@ -4,17 +4,16 @@
 namespace App\Http\Api;
 
 use App\Http\Api\Base\ApiController;
-use App\Services\CountryServiceInterface;
-use App\Services\UserServiceInterface;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 use Yajra\DataTables\DataTables;
 
 class UsersController extends ApiController
 {
-    private UserServiceInterface $service;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserServiceInterface $service)
+    public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }
@@ -45,6 +44,6 @@ class UsersController extends ApiController
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->countryService->find($id));
+        return response()->json($this->repository->find($id));
     }
 }

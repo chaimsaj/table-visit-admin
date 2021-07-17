@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
-use App\Services\UserServiceInterface;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -41,6 +37,7 @@ class ProfilesController extends AdminController
             $user->avatar = '/images/' . $avatarName;
         }
         $user->update();
+
         if ($user) {
             Session::flash('message', 'User Details Updated successfully!');
             Session::flash('alert-class', 'alert-success');

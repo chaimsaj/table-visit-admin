@@ -10,8 +10,8 @@ use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
+use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -21,9 +21,9 @@ use Throwable;
 
 class UsersController extends AdminController
 {
-    private UserServiceInterface $service;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserServiceInterface $service,
+    public function __construct(UserRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);

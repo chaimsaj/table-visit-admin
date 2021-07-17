@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
+use App\Repositories\PlaceDetailRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\UserServiceInterface;
 use Illuminate\Http\Request;
 
 class PlaceDetailsController extends AdminController
 {
-    private $userService;
+    private PlaceDetailRepositoryInterface $repository;
 
-    public function __construct(UserServiceInterface $userService,
+    public function __construct(PlaceDetailRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->userService = $userService;
+        $this->repository = $repository;
     }
 
     public function index()

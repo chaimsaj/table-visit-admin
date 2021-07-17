@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Currency;
 use App\Repositories\CurrencyRepositoryInterface;
-use App\Services\CurrencyServiceInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

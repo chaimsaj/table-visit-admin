@@ -5,16 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\PlaceFeature;
 use App\Repositories\PlaceFeatureRepositoryInterface;
-use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class PlaceFeaturesController extends AdminController
 {
-    private PlaceFeatureRepositoryInterface $service;
+    private PlaceFeatureRepositoryInterface $repository;
 
-    public function __construct(PlaceFeatureRepositoryInterface $service,
+    public function __construct(PlaceFeatureRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);

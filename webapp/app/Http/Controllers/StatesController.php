@@ -5,26 +5,26 @@ namespace App\Http\Controllers;
 use App\Core\AppConstant;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\State;
-use App\Services\CountryServiceInterface;
+use App\Repositories\CountryRepositoryInterface;
+use App\Repositories\StateRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\StateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class StatesController extends AdminController
 {
-    private StateServiceInterface $service;
-    private CountryServiceInterface $countryService;
+    private StateRepositoryInterface $repository;
+    private CountryRepositoryInterface $countryRepository;
 
-    public function __construct(StateServiceInterface $service,
-                                CountryServiceInterface $countryService,
+    public function __construct(StateRepositoryInterface $repository,
+                                CountryRepositoryInterface $countryRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
         $this->repository = $repository;
-        $this->countryService = $countryService;
+        $this->countryRepository = $countryRepository;
     }
 
     public function index()
@@ -32,7 +32,7 @@ class StatesController extends AdminController
         $data = $this->repository->actives();
 
         $data->each(function ($item, $key) {
-            $country = $this->countryService->find($item->country_id);
+            $country = $this->countryRepository->find($item->country_id);
             if ($country)
                 $item->country_name = $country->name;
             else
@@ -45,7 +45,7 @@ class StatesController extends AdminController
     public function detail($id)
     {
         $data = $this->repository->find($id);
-        $countries = $this->countryService->published();
+        $countries = $this->countryRepository->published();
         return view('states/detail', ["data" => $data, "countries" => $countries]);
     }
 

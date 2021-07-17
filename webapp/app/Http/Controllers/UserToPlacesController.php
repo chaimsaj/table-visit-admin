@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\AppConstant;
 use App\Http\Controllers\Base\AdminController;
-use App\Models\State;
 use App\Models\UserToPlace;
-use App\Services\CountryServiceInterface;
+use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
-use App\Services\StateServiceInterface;
-use App\Services\UserToPlaceServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
 class UserToPlacesController extends AdminController
 {
-    private UserToPlaceServiceInterface $service;
+    private UserToPlaceRepositoryInterface $repository;
 
-    public function __construct(UserToPlaceServiceInterface $service,
+    public function __construct(UserToPlaceRepositoryInterface $repository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
