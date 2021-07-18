@@ -48,7 +48,7 @@
                                 <td>{{ $item->iso_code }}</td>
                                 <td>{{ $item->display_order }}</td>
                                 <td>
-                                    <a href="{{route("country.delete", $item->id)}}" class="text-danger"><i
+                                    <a href="{{route("country.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
                                 </td>
                                 <td>

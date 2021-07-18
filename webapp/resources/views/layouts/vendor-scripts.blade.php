@@ -13,6 +13,9 @@
 <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
 
+<!-- Sweet Alerts js -->
+<script src="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
 {{--<script>
     $('#change-password').on('submit',function(event){
         event.preventDefault();
@@ -57,5 +60,7 @@
 
 <!-- App js -->
 <script src="{{ URL::asset('assets/js/app.min.js')}}"></script>
+
+<script src="{{ URL::asset('assets/js/app/shared.js')}}"></script>
 
 @yield('script-bottom')

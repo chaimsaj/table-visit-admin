@@ -7,5 +7,5 @@ use Throwable;
 
 interface LogServiceInterface
 {
-    public function save(Throwable $ex): void;
+    public function save(Throwable $ex, $user_id = null): void;
 }
