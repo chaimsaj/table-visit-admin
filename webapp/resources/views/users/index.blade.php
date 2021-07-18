@@ -58,7 +58,7 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>
-                                        <a href="{{route("user.delete", $item->id)}}" class="text-danger"><i
+                                        <a href="{{route("user.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                                 class="mdi mdi-delete font-size-18"></i></a>
                                     </td>
                                     <td>

@@ -52,7 +52,7 @@
                                 <td>{{ $item->state_name }}</td>
                                 <td>{{ $item->country_name }}</td>
                                 <td>
-                                    <a href="{{route("city.delete", $item->id)}}" class="text-danger"><i
+                                    <a href="{{route("city.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
                                 </td>
                                 <td>

@@ -54,7 +54,7 @@
                                 <td>{{ $item->display_order }}</td>
                                 <td>{{ $item->city_name }}</td>
                                 <td>
-                                    <a href="{{route("place.delete", $item->id)}}" class="text-danger"><i
+                                    <a href="{{route("place.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
                                 </td>
                                 <td>

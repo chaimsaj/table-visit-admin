@@ -28,7 +28,6 @@
                             <th>@lang('translation.Id')</th>
                             <th>@lang('translation.Code')</th>
                             <th>@lang('translation.Error')</th>
-                            <th>@lang('translation.Trace')</th>
                             <th>@lang('translation.Date')</th>
                         </tr>
                         </thead>
@@ -38,7 +37,6 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->code }}</td>
                                 <td>{{ $item->error }}</td>
-                                <td>{{ $item->trace }}</td>
                                 <td>{{ $item->created_at }}</td>
                             </tr>
                         @endforeach

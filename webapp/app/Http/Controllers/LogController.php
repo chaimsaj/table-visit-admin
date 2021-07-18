@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\LogRepositoryInterface;
 use Illuminate\Routing\Controller as BaseController;
-use App\Services\LogServiceInterface;
 
 class LogController extends BaseController
 {
-    private LogServiceInterface $repository;
+    private LogRepositoryInterface $repository;
 
-    public function __construct(LogServiceInterface $repository)
+    public function __construct(LogRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

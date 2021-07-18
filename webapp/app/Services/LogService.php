@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Repositories\LogRepositoryInterface;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models;
