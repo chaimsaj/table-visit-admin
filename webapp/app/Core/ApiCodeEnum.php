@@ -6,7 +6,7 @@ namespace App\Core;
 
 class ApiCodeEnum extends BaseEnum
 {
-    const Undefined = 0;
-    const Ok = 200;
-    const Error = 100;
+    const UNDEFINED = 0;
+    const SUCCESS = 200;
+    const ERROR = 100;
 }

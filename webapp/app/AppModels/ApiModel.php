@@ -3,12 +3,30 @@
 
 namespace App\AppModels;
 
+use App\Core\ApiCodeEnum;
+
 class ApiModel
 {
     public int $code;
     public object $data;
+    public array $list;
     public ?int $timestamp;
     public string $message;
+
+    public function setSuccess()
+    {
+        $this->setCode(ApiCodeEnum::SUCCESS);
+        $this->setMessage(ApiCodeEnum::toString(ApiCodeEnum::SUCCESS));
+    }
+
+    public function setError($message = null)
+    {
+        if (!$message)
+            $message = ApiCodeEnum::toString(ApiCodeEnum::ERROR);
+
+        $this->setCode(ApiCodeEnum::ERROR);
+        $this->setMessage($message);
+    }
 
     /**
      * @return int
@@ -40,6 +58,22 @@ class ApiModel
     public function setData(object $data): void
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getList(): array
+    {
+        return $this->list;
+    }
+
+    /**
+     * @param array $list
+     */
+    public function setList(array $list): void
+    {
+        $this->list = $list;
     }
 
     /**

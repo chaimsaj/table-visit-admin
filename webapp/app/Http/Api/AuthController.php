@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Throwable;
 
 class AuthController extends ApiController
 {
     public function sign_in(Request $request): JsonResponse
     {
         $response = new ApiModel();
-        $response->setCode(ApiCodeEnum::Error);
-        $response->setMessage(ApiCodeEnum::toString(ApiCodeEnum::Error));
+        $response->setSuccess();
 
         $credentials = $request->only('email', 'password');
 
@@ -36,9 +36,8 @@ class AuthController extends ApiController
             $token->setTokenType('Bearer');
 
             $response->setData($token);
-            $response->setCode(ApiCodeEnum::Ok);
-            $response->setMessage(ApiCodeEnum::toString(ApiCodeEnum::Ok));
-        }
+        } else
+            $response->setError();
 
         return response()->json($response);
     }
@@ -59,17 +58,14 @@ class AuthController extends ApiController
         //$user->tokens()->where('id', $tokenId)->delete();
 
         $response = new ApiModel();
-        $response->setCode(ApiCodeEnum::Ok);
-        $response->setMessage(ApiCodeEnum::toString(ApiCodeEnum::Ok));
-
+        $response->setSuccess();
         return response()->json($response);
     }
 
     public function sign_up(Request $request): JsonResponse
     {
         $response = new ApiModel();
-        $response->setCode(ApiCodeEnum::Ok);
-        $response->setCode(ApiCodeEnum::toString(ApiCodeEnum::Ok));
+        $response->setSuccess();
 
         $data = request()->json()->all();
 
@@ -81,7 +77,7 @@ class AuthController extends ApiController
         ]);
 
         if ($validator->fails()) {
-            $response->setData($validator->getMessageBag());
+            $response->setError($validator->getMessageBag());
             return response()->json($response);
         }
 
@@ -94,10 +90,8 @@ class AuthController extends ApiController
                 'auth_mode' => AuthModeEnum::Basic,
                 'user_type_id' => UserTypeEnum::Guest,
             ]);
-        } catch (Exception $exc) {
-            $response->setCode(ApiCodeEnum::Error);
-            $response->setMessage(ApiCodeEnum::toString(ApiCodeEnum::Error));
-            $response->setData($exc);
+        } catch (Throwable $ex) {
+            $response->setError($ex->getMessage());
         }
 
         return response()->json($response);
