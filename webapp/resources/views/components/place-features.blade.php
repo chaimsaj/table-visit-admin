@@ -1,3 +1,4 @@
 <div class="row">
-    Coming soon..
+    <p class="mb-0">
+        Coming soon..</p>
 </div>

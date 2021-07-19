@@ -63,7 +63,7 @@ Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->na
 Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
 Route::post('/user/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
 Route::get('/user/delete/{id}', [App\Http\Controllers\UsersController::class, 'delete'])->name('user.delete');
-Route::post('/user/save_user_to_place/{user_id}', [App\Http\Controllers\UsersController::class, 'save_user_to_place'])->name('user.save_user_to_place');
+Route::post('/user/save_user_to_place/{id}', [App\Http\Controllers\UsersController::class, 'save_user_to_place'])->name('user.save_user_to_place');
 Route::get('/user/delete_user_to_place/{id}', [App\Http\Controllers\UsersController::class, 'delete_user_to_place'])->name('user.delete_user_to_place');
 
 //UserTypes
@@ -110,7 +110,9 @@ Route::get('/places', [App\Http\Controllers\PlacesController::class, 'index'])->
 Route::get('/place/{id}', [App\Http\Controllers\PlacesController::class, 'detail'])->name('place.detail');
 Route::post('/place/{id}', [App\Http\Controllers\PlacesController::class, 'save'])->name('place.save');
 Route::get('/place/delete/{id}', [App\Http\Controllers\PlacesController::class, 'delete'])->name('place.delete');
-Route::post('/place/save_details/{place_id}', [App\Http\Controllers\PlacesController::class, 'save_details'])->name('place.save_details');
+Route::post('/place/save_details/{id}', [App\Http\Controllers\PlacesController::class, 'save_details'])->name('place.save_details');
+Route::post('/place/save_floor_plan/{id}', [App\Http\Controllers\PlacesController::class, 'save_floor_plan'])->name('place.save_floor_plan');
+Route::post('/place/save_food_menu/{id}', [App\Http\Controllers\PlacesController::class, 'save_food_menu'])->name('place.save_food_menu');
 
 //Place Types
 Route::get('/place-types', [App\Http\Controllers\PlaceTypesController::class, 'index'])->name('place-types');

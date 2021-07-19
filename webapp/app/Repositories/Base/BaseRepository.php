@@ -33,6 +33,18 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->all();
     }
 
+    public function actives(): Collection
+    {
+        return $this->model->where('deleted', 0)->get();
+    }
+
+    public function published(): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->get();
+    }
+
     public function restore($id): bool
     {
         return $this->findOnlyTrashedById($id)->restore();

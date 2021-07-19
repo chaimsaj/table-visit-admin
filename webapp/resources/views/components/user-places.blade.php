@@ -45,7 +45,7 @@
 
     <div class="col-xl-6">
         <form autocomplete="off" method="POST"
-              class="form-horizontal custom-validation"
+              class="form-horizontal"
               action="{{route("user.save_user_to_place", $user_id ?? 0)}}">
             @csrf
             <div class="mb-4">
@@ -65,7 +65,7 @@
             </div>
             <div class="d-flex flex-wrap gap-2">
                 <button type="submit"
-                        class="btn btn-info waves-effect waves-light">
+                        class="btn btn-dark waves-effect waves-light">
                     @lang('translation.Add')
                 </button>
             </div>

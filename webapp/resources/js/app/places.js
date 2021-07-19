@@ -13,6 +13,10 @@ function initPlace() {
     }
 }
 
+function initPlaces() {
+
+}
+
 function initPlaceFeatures() {
 }
 

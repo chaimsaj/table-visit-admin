@@ -58,7 +58,7 @@ class MediaHelper
         if (isset($image))
             return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . $image);
         else
-            return URL::to('media/' . MediaSizeEnum::toString(MediaSizeEnum::custom) . '/no-image-available.png');
+            return URL::to('media/' . MediaSizeEnum::toString(MediaSizeEnum::small) . '/no-image-available.png');
 
         // MediaHelper::getImageUrl(asset('/assets/images/default-image.jpeg'));
     }

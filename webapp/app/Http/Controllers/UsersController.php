@@ -171,7 +171,7 @@ class UsersController extends AdminController
         return redirect("users");
     }
 
-    public function save_user_to_place(Request $request, $user_id): RedirectResponse
+    public function save_user_to_place(Request $request, $id): RedirectResponse
     {
         try {
 
@@ -183,12 +183,12 @@ class UsersController extends AdminController
                 $this->logger->log("user.save_user_to_place error");
             } else {
                 $place_id = $request->get('place_id');
-                $exists = $this->userToPlaceRepository->existsByUser($place_id, $user_id);
+                $exists = $this->userToPlaceRepository->existsByUser($place_id, $id);
 
                 if ($exists == null) {
                     $db = new UserToPlace();
 
-                    $db->user_id = $user_id;
+                    $db->user_id = $id;
                     $db->place_id = $request->get('place_id');
                     $db->published = 1;
 

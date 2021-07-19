@@ -106,7 +106,7 @@ class PlacesController extends AdminController
 
         $data = $this->repository->find($id);
         $cities = $this->cityRepository->published();
-        $languages = $this->languageRepository->published();
+        //$languages = $this->languageRepository->published();
         $features = $this->placeFeatureRepository->published();
         $music = $this->placeMusicRepository->published();
 
@@ -116,7 +116,7 @@ class PlacesController extends AdminController
 
         return view('places/detail', ["data" => $data,
             "cities" => $cities,
-            "languages" => $languages,
+            //"languages" => $languages,
             "features" => $features,
             "music" => $music,
             "place_detail" => $place_detail,
@@ -184,7 +184,31 @@ class PlacesController extends AdminController
         return redirect("places");
     }
 
-    public function save_details(Request $request, $place_id): RedirectResponse
+    public function save_details(Request $request, $id): RedirectResponse
+    {
+        try {
+            $db = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
+
+            if ($db == null)
+                $db = new PlaceDetail();
+
+            $db->detail = $request->get('place_detail');
+            $db->place_id = $id;
+            $db->language_id = LanguageEnum::English;
+            $db->published = 1;
+
+            $this->placeDetailRepository->save($db);
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "details");
+
+        return redirect()->back();
+    }
+
+    public function save_features(Request $request, $id): RedirectResponse
     {
         try {
             $db = $this->placeDetailRepository->loadBy($place_id, LanguageEnum::English);
@@ -204,6 +228,64 @@ class PlacesController extends AdminController
         }
 
         Session::flash('tab', "details");
+
+        return redirect()->back();
+    }
+
+    public function save_floor_plan(Request $request, $id): RedirectResponse
+    {
+        try {
+            $db = $this->repository->find($id);
+
+            if ($db != null) {
+                if (request()->has('floor_plan_path')) {
+                    MediaHelper::deletePlacesImage($db->floor_plan_path);
+
+                    $image_file = request()->file('floor_plan_path');
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
+                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+
+                    Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
+
+                    $db->floor_plan_path = $image_name;
+
+                    $this->repository->save($db);
+                }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "floor-plan");
+
+        return redirect()->back();
+    }
+
+    public function save_food_menu(Request $request, $id): RedirectResponse
+    {
+        try {
+            $db = $this->repository->find($id);
+
+            if ($db != null) {
+                if (request()->has('food_menu_path')) {
+                    MediaHelper::deletePlacesImage($db->food_menu_path);
+
+                    $image_file = request()->file('food_menu_path');
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
+                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+
+                    Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
+
+                    $db->food_menu_path = $image_name;
+
+                    $this->repository->save($db);
+                }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "food-menu");
 
         return redirect()->back();
     }

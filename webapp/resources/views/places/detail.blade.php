@@ -23,34 +23,50 @@
                                         <span class="d-none d-sm-block">@lang('translation.Data')</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if($tab=="details") active @endif" data-bs-toggle="tab"
-                                       href="#details" role="tab">
-                                        <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
-                                        <span class="d-none d-sm-block">@lang('translation.Detail')</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if($tab=="images") active @endif" data-bs-toggle="tab"
-                                       href="#images" role="tab">
-                                        <span class="d-block d-sm-none"><i class="bx bx-paperclip"></i></span>
-                                        <span class="d-none d-sm-block">@lang('translation.Images')</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if($tab=="features") active @endif" data-bs-toggle="tab"
-                                       href="#features" role="tab">
-                                        <span class="d-block d-sm-none"><i class="bx bx-grid-alt"></i></span>
-                                        <span class="d-none d-sm-block">@lang('translation.Features')</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if($tab=="music") active @endif" data-bs-toggle="tab"
-                                       href="#music" role="tab">
-                                        <span class="d-block d-sm-none"><i class="bx bx-music"></i></span>
-                                        <span class="d-none d-sm-block">@lang('translation.Music')</span>
-                                    </a>
-                                </li>
+                                @if($data && $data->id != 0)
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="details") active @endif" data-bs-toggle="tab"
+                                           href="#details" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Detail')</span>
+                                        </a>
+                                    </li>
+                                    {{--<li class="nav-item">
+                                        <a class="nav-link @if($tab=="images") active @endif" data-bs-toggle="tab"
+                                           href="#images" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-paperclip"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Images')</span>
+                                        </a>
+                                    </li>--}}
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="floor-plan") active @endif" data-bs-toggle="tab"
+                                           href="#floor-plan" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-paperclip"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.FloorPlan')</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="food-menu") active @endif" data-bs-toggle="tab"
+                                           href="#food-menu" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-paperclip"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.FoodMenu')</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="features") active @endif" data-bs-toggle="tab"
+                                           href="#features" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-grid-alt"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Features')</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="music") active @endif" data-bs-toggle="tab"
+                                           href="#music" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-music"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Music')</span>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane p-2 @if($tab=="data") active @endif" id="data" role="tabpanel">
@@ -62,8 +78,8 @@
                                                   enctype="multipart/form-data">
                                                 @csrf
                                                 @if(isset($data))
-                                                    <img class="rounded avatar-md mt-2"
-                                                         src="{{\App\Helpers\MediaHelper::getImageUrl($data->image_path, \App\Core\MediaSizeEnum::medium)}}"
+                                                    <img class="rounded mt-2"
+                                                         src="{{\App\Helpers\MediaHelper::getImageUrl($data->image_path)}}"
                                                          alt=""/>
                                                     <hr/>
                                                 @endif
@@ -110,12 +126,12 @@
 
                                                 <div class="mb-3">
                                                     <label for="image_path">@lang('translation.MainImage')</label>
-                                                    <div class="input-group">
-                                                        <input type="file" name="image_path" class="form-control">
+                                                    <input type="file" name="image_path" class="form-control">
+                                                    {{--<div class="input-group">
+
                                                         <label class="input-group-text"
                                                                for="image_path">@lang('translation.Upload')</label>
-                                                    </div>
-
+                                                    </div>--}}
                                                 </div>
 
                                                 <div class="mb-4">
@@ -182,32 +198,41 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-2 @if($tab=="details") active @endif" id="details"
-                                     role="tabpanel">
-                                    <p class="mb-0">
-                                        @component('components.place-details', ["languages" => $languages, "place_detail" => $place_detail ?? null])
+                                @if($data && $data->id != 0)
+                                    <div class="tab-pane p-2 @if($tab=="details") active @endif" id="details"
+                                         role="tabpanel">
+                                        <p class="mb-0">
+                                            @component('components.place-details', ["place_detail" => $place_detail ?? null])
+                                            @endcomponent
+                                        </p>
+                                    </div>
+                                    {{--<div class="tab-pane p-2 @if($tab=="images") active @endif" id="images" role="tabpanel">
+                                        <p class="mb-0">
+                                            @component('components.place-images', ["place_id" => $data->id ?? 0])
+                                            @endcomponent
+                                        </p>
+                                    </div>--}}
+                                    <div class="tab-pane p-2 @if($tab=="floor-plan") active @endif" id="floor-plan"
+                                         role="tabpanel">
+                                        @component('components.place-floor-plan', ["data" => $data ?? null])
                                         @endcomponent
-                                    </p>
-                                </div>
-                                <div class="tab-pane p-2 @if($tab=="images") active @endif" id="images" role="tabpanel">
-                                    <p class="mb-0">
-                                        @component('components.place-images', ["languages" => $languages,"place_id" => $data->id ?? 0])
+                                    </div>
+                                    <div class="tab-pane p-2 @if($tab=="food-menu") active @endif" id="food-menu"
+                                         role="tabpanel">
+                                        @component('components.place-food-menu', ["data" => $data ?? null])
                                         @endcomponent
-                                    </p>
-                                </div>
-                                <div class="tab-pane p-2 @if($tab=="features") active @endif" id="features"
-                                     role="tabpanel">
-                                    <p class="mb-0">
-                                        @component('components.place-features', ["features" => $features,"place_id" => $data->id ?? 0])
+                                    </div>
+                                    <div class="tab-pane p-2 @if($tab=="features") active @endif" id="features"
+                                         role="tabpanel">
+                                        @component('components.place-features', ["features" => $features, "data" => $data ?? null])
                                         @endcomponent
-                                    </p>
-                                </div>
-                                <div class="tab-pane p-2 @if($tab=="music") active @endif" id="music" role="tabpanel">
-                                    <p class="mb-0">
-                                        @component('components.place-music', ["music" => $music,"place_id" => $data->id ?? 0])
+                                    </div>
+                                    <div class="tab-pane p-2 @if($tab=="music") active @endif" id="music"
+                                         role="tabpanel">
+                                        @component('components.place-music', ["music" => $music, "data" => $data ?? null])
                                         @endcomponent
-                                    </p>
-                                </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

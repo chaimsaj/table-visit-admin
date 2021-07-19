@@ -47,6 +47,8 @@ return [
     "Images" => "Images",
     "NoData" => "No data available",
     "PlaceDescription" => "Place description",
+    "FloorPlan" => "Floor Plan",
+    "FoodMenu" => "Food Menu",
 
     //Authentication
     "Authentication" => "Authentication",

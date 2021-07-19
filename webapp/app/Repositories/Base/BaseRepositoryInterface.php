@@ -14,6 +14,10 @@ interface BaseRepositoryInterface
 
     public function all(): Collection;
 
+    public function actives(): Collection;
+
+    public function published(): Collection;
+
     public function restore($id): bool;
 
     public function save(Model $model): bool;
