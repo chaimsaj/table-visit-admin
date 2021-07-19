@@ -41,36 +41,35 @@ class PlacesController extends AdminController
 
     public function index()
     {
-        $by_user = [];
         $data = [];
         $places = $this->repository->actives();
 
-        if (Auth::user()->user_type_id != UserTypeEnum::Admin)
-            $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
-
-        $places->each(function ($item) use ($by_user, $data) {
-            $add = true;
+        foreach ($places as $place) {
+            $to_add = true;
 
             if (Auth::user()->user_type_id != UserTypeEnum::Admin) {
+                $to_add = null;
+                $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
+
                 foreach ($by_user as $selected) {
-                    if ($selected->place_id == $item->id) {
-                        $add = true;
+                    if ($selected->place_id == $place->id) {
+                        $to_add = true;
                         break;
                     } else
-                        $add = false;
+                        $to_add = null;
                 }
             }
 
-            if ($add) {
-                $city = $this->cityRepository->find($item->city_id);
+            if (isset($to_add)) {
+                $city = $this->cityRepository->find($place->city_id);
                 if ($city)
-                    $item->city_name = $city->name;
+                    $place->city_name = $city->name;
                 else
-                    $item->city_name = AppConstant::getDash();
+                    $place->city_name = AppConstant::getDash();
 
-                array_push($data, $item);
+                array_push($data, $place);
             }
-        });
+        }
 
         return view('places/index', ["data" => $data]);
     }
