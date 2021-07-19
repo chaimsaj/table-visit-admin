@@ -132,13 +132,6 @@ var third_party_assets = {
             "name": "sweetalert2",
             "assets": ["./node_modules/sweetalert2/dist/sweetalert2.min.js", "./node_modules/sweetalert2/dist/sweetalert2.min.css"]
         },
-        {
-            "name": "summernote",
-            "assets": [
-                "./node_modules/summernote/dist/summernote.js",
-                "./node_modules/summernote/dist/summernote.css",
-            ]
-        },
         {"name": "jquery-sparkline", "assets": ["./node_modules/jquery-sparkline/jquery.sparkline.min.js"]},
         {"name": "jquery-knob", "assets": ["./node_modules/jquery-knob/dist/jquery.knob.min.js"]},
         {"name": "moment", "assets": ["./node_modules/moment/min/moment.min.js"]},
