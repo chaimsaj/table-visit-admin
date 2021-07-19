@@ -55,7 +55,7 @@
                                              src="{{\App\Helpers\MediaHelper::getImageUrl($item->avatar)}}"
                                              alt=""/>
                                     </td>
-                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->name }} {{ $item->last_name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>
                                         <a href="{{route("user.delete", $item->id)}}" class="text-danger sweet-warning"><i

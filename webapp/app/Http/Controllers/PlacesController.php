@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\AppConstant;
 use App\Core\MediaObjectTypeEnum;
+use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
@@ -11,8 +12,10 @@ use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\Console\Input\Input;
@@ -22,27 +25,51 @@ class PlacesController extends AdminController
 {
     private PlaceRepositoryInterface $repository;
     private CityRepositoryInterface $cityRepository;
+    private UserToPlaceRepositoryInterface $userToPlaceRepository;
 
     public function __construct(PlaceRepositoryInterface $repository,
                                 CityRepositoryInterface $cityRepository,
+                                UserToPlaceRepositoryInterface $userToPlaceRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
         $this->repository = $repository;
         $this->cityRepository = $cityRepository;
+        $this->userToPlaceRepository = $userToPlaceRepository;
     }
 
     public function index()
     {
-        $data = $this->repository->actives();
+        $by_user = [];
+        $data = [];
+        $places = $this->repository->actives();
 
-        $data->each(function ($item, $key) {
-            $city = $this->cityRepository->find($item->city_id);
-            if ($city)
-                $item->city_name = $city->name;
-            else
-                $item->city_name = AppConstant::getDash();
+        if (Auth::user()->user_type_id != UserTypeEnum::Admin)
+            $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
+
+        $places->each(function ($item) use ($by_user, $data) {
+            $add = true;
+
+            if (Auth::user()->user_type_id != UserTypeEnum::Admin) {
+                foreach ($by_user as $selected) {
+                    if ($selected->place_id == $item->id) {
+                        $add = true;
+                        break;
+                    } else
+                        $add = false;
+                }
+            }
+
+            if ($add) {
+                $city = $this->cityRepository->find($item->city_id);
+                if ($city)
+                    $item->city_name = $city->name;
+                else
+                    $item->city_name = AppConstant::getDash();
+
+                array_push($data, $item);
+            }
         });
 
         return view('places/index', ["data" => $data]);

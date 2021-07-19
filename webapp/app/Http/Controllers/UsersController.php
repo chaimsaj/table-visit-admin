@@ -53,40 +53,11 @@ class UsersController extends AdminController
     {
         $data = $this->repository->all();
 
-        $admin = new KeyValueModel();
-        $admin->setKey(UserTypeEnum::Admin);
-        $admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
-
-        $guest = new KeyValueModel();
-        $guest->setKey(UserTypeEnum::Guest);
-        $guest->setValue(UserTypeEnum::toString(UserTypeEnum::Guest));
-
-        $user_types = collect([$admin, $guest]);
-
-        return view('users/index', ["data" => $data, "user_types" => $user_types]);
+        return view('users/index', ["data" => $data, "user_types" => AppHelper::userTypes()]);
     }
 
     public function detail($id)
     {
-        $admin = new KeyValueModel();
-        $admin->setKey(UserTypeEnum::Admin);
-        $admin->setValue("Admin");
-        //$admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
-
-        $place_admin = new KeyValueModel();
-        $place_admin->setKey(UserTypeEnum::PlaceAdmin);
-        $place_admin->setValue("Place Admin");
-
-        $place_employee = new KeyValueModel();
-        $place_employee->setKey(UserTypeEnum::PlaceEmployee);
-        $place_employee->setValue("Place Employee");
-
-        $guest = new KeyValueModel();
-        $guest->setKey(UserTypeEnum::Guest);
-        $guest->setValue("Guest");
-
-        $user_types = collect([$admin, $place_admin, $place_employee, $guest]);
-
         $data = $this->repository->find($id);
 
         $all_places = $this->placeRepository->published();
@@ -119,7 +90,7 @@ class UsersController extends AdminController
         $tab = Session::get("tab", "data");
 
         return view('users/detail', ["data" => $data,
-            "user_types" => $user_types,
+            "user_types" => AppHelper::userTypes(),
             "places" => $places,
             "user_places" => $user_places,
             "tab" => $tab
@@ -143,7 +114,11 @@ class UsersController extends AdminController
             $db = $this->repository->find($id);
 
             if ($validator->fails() && $db == null) {
-                return view('users/detail', ["data" => $request])->withErrors($validator);
+                $tab = Session::get("tab", "data");
+                return view('users/detail', ["data" => $request,
+                    "tab" => $tab,
+                    "user_types" => AppHelper::userTypes()
+                ])->withErrors($validator);
             } else {
                 if ($db == null)
                     $db = new User();

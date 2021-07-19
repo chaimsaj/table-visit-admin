@@ -31,7 +31,14 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
     @include('layouts.topbar')
-    @include('layouts.sidebar')
+
+    @if(Auth::user() && Auth::user()->user_type_id == \App\Core\UserTypeEnum::Admin)
+        @include('layouts.sidebar')
+    @endif
+
+    @if(Auth::user() && Auth::user()->user_type_id != \App\Core\UserTypeEnum::Admin)
+        @include('layouts.sidebar-place')
+    @endif
     <!-- ============================================================== -->
         <!-- Start right Content here -->
         <!-- ============================================================== -->

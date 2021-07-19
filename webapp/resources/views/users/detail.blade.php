@@ -77,6 +77,8 @@
                                                             <div class="col-6">
                                                                 <input type="password"
                                                                        class="form-control"
+                                                                       name="password_confirmation"
+                                                                       id="password_confirmation"
                                                                        {{!isset($data->id) ? 'required' : ''}} data-parsley-equalto="#password"
                                                                        placeholder="Re-Type Password"/>
                                                             </div>

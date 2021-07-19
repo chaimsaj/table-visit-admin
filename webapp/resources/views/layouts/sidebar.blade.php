@@ -1,11 +1,6 @@
-<!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
-
     <div data-simplebar class="h-100">
-
-        <!--- Sidemenu -->
         <div id="sidebar-menu">
-            <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-apps">@lang('translation.Administration')</li>
 
@@ -23,28 +18,8 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
-                        {{--<li><a href="{{route("user-types")}}" key="t-users">@lang('translation.UserTypes')</a></li>--}}
                     </ul>
                 </li>
-
-                {{--<li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-store"></i>
-                        <span key="t-ecommerce">@lang('translation.Ecommerce')</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="#" key="t-products">@lang('translation.Products')</a></li>
-                        <li><a href="#"
-                               key="t-product-detail">@lang('translation.Product_Detail')</a></li>
-                        <li><a href="#" key="t-orders">@lang('translation.Orders')</a></li>
-                        <li><a href="#" key="t-customers">@lang('translation.Customers')</a></li>
-                        <li><a href="#" key="t-cart">@lang('translation.Cart')</a></li>
-                        <li><a href="#" key="t-checkout">@lang('translation.Checkout')</a></li>
-                        <li><a href="#" key="t-shops">@lang('translation.Shops')</a></li>
-                        <li><a href="#" key="t-add-product">@lang('translation.Add_Product')</a>
-                        </li>
-                    </ul>
-                </li>--}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -78,8 +53,10 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("places")}}" key="t-places">@lang('translation.Places')</a></li>
                         <li><a href="{{route("place-types")}}" key="t-place-types">@lang('translation.Types')</a></li>
-                        <li><a href="{{route("place-features")}}" key="t-place-features">@lang('translation.Features')</a></li>
-                        <li><a href="{{route("place-music-list")}}" key="t-place-music-list">@lang('translation.Music')</a></li>
+                        <li><a href="{{route("place-features")}}"
+                               key="t-place-features">@lang('translation.Features')</a></li>
+                        <li><a href="{{route("place-music-list")}}"
+                               key="t-place-music-list">@lang('translation.Music')</a></li>
                     </ul>
                 </li>
 
@@ -106,8 +83,6 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        {{--<span class="badge rounded-pill bg-success float-end"
-                              key="t-new">@lang('translation.New')</span>--}}
                         <i class="bx bx-lock-alt"></i>
                         <span key="t-authentication">@lang('translation.Authentication')</span>
                     </a>
@@ -131,10 +106,7 @@
                         <li><a href="{{route("logs")}}" key="t-users">@lang('translation.Logs')</a></li>
                     </ul>
                 </li>
-
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>
-<!-- Left Sidebar End -->
