@@ -13,25 +13,30 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Information</h4>
+                    <h4 class="card-title">Information {{$tab ?? 0}}</h4>
                     <div class="row">
                         <div class="col-xl-12 mt-2">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#data" role="tab">
+                                    <a class="nav-link @if($tab=="data") active @endif"
+                                       data-bs-toggle="tab" href="#data" role="tab">
                                         <span class="d-block d-sm-none"><i class="bx bx-data"></i></span>
                                         <span class="d-none d-sm-block">@lang('translation.Data')</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#places" role="tab">
-                                        <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
-                                        <span class="d-none d-sm-block">@lang('translation.Places')</span>
-                                    </a>
-                                </li>
+                                @if($data && $data->id != 0)
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="places") active @endif"
+                                           data-bs-toggle="tab" href="#places" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Places')</span>
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane active p-2" id="data" role="tabpanel">
+                                <div class="tab-pane p-2 @if($tab=="data") active @endif" id="data"
+                                     role="tabpanel">
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <form autocomplete="off" method="POST"
@@ -43,9 +48,9 @@
                                                     <img class="rounded avatar-md mt-2"
                                                          src="{{\App\Helpers\MediaHelper::getImageUrl($data->avatar, \App\Core\MediaSizeEnum::medium)}}"
                                                          alt=""/>
+                                                    <hr/>
                                                 @endif
-                                                <hr/>
-                                                <div class="mb-3">
+                                                <div class="mb-3 mt-3">
                                                     <label class="form-label">Name</label>
                                                     <input type="text" name="name"
                                                            value="{{$data->name ?? ''}}"
@@ -155,10 +160,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-2" id="places" role="tabpanel">
-                                    @component('components.user-places')
-                                    @endcomponent
-                                </div>
+                                @if($data && $data->id != 0)
+                                    <div class="tab-pane p-2 @if($tab=="places") active @endif" id="places"
+                                         role="tabpanel">
+                                        @component('components.user-places', ["places" => $places, "user_places" => $user_places, "user_id" => $data->id ?? 0])
+                                        @endcomponent
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

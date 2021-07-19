@@ -1,18 +1,61 @@
 <div class="row">
+    <div class="col-xl-12">
+        <div class="table-responsive">
+            <table class="table table-striped w-100 align-middle">
+                <thead>
+                <tr class="text-center">
+                    <th>@lang('translation.Id')</th>
+                    <th>@lang('translation.Name')</th>
+                    <th>@lang('translation.DisplayOrder')</th>
+                    <th>@lang('translation.City')</th>
+                    <th>@lang('translation.Delete')</th>
+                    <th>@lang('translation.View')</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($user_places as $item)
+                    <tr class="text-center">
+                        <td>{{ $item->rel_id }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->display_order }}</td>
+                        <td>{{ $item->city_name }}</td>
+                        <td>
+                            <a href="{{route("user.delete_user_to_place", $item->rel_id)}}"
+                               class="text-danger sweet-warning"><i
+                                    class="mdi mdi-delete font-size-18"></i></a>
+                        </td>
+                        <td>
+                            <a href="{{route("place.detail", $item->id)}}" target="_blank" class="text-secondary"><i
+                                    class="mdi mdi-arrow-top-right font-size-18"></i></a>
+                        </td>
+                    </tr>
+                @endforeach
+                @if(count($user_places) == 0)
+                    <tr class="text-center">
+                        <td colspan="5">
+                            @lang('translation.NoData')
+                        </td>
+                    </tr>
+                </tbody>
+                @endif
+            </table>
+        </div>
+        <hr/>
+    </div>
+
     <div class="col-xl-6">
         <form autocomplete="off" method="POST"
               class="form-horizontal custom-validation"
-              action="{{route("user.save", $place->id ?? 0)}}">
+              action="{{route("user.save_user_to_place", $user_id ?? 0)}}">
             @csrf
-            <div class="mb-4 mt-4">
-                <label class="form-label">@lang('translation.Places')</label>
+            <div class="mb-4">
+                <label class="form-label">@lang('translation.AddPlaces')</label>
                 <div>
                     <select id="place_id" class="form-select" name="place_id">
                         <option value="0">@lang('translation.Select')</option>
                         @if (isset($places))
                             @foreach($places as $place)
-                                <option
-                                    value="{{ $place->id }}" {{ ($data && $data->place_id == $place->id) ? 'selected' : '' }}>
+                                <option value="{{ $place->id }}">
                                     {{ $place->name }}
                                 </option>
                             @endforeach
@@ -25,10 +68,6 @@
                         class="btn btn-info waves-effect waves-light">
                     @lang('translation.Add')
                 </button>
-                {{--<a href="{{route("users")}}"
-                   class="btn btn-danger waves-effect">
-                    @lang('translation.Cancel')
-                </a>--}}
             </div>
         </form>
     </div>

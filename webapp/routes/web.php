@@ -63,6 +63,8 @@ Route::get('/users', [App\Http\Controllers\UsersController::class, 'index'])->na
 Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'detail'])->name('user.detail');
 Route::post('/user/{id}', [App\Http\Controllers\UsersController::class, 'save'])->name('user.save');
 Route::get('/user/delete/{id}', [App\Http\Controllers\UsersController::class, 'delete'])->name('user.delete');
+Route::post('/user/save_user_to_place/{user_id}', [App\Http\Controllers\UsersController::class, 'save_user_to_place'])->name('user.save_user_to_place');
+Route::get('/user/delete_user_to_place/{id}', [App\Http\Controllers\UsersController::class, 'delete_user_to_place'])->name('user.delete_user_to_place');
 
 //UserTypes
 Route::get('/user-types', [App\Http\Controllers\UserTypesController::class, 'index'])->name('user-types');

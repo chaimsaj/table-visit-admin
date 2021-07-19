@@ -15,7 +15,7 @@ class MainController extends ApiController
         $response = new ApiModel();
         $response->setData(now());
         $response->setTimestamp(now()->timestamp);
-        $response->setCode(ApiCodeEnum::Ok);
+        $response->setCode(ApiCodeEnum::SUCCESS);
         return response()->json($response);
     }
 }

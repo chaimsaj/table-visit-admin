@@ -35,6 +35,7 @@ return [
     "Id" => "©",
     "Edit" => "E",
     "Delete" => "D",
+    "View" => "V",
     "Information" => "Information",
     "Image" => "Image",
     "MainImage" => "Main Image",
@@ -44,6 +45,7 @@ return [
     "Data" => "Data",
     "Details" => "Details",
     "Images" => "Images",
+    "NoData" => "No data available",
 
     //Authentication
     "Authentication" => "Authentication",
@@ -91,6 +93,7 @@ return [
 
     "Places" => "Places",
     "Place" => "Place",
+    "AddPlaces" => "Add Places",
 
     "Types" => "Types",
     "PlaceTypes" => "Place Types",

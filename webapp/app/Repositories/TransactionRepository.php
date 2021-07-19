@@ -23,9 +23,4 @@ class TransactionRepository extends BaseRepository implements TransactionReposit
     {
         return $this->model->all('active', 1);
     }
-
-    public function published(): Collection
-    {
-
-    }
 }

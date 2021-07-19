@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AppModels\KeyValueModel;
+use App\Core\AppConstant;
 use App\Core\AuthModeEnum;
 use App\Core\GenderEnum;
 use App\Core\MediaObjectTypeEnum;
@@ -11,11 +12,17 @@ use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\UserToPlace;
+use App\Repositories\CityRepositoryInterface;
+use App\Repositories\PlaceRepository;
+use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -24,13 +31,22 @@ use Throwable;
 class UsersController extends AdminController
 {
     private UserRepositoryInterface $repository;
+    private UserToPlaceRepositoryInterface $userToPlaceRepository;
+    private PlaceRepositoryInterface $placeRepository;
+    private CityRepositoryInterface $cityRepository;
 
     public function __construct(UserRepositoryInterface $repository,
+                                UserToPlaceRepositoryInterface $userToPlaceRepository,
+                                PlaceRepositoryInterface $placeRepository,
+                                CityRepositoryInterface $cityRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
         $this->repository = $repository;
+        $this->userToPlaceRepository = $userToPlaceRepository;
+        $this->placeRepository = $placeRepository;
+        $this->cityRepository = $cityRepository;
     }
 
     public function index()
@@ -54,25 +70,60 @@ class UsersController extends AdminController
     {
         $admin = new KeyValueModel();
         $admin->setKey(UserTypeEnum::Admin);
-        $admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
+        $admin->setValue("Admin");
+        //$admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
 
         $place_admin = new KeyValueModel();
         $place_admin->setKey(UserTypeEnum::PlaceAdmin);
-        $place_admin->setValue(UserTypeEnum::toString(UserTypeEnum::PlaceAdmin));
+        $place_admin->setValue("Place Admin");
 
         $place_employee = new KeyValueModel();
         $place_employee->setKey(UserTypeEnum::PlaceEmployee);
-        $place_employee->setValue(UserTypeEnum::toString(UserTypeEnum::PlaceEmployee));
+        $place_employee->setValue("Place Employee");
 
         $guest = new KeyValueModel();
         $guest->setKey(UserTypeEnum::Guest);
-        $guest->setValue(UserTypeEnum::toString(UserTypeEnum::Guest));
+        $guest->setValue("Guest");
 
         $user_types = collect([$admin, $place_admin, $place_employee, $guest]);
 
         $data = $this->repository->find($id);
 
-        return view('users/detail', ["data" => $data, "user_types" => $user_types]);
+        $all_places = $this->placeRepository->published();
+
+        $by_user = $this->userToPlaceRepository->findByUser($id);
+
+        $places = [];
+        $user_places = [];
+
+        foreach ($all_places as $place) {
+
+            $city = $this->cityRepository->find($place->city_id);
+            if ($city)
+                $place->city_name = $city->name;
+            else
+                $place->city_name = AppConstant::getDash();
+
+            foreach ($by_user as $selected) {
+                if ($selected->place_id == $place->id) {
+                    $place->rel_id = $selected->id;
+                    array_push($user_places, $place);
+                } else
+                    array_push($places, $place);
+            }
+
+            if ($by_user->count() == 0)
+                array_push($places, $place);
+        }
+
+        $tab = Session::get("tab", "data");
+
+        return view('users/detail', ["data" => $data,
+            "user_types" => $user_types,
+            "places" => $places,
+            "user_places" => $user_places,
+            "tab" => $tab
+        ]);
     }
 
     public function save(Request $request, $id)
@@ -143,5 +194,48 @@ class UsersController extends AdminController
         $this->repository->delete($id);
 
         return redirect("users");
+    }
+
+    public function save_user_to_place(Request $request, $user_id): RedirectResponse
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'place_id' => ['required', 'int', 'gt:0'],
+            ]);
+
+            if ($validator->fails()) {
+                $this->logger->log("user.save_user_to_place error");
+            } else {
+                $place_id = $request->get('place_id');
+                $exists = $this->userToPlaceRepository->existsByUser($place_id, $user_id);
+
+                if ($exists == null) {
+                    $db = new UserToPlace();
+
+                    $db->user_id = $user_id;
+                    $db->place_id = $request->get('place_id');
+                    $db->published = 1;
+
+                    $this->userToPlaceRepository->save($db);
+                }
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "places");
+
+        return redirect()->back();
+    }
+
+    public function delete_user_to_place($id): RedirectResponse
+    {
+        $this->userToPlaceRepository->delete($id);
+
+        Session::flash('tab', "places");
+
+        return redirect()->back();
     }
 }

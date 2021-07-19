@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\ServiceType;
 use App\Models\UserToPlace;
 use App\Repositories\Base\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class UserToPlaceRepository extends BaseRepository implements UserToPlaceRepositoryInterface
@@ -18,13 +19,20 @@ class UserToPlaceRepository extends BaseRepository implements UserToPlaceReposit
         parent::__construct($model);
     }
 
-    public function actives(): Collection
+    public function findByUser($user_id): Collection
     {
-        return $this->model->all('active', 1);
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('user_id', $user_id)
+            ->get();
     }
 
-    public function published(): Collection
+    public function existsByUser($place_id, $user_id): ?Model
     {
-
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('place_id', $place_id)
+            ->where('user_id', $user_id)
+            ->first();
     }
 }

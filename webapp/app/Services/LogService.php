@@ -3,6 +3,8 @@
 
 namespace App\Services;
 
+use App\Core\ApiCodeEnum;
+use App\Core\AppErrorEnum;
 use App\Repositories\LogRepositoryInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +23,16 @@ class LogService implements LogServiceInterface
 
     public function save(Throwable $ex, $user_id = null): void
     {
-        Log::error($ex->getMessage());
+        $this->saveDb($ex->getCode(), $ex->getMessage(), $ex->getTraceAsString(), $user_id);
+    }
 
+    public function log(string $error, $user_id = null): void
+    {
+        $this->saveDb(AppErrorEnum::GENERIC, $error, "", $user_id);
+    }
+
+    private function saveDb(int $code, string $message, string $trace, $user_id = null): void
+    {
         try {
 
             if ($user_id == null) {
@@ -32,23 +42,20 @@ class LogService implements LogServiceInterface
 
             $db = new Models\Log();
 
-            $message = $ex->getMessage();
-
             if (strlen($message) > 250)
                 $message = substr($message, 0, 250);
-
-            $trace = $ex->getTraceAsString();
 
             if (strlen($trace) > 750)
                 $trace = substr($trace, 0, 750);
 
-            $db->code = strval($ex->getCode());
+            $db->code = strval($code);
             $db->error = $message;
             $db->trace = $trace;
             $db->user_id = $user_id;
             $db->published = 1;
 
             $this->repository->save($db);
+
         } catch (Throwable $e) {
             Log::error($e->getMessage());
         }

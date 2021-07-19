@@ -40,30 +40,4 @@ class UsersController extends AdminApiController
 
         return response()->json($userToPlaces);
     }
-
-    public function saveUserToPlace(Request $request)
-    {
-        try {
-
-            $validator = Validator::make($request->all(), [
-                'user_id' => ['required', 'int'],
-                'place_id' => ['required', 'int'],
-            ]);
-
-            if ($validator->fails()) {
-                // return view('states/detail', ["data" => $request])->withErrors($validator);
-            } else {
-                $db = new UserToPlace();
-
-                $db->user_id = $request->get('user_id');
-                $db->place_id = $request->get('place_id');
-                $db->published = $request->get('published') == "on";
-
-                $this->userToPlaceRepository->save($db);
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-        }
-    }
 }
