@@ -77,6 +77,13 @@ class PlacesController extends AdminController
 
     public function detail($id)
     {
+        if (Auth::user()->user_type_id != UserTypeEnum::Admin) {
+            $exists = $this->userToPlaceRepository->existsByUser($id, Auth::user()->id);
+
+            if ($exists == null)
+                return redirect("/");
+        }
+
         $data = $this->repository->find($id);
         $cities = $this->cityRepository->published();
 
