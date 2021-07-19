@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\Place;
 use App\Repositories\Base\BaseRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Throwable;
 

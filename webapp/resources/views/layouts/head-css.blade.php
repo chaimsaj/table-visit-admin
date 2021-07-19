@@ -9,6 +9,9 @@
 <link href="{{ URL::asset('/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css"/>
 <!-- Datatables Css -->
 <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css"/>
+<!-- Summernote-->
+<link href="{{ URL::asset('/assets/libs/summernote/summernote-bs4.min.css') }}" id="bootstrap-style" rel="stylesheet"
+      type="text/css"/>
 <!-- App Css-->
 <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css"/>
 

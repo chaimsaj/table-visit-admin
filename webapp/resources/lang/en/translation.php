@@ -46,6 +46,7 @@ return [
     "Details" => "Details",
     "Images" => "Images",
     "NoData" => "No data available",
+    "PlaceDescription" => "Place description",
 
     //Authentication
     "Authentication" => "Authentication",

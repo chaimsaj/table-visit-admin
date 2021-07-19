@@ -23,15 +23,15 @@ class LogService implements LogServiceInterface
 
     public function save(Throwable $ex, $user_id = null): void
     {
-        $this->saveDb($ex->getCode(), $ex->getMessage(), $ex->getTraceAsString(), $user_id);
+        $this->saveDb(strval($ex->getCode()), $ex->getMessage(), $ex->getTraceAsString(), $user_id);
     }
 
     public function log(string $error, $user_id = null): void
     {
-        $this->saveDb(AppErrorEnum::GENERIC, $error, "", $user_id);
+        $this->saveDb(strval(AppErrorEnum::GENERIC), $error, "", $user_id);
     }
 
-    private function saveDb(int $code, string $message, string $trace, $user_id = null): void
+    private function saveDb(string $code, string $message, string $trace, $user_id = null): void
     {
         try {
 
@@ -48,7 +48,7 @@ class LogService implements LogServiceInterface
             if (strlen($trace) > 750)
                 $trace = substr($trace, 0, 750);
 
-            $db->code = strval($code);
+            $db->code = $code;
             $db->error = $message;
             $db->trace = $trace;
             $db->user_id = $user_id;

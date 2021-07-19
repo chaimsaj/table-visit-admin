@@ -5,6 +5,8 @@
 <script src="{{ URL::asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
 <script src="{{ URL::asset('assets/libs/node-waves/node-waves.min.js')}}"></script>
 
+<script src="{{ URL::asset('assets/libs/tinymce/tinymce.min.js')}}"></script>
+
 {{--APP--}}
 <!-- datatables -->
 <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>

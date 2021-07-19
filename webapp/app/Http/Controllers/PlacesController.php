@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\AppConstant;
+use App\Core\LanguageEnum;
 use App\Core\MediaObjectTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
@@ -10,12 +11,20 @@ use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
+use App\Models\PlaceDetail;
 use App\Repositories\CityRepositoryInterface;
+use App\Repositories\LanguageRepositoryInterface;
+use App\Repositories\PlaceDetailRepositoryInterface;
+use App\Repositories\PlaceFeatureRepositoryInterface;
+use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\Console\Input\Input;
@@ -26,10 +35,18 @@ class PlacesController extends AdminController
     private PlaceRepositoryInterface $repository;
     private CityRepositoryInterface $cityRepository;
     private UserToPlaceRepositoryInterface $userToPlaceRepository;
+    private LanguageRepositoryInterface $languageRepository;
+    private PlaceFeatureRepositoryInterface $placeFeatureRepository;
+    private PlaceMusicRepositoryInterface $placeMusicRepository;
+    private PlaceDetailRepositoryInterface $placeDetailRepository;
 
     public function __construct(PlaceRepositoryInterface $repository,
                                 CityRepositoryInterface $cityRepository,
                                 UserToPlaceRepositoryInterface $userToPlaceRepository,
+                                LanguageRepositoryInterface $languageRepository,
+                                PlaceFeatureRepositoryInterface $placeFeatureRepository,
+                                PlaceMusicRepositoryInterface $placeMusicRepository,
+                                PlaceDetailRepositoryInterface $placeDetailRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
@@ -37,6 +54,10 @@ class PlacesController extends AdminController
         $this->repository = $repository;
         $this->cityRepository = $cityRepository;
         $this->userToPlaceRepository = $userToPlaceRepository;
+        $this->languageRepository = $languageRepository;
+        $this->placeFeatureRepository = $placeFeatureRepository;
+        $this->placeMusicRepository = $placeMusicRepository;
+        $this->placeDetailRepository = $placeDetailRepository;
     }
 
     public function index()
@@ -85,53 +106,69 @@ class PlacesController extends AdminController
 
         $data = $this->repository->find($id);
         $cities = $this->cityRepository->published();
+        $languages = $this->languageRepository->published();
+        $features = $this->placeFeatureRepository->published();
+        $music = $this->placeMusicRepository->published();
 
-        return view('places/detail', ["data" => $data, "cities" => $cities]);
+        $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
+
+        $tab = Session::get("tab", "data");
+
+        return view('places/detail', ["data" => $data,
+            "cities" => $cities,
+            "languages" => $languages,
+            "features" => $features,
+            "music" => $music,
+            "place_detail" => $place_detail,
+            "tab" => $tab
+        ]);
     }
 
     public function save(Request $request, $id)
     {
         try {
-            $validator = Validator::make($request->all(), [
+            /*$validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
                 'address' => ['required', 'string', 'max:255'],
-            ]);
+            ]);*/
 
             $db = $this->repository->find($id);
 
-            if ($validator->fails() && $db == null) {
-                return view('places/detail', ["data" => $request])->withErrors($validator);
-            } else {
-                if ($db == null)
-                    $db = new Place();
+            if ($db == null)
+                $db = new Place();
 
-                $db->name = $request->get('name');
-                $db->address = $request->get('address');
-                $db->display_order = intval($request->get('display_order'));
-                $db->city_id = $request->get('city_id');
-                $db->published = $request->get('published') == "on";
-                $db->show = $request->get('show') == "on";
-                $db->accept_reservations = $request->get('accept_reservations') == "on";
-                $db->open = $request->get('open') == "on";
+            $db->name = $request->get('name');
+            $db->address = $request->get('address');
+            $db->display_order = intval($request->get('display_order'));
+            $db->city_id = $request->get('city_id');
+            $db->published = $request->get('published') == "on";
+            $db->show = $request->get('show') == "on";
+            $db->accept_reservations = $request->get('accept_reservations') == "on";
+            $db->open = $request->get('open') == "on";
+
+            $this->repository->save($db);
+
+            if (request()->has('image_path')) {
+                MediaHelper::deletePlacesImage($db->image_path);
+
+                $image_file = request()->file('image_path');
+                $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
+                $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+
+                Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
+
+                $db->image_path = $image_name;
 
                 $this->repository->save($db);
 
-                if (request()->has('image_path')) {
-                    MediaHelper::deletePlacesImage($db->image_path);
-
-                    $image_file = request()->file('image_path');
-                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
-                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
-
-                    Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
-
-                    $db->image_path = $image_name;
-
-                    $this->repository->save($db);
-
-                    // Image::make(Input::file('image_path'))->resize(300, 200)->save('foo.jpg');
-                }
+                // Image::make(Input::file('image_path'))->resize(300, 200)->save('foo.jpg');
             }
+
+            /*if ($validator->fails() && $db == null) {
+                return view('places/detail', ["data" => $request])->withErrors($validator);
+            } else {
+
+            }*/
 
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -145,5 +182,29 @@ class PlacesController extends AdminController
         $this->repository->deleteLogic($id);
 
         return redirect("places");
+    }
+
+    public function save_details(Request $request, $place_id): RedirectResponse
+    {
+        try {
+            $db = $this->placeDetailRepository->loadBy($place_id, LanguageEnum::English);
+
+            if ($db == null)
+                $db = new PlaceDetail();
+
+            $db->detail = $request->get('place_detail');
+            $db->place_id = $place_id;
+            $db->language_id = LanguageEnum::English;
+            $db->published = 1;
+
+            $this->placeDetailRepository->save($db);
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "details");
+
+        return redirect()->back();
     }
 }

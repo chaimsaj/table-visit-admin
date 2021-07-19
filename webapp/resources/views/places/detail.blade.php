@@ -17,38 +17,43 @@
                         <div class="col-xl-12 mt-2">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="tab" href="#data" role="tab">
+                                    <a class="nav-link @if($tab=="data") active @endif" data-bs-toggle="tab"
+                                       href="#data" role="tab">
                                         <span class="d-block d-sm-none"><i class="bx bx-data"></i></span>
                                         <span class="d-none d-sm-block">@lang('translation.Data')</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#details" role="tab">
+                                    <a class="nav-link @if($tab=="details") active @endif" data-bs-toggle="tab"
+                                       href="#details" role="tab">
                                         <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
-                                        <span class="d-none d-sm-block">@lang('translation.Details')</span>
+                                        <span class="d-none d-sm-block">@lang('translation.Detail')</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#images" role="tab">
+                                    <a class="nav-link @if($tab=="images") active @endif" data-bs-toggle="tab"
+                                       href="#images" role="tab">
                                         <span class="d-block d-sm-none"><i class="bx bx-paperclip"></i></span>
                                         <span class="d-none d-sm-block">@lang('translation.Images')</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#features" role="tab">
+                                    <a class="nav-link @if($tab=="features") active @endif" data-bs-toggle="tab"
+                                       href="#features" role="tab">
                                         <span class="d-block d-sm-none"><i class="bx bx-grid-alt"></i></span>
                                         <span class="d-none d-sm-block">@lang('translation.Features')</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#music" role="tab">
+                                    <a class="nav-link @if($tab=="music") active @endif" data-bs-toggle="tab"
+                                       href="#music" role="tab">
                                         <span class="d-block d-sm-none"><i class="bx bx-music"></i></span>
                                         <span class="d-none d-sm-block">@lang('translation.Music')</span>
                                     </a>
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane active p-2" id="data" role="tabpanel">
+                                <div class="tab-pane p-2 @if($tab=="data") active @endif" id="data" role="tabpanel">
                                     <div class="row">
                                         <div class="col-xl-6">
                                             <form autocomplete="off" method="POST"
@@ -60,9 +65,9 @@
                                                     <img class="rounded avatar-md mt-2"
                                                          src="{{\App\Helpers\MediaHelper::getImageUrl($data->image_path, \App\Core\MediaSizeEnum::medium)}}"
                                                          alt=""/>
+                                                    <hr/>
                                                 @endif
-                                                <hr/>
-                                                <div class="mb-3">
+                                                <div class="mb-3 mt-3">
                                                     <label class="form-label">Name</label>
                                                     <input type="text" name="name"
                                                            value="{{$data->name ?? ''}}"
@@ -177,24 +182,30 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane p-2" id="details" role="tabpanel">
+                                <div class="tab-pane p-2 @if($tab=="details") active @endif" id="details"
+                                     role="tabpanel">
                                     <p class="mb-0">
-                                        Coming soon..
+                                        @component('components.place-details', ["languages" => $languages, "place_detail" => $place_detail ?? null])
+                                        @endcomponent
                                     </p>
                                 </div>
-                                <div class="tab-pane p-2" id="images" role="tabpanel">
+                                <div class="tab-pane p-2 @if($tab=="images") active @endif" id="images" role="tabpanel">
                                     <p class="mb-0">
-                                        Coming soon..
+                                        @component('components.place-images', ["languages" => $languages,"place_id" => $data->id ?? 0])
+                                        @endcomponent
                                     </p>
                                 </div>
-                                <div class="tab-pane p-2" id="features" role="tabpanel">
+                                <div class="tab-pane p-2 @if($tab=="features") active @endif" id="features"
+                                     role="tabpanel">
                                     <p class="mb-0">
-                                        Coming soon..
+                                        @component('components.place-features', ["features" => $features,"place_id" => $data->id ?? 0])
+                                        @endcomponent
                                     </p>
                                 </div>
-                                <div class="tab-pane p-2" id="music" role="tabpanel">
+                                <div class="tab-pane p-2 @if($tab=="music") active @endif" id="music" role="tabpanel">
                                     <p class="mb-0">
-                                        Coming soon..
+                                        @component('components.place-music', ["music" => $music,"place_id" => $data->id ?? 0])
+                                        @endcomponent
                                     </p>
                                 </div>
                             </div>
@@ -206,6 +217,8 @@
     </div>
 @endsection
 @section('script')
+    <!--tinymce js-->
+    <script src="{{ URL::asset('/assets/libs/tinymce/tinymce.min.js') }}"></script>
     <!-- places -->
     <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
     <script type="application/javascript">

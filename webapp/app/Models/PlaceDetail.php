@@ -14,5 +14,5 @@ class PlaceDetail extends Model
      *
      * @var string
      */
-    protected $table = 'places_detail';
+    protected $table = 'place_details';
 }

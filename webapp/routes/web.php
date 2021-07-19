@@ -110,6 +110,7 @@ Route::get('/places', [App\Http\Controllers\PlacesController::class, 'index'])->
 Route::get('/place/{id}', [App\Http\Controllers\PlacesController::class, 'detail'])->name('place.detail');
 Route::post('/place/{id}', [App\Http\Controllers\PlacesController::class, 'save'])->name('place.save');
 Route::get('/place/delete/{id}', [App\Http\Controllers\PlacesController::class, 'delete'])->name('place.delete');
+Route::post('/place/save_details/{place_id}', [App\Http\Controllers\PlacesController::class, 'save_details'])->name('place.save_details');
 
 //Place Types
 Route::get('/place-types', [App\Http\Controllers\PlaceTypesController::class, 'index'])->name('place-types');

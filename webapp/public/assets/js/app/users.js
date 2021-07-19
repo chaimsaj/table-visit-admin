@@ -4,3 +4,7 @@
     });
 })();
 
+function initUser()
+{
+
+}
