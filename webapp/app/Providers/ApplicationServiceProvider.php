@@ -37,6 +37,10 @@ use App\Repositories\PlaceMusicRepository;
 use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepository;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\PlaceToFeatureRepository;
+use App\Repositories\PlaceToFeatureRepositoryInterface;
+use App\Repositories\PlaceToMusicRepository;
+use App\Repositories\PlaceToMusicRepositoryInterface;
 use App\Repositories\PlaceTypeRepository;
 use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\PlaceWorkDayRepository;
@@ -107,6 +111,10 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(PlaceFeatureRepositoryInterface::class, PlaceFeatureRepository::class);
         $this->app->bind(PlaceMusicRepositoryInterface::class, PlaceMusicRepository::class);
         $this->app->bind(PlaceRepositoryInterface::class, PlaceRepository::class);
+
+        $this->app->bind(PlaceToFeatureRepositoryInterface::class, PlaceToFeatureRepository::class);
+        $this->app->bind(PlaceToMusicRepositoryInterface::class, PlaceToMusicRepository::class);
+
         $this->app->bind(PlaceTypeRepositoryInterface::class, PlaceTypeRepository::class);
         $this->app->bind(PlaceWorkDayRepositoryInterface::class, PlaceWorkDayRepository::class);
         $this->app->bind(PlaceWorkHourRepositoryInterface::class, PlaceWorkHourRepository::class);

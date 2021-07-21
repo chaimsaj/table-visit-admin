@@ -12,12 +12,16 @@ use App\Http\Controllers\Base\AdminController;
 use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
 use App\Models\PlaceDetail;
+use App\Models\PlaceToFeature;
+use App\Models\PlaceToMusic;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\LanguageRepositoryInterface;
 use App\Repositories\PlaceDetailRepositoryInterface;
 use App\Repositories\PlaceFeatureRepositoryInterface;
 use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\PlaceToFeatureRepositoryInterface;
+use App\Repositories\PlaceToMusicRepositoryInterface;
 use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +43,8 @@ class PlacesController extends AdminController
     private PlaceFeatureRepositoryInterface $placeFeatureRepository;
     private PlaceMusicRepositoryInterface $placeMusicRepository;
     private PlaceDetailRepositoryInterface $placeDetailRepository;
+    private PlaceToFeatureRepositoryInterface $placeToFeatureRepository;
+    private PlaceToMusicRepositoryInterface $placeToMusicRepository;
 
     public function __construct(PlaceRepositoryInterface $repository,
                                 CityRepositoryInterface $cityRepository,
@@ -47,6 +53,8 @@ class PlacesController extends AdminController
                                 PlaceFeatureRepositoryInterface $placeFeatureRepository,
                                 PlaceMusicRepositoryInterface $placeMusicRepository,
                                 PlaceDetailRepositoryInterface $placeDetailRepository,
+                                PlaceToFeatureRepositoryInterface $placeToFeatureRepository,
+                                PlaceToMusicRepositoryInterface $placeToMusicRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
@@ -58,6 +66,8 @@ class PlacesController extends AdminController
         $this->placeFeatureRepository = $placeFeatureRepository;
         $this->placeMusicRepository = $placeMusicRepository;
         $this->placeDetailRepository = $placeDetailRepository;
+        $this->placeToFeatureRepository = $placeToFeatureRepository;
+        $this->placeToMusicRepository = $placeToMusicRepository;
     }
 
     public function index()
@@ -184,6 +194,7 @@ class PlacesController extends AdminController
         return redirect("places");
     }
 
+    //Details
     public function save_details(Request $request, $id): RedirectResponse
     {
         try {
@@ -208,40 +219,17 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
-    public function save_features(Request $request, $id): RedirectResponse
-    {
-        try {
-            $db = $this->placeDetailRepository->loadBy($place_id, LanguageEnum::English);
-
-            if ($db == null)
-                $db = new PlaceDetail();
-
-            $db->detail = $request->get('place_detail');
-            $db->place_id = $place_id;
-            $db->language_id = LanguageEnum::English;
-            $db->published = 1;
-
-            $this->placeDetailRepository->save($db);
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-        }
-
-        Session::flash('tab', "details");
-
-        return redirect()->back();
-    }
-
+    //Floor Plan
     public function save_floor_plan(Request $request, $id): RedirectResponse
     {
         try {
             $db = $this->repository->find($id);
 
             if ($db != null) {
-                if (request()->has('floor_plan_path')) {
+                if ($request->has('floor_plan_path')) {
                     MediaHelper::deletePlacesImage($db->floor_plan_path);
 
-                    $image_file = request()->file('floor_plan_path');
+                    $image_file = $request->file('floor_plan_path');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
                     $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
@@ -261,16 +249,17 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
+    //Food Menu
     public function save_food_menu(Request $request, $id): RedirectResponse
     {
         try {
             $db = $this->repository->find($id);
 
             if ($db != null) {
-                if (request()->has('food_menu_path')) {
+                if ($request->has('food_menu_path')) {
                     MediaHelper::deletePlacesImage($db->food_menu_path);
 
-                    $image_file = request()->file('food_menu_path');
+                    $image_file = $request->file('food_menu_path');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
                     $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
@@ -286,6 +275,94 @@ class PlacesController extends AdminController
         }
 
         Session::flash('tab', "food-menu");
+
+        return redirect()->back();
+    }
+
+    //Features
+    public function save_feature_to_place(Request $request, $id): RedirectResponse
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'feature_id' => ['required', 'int', 'gt:0'],
+            ]);
+
+            if ($validator->fails()) {
+                $this->logger->log("place.save_feature_to_place error");
+            } else {
+                $feature_id = $request->get('feature_id');
+                $exists = $this->placeToFeatureRepository->existsByPlace($feature_id, $id);
+
+                if ($exists == null) {
+                    $db = new PlaceToFeature();
+
+                    $db->place_id = $id;
+                    $db->feature_id = $feature_id;
+                    $db->published = 1;
+
+                    $this->placeToFeatureRepository->save($db);
+                }
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "features");
+
+        return redirect()->back();
+    }
+
+    public function delete_feature_to_place($id): RedirectResponse
+    {
+        $this->placeToFeatureRepository->delete($id);
+
+        Session::flash('tab', "features");
+
+        return redirect()->back();
+    }
+
+    //Music
+    public function save_music_to_place(Request $request, $id): RedirectResponse
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'music_id' => ['required', 'int', 'gt:0'],
+            ]);
+
+            if ($validator->fails()) {
+                $this->logger->log("place.save_music_to_place error");
+            } else {
+                $music_id = $request->get('music_id');
+                $exists = $this->placeToMusicRepository->existsByPlace($music_id, $id);
+
+                if ($exists == null) {
+                    $db = new PlaceToMusic();
+
+                    $db->place_id = $id;
+                    $db->music_id = $music_id;
+                    $db->published = 1;
+
+                    $this->placeToMusicRepository->save($db);
+                }
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "music");
+
+        return redirect()->back();
+    }
+
+    public function delete_music_to_place($id): RedirectResponse
+    {
+        $this->placeToMusicRepository->delete($id);
+
+        Session::flash('tab', "music");
 
         return redirect()->back();
     }

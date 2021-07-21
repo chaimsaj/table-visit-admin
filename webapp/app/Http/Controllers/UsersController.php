@@ -189,7 +189,7 @@ class UsersController extends AdminController
                     $db = new UserToPlace();
 
                     $db->user_id = $id;
-                    $db->place_id = $request->get('place_id');
+                    $db->place_id = $place_id;
                     $db->published = 1;
 
                     $this->userToPlaceRepository->save($db);

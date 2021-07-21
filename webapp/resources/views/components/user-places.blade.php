@@ -32,7 +32,7 @@
                 @endforeach
                 @if(count($user_places) == 0)
                     <tr class="text-center">
-                        <td colspan="5">
+                        <td colspan="6">
                             @lang('translation.NoData')
                         </td>
                     </tr>

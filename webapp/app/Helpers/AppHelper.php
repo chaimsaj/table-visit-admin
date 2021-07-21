@@ -22,23 +22,30 @@ class AppHelper
 
     static function userTypes(): Collection
     {
+        $undefined = new KeyValueModel();
+        $undefined->setKey(UserTypeEnum::Undefined);
+        $undefined->setValue("Undefined");
+
         $admin = new KeyValueModel();
         $admin->setKey(UserTypeEnum::Admin);
         $admin->setValue("Admin");
-        //$admin->setValue(UserTypeEnum::toString(UserTypeEnum::Admin));
 
         $place_admin = new KeyValueModel();
         $place_admin->setKey(UserTypeEnum::PlaceAdmin);
         $place_admin->setValue("Place Admin");
 
-        $place_employee = new KeyValueModel();
-        $place_employee->setKey(UserTypeEnum::PlaceEmployee);
-        $place_employee->setValue("Place Employee");
+        $valet_parking = new KeyValueModel();
+        $valet_parking->setKey(UserTypeEnum::ValetParking);
+        $valet_parking->setValue("Valet Parking");
 
-        $guest = new KeyValueModel();
-        $guest->setKey(UserTypeEnum::Guest);
-        $guest->setValue("Guest");
+        $waiter = new KeyValueModel();
+        $waiter->setKey(UserTypeEnum::Waiter);
+        $waiter->setValue("Waiter");
 
-        return collect([$admin, $place_admin, $place_employee, $guest]);
+        $employee = new KeyValueModel();
+        $employee->setKey(UserTypeEnum::Employee);
+        $employee->setValue("Employee");
+
+        return collect([$undefined, $admin, $place_admin, $valet_parking, $waiter, $employee]);
     }
 }

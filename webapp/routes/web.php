@@ -114,6 +114,12 @@ Route::post('/place/save_details/{id}', [App\Http\Controllers\PlacesController::
 Route::post('/place/save_floor_plan/{id}', [App\Http\Controllers\PlacesController::class, 'save_floor_plan'])->name('place.save_floor_plan');
 Route::post('/place/save_food_menu/{id}', [App\Http\Controllers\PlacesController::class, 'save_food_menu'])->name('place.save_food_menu');
 
+Route::post('/place/save_feature_to_place/{id}', [App\Http\Controllers\PlacesController::class, 'save_feature_to_place'])->name('place.save_feature_to_place');
+Route::get('/place/delete_feature_to_place/{id}', [App\Http\Controllers\PlacesController::class, 'delete_feature_to_place'])->name('place.delete_feature_to_place');
+
+Route::post('/place/save_music_to_place/{id}', [App\Http\Controllers\PlacesController::class, 'save_music_to_place'])->name('place.save_music_to_place');
+Route::get('/place/delete_music_to_place/{id}', [App\Http\Controllers\PlacesController::class, 'delete_music_to_place'])->name('place.delete_music_to_place');
+
 //Place Types
 Route::get('/place-types', [App\Http\Controllers\PlaceTypesController::class, 'index'])->name('place-types');
 Route::get('/place-type/{id}', [App\Http\Controllers\PlaceTypesController::class, 'detail'])->name('place-type.detail');
