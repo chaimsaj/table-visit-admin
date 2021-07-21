@@ -39,7 +39,6 @@ class PlacesController extends AdminController
     private PlaceRepositoryInterface $repository;
     private CityRepositoryInterface $cityRepository;
     private UserToPlaceRepositoryInterface $userToPlaceRepository;
-    private LanguageRepositoryInterface $languageRepository;
     private PlaceFeatureRepositoryInterface $placeFeatureRepository;
     private PlaceMusicRepositoryInterface $placeMusicRepository;
     private PlaceDetailRepositoryInterface $placeDetailRepository;
@@ -49,7 +48,6 @@ class PlacesController extends AdminController
     public function __construct(PlaceRepositoryInterface $repository,
                                 CityRepositoryInterface $cityRepository,
                                 UserToPlaceRepositoryInterface $userToPlaceRepository,
-                                LanguageRepositoryInterface $languageRepository,
                                 PlaceFeatureRepositoryInterface $placeFeatureRepository,
                                 PlaceMusicRepositoryInterface $placeMusicRepository,
                                 PlaceDetailRepositoryInterface $placeDetailRepository,
@@ -62,7 +60,6 @@ class PlacesController extends AdminController
         $this->repository = $repository;
         $this->cityRepository = $cityRepository;
         $this->userToPlaceRepository = $userToPlaceRepository;
-        $this->languageRepository = $languageRepository;
         $this->placeFeatureRepository = $placeFeatureRepository;
         $this->placeMusicRepository = $placeMusicRepository;
         $this->placeDetailRepository = $placeDetailRepository;

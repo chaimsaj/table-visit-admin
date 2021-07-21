@@ -6,29 +6,30 @@
                 <tr class="text-center">
                     <th>@lang('translation.Id')</th>
                     <th>@lang('translation.Feature')</th>
-                    <th>@lang('translation.Delete')</th>
-                    <th>@lang('translation.View')</th>
+                    <th class="th25">@lang('translation.Delete')</th>
+                    <th class="th25">@lang('translation.View')</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach ($features as $item)
+                @foreach ($place_features as $item)
                     <tr class="text-center">
                         <td>{{ $item->rel_id }}</td>
                         <td>{{ $item->name }}</td>
                         <td>
-                            <a href="{{route("user.delete_user_to_place", $item->rel_id)}}"
+                            <a href="{{route("place.delete_feature_to_place", $item->rel_id)}}"
                                class="text-danger sweet-warning"><i
                                     class="mdi mdi-delete font-size-18"></i></a>
                         </td>
                         <td>
-                            <a href="{{route("place.detail", $item->id)}}" target="_blank" class="text-secondary"><i
+                            <a href="{{route("place-feature.detail", $item->id)}}" target="_blank"
+                               class="text-secondary"><i
                                     class="mdi mdi-arrow-top-right font-size-18"></i></a>
                         </td>
                     </tr>
                 @endforeach
-                @if(count($user_places) == 0)
+                @if(count($place_features) == 0)
                     <tr class="text-center">
-                        <td colspan="6">
+                        <td colspan="4">
                             @lang('translation.NoData')
                         </td>
                     </tr>
@@ -42,17 +43,17 @@
     <div class="col-xl-6">
         <form autocomplete="off" method="POST"
               class="form-horizontal"
-              action="{{route("user.save_user_to_place", $user_id ?? 0)}}">
+              action="{{route("place.save_feature_to_place", $data->id ?? 0)}}">
             @csrf
             <div class="mb-4">
-                <label class="form-label">@lang('translation.AddPlaces')</label>
+                <label class="form-label">@lang('translation.AddFeatures')</label>
                 <div>
-                    <select id="place_id" class="form-select" name="place_id">
+                    <select id="feature_id" class="form-select" name="feature_id">
                         <option value="0">@lang('translation.Select')</option>
-                        @if (isset($places))
-                            @foreach($places as $place)
-                                <option value="{{ $place->id }}">
-                                    {{ $place->name }}
+                        @if (isset($features))
+                            @foreach($features as $feature)
+                                <option value="{{ $feature->id }}">
+                                    {{ $feature->name }}
                                 </option>
                             @endforeach
                         @endif
