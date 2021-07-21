@@ -35,8 +35,8 @@
                             <th>@lang('translation.Name')</th>
                             <th>@lang('translation.DisplayOrder')</th>
                             <th>@lang('translation.City')</th>
-                            <th class="no-sort">@lang('translation.Delete')</th>
-                            <th class="no-sort">@lang('translation.Edit')</th>
+                            <th class="th45 no-sort">@lang('translation.Delete')</th>
+                            <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
                         </thead>
 

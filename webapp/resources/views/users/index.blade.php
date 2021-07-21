@@ -40,8 +40,8 @@
                                 <th>@lang('translation.Name')</th>
                                 <th>@lang('translation.Email')</th>
                                 <th>@lang('translation.UserType')</th>
-                                <th class="no-sort">@lang('translation.Delete')</th>
-                                <th class="no-sort">@lang('translation.Edit')</th>
+                                <th class="th45 no-sort">@lang('translation.Delete')</th>
+                                <th class="th45 no-sort">@lang('translation.Edit')</th>
                             </tr>
                             </thead>
                             <tbody>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\PlaceFeature;
 use App\Repositories\PlaceFeatureRepositoryInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Throwable;

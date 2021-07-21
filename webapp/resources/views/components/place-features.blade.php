@@ -6,8 +6,8 @@
                 <tr class="text-center">
                     <th>@lang('translation.Id')</th>
                     <th>@lang('translation.Feature')</th>
-                    <th class="th25">@lang('translation.Delete')</th>
-                    <th class="th25">@lang('translation.View')</th>
+                    <th class="th45">@lang('translation.Delete')</th>
+                    <th class="th45">@lang('translation.View')</th>
                 </tr>
                 </thead>
                 <tbody>

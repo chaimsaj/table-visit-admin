@@ -8,8 +8,8 @@
                     <th>@lang('translation.Name')</th>
                     <th>@lang('translation.DisplayOrder')</th>
                     <th>@lang('translation.City')</th>
-                    <th>@lang('translation.Delete')</th>
-                    <th>@lang('translation.View')</th>
+                    <th class="th45">@lang('translation.Delete')</th>
+                    <th class="th45">@lang('translation.View')</th>
                 </tr>
                 </thead>
                 <tbody>
