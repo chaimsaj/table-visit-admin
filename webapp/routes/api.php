@@ -32,6 +32,7 @@ Route::middleware('api')->group(function () {
     Route::post('/sign_in', [App\Http\Api\AuthController::class, 'sign_in'])->name('api.auth.sign_in');
     Route::post('/sign_up', [App\Http\Api\AuthController::class, 'sign_up'])->name('api.auth.sign_up');
 
+    //Admin Api
     //Locations
     Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin.api.load_states');
 });

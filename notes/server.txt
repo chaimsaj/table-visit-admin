@@ -1,9 +1,3 @@
-ssh root@74.117.181.34
-8Aday258NLF6xhc0KX
-
-mariadb
-lO2V4Zd49TNx6nh9Zj
-
 NEW
 ssh centos-vm@table-visit.southcentralus.cloudapp.azure.com
 centos-vm
