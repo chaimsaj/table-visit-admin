@@ -4,7 +4,7 @@
             <table class="table table-striped w-100 align-middle">
                 <thead>
                 <tr class="text-center">
-                    <th class="th5p">@lang('translation.Id')</th>
+                    <th class="th10p">@lang('translation.Id')</th>
                     <th>@lang('translation.Feature')</th>
                     <th class="th45">@lang('translation.Delete')</th>
                     <th class="th45">@lang('translation.View')</th>
