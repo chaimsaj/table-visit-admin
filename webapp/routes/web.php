@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes([
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
+]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 Route::get('/index', [App\Http\Controllers\HomeController::class, 'root'])->name('root');

@@ -51,7 +51,8 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form autocomplete="off" class="form-horizontal" method="POST" action="{{ route('login') }}">
+                                            <form autocomplete="off" class="form-horizontal" method="POST"
+                                                  action="{{ route('login') }}">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Email</label>
@@ -108,18 +109,18 @@
                                                     </button>
                                                 </div>
                                             </form>
-                                            <div class="mt-5 text-center">
+                                            {{--<div class="mt-5 text-center">
                                                 <p>Don't have an account ? <a href="{{ url('register') }}"
                                                                               class="fw-medium text-primary"> Signup
                                                         now </a></p>
-                                            </div>
+                                            </div>--}}
                                         </div>
                                     </div>
 
                                     <div class="mt-4 mt-md-5 text-center">
                                         <p class="mb-0">
                                             <script>
-                                                document.write(new Date().getFullYear())
+                                                document.write(new Date().getFullYear().toString())
 
                                             </script>
                                             @lang('translation.TableVisit') &trade;
@@ -142,4 +143,4 @@
     @section('script')
         <script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
         <script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
-    @endsection
+@endsection

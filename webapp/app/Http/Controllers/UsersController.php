@@ -88,7 +88,10 @@ class UsersController extends AdminController
                 array_push($places, $place);
         }
 
-        $is_admin = $data->user_type_id == UserTypeEnum::Admin;
+        $is_admin = false;
+
+        if (isset($data))
+            $is_admin = $data->user_type_id == UserTypeEnum::Admin;
 
         $tab = Session::get("tab", "data");
 
