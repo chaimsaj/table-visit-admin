@@ -23,11 +23,11 @@ class PlaceToMusicRepository extends BaseRepository implements PlaceToMusicRepos
             ->get();
     }
 
-    public function existsByPlace($music_id, $place_id): ?Model
+    public function existsByPlace($place_music_id, $place_id): ?Model
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('music_id', $music_id)
+            ->where('place_music_id', $place_music_id)
             ->where('place_id', $place_id)
             ->first();
     }

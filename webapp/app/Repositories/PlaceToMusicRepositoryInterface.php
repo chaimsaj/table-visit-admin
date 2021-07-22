@@ -11,5 +11,5 @@ interface PlaceToMusicRepositoryInterface extends BaseRepositoryInterface
 {
     public function findByPlace($place_id): Collection;
 
-    public function existsByPlace($music_id, $place_id): ?Model;
+    public function existsByPlace($place_music_id, $place_id): ?Model;
 }

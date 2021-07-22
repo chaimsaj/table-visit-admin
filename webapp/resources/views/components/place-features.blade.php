@@ -4,7 +4,7 @@
             <table class="table table-striped w-100 align-middle">
                 <thead>
                 <tr class="text-center">
-                    <th>@lang('translation.Id')</th>
+                    <th class="th5p">@lang('translation.Id')</th>
                     <th>@lang('translation.Feature')</th>
                     <th class="th45">@lang('translation.Delete')</th>
                     <th class="th45">@lang('translation.View')</th>
@@ -48,7 +48,7 @@
             <div class="mb-4">
                 <label class="form-label">@lang('translation.AddFeatures')</label>
                 <div>
-                    <select id="feature_id" class="form-select" name="feature_id">
+                    <select id="place_feature_id" class="form-select" name="place_feature_id">
                         <option value="0">@lang('translation.Select')</option>
                         @if (isset($features))
                             @foreach($features as $feature)

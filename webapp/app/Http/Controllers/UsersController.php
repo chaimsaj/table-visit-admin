@@ -21,6 +21,7 @@ use App\Services\LogServiceInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -87,12 +88,15 @@ class UsersController extends AdminController
                 array_push($places, $place);
         }
 
+        $is_admin = $data->user_type_id == UserTypeEnum::Admin;
+
         $tab = Session::get("tab", "data");
 
         return view('users/detail', ["data" => $data,
             "user_types" => AppHelper::userTypes(),
             "places" => $places,
             "user_places" => $user_places,
+            "is_admin" => $is_admin,
             "tab" => $tab
         ]);
     }

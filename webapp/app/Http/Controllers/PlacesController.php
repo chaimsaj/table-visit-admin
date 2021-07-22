@@ -113,20 +113,55 @@ class PlacesController extends AdminController
 
         $data = $this->repository->find($id);
         $cities = $this->cityRepository->published();
-        //$languages = $this->languageRepository->published();
-        $features = $this->placeFeatureRepository->published();
-        $music = $this->placeMusicRepository->published();
-
         $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
+
+        $all_features = $this->placeFeatureRepository->published();
+        $place_to_features = $this->placeToFeatureRepository->published();
+
+        $features = [];
+        $place_features = [];
+
+        foreach ($all_features as $feature) {
+            foreach ($place_to_features as $selected) {
+                if ($selected->place_feature_id == $feature->id) {
+                    $feature->rel_id = $selected->id;
+                    array_push($place_features, $feature);
+                } else
+                    array_push($features, $feature);
+            }
+
+            if ($place_to_features->count() == 0)
+                array_push($features, $feature);
+        }
+
+        $all_music = $this->placeMusicRepository->published();
+        $place_to_music = $this->placeToMusicRepository->published();
+
+        $music_data = [];
+        $place_music = [];
+
+        foreach ($all_music as $music) {
+            foreach ($place_to_music as $selected) {
+                if ($selected->place_music_id == $music->id) {
+                    $music->rel_id = $selected->id;
+                    array_push($place_music, $music);
+                } else
+                    array_push($music_data, $music);
+            }
+
+            if ($place_to_music->count() == 0)
+                array_push($music_data, $music);
+        }
 
         $tab = Session::get("tab", "data");
 
         return view('places/detail', ["data" => $data,
             "cities" => $cities,
-            //"languages" => $languages,
-            "features" => $features,
-            "music" => $music,
             "place_detail" => $place_detail,
+            "features" => $features,
+            "place_features" => $place_features,
+            "music" => $music_data,
+            "place_music" => $place_music,
             "tab" => $tab
         ]);
     }
@@ -282,20 +317,20 @@ class PlacesController extends AdminController
         try {
 
             $validator = Validator::make($request->all(), [
-                'feature_id' => ['required', 'int', 'gt:0'],
+                'place_feature_id' => ['required', 'int', 'gt:0'],
             ]);
 
             if ($validator->fails()) {
                 $this->logger->log("place.save_feature_to_place error");
             } else {
-                $feature_id = $request->get('feature_id');
-                $exists = $this->placeToFeatureRepository->existsByPlace($feature_id, $id);
+                $place_feature_id = $request->get('place_feature_id');
+                $exists = $this->placeToFeatureRepository->existsByPlace($place_feature_id, $id);
 
                 if ($exists == null) {
                     $db = new PlaceToFeature();
 
                     $db->place_id = $id;
-                    $db->feature_id = $feature_id;
+                    $db->place_feature_id = $place_feature_id;
                     $db->published = 1;
 
                     $this->placeToFeatureRepository->save($db);
@@ -326,20 +361,20 @@ class PlacesController extends AdminController
         try {
 
             $validator = Validator::make($request->all(), [
-                'music_id' => ['required', 'int', 'gt:0'],
+                'place_music_id' => ['required', 'int', 'gt:0'],
             ]);
 
             if ($validator->fails()) {
                 $this->logger->log("place.save_music_to_place error");
             } else {
-                $music_id = $request->get('music_id');
-                $exists = $this->placeToMusicRepository->existsByPlace($music_id, $id);
+                $place_music_id = $request->get('place_music_id');
+                $exists = $this->placeToMusicRepository->existsByPlace($place_music_id, $id);
 
                 if ($exists == null) {
                     $db = new PlaceToMusic();
 
                     $db->place_id = $id;
-                    $db->music_id = $music_id;
+                    $db->place_music_id = $place_music_id;
                     $db->published = 1;
 
                     $this->placeToMusicRepository->save($db);

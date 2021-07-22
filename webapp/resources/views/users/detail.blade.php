@@ -24,7 +24,7 @@
                                         <span class="d-none d-sm-block">@lang('translation.Data')</span>
                                     </a>
                                 </li>
-                                @if($data && $data->id != 0)
+                                @if($data && $data->id != 0 && !$is_admin)
                                     <li class="nav-item">
                                         <a class="nav-link @if($tab=="places") active @endif"
                                            data-bs-toggle="tab" href="#places" role="tab">
@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($data && $data->id != 0)
+                                @if($data && $data->id != 0 && !$is_admin)
                                     <div class="tab-pane p-2 @if($tab=="places") active @endif" id="places"
                                          role="tabpanel">
                                         @component('components.user-places', ["places" => $places, "user_places" => $user_places, "user_id" => $data->id ?? 0])

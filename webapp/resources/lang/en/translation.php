@@ -107,6 +107,7 @@ return [
     "PlaceFeature" => "Place Feature",
     "Feature" => "Feature",
     "AddFeatures" => "Add Features",
+    "AddMusic" => "Add Music",
 
     "Music" => "Music",
     "PlaceMusic" => "Place Music",

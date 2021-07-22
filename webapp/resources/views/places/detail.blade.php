@@ -224,12 +224,12 @@
                                     </div>
                                     <div class="tab-pane p-2 @if($tab=="features") active @endif" id="features"
                                          role="tabpanel">
-                                        @component('components.place-features', ["features" => $features, "data" => $data ?? null, "place_features" => []])
+                                        @component('components.place-features', ["features" => $features, "data" => $data ?? null, "place_features" => $place_features])
                                         @endcomponent
                                     </div>
                                     <div class="tab-pane p-2 @if($tab=="music") active @endif" id="music"
                                          role="tabpanel">
-                                        @component('components.place-music', ["music" => $music, "data" => $data ?? null, "place_music" => []])
+                                        @component('components.place-music', ["music" => $music, "data" => $data ?? null, "place_music" => $place_music])
                                         @endcomponent
                                     </div>
                                 @endif

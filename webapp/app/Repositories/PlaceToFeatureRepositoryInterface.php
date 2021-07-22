@@ -11,5 +11,5 @@ interface PlaceToFeatureRepositoryInterface extends BaseRepositoryInterface
 {
     public function findByPlace($place_id): Collection;
 
-    public function existsByPlace($feature_id, $place_id): ?Model;
+    public function existsByPlace($place_feature_id, $place_id): ?Model;
 }

@@ -23,11 +23,11 @@ class PlaceToFeatureRepository extends BaseRepository implements PlaceToFeatureR
             ->get();
     }
 
-    public function existsByPlace($feature_id, $place_id): ?Model
+    public function existsByPlace($place_feature_id, $place_id): ?Model
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('feature_id', $feature_id)
+            ->where('place_feature_id', $place_feature_id)
             ->where('place_id', $place_id)
             ->first();
     }
