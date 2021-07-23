@@ -6,6 +6,17 @@ d7LFhnPmbwuIln3l
 mariadb
 pBJRetR2EKPg
 
+mysql_upgrade --force -u root -p
+
+mysql -u root -p table-visit
+
+sudo nano /etc/my.cnf.d/server.cnf
+
+CREATE USER external_user@'%' IDENTIFIED BY 'pBJRetR2EKPg';
+GRANT ALL PRIVILEGES ON *.* TO 'external_user'@'%' ;
+flush privileges;
+
+
 DB_DATABASE=table-visit
 DB_USERNAME=root
 DB_PASSWORD=pBJRetR2EKPg

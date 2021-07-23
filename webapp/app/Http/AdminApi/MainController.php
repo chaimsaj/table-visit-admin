@@ -32,7 +32,7 @@ class MainController
         $this->cityRepository = $cityRepository;
     }
 
-    public function import_bak(): JsonResponse
+    public function _bak(): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
