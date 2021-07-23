@@ -34,7 +34,7 @@ class CitiesController extends AdminController
 
     public function index()
     {
-        $data = $this->repository->actives();
+        $data = $this->repository->actives()->take(100);
 
         $data->each(function ($item, $key) {
             $country = $this->countryRepository->find($item->country_id);

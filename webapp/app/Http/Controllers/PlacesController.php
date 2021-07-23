@@ -22,11 +22,13 @@ use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceToFeatureRepositoryInterface;
 use App\Repositories\PlaceToMusicRepositoryInterface;
+use App\Repositories\StateRepositoryInterface;
 use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +39,7 @@ use Throwable;
 class PlacesController extends AdminController
 {
     private PlaceRepositoryInterface $repository;
+    private StateRepositoryInterface $stateRepository;
     private CityRepositoryInterface $cityRepository;
     private UserToPlaceRepositoryInterface $userToPlaceRepository;
     private PlaceFeatureRepositoryInterface $placeFeatureRepository;
@@ -46,6 +49,7 @@ class PlacesController extends AdminController
     private PlaceToMusicRepositoryInterface $placeToMusicRepository;
 
     public function __construct(PlaceRepositoryInterface $repository,
+                                StateRepositoryInterface $stateRepository,
                                 CityRepositoryInterface $cityRepository,
                                 UserToPlaceRepositoryInterface $userToPlaceRepository,
                                 PlaceFeatureRepositoryInterface $placeFeatureRepository,
@@ -58,6 +62,7 @@ class PlacesController extends AdminController
         parent::__construct($logger);
 
         $this->repository = $repository;
+        $this->stateRepository = $stateRepository;
         $this->cityRepository = $cityRepository;
         $this->userToPlaceRepository = $userToPlaceRepository;
         $this->placeFeatureRepository = $placeFeatureRepository;
@@ -112,8 +117,15 @@ class PlacesController extends AdminController
         }
 
         $data = $this->repository->find($id);
-        $cities = $this->cityRepository->published();
         $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
+        $states = $this->stateRepository->published();
+
+        $cities = new Collection();
+
+        if (isset($data)) {
+
+            $cities = $this->cityRepository->publishedByState($data->state_id);
+        }
 
         $all_features = $this->placeFeatureRepository->published();
         $place_to_features = $this->placeToFeatureRepository->published();
@@ -156,6 +168,7 @@ class PlacesController extends AdminController
         $tab = Session::get("tab", "data");
 
         return view('places/detail', ["data" => $data,
+            "states" => $states,
             "cities" => $cities,
             "place_detail" => $place_detail,
             "features" => $features,

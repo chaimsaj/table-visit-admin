@@ -35,6 +35,9 @@ Route::middleware('api')->group(function () {
     //Admin Api
     //Locations
     Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin.api.load_states');
+    Route::get('/admin/locations/load_cities/{state_id}', [App\Http\AdminApi\LocationsController::class, 'load_cities'])->name('admin.api.load_cities');
+
+    //Route::get('/admin/main/import', [App\Http\AdminApi\MainController::class, 'import'])->name('admin.api.main.import');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

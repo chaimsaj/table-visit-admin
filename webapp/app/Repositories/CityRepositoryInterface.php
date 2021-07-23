@@ -10,5 +10,6 @@ interface CityRepositoryInterface extends BaseRepositoryInterface
 {
     public function actives(): Collection;
     public function published(): Collection;
+    public function publishedByState($state_id): Collection;
     public function deleteLogic($id): bool;
 }

@@ -28,6 +28,14 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
             ->get();
     }
 
+    public function publishedByState($state_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('state_id', $state_id)
+            ->get();
+    }
+
     public function deleteLogic($id): bool
     {
         try {

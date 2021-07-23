@@ -110,6 +110,21 @@
                                                 </div>
 
                                                 <div class="mb-3">
+                                                    <label class="form-label">State</label>
+                                                    <div>
+                                                        <select class="form-select" name="state_id">
+                                                            <option value="0">@lang('translation.Select')</option>
+                                                            @foreach($states as $state)
+                                                                <option
+                                                                    value="{{ $state->id }}" {{ ($data && $data->state_id == $state->id) ? 'selected' : '' }}>
+                                                                    {{ $state->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
                                                     <label class="form-label">City</label>
                                                     <div>
                                                         <select class="form-select" name="city_id">
