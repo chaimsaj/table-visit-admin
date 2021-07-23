@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Collection;
 use Throwable;
 
 class UsersController extends AdminController
@@ -52,53 +53,90 @@ class UsersController extends AdminController
 
     public function index()
     {
-        $data = $this->repository->all();
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
 
-        return view('users/index', ["data" => $data, "user_types" => AppHelper::userTypes()]);
+        $data = new Collection();
+
+        if ($is_admin)
+            $data = $this->repository->actives();
+        else {
+            $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
+            foreach ($by_user as $selected) {
+                $users = $this->repository->activesByPlace($selected->place_id);
+                foreach ($users as $user)
+                    $data->push($user);
+            }
+        }
+
+        return view('users/index', ["data" => $data,
+            "user_types" => AppHelper::userTypesAll(),
+            "is_admin" => $is_admin
+        ]);
     }
 
     public function detail($id)
     {
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
         $data = $this->repository->find($id);
 
-        $all_places = $this->placeRepository->published();
-
-        $by_user = $this->userToPlaceRepository->findByUser($id);
+        if ($is_admin && isset($data) && $data->place_id != null)
+            return redirect("users");
 
         $places = [];
         $user_places = [];
 
-        foreach ($all_places as $place) {
+        $current = $id;
 
-            $city = $this->cityRepository->find($place->city_id);
-            if ($city)
-                $place->city_name = $city->name;
-            else
-                $place->city_name = AppConstant::getDash();
+        if (!$is_admin)
+            $current = Auth::user()->id;
 
-            foreach ($by_user as $selected) {
-                if ($selected->place_id == $place->id) {
-                    $place->rel_id = $selected->id;
-                    array_push($user_places, $place);
-                } else
+        $by_user = $this->userToPlaceRepository->findByUser($current);
+
+        if ($is_admin) {
+            $all_places = $this->placeRepository->published();
+
+            foreach ($all_places as $place) {
+                $city = $this->cityRepository->find($place->city_id);
+                if ($city)
+                    $place->city_name = $city->name;
+                else
+                    $place->city_name = AppConstant::getDash();
+
+                foreach ($by_user as $selected) {
+                    if ($selected->place_id == $place->id) {
+                        $place->rel_id = $selected->id;
+                        array_push($user_places, $place);
+                    } else
+                        array_push($places, $place);
+                }
+
+                if ($by_user->count() == 0)
                     array_push($places, $place);
             }
+        } else {
+            foreach ($by_user as $selected) {
+                $place = $this->placeRepository->find($selected->place_id);
 
-            if ($by_user->count() == 0)
-                array_push($places, $place);
+                if (isset($place)) {
+                    $place->rel_id = $selected->id;
+                    array_push($user_places, $place);
+                }
+            }
         }
 
-        $is_admin = false;
+        $has_places = false;
 
         if (isset($data))
-            $is_admin = $data->user_type_id == UserTypeEnum::Admin;
+            $has_places = $data->user_type_id == UserTypeEnum::Admin;
 
         $tab = Session::get("tab", "data");
 
         return view('users/detail', ["data" => $data,
-            "user_types" => AppHelper::userTypes(),
+            "user_types" => AppHelper::userTypes($is_admin),
             "places" => $places,
             "user_places" => $user_places,
+            "has_places" => $has_places,
             "is_admin" => $is_admin,
             "tab" => $tab
         ]);
@@ -107,6 +145,8 @@ class UsersController extends AdminController
     public function save(Request $request, $id)
     {
         try {
+
+            $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
 
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
@@ -146,6 +186,10 @@ class UsersController extends AdminController
                     $db->email_verified_at = now();
 
                 //$db->dob = date('Y-m-d', strtotime($request->get('dob')));
+
+                if (!$is_admin) {
+                    $db->place_id = intval($request->get('place_id'));
+                }
 
                 $this->repository->save($db);
 

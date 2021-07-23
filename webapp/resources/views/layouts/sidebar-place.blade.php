@@ -13,6 +13,16 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-user-circle"></i>
+                        <span key="t-users">@lang('translation.Users')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-building-house"></i>
                         <span key="t-venues">@lang('translation.Venues')</span>
                     </a>

@@ -24,7 +24,7 @@
                                         <span class="d-none d-sm-block">@lang('translation.Data')</span>
                                     </a>
                                 </li>
-                                @if($data && $data->id != 0 && !$is_admin)
+                                @if($data && $data->id != 0 && $data->place_id == null && !$has_places)
                                     <li class="nav-item">
                                         <a class="nav-link @if($tab=="places") active @endif"
                                            data-bs-toggle="tab" href="#places" role="tab">
@@ -120,6 +120,22 @@
                                                     </div>
                                                 </div>
 
+                                                @if(!$is_admin)
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Place</label>
+                                                        <div>
+                                                            <select class="form-select" name="place_id">
+                                                                @foreach($user_places as $user_place)
+                                                                    <option
+                                                                        value="{{ $user_place->id }}" {{ ($data && $data->place_id == $user_place->id) ? 'selected' : '' }}>
+                                                                        {{ $user_place->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
                                                 <div class="mb-4">
                                                     <div class="row">
                                                         <div class="col-6">
@@ -162,7 +178,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($data && $data->id != 0 && !$is_admin)
+                                @if($data && $data->id != 0 && $data->place_id == null && !$has_places)
                                     <div class="tab-pane p-2 @if($tab=="places") active @endif" id="places"
                                          role="tabpanel">
                                         @component('components.user-places', ["places" => $places, "user_places" => $user_places, "user_id" => $data->id ?? 0])

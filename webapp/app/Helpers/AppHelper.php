@@ -20,32 +20,49 @@ class AppHelper
         return str_pad($number, 2, '0', STR_PAD_LEFT);
     }
 
-    static function userTypes(): Collection
+    static function userTypes(bool $is_admin = true): Collection
     {
-        $undefined = new KeyValueModel();
-        $undefined->setKey(UserTypeEnum::Undefined);
-        $undefined->setValue("Undefined");
+        if ($is_admin) {
+            $undefined = new KeyValueModel();
+            $undefined->setKey(UserTypeEnum::Undefined);
+            $undefined->setValue("Undefined");
 
-        $admin = new KeyValueModel();
-        $admin->setKey(UserTypeEnum::Admin);
-        $admin->setValue("Admin");
+            $admin = new KeyValueModel();
+            $admin->setKey(UserTypeEnum::Admin);
+            $admin->setValue("Admin");
 
-        $place_admin = new KeyValueModel();
-        $place_admin->setKey(UserTypeEnum::PlaceAdmin);
-        $place_admin->setValue("Place Admin");
+            $place_admin = new KeyValueModel();
+            $place_admin->setKey(UserTypeEnum::PlaceAdmin);
+            $place_admin->setValue("Place Admin");
 
-        $valet_parking = new KeyValueModel();
-        $valet_parking->setKey(UserTypeEnum::ValetParking);
-        $valet_parking->setValue("Valet Parking");
+            return collect([$undefined, $admin, $place_admin]);
+        } else {
+            $valet_parking = new KeyValueModel();
+            $valet_parking->setKey(UserTypeEnum::ValetParking);
+            $valet_parking->setValue("Valet Parking");
 
-        $waiter = new KeyValueModel();
-        $waiter->setKey(UserTypeEnum::Waiter);
-        $waiter->setValue("Waiter");
+            $waiter = new KeyValueModel();
+            $waiter->setKey(UserTypeEnum::Waiter);
+            $waiter->setValue("Waiter");
 
-        $employee = new KeyValueModel();
-        $employee->setKey(UserTypeEnum::Employee);
-        $employee->setValue("Employee");
+            $employee = new KeyValueModel();
+            $employee->setKey(UserTypeEnum::Employee);
+            $employee->setValue("Employee");
 
-        return collect([$undefined, $admin, $place_admin, $valet_parking, $waiter, $employee]);
+            return collect([$valet_parking, $waiter, $employee]);
+        }
+    }
+
+    static function userTypesAll(): Collection
+    {
+        $all_types = new Collection();
+
+        foreach (AppHelper::userTypes() as $user_type)
+            $all_types->push($user_type);
+
+        foreach (AppHelper::userTypes(false) as $user_type)
+            $all_types->push($user_type);
+
+        return $all_types;
     }
 }

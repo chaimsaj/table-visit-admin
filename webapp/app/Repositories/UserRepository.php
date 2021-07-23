@@ -17,7 +17,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function actives(): Collection
     {
-        return $this->model->where('deleted', 0)->get();
+        return $this->model->where('deleted', 0)
+            ->orderBy('name', 'asc')
+            ->get();
+    }
+
+    public function activesByPlace(int $place_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where("place_id", "=", $place_id)
+            ->orderBy('name', 'asc')
+            ->get();
     }
 
     public function published(): Collection
