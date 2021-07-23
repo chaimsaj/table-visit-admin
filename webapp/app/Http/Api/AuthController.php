@@ -11,6 +11,8 @@ use App\Core\BaseEnum;
 use App\Core\UserTypeEnum;
 use App\Http\Api\Base\ApiController;
 use App\Models\User;
+use App\Repositories\CityRepositoryInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +22,11 @@ use Throwable;
 
 class AuthController extends ApiController
 {
+    public function __construct(LogServiceInterface $logger)
+    {
+        parent::__construct($logger);
+    }
+
     public function sign_in(Request $request): JsonResponse
     {
         $response = new ApiModel();
@@ -44,9 +51,16 @@ class AuthController extends ApiController
 
     public function sign_out(Request $request): JsonResponse
     {
+        $response = new ApiModel();
+        $response->setSuccess();
+
         if (Auth::check()) {
-            $request->user()->currentAccessToken()->delete();
-        }
+            $token = Auth::user()->currentAccessToken();
+            $token->delete();
+        } else
+            $response->setError();
+
+        return response()->json($response);
 
         // Revoke all tokens...
         //$user->tokens()->delete();
@@ -57,9 +71,6 @@ class AuthController extends ApiController
         // Revoke a specific token...
         //$user->tokens()->where('id', $tokenId)->delete();
 
-        $response = new ApiModel();
-        $response->setSuccess();
-        return response()->json($response);
     }
 
     public function sign_up(Request $request): JsonResponse
@@ -93,6 +104,36 @@ class AuthController extends ApiController
         } catch (Throwable $ex) {
             $response->setError($ex->getMessage());
         }
+
+        return response()->json($response);
+    }
+
+    public function logged_user(): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if (isset($user->dob))
+                $user->dob = DateTime::createFromFormat('Y-m-d', $user->dob)->format('d-m-Y');
+
+            $response->setData($user);
+        } else
+            $response->setError();
+
+        return response()->json($response);
+    }
+
+    public function valid_user(): JsonResponse
+    {
+        $response = new ApiModel();
+
+        if (Auth::check()) {
+            $response->setSuccess();
+        } else
+            $response->setError();
 
         return response()->json($response);
     }

@@ -42,8 +42,11 @@ Route::middleware('api')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/sign_out', [App\Http\Api\AuthController::class, 'sign_out'])->name('api.auth.sign_out');
+    Route::get('/logged_user', [App\Http\Api\AuthController::class, 'logged_user'])->name('api.auth.logged_user');
+    Route::get('/valid_user', [App\Http\Api\AuthController::class, 'valid_user'])->name('api.auth.valid_user');
 
-    Route::get('/users', [App\Http\Api\UsersController::class, 'list'])->name('api.users.list');
+    Route::get('/cities', [App\Http\Api\CitiesController::class, 'list'])->name('api.cities.list');
+    Route::get('/city/{id}', [App\Http\Api\CitiesController::class, 'find'])->name('api.cities.find');
 
     Route::get('/cities', [App\Http\Api\CitiesController::class, 'list'])->name('api.cities.list');
     Route::get('/city/{id}', [App\Http\Api\CitiesController::class, 'find'])->name('api.cities.find');

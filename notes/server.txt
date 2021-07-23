@@ -6,6 +6,10 @@ d7LFhnPmbwuIln3l
 mariadb
 pBJRetR2EKPg
 
+DB_DATABASE=table-visit
+DB_USERNAME=root
+DB_PASSWORD=pBJRetR2EKPg
+
 mysql -h localhost -u root -p table-visit
 
 DROP DATABASE `table-visit`;
