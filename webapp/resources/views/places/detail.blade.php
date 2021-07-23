@@ -112,7 +112,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">State</label>
                                                     <div>
-                                                        <select class="form-select" name="state_id">
+                                                        <select class="form-select" id="state_id" name="state_id">
                                                             <option value="0">@lang('translation.Select')</option>
                                                             @foreach($states as $state)
                                                                 <option
@@ -127,7 +127,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">City</label>
                                                     <div>
-                                                        <select class="form-select" name="city_id">
+                                                        <select class="form-select" id="city_id" name="city_id">
                                                             <option value="0">@lang('translation.Select')</option>
                                                             @foreach($cities as $city)
                                                                 <option

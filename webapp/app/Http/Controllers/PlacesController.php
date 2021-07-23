@@ -196,6 +196,7 @@ class PlacesController extends AdminController
             $db->address = $request->get('address');
             $db->display_order = intval($request->get('display_order'));
             $db->city_id = $request->get('city_id');
+            $db->state_id = $request->get('state_id');
             $db->published = $request->get('published') == "on";
             $db->show = $request->get('show') == "on";
             $db->accept_reservations = $request->get('accept_reservations') == "on";
