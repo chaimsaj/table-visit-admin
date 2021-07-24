@@ -33,9 +33,11 @@ Route::middleware('api')->group(function () {
     Route::post('/sign_up', [App\Http\Api\AuthController::class, 'sign_up'])->name('api.auth.sign_up');
 
     //Admin Api
+
     //Locations
     Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin.api.load_states');
     Route::get('/admin/locations/load_cities/{state_id}', [App\Http\AdminApi\LocationsController::class, 'load_cities'])->name('admin.api.load_cities');
+    Route::post('/admin/locations/cities', [App\Http\AdminApi\LocationsController::class, 'cities'])->name('admin.api.cities');
 
     //Route::get('/admin/main/import', [App\Http\AdminApi\MainController::class, 'import'])->name('admin.api.main.import');
 });

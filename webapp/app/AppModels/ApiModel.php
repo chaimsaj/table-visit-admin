@@ -4,12 +4,13 @@
 namespace App\AppModels;
 
 use App\Core\ApiCodeEnum;
+use Illuminate\Support\Collection;
 
 class ApiModel
 {
     public int $code;
     public object $data;
-    public array $list;
+    public Collection $list;
     public ?int $timestamp;
     public string $message;
 
@@ -61,17 +62,17 @@ class ApiModel
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getList(): array
+    public function getList(): Collection
     {
         return $this->list;
     }
 
     /**
-     * @param array $list
+     * @param Collection $list
      */
-    public function setList(array $list): void
+    public function setList(Collection $list): void
     {
         $this->list = $list;
     }

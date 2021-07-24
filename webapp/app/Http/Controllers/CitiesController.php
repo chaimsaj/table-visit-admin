@@ -85,6 +85,10 @@ class CitiesController extends AdminController
 
                 $db->name = $request->get('name');
                 $db->iso_code = $request->get('iso_code');
+
+                if ($db->iso_code == null)
+                    $db->iso_code = "";
+
                 $db->display_order = intval($request->get('display_order'));
                 $db->country_id = $request->get('country_id');
                 $db->state_id = $request->get('state_id');

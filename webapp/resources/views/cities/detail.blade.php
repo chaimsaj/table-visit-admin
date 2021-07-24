@@ -32,7 +32,7 @@
                                     <div>
                                         <input name="iso_code" type="iso_code"
                                                value="{{$data->iso_code ?? ''}}"
-                                               class="form-control" required
+                                               class="form-control"
                                                placeholder="Code"/>
                                     </div>
                                 </div>

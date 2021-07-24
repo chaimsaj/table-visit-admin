@@ -7,12 +7,42 @@ function initStates() {
 }
 
 function initCities() {
-    /*$('#example').dataTable({
-        "ajax": {
-            "url": "data.json",
-            "type": "POST"
+    let datatable = $('#cities-datatable').DataTable({
+        columnDefs: [
+            {
+                targets: 'no-sort', orderable: false
+            }
+        ],
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/api/admin/locations/cities",
+            type: "POST"
+        },
+        columns: [
+            // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'iso_code', name: 'iso_code'},
+            {data: 'display_order', name: 'display_order'},
+            {data: 'state_name', name: 'state_name'},
+            {data: 'country_name', name: 'country_name'},
+            {
+                data: null, render: function (data) {
+                    return '<a href="/city/delete/' + data['id'] + '" class="text-danger sweet-warning"><i class="mdi mdi-delete font-size-18"></i></a>';
+                }
+            },
+            {
+                data: null, render: function (data) {
+                    return '<a href="/city/' + data['id'] + '" class="text-success load"><i class="mdi mdi-pencil font-size-18"></i></a>';
+                }
+            }
+        ],
+        drawCallback: function () {
+            initLoad();
+            sweetWarning();
         }
-    });*/
+    });
 }
 
 function initCity() {

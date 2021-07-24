@@ -26,21 +26,42 @@
                         </div>
                     </div>
                     <hr/>
-                    <table id="cities-datatable"
-                           class="table table-bordered dt-responsive nowrap w-100 align-middle text-center">
+                    <table id="datatable"
+                           class="table table-bordered dt-responsive nowrap w-100 align-middle">
                         <thead class="table-light">
                         <tr class="text-center">
-                            <th class="no-sort">@lang('translation.Id')</th>
-                            <th class="no-sort">@lang('translation.Name')</th>
-                            <th class="no-sort">@lang('translation.Code')</th>
-                            <th class="no-sort">@lang('translation.DisplayOrder')</th>
-                            <th class="no-sort">@lang('translation.State')</th>
-                            <th class="no-sort">@lang('translation.Country')</th>
+                            <th>@lang('translation.Id')</th>
+                            <th>@lang('translation.Name')</th>
+                            <th>@lang('translation.Code')</th>
+                            <th>@lang('translation.DisplayOrder')</th>
+                            <th>@lang('translation.State')</th>
+                            <th>@lang('translation.Country')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
                         </thead>
 
+
+                        <tbody>
+                        @foreach ($data as $item)
+                            <tr class="text-center">
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->iso_code }}</td>
+                                <td>{{ $item->display_order }}</td>
+                                <td>{{ $item->state_name }}</td>
+                                <td>{{ $item->country_name }}</td>
+                                <td>
+                                    <a href="{{route("city.delete", $item->id)}}" class="text-danger sweet-warning"><i
+                                            class="mdi mdi-delete font-size-18"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{{route("city.detail", $item->id)}}" class="text-success"><i
+                                            class="mdi mdi-pencil font-size-18"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

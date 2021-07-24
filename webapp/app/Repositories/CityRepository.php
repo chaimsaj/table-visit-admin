@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
 use Throwable;
+use function PHPUnit\Framework\isEmpty;
 
 class CityRepository extends BaseRepository implements CityRepositoryInterface
 {
@@ -18,6 +19,22 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
     public function actives(): Collection
     {
         return $this->model->where('deleted', 0)->get();
+    }
+
+    public function actives_paged(int $start, int $length, string $search): array
+    {
+        $query = $this->model->where('deleted', 0)
+            ->where('name', 'like', $search . '%')
+            ->skip($start)
+            ->take($length)
+            ->get();
+
+        $count = $this->model->count();
+
+        return [
+            "data" => $query,
+            "count" => $count
+        ];
     }
 
     public function published(): Collection

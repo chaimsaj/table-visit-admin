@@ -18,11 +18,11 @@ interface BaseRepositoryInterface
 
     public function published(): Collection;
 
-    public function restore($id): bool;
+    public function restore(int $id): bool;
 
     public function save(Model $model): bool;
 
-    public function delete($id): bool;
+    public function delete(int $id): bool;
 
-    public function deleteLogic($id): bool;
+    public function deleteLogic(int $id): bool;
 }
