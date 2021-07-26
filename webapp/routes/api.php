@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/cities', [App\Http\Api\CitiesController::class, 'list'])->name('api.cities.list');
     Route::get('/city/{id}', [App\Http\Api\CitiesController::class, 'find'])->name('api.cities.find');
+    Route::post('/cities/search', [App\Http\Api\CitiesController::class, 'search'])->name('api.cities.search');
 
     Route::get('/places', [App\Http\Api\PlacesController::class, 'list'])->name('api.places.list');
     Route::get('/place/{id}', [App\Http\Api\PlacesController::class, 'find'])->name('api.places.find');

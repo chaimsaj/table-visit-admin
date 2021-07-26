@@ -12,9 +12,11 @@ interface CityRepositoryInterface extends BaseRepositoryInterface
 
     public function published(): Collection;
 
-    public function publishedByState($state_id): Collection;
+    public function publishedByState(int $state_id): Collection;
 
-    public function deleteLogic($id): bool;
+    public function deleteLogic(int $id): bool;
 
     public function actives_paged(int $start, int $length, string $search): array;
+
+    public function search(string $word): Collection;
 }

@@ -9,6 +9,7 @@ use App\Http\Api\Base\ApiController;
 use App\Repositories\CityRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Throwable;
 
 class CitiesController extends ApiController
@@ -38,7 +39,7 @@ class CitiesController extends ApiController
         return response()->json($response);
     }
 
-    public function find($id): JsonResponse
+    public function find(int $id): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -46,6 +47,30 @@ class CitiesController extends ApiController
         try {
             $query = $this->cityRepository->find($id);
             $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $word = "";
+
+            $data = $request->json()->all();
+
+            if (isset($data) && isset($data['word']))
+                $word = $data['word'];
+
+            if (strlen($word) >= 3) {
+                $query = $this->cityRepository->search($word);
+                $response->setData($query);
+            }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }

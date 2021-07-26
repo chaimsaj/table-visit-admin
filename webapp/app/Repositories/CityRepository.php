@@ -72,4 +72,13 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
             return false;
         }
     }
+
+    public function search(string $word): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('name', 'like', $word . '%')
+            ->orderBy('name', 'asc')
+            ->get();
+    }
 }
