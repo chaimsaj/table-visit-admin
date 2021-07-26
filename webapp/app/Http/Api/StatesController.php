@@ -3,26 +3,53 @@
 
 namespace App\Http\Api;
 
+use App\AppModels\ApiModel;
 use App\Http\Api\Base\ApiController;
+use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class StatesController extends ApiController
 {
-    private StateRepositoryInterface $repository;
+    private StateRepositoryInterface $stateRepository;
 
-    public function __construct(StateRepositoryInterface $repository)
+    public function __construct(StateRepositoryInterface $stateRepository,
+                                LogServiceInterface $logger)
     {
-        $this->repository = $repository;
+        parent::__construct($logger);
+
+        $this->stateRepository = $stateRepository;
     }
 
     public function list(): JsonResponse
     {
-        return response()->json($this->repository->actives());
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->stateRepository->published();
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
     }
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->repository->find($id));
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->stateRepository->find($id);
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
     }
 }

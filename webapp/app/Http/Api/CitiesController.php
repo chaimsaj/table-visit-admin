@@ -13,14 +13,14 @@ use Throwable;
 
 class CitiesController extends ApiController
 {
-    private CityRepositoryInterface $repository;
+    private CityRepositoryInterface $cityRepository;
 
-    public function __construct(CityRepositoryInterface $repository,
+    public function __construct(CityRepositoryInterface $cityRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->repository = $repository;
+        $this->cityRepository = $cityRepository;
     }
 
     public function list(): JsonResponse
@@ -29,7 +29,7 @@ class CitiesController extends ApiController
         $response->setSuccess();
 
         try {
-            $query = $this->repository->published();
+            $query = $this->cityRepository->published();
             $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -40,6 +40,16 @@ class CitiesController extends ApiController
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->repository->find($id));
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->cityRepository->find($id);
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
     }
 }

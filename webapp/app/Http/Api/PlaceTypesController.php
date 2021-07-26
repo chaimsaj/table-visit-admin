@@ -3,26 +3,53 @@
 
 namespace App\Http\Api;
 
+use App\AppModels\ApiModel;
 use App\Http\Api\Base\ApiController;
+use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceTypeRepositoryInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Throwable;
 
 class PlaceTypesController extends ApiController
 {
-    private PlaceTypeRepositoryInterface $repository;
+    private PlaceTypeRepositoryInterface $placeTypeRepository;
 
-    public function __construct(PlaceTypeRepositoryInterface $repository)
+    public function __construct(PlaceTypeRepositoryInterface $placeTypeRepository,
+                                LogServiceInterface $logger)
     {
-        $this->repository = $repository;
+        parent::__construct($logger);
+
+        $this->placeTypeRepository = $placeTypeRepository;
     }
 
     public function list(): JsonResponse
     {
-        return response()->json($this->repository->all());
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->placeTypeRepository->published();
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
     }
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->repository->find($id));
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->placeTypeRepository->find($id);
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
     }
 }

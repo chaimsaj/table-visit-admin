@@ -3,47 +3,52 @@
 
 namespace App\Http\Api;
 
+use App\AppModels\ApiModel;
 use App\Http\Api\Base\ApiController;
 use App\Repositories\UserRepositoryInterface;
+use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Throwable;
-use Yajra\DataTables\DataTables;
 
 class UsersController extends ApiController
 {
-    private UserRepositoryInterface $repository;
+    private UserRepositoryInterface $userRepository;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $userRepository,
+                                LogServiceInterface $logger)
     {
-        $this->repository = $repository;
+        parent::__construct($logger);
+
+        $this->userRepository = $userRepository;
     }
 
     public function list(): JsonResponse
     {
+        $response = new ApiModel();
+        $response->setSuccess();
+
         try {
-            //return Datatables::of($this->repository->all())->make(true);
-
-            $query = $this->repository->all();
-
-            return Datatables::of($query)->setTransformer(function ($data) {
-                return [
-                    'id' => (int)$data->id,
-                    'name' => $data->name,
-                    'email' => $data->email,
-                    'created_at' => (string)$data->created_at,
-                    'updated_at' => (string)$data->updated_at,
-                ];
-            })->toJson();
-
+            $query = $this->userRepository->published();
+            $response->setData($query);
         } catch (Throwable $ex) {
-            return response()->json($ex->getMessage());
+            $this->logger->save($ex);
         }
 
-        //return response()->json($this->countryService->all());
+        return response()->json($response);
     }
 
     public function find($id): JsonResponse
     {
-        return response()->json($this->repository->find($id));
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->userRepository->find($id);
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
     }
 }

@@ -78,7 +78,7 @@ class AuthController extends ApiController
         $response = new ApiModel();
         $response->setSuccess();
 
-        $data = request()->json()->all();
+        $data = $request->json()->all();
 
         $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],

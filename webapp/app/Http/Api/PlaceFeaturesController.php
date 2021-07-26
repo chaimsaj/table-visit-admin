@@ -6,22 +6,24 @@ namespace App\Http\Api;
 use App\AppModels\ApiModel;
 use App\Http\Api\Base\ApiController;
 use App\Repositories\CountryRepositoryInterface;
+use App\Repositories\PlaceFeatureRepositoryInterface;
+use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-class PlacesController extends ApiController
+class PlaceFeaturesController extends ApiController
 {
-    private PlaceRepositoryInterface $placeRepository;
+    private PlaceFeatureRepositoryInterface $placeFeatureRepository;
 
-    public function __construct(PlaceRepositoryInterface $placeRepository,
+    public function __construct(PlaceFeatureRepositoryInterface $placeFeatureRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->placeRepository = $placeRepository;
+        $this->placeFeatureRepository = $placeFeatureRepository;
     }
 
     public function list(): JsonResponse
@@ -30,7 +32,7 @@ class PlacesController extends ApiController
         $response->setSuccess();
 
         try {
-            $query = $this->placeRepository->published();
+            $query = $this->placeFeatureRepository->published();
             $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -45,7 +47,7 @@ class PlacesController extends ApiController
         $response->setSuccess();
 
         try {
-            $query = $this->placeRepository->find($id);
+            $query = $this->placeFeatureRepository->find($id);
             $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
