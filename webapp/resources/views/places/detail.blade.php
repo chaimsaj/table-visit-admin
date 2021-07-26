@@ -217,7 +217,7 @@
                                     <div class="tab-pane p-2 @if($tab=="details") active @endif" id="details"
                                          role="tabpanel">
                                         <p class="mb-0">
-                                            @component('components.place-details', ["place_detail" => $place_detail ?? null])
+                                            @component('components.place-details', ["place_detail" => $place_detail ?? null, "data" => $data ?? null])
                                             @endcomponent
                                         </p>
                                     </div>

@@ -2,7 +2,7 @@
     <div class="col-xl-8">
         <form autocomplete="off" method="POST"
               class="form-horizontal"
-              action="{{route("place.save_details", $place_detail->place_id ?? 0)}}">
+              action="{{route("place.save_details", $data->id ?? 0)}}">
             @csrf
             <div class="mb-4 mt-3">
                 <label class="form-label">@lang('translation.PlaceDescription')</label>
