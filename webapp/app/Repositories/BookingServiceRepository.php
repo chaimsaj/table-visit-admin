@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\BookingService;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class BookingServiceRepository extends BaseRepository implements BookingServiceRepositoryInterface
 {

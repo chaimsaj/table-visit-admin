@@ -6,7 +6,6 @@ namespace App\Repositories;
 use App\Core\LanguageEnum;
 use App\Models\Place;
 use App\Repositories\Base\BaseRepository;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
