@@ -19,6 +19,10 @@ use App\Repositories\CountryRepository;
 use App\Repositories\CountryRepositoryInterface;
 use App\Repositories\CurrencyRepository;
 use App\Repositories\CurrencyRepositoryInterface;
+use App\Repositories\FavoriteRepository;
+use App\Repositories\FavoriteRepositoryInterface;
+use App\Repositories\GuestRepository;
+use App\Repositories\GuestRepositoryInterface;
 use App\Repositories\LanguageRepository;
 use App\Repositories\LanguageRepositoryInterface;
 use App\Repositories\LocationRepository;
@@ -102,6 +106,8 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(ContentPageRepositoryInterface::class, ContentPageRepository::class);
         $this->app->bind(CountryRepositoryInterface::class, CountryRepository::class);
         $this->app->bind(CurrencyRepositoryInterface::class, CurrencyRepository::class);
+        $this->app->bind(FavoriteRepositoryInterface::class, FavoriteRepository::class);
+        $this->app->bind(GuestRepositoryInterface::class, GuestRepository::class);
         $this->app->bind(LanguageRepositoryInterface::class, LanguageRepository::class);
         $this->app->bind(LocationRepositoryInterface::class, LocationRepository::class);
         $this->app->bind(LogRepositoryInterface::class, LogRepository::class);
@@ -111,10 +117,8 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(PlaceFeatureRepositoryInterface::class, PlaceFeatureRepository::class);
         $this->app->bind(PlaceMusicRepositoryInterface::class, PlaceMusicRepository::class);
         $this->app->bind(PlaceRepositoryInterface::class, PlaceRepository::class);
-
         $this->app->bind(PlaceToFeatureRepositoryInterface::class, PlaceToFeatureRepository::class);
         $this->app->bind(PlaceToMusicRepositoryInterface::class, PlaceToMusicRepository::class);
-
         $this->app->bind(PlaceTypeRepositoryInterface::class, PlaceTypeRepository::class);
         $this->app->bind(PlaceWorkDayRepositoryInterface::class, PlaceWorkDayRepository::class);
         $this->app->bind(PlaceWorkHourRepositoryInterface::class, PlaceWorkHourRepository::class);
