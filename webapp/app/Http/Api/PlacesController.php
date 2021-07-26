@@ -53,4 +53,19 @@ class PlacesController extends ApiController
 
         return response()->json($response);
     }
+
+    public function list_by_city(int $city_id): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->placeRepository->publishedByCity($city_id);
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
+    }
 }

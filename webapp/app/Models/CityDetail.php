@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Base\AppBaseModel;
 
-class CityDetail extends Model
+class CityDetail extends AppBaseModel
 {
     /**
      * The table associated with the model.

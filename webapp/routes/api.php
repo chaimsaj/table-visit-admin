@@ -47,9 +47,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logged_user', [App\Http\Api\AuthController::class, 'logged_user'])->name('api.auth.logged_user');
     Route::get('/valid_user', [App\Http\Api\AuthController::class, 'valid_user'])->name('api.auth.valid_user');
 
-    Route::get('/cities', [App\Http\Api\CitiesController::class, 'list'])->name('api.cities.list');
-    Route::get('/city/{id}', [App\Http\Api\CitiesController::class, 'find'])->name('api.cities.find');
+    Route::get('/countries', [App\Http\Api\CountriesController::class, 'list'])->name('api.countries.list');
+    Route::get('/country/{id}', [App\Http\Api\CountriesController::class, 'find'])->name('api.countries.find');
+
+    Route::get('/states', [App\Http\Api\StatesController::class, 'list'])->name('api.states.list');
+    Route::get('/state/{id}', [App\Http\Api\StatesController::class, 'find'])->name('api.states.find');
 
     Route::get('/cities', [App\Http\Api\CitiesController::class, 'list'])->name('api.cities.list');
     Route::get('/city/{id}', [App\Http\Api\CitiesController::class, 'find'])->name('api.cities.find');
+
+    Route::get('/places', [App\Http\Api\PlacesController::class, 'list'])->name('api.places.list');
+    Route::get('/place/{id}', [App\Http\Api\PlacesController::class, 'find'])->name('api.places.find');
+    Route::get('/places/list_by_city/{city_id}', [App\Http\Api\PlacesController::class, 'list_by_city'])->name('api.places.list_by_city');
+
+    Route::get('/place_music', [App\Http\Api\PlaceMusicController::class, 'list'])->name('api.place_music.list');
+    Route::get('/place_music/{id}', [App\Http\Api\PlaceMusicController::class, 'find'])->name('api.place_music.find');
+
+    Route::get('/place_features', [App\Http\Api\PlaceFeaturesController::class, 'list'])->name('api.place_features.list');
+    Route::get('/place_feature/{id}', [App\Http\Api\PlaceFeaturesController::class, 'find'])->name('api.place_features.find');
 });

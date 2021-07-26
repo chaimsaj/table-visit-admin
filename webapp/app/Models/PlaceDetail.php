@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Base\AppBaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class PlaceDetail extends Model
+class PlaceDetail extends AppBaseModel
 {
     use HasFactory;
 
