@@ -99,7 +99,7 @@ class AuthController extends ApiController
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'auth_mode' => AuthModeEnum::Basic,
-                'user_type_id' => UserTypeEnum::Guest,
+                'user_type_id' => UserTypeEnum::Customer,
             ]);
         } catch (Throwable $ex) {
             $response->setError($ex->getMessage());

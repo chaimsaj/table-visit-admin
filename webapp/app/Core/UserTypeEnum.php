@@ -12,7 +12,7 @@ class UserTypeEnum extends BaseEnum
     const PlaceAdmin = 2;
     const ValetParking = 3;
     const Waiter = 4;
-    const Employee = 5;
+    const DJ = 5;
 
     const Customer = 6;
 }

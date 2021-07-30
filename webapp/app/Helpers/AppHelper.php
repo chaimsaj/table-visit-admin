@@ -46,8 +46,8 @@ class AppHelper
             $waiter->setValue("Waiter");
 
             $employee = new KeyValueModel();
-            $employee->setKey(UserTypeEnum::Employee);
-            $employee->setValue("Employee");
+            $employee->setKey(UserTypeEnum::DJ);
+            $employee->setValue("DJ");
 
             return collect([$valet_parking, $waiter, $employee]);
         }
