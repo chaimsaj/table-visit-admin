@@ -16,7 +16,9 @@ interface CityRepositoryInterface extends BaseRepositoryInterface
 
     public function deleteLogic(int $id): bool;
 
-    public function actives_paged(int $start, int $length, string $search): array;
+    public function activesPaged(int $start, int $length, string $search): array;
 
-    public function search(string $word): Collection;
+    public function search(string $word, int $top = 25): Collection;
+
+    public function top(int $top = 25): Collection;
 }

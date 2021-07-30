@@ -77,7 +77,7 @@ class LocationsController extends AdminApiController
         $search = isset($search_param) && isset($search_param["value"]) ? $search_param["value"] : "";
 
         try {
-            $query = $this->cityRepository->actives_paged($start, $length, $search);
+            $query = $this->cityRepository->activesPaged($start, $length, $search);
 
             foreach ($query["data"] as $item) {
                 $item->state_name = AppConstant::getDash();

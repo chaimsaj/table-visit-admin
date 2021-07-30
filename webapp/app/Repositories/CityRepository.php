@@ -21,7 +21,7 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
         return $this->model->where('deleted', 0)->get();
     }
 
-    public function actives_paged(int $start, int $length, string $search): array
+    public function activesPaged(int $start, int $length, string $search): array
     {
         $query = $this->model->where('deleted', 0)
             ->where('name', 'like', $search . '%')
@@ -73,12 +73,22 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
         }
     }
 
-    public function search(string $word): Collection
+    public function search(string $word, int $top = 25): Collection
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where('name', 'like', $word . '%')
             ->orderBy('name', 'asc')
+            ->take($top)
+            ->get();
+    }
+
+    public function top(int $top = 25): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->orderBy('name', 'asc')
+            ->take($top)
             ->get();
     }
 }

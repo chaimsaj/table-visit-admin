@@ -17,7 +17,7 @@ class CitiesController extends ApiController
     private CityRepositoryInterface $cityRepository;
 
     public function __construct(CityRepositoryInterface $cityRepository,
-                                LogServiceInterface $logger)
+                                LogServiceInterface     $logger)
     {
         parent::__construct($logger);
 
@@ -71,6 +71,21 @@ class CitiesController extends ApiController
                 $query = $this->cityRepository->search($word);
                 $response->setData($query);
             }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
+    }
+
+    public function top(): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            $query = $this->cityRepository->top();
+            $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
