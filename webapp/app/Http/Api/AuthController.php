@@ -8,6 +8,7 @@ use App\AppModels\TokenModel;
 use App\Core\ApiCodeEnum;
 use App\Core\AuthModeEnum;
 use App\Core\BaseEnum;
+use App\Core\GenderEnum;
 use App\Core\UserTypeEnum;
 use App\Http\Api\Base\ApiController;
 use App\Models\User;
@@ -100,6 +101,7 @@ class AuthController extends ApiController
                 'password' => Hash::make($data['password']),
                 'auth_mode' => AuthModeEnum::Basic,
                 'user_type_id' => UserTypeEnum::Customer,
+                'gender' => GenderEnum::Undefined
             ]);
         } catch (Throwable $ex) {
             $response->setError($ex->getMessage());
