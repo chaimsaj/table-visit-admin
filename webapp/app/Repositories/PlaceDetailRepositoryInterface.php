@@ -9,5 +9,5 @@ use Illuminate\Support\Collection;
 
 interface PlaceDetailRepositoryInterface extends BaseRepositoryInterface
 {
-    public function loadBy($place_id, $language_id): ?Model;
+    public function loadBy(int $place_id, int $language_id): ?Model;
 }

@@ -9,4 +9,5 @@ use Illuminate\Support\Collection;
 
 interface PlaceFeatureRepositoryInterface extends BaseRepositoryInterface
 {
+    public function shown(int $place_id): Collection;
 }

@@ -8,7 +8,5 @@ use Illuminate\Support\Collection;
 
 interface PlaceTypeRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-    public function published(): Collection;
-    public function deleteLogic($id): bool;
+    public function shown(int $place_id): Collection;
 }

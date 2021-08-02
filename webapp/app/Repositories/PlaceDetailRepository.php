@@ -14,7 +14,7 @@ class PlaceDetailRepository extends BaseRepository implements PlaceDetailReposit
         parent::__construct($model);
     }
 
-    public function loadBy($place_id, $language_id): ?Model
+    public function loadBy(int $place_id, int $language_id): ?Model
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
