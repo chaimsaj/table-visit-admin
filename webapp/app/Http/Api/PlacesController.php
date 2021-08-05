@@ -4,6 +4,7 @@
 namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
+use App\Core\LanguageEnum;
 use App\Core\MediaSizeEnum;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
@@ -71,7 +72,13 @@ class PlacesController extends ApiController
 
         try {
             $query = $this->placeRepository->find($id);
-            $response->setData($query);
+
+            $language = LanguageEnum::English;
+
+            $data = $this->load_place($query);
+            $data->detail = $this->detail($data->id, $language);
+
+            $response->setData($data);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
@@ -98,33 +105,20 @@ class PlacesController extends ApiController
     {
         $response = new ApiModel();
         $response->setSuccess();
+        $data = new Collection;
 
         try {
             $query = $this->placeRepository->featured($top);
 
             foreach ($query as $item) {
-                $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
-                $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::medium);
-                $item->food_menu_path = MediaHelper::getImageUrl($item->food_menu_path, MediaSizeEnum::medium);
-
-                $item->place_rating_count = rand(0, 100);
-                $item->place_rating_avg = rand(1, 5);
-
-                $item->place_types = $this->place_types($item->id);
-
-                if ($item->place_types->count() > 0)
-                    $item->place_type_name = $item->place_types[0]->name;
-                else
-                    $item->place_type_name = "Venue";
-
-                $item->place_features = $this->place_features($item->id);
-                $item->place_music = $this->place_music($item->id);
+                $data_item = $this->load_place($item);
+                $data->add($data_item);
             }
-
-            $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
+
+        $response->setData($data);
 
         return response()->json($response);
     }
@@ -133,27 +127,14 @@ class PlacesController extends ApiController
     {
         $response = new ApiModel();
         $response->setSuccess();
+        $data = new Collection;
 
         try {
             $query = $this->placeRepository->near($top);
 
             foreach ($query as $item) {
-                $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
-                $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::medium);
-                $item->food_menu_path = MediaHelper::getImageUrl($item->food_menu_path, MediaSizeEnum::medium);
-
-                $item->place_rating_count = rand(0, 100);
-                $item->place_rating_avg = rand(1, 5);
-
-                $item->place_types = $this->place_types($item->id);
-
-                if ($item->place_types->count() > 0)
-                    $item->place_type_name = $item->place_types[0]->name;
-                else
-                    $item->place_type_name = "Venue";
-
-                $item->place_features = $this->place_features($item->id);
-                $item->place_music = $this->place_music($item->id);
+                $data_item = $this->load_place($item);
+                $data->add($data_item);
             }
 
             $response->setData($query);
@@ -161,8 +142,12 @@ class PlacesController extends ApiController
             $this->logger->save($ex);
         }
 
+        $response->setData($data);
+
         return response()->json($response);
     }
+
+    #region
 
     private function detail(int $place_id, int $language_id): ?Model
     {
@@ -223,4 +208,31 @@ class PlacesController extends ApiController
 
         return null;
     }
+
+    private function load_place(Model $item): Model
+    {
+        $image = $item->image_path;
+        
+        $item->image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::medium);
+        $item->large_image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::large);
+        $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::medium);
+        $item->food_menu_path = MediaHelper::getImageUrl($item->food_menu_path, MediaSizeEnum::medium);
+
+        $item->place_rating_count = rand(0, 100);
+        $item->place_rating_avg = rand(1, 5);
+
+        $item->place_types = $this->place_types($item->id);
+
+        if ($item->place_types->count() > 0)
+            $item->place_type_name = $item->place_types[0]->name;
+        else
+            $item->place_type_name = "Venue";
+
+        $item->place_features = $this->place_features($item->id);
+        $item->place_music = $this->place_music($item->id);
+
+        return $item;
+    }
+
+    #end region
 }
