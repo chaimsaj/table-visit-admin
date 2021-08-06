@@ -37,11 +37,11 @@ class UsersController extends AdminController
     private PlaceRepositoryInterface $placeRepository;
     private CityRepositoryInterface $cityRepository;
 
-    public function __construct(UserRepositoryInterface $repository,
+    public function __construct(UserRepositoryInterface        $repository,
                                 UserToPlaceRepositoryInterface $userToPlaceRepository,
-                                PlaceRepositoryInterface $placeRepository,
-                                CityRepositoryInterface $cityRepository,
-                                LogServiceInterface $logger)
+                                PlaceRepositoryInterface       $placeRepository,
+                                CityRepositoryInterface        $cityRepository,
+                                LogServiceInterface            $logger)
     {
         parent::__construct($logger);
 
@@ -57,14 +57,20 @@ class UsersController extends AdminController
 
         $data = new Collection();
 
-        if ($is_admin)
+        if ($is_admin) {
             $data = $this->repository->actives();
-        else {
+
+            foreach ($data as $item) {
+                $item->user_type_name = AppHelper::userType($item->user_type_id);
+            }
+        } else {
             $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
             foreach ($by_user as $selected) {
                 $users = $this->repository->activesByPlace($selected->place_id);
-                foreach ($users as $user)
+                foreach ($users as $user) {
+                    $user->user_type_name = AppHelper::userType($user->user_type_id);
                     $data->push($user);
+                }
             }
         }
 

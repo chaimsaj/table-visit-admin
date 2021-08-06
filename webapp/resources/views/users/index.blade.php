@@ -58,7 +58,7 @@
                                     </td>
                                     <td>{{ $item->name }} {{ $item->last_name }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>{{ $user_types[$item->user_type_id]->getValue() }}</td>
+                                    <td>{{ $item->user_type_name }}</td>
                                     <td>
                                         <a href="{{route("user.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                                 class="mdi mdi-delete font-size-18"></i></a>

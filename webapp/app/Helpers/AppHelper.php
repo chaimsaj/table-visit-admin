@@ -35,7 +35,11 @@ class AppHelper
             $place_admin->setKey(UserTypeEnum::PlaceAdmin);
             $place_admin->setValue("Place Admin");
 
-            return collect([$undefined, $admin, $place_admin]);
+            $customer = new KeyValueModel();
+            $customer->setKey(UserTypeEnum::Customer);
+            $customer->setValue("Customer");
+
+            return collect([$undefined, $admin, $place_admin, $customer]);
         } else {
             $valet_parking = new KeyValueModel();
             $valet_parking->setKey(UserTypeEnum::ValetParking);
@@ -64,6 +68,15 @@ class AppHelper
             $all_types->push($user_type);
 
         return $all_types;
+    }
+
+    static function userType($user_type_id)
+    {
+        return AppHelper::userTypesAll()->firstWhere('key', $user_type_id)->getValue();
+        /*return AppHelper::userTypesAll()->first(function ($value) use ($user_type_id) {
+            if ($value->getKey() == $user_type_id)
+                return $value->getValue();
+        });*/
     }
 
     static function truncateString($str, int $max): string
