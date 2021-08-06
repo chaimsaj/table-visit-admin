@@ -65,4 +65,17 @@ class AppHelper
 
         return $all_types;
     }
+
+    static function truncateString($str, int $max): string
+    {
+        if (strlen($str) <= $max)
+            return $str;
+
+        $new_string = substr($str, 0, $max);
+
+        if (substr($new_string, -1, 1) != ' ')
+            $new_string = substr($new_string, 0, strrpos($new_string, " "));
+
+        return $new_string;
+    }
 }

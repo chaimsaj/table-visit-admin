@@ -6,6 +6,7 @@ namespace App\Http\Api;
 use App\AppModels\ApiModel;
 use App\Core\LanguageEnum;
 use App\Core\MediaSizeEnum;
+use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\Place;
@@ -77,6 +78,9 @@ class PlacesController extends ApiController
 
             $data = $this->load_place($query);
             $data->detail = $this->detail($data->id, $language);
+
+            if (isset($data->detail))
+                $data->detail->short_detail = AppHelper::truncateString(strip_tags($data->detail->detail), 150);
 
             $response->setData($data);
         } catch (Throwable $ex) {
@@ -212,7 +216,7 @@ class PlacesController extends ApiController
     private function load_place(Model $item): Model
     {
         $image = $item->image_path;
-        
+
         $item->image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::medium);
         $item->large_image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::large);
         $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::medium);
