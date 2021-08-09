@@ -161,10 +161,10 @@ class PlacesController extends ApiController
         try {
             $word = "";
 
-            $data = $request->json()->all();
+            $request_data = $request->json()->all();
 
-            if (isset($data) && isset($data['word']))
-                $word = $data['word'];
+            if (isset($request_data) && isset($request_data['word']))
+                $word = $request_data['word'];
 
             if (strlen($word) >= 3) {
                 $query = $this->placeRepository->search($word);
