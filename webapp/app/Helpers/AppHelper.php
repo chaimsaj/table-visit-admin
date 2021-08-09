@@ -89,6 +89,6 @@ class AppHelper
         if (substr($new_string, -1, 1) != ' ')
             $new_string = substr($new_string, 0, strrpos($new_string, " "));
 
-        return $new_string;
+        return $new_string . "..";
     }
 }

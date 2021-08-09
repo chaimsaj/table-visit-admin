@@ -80,7 +80,7 @@ class PlacesController extends ApiController
             $data->detail = $this->detail($data->id, $language);
 
             if (isset($data->detail))
-                $data->detail->short_detail = AppHelper::truncateString(strip_tags($data->detail->detail), 150);
+                $data->detail->short_detail = AppHelper::truncateString(strip_tags($data->detail->detail), 145);
 
             $response->setData($data);
         } catch (Throwable $ex) {
