@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/places/near', [App\Http\Api\PlacesController::class, 'near'])->name('api.places.near');
     Route::get('/place/{id}', [App\Http\Api\PlacesController::class, 'find'])->name('api.places.find');
     Route::get('/places/list_by_city/{city_id}', [App\Http\Api\PlacesController::class, 'list_by_city'])->name('api.places.list_by_city');
+    Route::post('/places/search', [App\Http\Api\PlacesController::class, 'search'])->name('api.places.search');
 
     Route::get('/place_music', [App\Http\Api\PlaceMusicController::class, 'list'])->name('api.place_music.list');
     Route::get('/place_music/{id}', [App\Http\Api\PlaceMusicController::class, 'find'])->name('api.place_music.find');

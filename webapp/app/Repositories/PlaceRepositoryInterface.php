@@ -15,4 +15,6 @@ interface PlaceRepositoryInterface extends BaseRepositoryInterface
     public function featured(int $top = 25): Collection;
 
     public function near(int $top = 25): Collection;
+
+    public function search(string $search, int $top = 25): Collection;
 }

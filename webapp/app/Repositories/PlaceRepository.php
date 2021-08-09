@@ -50,4 +50,13 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->get();
     }
 
+    public function search(string $search, int $top = 25): Collection
+    {
+        return $this->model->where('published', '=', 1)
+            ->where('name', 'like', '%' . $search . '%')
+            ->where('show', '=', 1)
+            ->where('deleted', '=', 0)
+            ->take($top)
+            ->get();
+    }
 }

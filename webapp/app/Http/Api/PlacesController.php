@@ -19,6 +19,7 @@ use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Throwable;
 
@@ -142,6 +143,37 @@ class PlacesController extends ApiController
             }
 
             $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        $response->setData($data);
+
+        return response()->json($response);
+    }
+
+    public function search(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+        $data = new Collection;
+
+        try {
+            $word = "";
+
+            $data = $request->json()->all();
+
+            if (isset($data) && isset($data['word']))
+                $word = $data['word'];
+
+            if (strlen($word) >= 3) {
+                $query = $this->placeRepository->search($word);
+
+                foreach ($query as $item) {
+                    $data_item = $this->load_place($item);
+                    $data->add($data_item);
+                }
+            }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
