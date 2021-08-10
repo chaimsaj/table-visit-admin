@@ -12,25 +12,25 @@ use Throwable;
 
 class PlaceTypesController extends AdminController
 {
-    private PlaceTypeRepositoryInterface $repository;
+    private PlaceTypeRepositoryInterface $placeTypeRepository;
 
-    public function __construct(PlaceTypeRepositoryInterface $repository,
+    public function __construct(PlaceTypeRepositoryInterface $placeTypeRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->repository = $repository;
+        $this->placeTypeRepository = $placeTypeRepository;
     }
 
     public function index()
     {
-        $data = $this->repository->actives();
+        $data = $this->placeTypeRepository->actives();
         return view('place-types/index', ["data" => $data]);
     }
 
     public function detail($id)
     {
-        $data = $this->repository->find($id);
+        $data = $this->placeTypeRepository->find($id);
         return view('place-types/detail', ["data" => $data]);
     }
 
@@ -41,7 +41,7 @@ class PlaceTypesController extends AdminController
                 'name' => ['required', 'string', 'max:255'],
             ]);
 
-            $db = $this->repository->find($id);
+            $db = $this->placeTypeRepository->find($id);
 
             if ($validator->fails() && $db == null) {
                 return view('place-types/detail', ["data" => $request])->withErrors($validator);
@@ -54,7 +54,7 @@ class PlaceTypesController extends AdminController
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
 
-                $this->repository->save($db);
+                $this->placeTypeRepository->save($db);
             }
 
         } catch (Throwable $ex) {
@@ -66,7 +66,7 @@ class PlaceTypesController extends AdminController
 
     public function delete($id)
     {
-        $this->repository->deleteLogic($id);
+        $this->placeTypeRepository->deleteLogic($id);
 
         return redirect("place-types");
     }

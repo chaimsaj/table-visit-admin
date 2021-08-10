@@ -9,9 +9,4 @@ use Illuminate\Support\Collection;
 
 interface TableRateRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-
-    public function published(): Collection;
-
-    public function deleteLogic($id): bool;
 }

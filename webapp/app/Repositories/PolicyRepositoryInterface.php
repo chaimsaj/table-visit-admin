@@ -8,6 +8,4 @@ use Illuminate\Support\Collection;
 
 interface PolicyRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-    public function published(): Collection;
 }

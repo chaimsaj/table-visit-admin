@@ -8,6 +8,4 @@ use Illuminate\Support\Collection;
 
 interface ServiceRateRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-    public function published(): Collection;
 }

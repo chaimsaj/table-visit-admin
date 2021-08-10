@@ -9,6 +9,4 @@ use Illuminate\Support\Collection;
 
 interface SystemConfigurationRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-    public function published(): Collection;
 }

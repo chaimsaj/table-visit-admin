@@ -17,14 +17,4 @@ class TableRepository extends BaseRepository implements TableRepositoryInterface
     {
         parent::__construct($model);
     }
-
-    public function actives(): Collection
-    {
-        return $this->model->all('active', 1);
-    }
-
-    public function published(): Collection
-    {
-
-    }
 }

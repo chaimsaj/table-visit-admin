@@ -6,7 +6,6 @@ namespace App\Repositories;
 use App\Models\User;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
-use Throwable;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {

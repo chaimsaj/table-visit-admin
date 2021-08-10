@@ -8,7 +8,4 @@ use Illuminate\Support\Collection;
 
 interface LanguageRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-    public function published(): Collection;
-    public function deleteLogic($id): bool;
 }

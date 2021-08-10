@@ -35,25 +35,4 @@ class StateRepository extends BaseRepository implements StateRepositoryInterface
             ->where('country_id', $country_id)
             ->get();
     }
-
-    public function deleteLogic($id): bool
-    {
-        try {
-
-            $model = $this->find($id);
-
-            if ($model != null) {
-                $model->published = 0;
-                $model->show = 0;
-                $model->deleted = 1;
-
-                $model->save();
-            }
-
-            return true;
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-            return false;
-        }
-    }
 }

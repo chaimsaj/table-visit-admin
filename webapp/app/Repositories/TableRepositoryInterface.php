@@ -8,6 +8,5 @@ use Illuminate\Support\Collection;
 
 interface TableRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-    public function published(): Collection;
+
 }
