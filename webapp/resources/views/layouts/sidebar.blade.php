@@ -63,10 +63,11 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bxs-drink"></i>
-                        <span key="t-table-services">@lang('translation.TableServices')</span>
+                        <span key="t-table-services">@lang('translation.TablesAndBottles')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route("services")}}" key="t-services">@lang('translation.Services')</a></li>
+                        <li><a href="{{route("tables")}}" key="t-services">@lang('translation.Tables')</a></li>
+                        <li><a href="{{route("services")}}" key="t-services">@lang('translation.Bottles')</a></li>
                     </ul>
                 </li>
 

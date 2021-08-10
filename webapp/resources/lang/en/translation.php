@@ -24,7 +24,10 @@ return [
     "Services" => "Services",
     "Service" => "Service",
     "Tables" => "Tables",
-    "TableServices" => "Table Services",
+    "Table" => "Table",
+    "TablesAndBottles" => "Tables & Bottles",
+    "Bottles" => "Bottles",
+    "Bottle" => "Bottle",
 
     "Name" => "Name",
     "Code" => "Code",

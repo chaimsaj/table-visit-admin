@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Bottles') @endsection
+@section('title') @lang('translation.Tables') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
         @slot('li_1') @lang('translation.TablesAndBottles') @endslot
-        @slot('title') @lang('translation.Bottles') @endslot
+        @slot('title') @lang('translation.Tables') @endslot
     @endcomponent
     <div class="row">
         <div class="col-12">
@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <h4 class="card-title col-sm-4">
-                            @lang('translation.Bottles')
+                            @lang('translation.Tables')
                         </h4>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
@@ -35,5 +35,5 @@
 @endsection
 @section('script')
     <!-- table-services -->
-    <script src="{{ URL::asset('/assets/js/app/table-services.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/app/tables.js') }}"></script>
 @endsection
