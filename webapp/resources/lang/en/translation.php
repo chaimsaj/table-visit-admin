@@ -43,6 +43,7 @@ return [
     "TableRates" => "Table Rates",
     "TableRate" => "Table Rate",
     "TablesAndRates" => "Tables & Rates",
+    "Type" => "Type",
 
     "TablesAndBottles" => "Tables & Bottles",
     "Bottles" => "Bottles",

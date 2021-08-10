@@ -26,12 +26,13 @@
                         </div>
                     </div>
                     <hr/>
-                    <table id="tables-datatable"
+                    <table id="services-datatable"
                            class="table table-bordered dt-responsive nowrap w-100 align-middle text-center">
                         <thead class="table-light">
                         <tr class="text-center">
                             <th class="no-sort">@lang('translation.Id')</th>
                             <th class="no-sort">@lang('translation.Name')</th>
+                            <th class="no-sort">@lang('translation.Type')</th>
                             <th class="no-sort">@lang('translation.Place')</th>
                             <th class="no-sort">@lang('translation.DisplayOrder')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
