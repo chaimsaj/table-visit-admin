@@ -108,7 +108,6 @@ Route::get('/currency/{id}', [App\Http\Controllers\CurrenciesController::class, 
 Route::post('/currency/{id}', [App\Http\Controllers\CurrenciesController::class, 'save'])->name('currency.save');
 Route::get('/currency/delete/{id}', [App\Http\Controllers\CurrenciesController::class, 'delete'])->name('currency.delete');
 
-//Venues
 //Places
 Route::get('/places', [App\Http\Controllers\PlacesController::class, 'index'])->name('places');
 Route::get('/place/{id}', [App\Http\Controllers\PlacesController::class, 'detail'])->name('place.detail');
@@ -152,6 +151,11 @@ Route::get('/tables', [App\Http\Controllers\TablesController::class, 'index'])->
 Route::get('/table/{id}', [App\Http\Controllers\TablesController::class, 'detail'])->name('table.detail');
 Route::post('/table/{id}', [App\Http\Controllers\TablesController::class, 'save'])->name('table.save');
 Route::get('/table/delete/{id}', [App\Http\Controllers\TablesController::class, 'delete'])->name('table.delete');
+Route::post('/table/save_details/{id}', [App\Http\Controllers\TablesController::class, 'save_details'])->name('table.save_details');
+
+Route::post('/table/save_rate/{id}', [App\Http\Controllers\TablesController::class, 'save_rate'])->name('table.save_rate');
+Route::post('/table/edit_rate/{id}', [App\Http\Controllers\TablesController::class, 'edit_rate'])->name('table.edit_rate');
+Route::get('/table/delete_rate/{id}', [App\Http\Controllers\TablesController::class, 'delete_rate'])->name('table.delete_rate');
 
 //Table Types
 Route::get('/table-types', [App\Http\Controllers\TableTypesController::class, 'index'])->name('table-types');

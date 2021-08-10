@@ -36,9 +36,11 @@ return [
 
     "Tables" => "Tables",
     "Table" => "Table",
+    "TableDescription" => "Table description",
 
     "TableTypes" => "Table Types",
     "TableType" => "Table Type",
+    "Rates" => "Rates",
 
     "TableRates" => "Table Rates",
     "TableRate" => "Table Rate",

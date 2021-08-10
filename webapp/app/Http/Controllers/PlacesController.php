@@ -48,16 +48,16 @@ class PlacesController extends AdminController
     private PlaceToFeatureRepositoryInterface $placeToFeatureRepository;
     private PlaceToMusicRepositoryInterface $placeToMusicRepository;
 
-    public function __construct(PlaceRepositoryInterface $repository,
-                                StateRepositoryInterface $stateRepository,
-                                CityRepositoryInterface $cityRepository,
-                                UserToPlaceRepositoryInterface $userToPlaceRepository,
-                                PlaceFeatureRepositoryInterface $placeFeatureRepository,
-                                PlaceMusicRepositoryInterface $placeMusicRepository,
-                                PlaceDetailRepositoryInterface $placeDetailRepository,
+    public function __construct(PlaceRepositoryInterface          $repository,
+                                StateRepositoryInterface          $stateRepository,
+                                CityRepositoryInterface           $cityRepository,
+                                UserToPlaceRepositoryInterface    $userToPlaceRepository,
+                                PlaceFeatureRepositoryInterface   $placeFeatureRepository,
+                                PlaceMusicRepositoryInterface     $placeMusicRepository,
+                                PlaceDetailRepositoryInterface    $placeDetailRepository,
                                 PlaceToFeatureRepositoryInterface $placeToFeatureRepository,
-                                PlaceToMusicRepositoryInterface $placeToMusicRepository,
-                                LogServiceInterface $logger)
+                                PlaceToMusicRepositoryInterface   $placeToMusicRepository,
+                                LogServiceInterface               $logger)
     {
         parent::__construct($logger);
 
@@ -117,7 +117,11 @@ class PlacesController extends AdminController
         }
 
         $data = $this->repository->find($id);
-        $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
+        $place_detail = null;
+
+        if (isset($data))
+            $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
+
         $states = $this->stateRepository->published();
 
         $cities = new Collection();
