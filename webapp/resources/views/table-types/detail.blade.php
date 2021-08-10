@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <form autocomplete="off" method="POST" class="form-horizontal custom-validation"
-                                  action="{{route("service-type.save", $data->id ?? 0)}}"
+                                  action="{{route("table-type.save", $data->id ?? 0)}}"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <hr/>
@@ -100,7 +100,7 @@
     <script src="{{ URL::asset('/assets/js/app/tables.js') }}"></script>
     <script type="application/javascript">
         (function () {
-            initServiceType();
+            initTableType();
         })();
     </script>
 @endsection
