@@ -4,29 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Repositories\ServiceRepositoryInterface;
+use App\Repositories\ServiceTypeRepositoryInterface;
+use App\Repositories\TableRepositoryInterface;
+use App\Repositories\TableTypeRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 
-class ServicesController extends AdminController
+class ServiceTypesController extends AdminController
 {
-    private ServiceRepositoryInterface $serviceRepository;
+    private ServiceTypeRepositoryInterface $serviceTypeRepository;
 
-    public function __construct(ServiceRepositoryInterface $serviceRepository,
+    public function __construct(ServiceTypeRepositoryInterface $serviceTypeRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->serviceRepository = $serviceRepository;
+        $this->serviceTypeRepository = $serviceTypeRepository;
     }
 
     public function index()
     {
-        return view('services/index');
+        return view('service-types/index');
     }
 
     public function detail()
     {
-        return view('services/detail');
+        return view('service-types/detail');
     }
 
     public function save(Request $request, $id)

@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.PlaceType') @endsection
+@section('title') @lang('translation.ServiceRate') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.Venues') @endslot
-        @slot('title') @lang('translation.PlaceType') @endslot
+        @slot('li_1') @lang('translation.TablesAndBottles') @endslot
+        @slot('title') @lang('translation.ServiceRate') @endslot
     @endcomponent
 
     <div class="row">
@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <form autocomplete="off" method="POST" class="form-horizontal custom-validation"
-                                  action="{{route("place-type.save", $data->id ?? 0)}}"
+                                  action="{{route("service-rate.save", $data->id ?? 0)}}"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <hr/>
@@ -68,7 +68,7 @@
                                     <button type="submit" class="btn btn-success waves-effect waves-light">
                                         @lang('translation.Save')
                                     </button>
-                                    <a href="{{route("place-types")}}"
+                                    <a href="{{route("service-rates")}}"
                                        class="btn btn-danger waves-effect">
                                         @lang('translation.Cancel')
                                     </a>
@@ -96,11 +96,11 @@
     </div>
 @endsection
 @section('script')
-    <!-- places -->
-    <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
+    <!-- services -->
+    <script src="{{ URL::asset('/assets/js/app/services.js') }}"></script>
     <script type="application/javascript">
         (function () {
-            initPlaceType();
+            initServiceRate();
         })();
     </script>
 @endsection

@@ -147,9 +147,38 @@ Route::get('/logs', [App\Http\Controllers\LogController::class, 'index'])->name(
 Route::get('/log/{id}', [App\Http\Controllers\LogController::class, 'detail'])->name('log.detail');
 Route::get('/log/delete/{id}', [App\Http\Controllers\LogController::class, 'delete'])->name('log.delete');
 
-//Services
+//Tables
+Route::get('/tables', [App\Http\Controllers\TablesController::class, 'index'])->name('tables');
+Route::get('/table/{id}', [App\Http\Controllers\TablesController::class, 'detail'])->name('table.detail');
+Route::post('/table/{id}', [App\Http\Controllers\TablesController::class, 'save'])->name('table.save');
+Route::get('/table/delete/{id}', [App\Http\Controllers\TablesController::class, 'delete'])->name('table.delete');
+
+//Table Types
+Route::get('/table-types', [App\Http\Controllers\TableTypesController::class, 'index'])->name('table-types');
+Route::get('/table-type/{id}', [App\Http\Controllers\TableTypesController::class, 'detail'])->name('table-type.detail');
+Route::post('/table-type/{id}', [App\Http\Controllers\TableTypesController::class, 'save'])->name('table-type.save');
+Route::get('/table-type/delete/{id}', [App\Http\Controllers\TableTypesController::class, 'delete'])->name('table-type.delete');
+
+//Table Rates
+Route::get('/table-rates', [App\Http\Controllers\TableRatesController::class, 'index'])->name('table-rates');
+Route::get('/table-rate/{id}', [App\Http\Controllers\TableRatesController::class, 'detail'])->name('table-rate.detail');
+Route::post('/table-rate/{id}', [App\Http\Controllers\TableRatesController::class, 'save'])->name('table-rate.save');
+Route::get('/table-rate/delete/{id}', [App\Http\Controllers\TableRatesController::class, 'delete'])->name('table-rate.delete');
+
 //Services
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/service/{id}', [App\Http\Controllers\ServicesController::class, 'detail'])->name('service.detail');
 Route::post('/service/{id}', [App\Http\Controllers\ServicesController::class, 'save'])->name('service.save');
 Route::get('/service/delete/{id}', [App\Http\Controllers\ServicesController::class, 'delete'])->name('service.delete');
+
+//Service Types
+Route::get('/service-types', [App\Http\Controllers\ServiceTypesController::class, 'index'])->name('service-types');
+Route::get('/service-type/{id}', [App\Http\Controllers\ServiceTypesController::class, 'detail'])->name('service-type.detail');
+Route::post('/service-type/{id}', [App\Http\Controllers\ServiceTypesController::class, 'save'])->name('service-type.save');
+Route::get('/service-type/delete/{id}', [App\Http\Controllers\ServiceTypesController::class, 'delete'])->name('service-type.delete');
+
+//Service Rates
+Route::get('/service-rates', [App\Http\Controllers\ServiceRatesController::class, 'index'])->name('service-rates');
+Route::get('/service-rate/{id}', [App\Http\Controllers\ServiceRatesController::class, 'detail'])->name('service-rate.detail');
+Route::post('/service-rate/{id}', [App\Http\Controllers\ServiceRatesController::class, 'save'])->name('service-rate.save');
+Route::get('/service-rate/delete/{id}', [App\Http\Controllers\ServiceRatesController::class, 'delete'])->name('service-rate.delete');

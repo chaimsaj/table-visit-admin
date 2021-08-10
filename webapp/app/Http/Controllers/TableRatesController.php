@@ -4,29 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
 use App\Repositories\ServiceRepositoryInterface;
+use App\Repositories\TableRateRepositoryInterface;
+use App\Repositories\TableRepositoryInterface;
+use App\Repositories\TableTypeRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 
-class ServicesController extends AdminController
+class TableRatesController extends AdminController
 {
-    private ServiceRepositoryInterface $serviceRepository;
+    private TableRateRepositoryInterface $tableRateRepository;
 
-    public function __construct(ServiceRepositoryInterface $serviceRepository,
+    public function __construct(TableRateRepositoryInterface $tableRateRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->serviceRepository = $serviceRepository;
+        $this->tableRateRepository = $tableRateRepository;
     }
 
     public function index()
     {
-        return view('services/index');
+        return view('table-rates/index');
     }
 
     public function detail()
     {
-        return view('services/detail');
+        return view('table-rates/detail');
     }
 
     public function save(Request $request, $id)

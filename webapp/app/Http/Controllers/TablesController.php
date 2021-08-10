@@ -3,31 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Base\AdminController;
-use App\Repositories\ServiceRateRepository;
-use App\Repositories\ServiceRateRepositoryInterface;
+use App\Repositories\ServiceRepositoryInterface;
+use App\Repositories\TableRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
 
-class ServiceRatesController extends AdminController
+class TablesController extends AdminController
 {
-    private ServiceRateRepositoryInterface $serviceRateRepository;
+    private TableRepositoryInterface $tableRepository;
 
-    public function __construct(ServiceRateRepositoryInterface $serviceRateRepository,
+    public function __construct(TableRepositoryInterface $tableRepository,
                                 LogServiceInterface $logger)
     {
         parent::__construct($logger);
 
-        $this->serviceRateRepository = $serviceRateRepository;
+        $this->tableRepository = $tableRepository;
     }
 
     public function index()
     {
-        return view('service-rates/index');
+        return view('tables/index');
     }
 
     public function detail()
     {
-        return view('service-rates/detail');
+        return view('tables/detail');
     }
 
     public function save(Request $request, $id)
