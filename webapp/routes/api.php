@@ -35,9 +35,15 @@ Route::middleware('api')->group(function () {
     //Admin Api
 
     //Locations
-    Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin.api.load_states');
-    Route::get('/admin/locations/load_cities/{state_id}', [App\Http\AdminApi\LocationsController::class, 'load_cities'])->name('admin.api.load_cities');
-    Route::post('/admin/locations/cities', [App\Http\AdminApi\LocationsController::class, 'cities'])->name('admin.api.cities');
+    Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin_api.locations.load_states');
+    Route::get('/admin/locations/load_cities/{state_id}', [App\Http\AdminApi\LocationsController::class, 'load_cities'])->name('admin_api.locations.load_cities');
+    Route::post('/admin/locations/cities', [App\Http\AdminApi\LocationsController::class, 'cities'])->name('admin_api.locations.cities');
+
+    //Tables
+    Route::post('/admin/tables/list', [App\Http\AdminApi\TablesController::class, 'list'])->name('admin_api.tables.list');
+
+    //Services
+    Route::post('/admin/services/list', [App\Http\AdminApi\ServicesController::class, 'list'])->name('admin_api.services.list');
 
     //Route::get('/admin/main/import', [App\Http\AdminApi\MainController::class, 'import'])->name('admin.api.main.import');
 });

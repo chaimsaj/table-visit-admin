@@ -30,9 +30,10 @@
                                 <div class="mb-3">
                                     <label class="form-label">Code</label>
                                     <div>
-                                        <input name="iso_code" type="iso_code"
+                                        <input name="iso_code"
                                                value="{{$data->iso_code ?? ''}}"
                                                class="form-control"
+                                               required
                                                placeholder="Code"/>
                                     </div>
                                 </div>
@@ -40,7 +41,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Display order</label>
                                     <div>
-                                        <input name="display_order" type="display_order"
+                                        <input name="display_order"
                                                value="{{$data->display_order ?? ''}}"
                                                class="form-control" required
                                                placeholder="Display order"/>

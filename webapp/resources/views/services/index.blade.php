@@ -20,20 +20,39 @@
                             <div class="text-sm-end">
                                 <a href="{{route("service.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
-                                        class="mdi mdi-plus me-1"></i>
-                                    @lang('translation.AddNew')
+                                        class="mdi mdi-plus me-1"></i> @lang('translation.AddNew')
                                 </a>
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
                     <hr/>
-                    <div>Coming soon..</div>
+                    <table id="tables-datatable"
+                           class="table table-bordered dt-responsive nowrap w-100 align-middle text-center">
+                        <thead class="table-light">
+                        <tr class="text-center">
+                            <th class="no-sort">@lang('translation.Id')</th>
+                            <th class="no-sort">@lang('translation.Name')</th>
+                            <th class="no-sort">@lang('translation.Place')</th>
+                            <th class="no-sort">@lang('translation.DisplayOrder')</th>
+                            <th class="th45 no-sort">@lang('translation.Delete')</th>
+                            <th class="th45 no-sort">@lang('translation.Edit')</th>
+                        </tr>
+                        </thead>
+
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
-    <!-- table-services -->
-    <script src="{{ URL::asset('/assets/js/app/table-services.js') }}"></script>
+    <!-- Datatable init js -->
+    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <!-- services -->
+    <script src="{{ URL::asset('/assets/js/app/services.js') }}"></script>
+    <script type="application/javascript">
+        (function () {
+            initServices();
+        })();
+    </script>
 @endsection

@@ -20,10 +20,10 @@ class CitiesController extends AdminController
     private CountryRepositoryInterface $countryRepository;
     private StateRepositoryInterface $stateRepository;
 
-    public function __construct(CityRepositoryInterface $repository,
+    public function __construct(CityRepositoryInterface    $repository,
                                 CountryRepositoryInterface $countryRepository,
-                                StateRepositoryInterface $stateRepository,
-                                LogServiceInterface $logger)
+                                StateRepositoryInterface   $stateRepository,
+                                LogServiceInterface        $logger)
     {
         parent::__construct($logger);
 
@@ -34,7 +34,7 @@ class CitiesController extends AdminController
 
     public function index()
     {
-        $data = $this->repository->actives()->take(250);
+        /*$data = $this->repository->actives()->take(250);
 
         $data->each(function ($item, $key) {
             $country = $this->countryRepository->find($item->country_id);
@@ -52,7 +52,9 @@ class CitiesController extends AdminController
                 $item->state_name = AppConstant::getDash();
         });
 
-        return view('cities/index', ["data" => $data]);
+        return view('cities/index', ["data" => $data]);*/
+
+        return view('cities/index');
     }
 
     public function detail($id)

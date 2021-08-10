@@ -21,12 +21,12 @@ function initCities() {
         },
         columns: [
             // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'id', name: 'id'},
-            {data: 'name', name: 'name'},
-            {data: 'iso_code', name: 'iso_code'},
-            {data: 'display_order', name: 'display_order'},
-            {data: 'state_name', name: 'state_name'},
-            {data: 'country_name', name: 'country_name'},
+            {data: 'id'},
+            {data: 'name'},
+            {data: 'iso_code'},
+            {data: 'display_order'},
+            {data: 'state_name'},
+            {data: 'country_name'},
             {
                 data: null, render: function (data) {
                     return '<a href="/city/delete/' + data['id'] + '" class="text-danger sweet-warning"><i class="mdi mdi-delete font-size-18"></i></a>';

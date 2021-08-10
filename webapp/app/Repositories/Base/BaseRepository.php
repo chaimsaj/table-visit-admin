@@ -77,4 +77,20 @@ class BaseRepository implements BaseRepositoryInterface
             return false;
         }
     }
+
+    public function activesPaged(int $start, int $length, string $search): array
+    {
+        $query = $this->model->where('deleted', 0)
+            ->where('name', 'like', $search . '%')
+            ->skip($start)
+            ->take($length)
+            ->get();
+
+        $count = $this->model->count();
+
+        return [
+            "data" => $query,
+            "count" => $count
+        ];
+    }
 }

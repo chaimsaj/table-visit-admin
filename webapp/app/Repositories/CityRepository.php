@@ -21,22 +21,6 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
         return $this->model->where('deleted', 0)->get();
     }
 
-    public function activesPaged(int $start, int $length, string $search): array
-    {
-        $query = $this->model->where('deleted', 0)
-            ->where('name', 'like', $search . '%')
-            ->skip($start)
-            ->take($length)
-            ->get();
-
-        $count = $this->model->count();
-
-        return [
-            "data" => $query,
-            "count" => $count
-        ];
-    }
-
     public function published(): Collection
     {
         return $this->model->where('deleted', 0)

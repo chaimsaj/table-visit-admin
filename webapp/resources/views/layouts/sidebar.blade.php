@@ -75,16 +75,16 @@
                         <li><a href="{{route("tables")}}" key="t-tables">@lang('translation.Tables')</a></li>
                         <li><a href="{{route("table-types")}}" key="t-table-types">@lang('translation.TableTypes')</a>
                         </li>
-                        <li><a href="{{route("table-rates")}}" key="t-table-rates">@lang('translation.TableRates')</a>
-                        </li>
+                        {{--<li><a href="{{route("table-rates")}}" key="t-table-rates">@lang('translation.TableRates')</a>
+                        </li>--}}
                         <li class="menu-title-divider" key="t-services-divider">
                             @lang('translation.BottlesAndDrinks')
                         </li>
                         <li><a href="{{route("services")}}" key="t-services">@lang('translation.Bottles')</a></li>
                         <li><a href="{{route("service-types")}}"
                                key="t-service-types">@lang('translation.DrinkTypes')</a></li>
-                        <li><a href="{{route("service-rates")}}"
-                               key="t-service-rates">@lang('translation.BottleRates')</a></li>
+                        {{--<li><a href="{{route("service-rates")}}"
+                               key="t-service-rates">@lang('translation.BottleRates')</a></li>--}}
                     </ul>
                 </li>
 
