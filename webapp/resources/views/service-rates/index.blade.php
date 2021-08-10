@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <h4 class="card-title col-sm-4">
-                            @lang('translation.ServiceRates')
+                            @lang('translation.BottleRates')
                         </h4>
                         <div class="col-sm-8">
                             <div class="text-sm-end">

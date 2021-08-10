@@ -5,7 +5,7 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.TablesAndBottles') @endslot
+        @slot('li_1') @lang('translation.TablesAndRates') @endslot
         @slot('title') @lang('translation.Tables') @endslot
     @endcomponent
     <div class="row">
@@ -18,7 +18,7 @@
                         </h4>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
-                                <a href="{{route("service.detail", 0)}}"
+                                <a href="{{route("table.detail", 0)}}"
                                    class="btn btn-primary waves-effect waves-light"><i
                                         class="mdi mdi-plus me-1"></i>
                                     @lang('translation.AddNew')
