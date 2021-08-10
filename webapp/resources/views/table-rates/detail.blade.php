@@ -96,11 +96,11 @@
     </div>
 @endsection
 @section('script')
-    <!-- services -->
-    <script src="{{ URL::asset('/assets/js/app/services.js') }}"></script>
+    <!-- tables -->
+    <script src="{{ URL::asset('/assets/js/app/tables.js') }}"></script>
     <script type="application/javascript">
         (function () {
-            initServiceRate();
+            initTableRate();
         })();
     </script>
 @endsection

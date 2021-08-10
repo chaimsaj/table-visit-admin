@@ -34,6 +34,6 @@
     </div>
 @endsection
 @section('script')
-    <!-- table-services -->
+    <!-- tables -->
     <script src="{{ URL::asset('/assets/js/app/tables.js') }}"></script>
 @endsection
