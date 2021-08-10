@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.ServiceType') @endsection
+@section('title') @lang('translation.DrinkType') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.TablesAndBottles') @endslot
-        @slot('title') @lang('translation.ServiceType') @endslot
+        @slot('li_1') @lang('translation.BottlesAndDrinks') @endslot
+        @slot('title') @lang('translation.DrinkType') @endslot
     @endcomponent
 
     <div class="row">

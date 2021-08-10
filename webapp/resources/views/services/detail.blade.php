@@ -5,7 +5,7 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.TablesAndBottles') @endslot
+        @slot('li_1') @lang('translation.BottlesAndDrinks') @endslot
         @slot('title') @lang('translation.Bottle') @endslot
     @endcomponent
     <div class="row">

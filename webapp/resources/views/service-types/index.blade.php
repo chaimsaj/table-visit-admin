@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.ServiceTypes') @endsection
+@section('title') @lang('translation.DrinkTypes') @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.TablesAndBottles') @endslot
-        @slot('title') @lang('translation.ServiceTypes') @endslot
+        @slot('li_1') @lang('translation.BottlesAndDrinks') @endslot
+        @slot('title') @lang('translation.DrinkTypes') @endslot
     @endcomponent
     <div class="row">
         <div class="col-12">
@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <h4 class="card-title col-sm-4">
-                            @lang('translation.ServiceTypes')
+                            @lang('translation.DrinkTypes')
                         </h4>
                         <div class="col-sm-8">
                             <div class="text-sm-end">
@@ -47,7 +47,8 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->display_order }}</td>
                                 <td>
-                                    <a href="{{route("service-type.delete", $item->id)}}" class="text-danger sweet-warning"><i
+                                    <a href="{{route("service-type.delete", $item->id)}}"
+                                       class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
                                 </td>
                                 <td>

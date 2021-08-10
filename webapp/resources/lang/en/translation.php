@@ -21,13 +21,34 @@ return [
     "Trace" => "Trace",
     "Date" => "Date",
     "Settings" => "Settings",
+
     "Services" => "Services",
     "Service" => "Service",
+
+    "ServiceTypes" => "Service Types",
+    "ServiceType" => "Service Type",
+
+    "ServiceRates" => "Service Rates",
+    "ServiceRate" => "Service Rate",
+
+    "DrinkTypes" => "Drink Types",
+    "DrinkType" => "Drink Type",
+
     "Tables" => "Tables",
     "Table" => "Table",
+
+    "TableTypes" => "Table Types",
+    "TableType" => "Table Type",
+
+    "TableRates" => "Table Rates",
+    "TableRate" => "Table Rate",
+
     "TablesAndBottles" => "Tables & Bottles",
     "Bottles" => "Bottles",
     "Bottle" => "Bottle",
+    "BottleRates" => "Bottle Rates",
+    "BottlesAndDrinks" => "Bottles & Drinks",
+    "BottleRate" => "Bottle Rate",
 
     "Name" => "Name",
     "Code" => "Code",
@@ -104,6 +125,7 @@ return [
     "Types" => "Types",
     "PlaceTypes" => "Place Types",
     "PlaceType" => "Place Type",
+    "TypesAndFeatures" => "Types & Features",
 
     "Features" => "Features",
     "PlaceFeatures" => "Place Features",
