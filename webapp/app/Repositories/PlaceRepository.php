@@ -59,12 +59,4 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->take($top)
             ->get();
     }
-
-    public function activesByTenant(int $tenant_id): Collection
-    {
-        return $this->model->where('deleted', 0)
-            ->where("tenant_id", "=", $tenant_id)
-            ->orderBy('name', 'asc')
-            ->get();
-    }
 }

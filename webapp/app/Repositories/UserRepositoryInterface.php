@@ -8,9 +8,5 @@ use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface extends BaseRepositoryInterface
 {
-    public function actives(): Collection;
-
     public function activesByTenant(int $tenant_id): Collection;
-
-    public function published(): Collection;
 }

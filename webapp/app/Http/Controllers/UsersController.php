@@ -120,8 +120,12 @@ class UsersController extends AdminController
                     "user_types" => AppHelper::userTypes()
                 ])->withErrors($validator);
             } else {
-                if ($db == null)
+                if ($db == null) {
                     $db = new User();
+
+                    if (!$is_admin)
+                        $db->tenant_id = Auth::user()->tenant_id;
+                }
 
                 $db->name = $request->get('name');
                 $db->last_name = $request->get('last_name');

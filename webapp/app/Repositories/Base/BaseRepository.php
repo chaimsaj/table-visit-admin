@@ -91,4 +91,13 @@ class BaseRepository implements BaseRepositoryInterface
             "count" => $count
         ];
     }
+
+    public function activesByTenant(int $tenant_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where("tenant_id", "=", $tenant_id)
+            ->orWhere('tenant_id', "=", null)
+            ->orderBy('name', 'asc')
+            ->get();
+    }
 }

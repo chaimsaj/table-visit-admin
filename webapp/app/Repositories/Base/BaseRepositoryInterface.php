@@ -27,4 +27,6 @@ interface BaseRepositoryInterface
     public function deleteLogic(int $id): bool;
 
     public function activesPaged(int $start, int $length, string $search): array;
+
+    public function activesByTenant(int $tenant_id): Collection;
 }
