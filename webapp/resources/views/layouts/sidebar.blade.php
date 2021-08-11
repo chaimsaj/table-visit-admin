@@ -17,6 +17,7 @@
                         <span key="t-users">@lang('translation.Users')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a class="load" href="{{route("tenants")}}" key="t-tenants">@lang('translation.Tenants')</a></li>
                         <li><a class="load" href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
                     </ul>
                 </li>

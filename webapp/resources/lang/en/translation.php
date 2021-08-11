@@ -47,6 +47,10 @@ return [
     "TablesAndRates" => "Tables & Rates",
     "Type" => "Type",
 
+    "Tenants" => "Tenants",
+    "Tenant" => "Tenant",
+    "UUID" => "UUID",
+
     "TablesAndBottles" => "Tables & Bottles",
     "Bottles" => "Bottles",
     "Bottle" => "Bottle",
