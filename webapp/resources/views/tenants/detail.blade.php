@@ -40,16 +40,6 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="show"
-                                                       {{($data && $data->show == 1) ? 'checked' : ''}}
-                                                       name="show">
-                                                <label class="form-check-label" for="show">
-                                                    Show
-                                                </label>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
