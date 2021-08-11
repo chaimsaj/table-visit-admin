@@ -27,7 +27,7 @@
                                         class="mdi mdi-plus me-1"></i> @lang('translation.AddNew')
                                 </a>
                             </div>
-                        </div><!-- end col-->
+                        </div>
                     </div>
                     <hr/>
                     <div class="row">
@@ -48,9 +48,6 @@
                             @foreach ($data as $item)
                                 <tr class="text-center">
                                     <td>{{ $item->id }}</td>
-                                    {{--<td><img class="rounded avatar-sm"
-                                             src="{{ isset($item->avatar) ? asset($item->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
-                                             alt=""></td>--}}
                                     <td>
                                         <img class="rounded avatar-sm"
                                              src="{{\App\Helpers\MediaHelper::getImageUrl($item->avatar)}}"

@@ -85,8 +85,6 @@ use App\Repositories\UserProfileRepository;
 use App\Repositories\UserProfileRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
-use App\Repositories\UserToPlaceRepository;
-use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogService;
 use App\Services\LogServiceInterface;
 use Illuminate\Support\ServiceProvider;
@@ -143,7 +141,6 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(UserActionRepositoryInterface::class, UserActionRepository::class);
         $this->app->bind(UserProfileRepositoryInterface::class, UserProfileRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(UserToPlaceRepositoryInterface::class, UserToPlaceRepository::class);
 
         //Services
         $this->app->bind(LogServiceInterface::class, LogService::class);

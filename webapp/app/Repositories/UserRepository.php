@@ -21,10 +21,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->get();
     }
 
-    public function activesByPlace(int $place_id): Collection
+    public function activesByTenant(int $tenant_id): Collection
     {
         return $this->model->where('deleted', 0)
-            ->where("place_id", "=", $place_id)
+            ->where("tenant_id", "=", $tenant_id)
             ->orderBy('name', 'asc')
             ->get();
     }

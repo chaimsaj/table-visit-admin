@@ -24,15 +24,6 @@
                                         <span class="d-none d-sm-block">@lang('translation.Data')</span>
                                     </a>
                                 </li>
-                                @if($data && $data->id != 0 && $data->place_id == null && !$has_places)
-                                    <li class="nav-item">
-                                        <a class="nav-link @if($tab=="places") active @endif"
-                                           data-bs-toggle="tab" href="#places" role="tab">
-                                            <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
-                                            <span class="d-none d-sm-block">@lang('translation.Places')</span>
-                                        </a>
-                                    </li>
-                                @endif
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane p-2 @if($tab=="data") active @endif" id="data"
@@ -105,11 +96,11 @@
                                                     </div>
                                                 </div>
 
+
                                                 <div class="mb-3">
                                                     <label class="form-label">User Type</label>
                                                     <div>
                                                         <select class="form-select" name="user_type_id">
-                                                            <option value="0">@lang('translation.Select')</option>
                                                             @foreach($user_types as $user_type)
                                                                 <option
                                                                     value="{{ $user_type->key }}" {{ ($data && $data->user_type_id == $user_type->key) ? 'selected' : '' }}>
@@ -119,23 +110,38 @@
                                                         </select>
                                                     </div>
                                                 </div>
-
-                                                @if(!$is_admin)
+                                                @if($is_admin)
                                                     <div class="mb-3">
-                                                        <label class="form-label">Place</label>
+                                                        <label class="form-label">Tenant</label>
                                                         <div>
-                                                            <select class="form-select" name="place_id">
-                                                                @foreach($user_places as $user_place)
+                                                            <select class="form-select" name="tenant_id">
+                                                                <option value="0">@lang('translation.Select')</option>
+                                                                @foreach($tenants as $tenant)
                                                                     <option
-                                                                        value="{{ $user_place->id }}" {{ ($data && $data->place_id == $user_place->id) ? 'selected' : '' }}>
-                                                                        {{ $user_place->name }}
+                                                                        value="{{ $tenant->id }}" {{ ($data && $data->tenant_id == $tenant->id) ? 'selected' : '' }}>
+                                                                        {{ $tenant->name }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
                                                 @endif
-
+                                                @if(!$is_admin)
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Place</label>
+                                                        <div>
+                                                            <select class="form-select" name="place_id">
+                                                                <option value="0">@lang('translation.Select')</option>
+                                                                @foreach($places as $place)
+                                                                    <option
+                                                                        value="{{ $place->id }}" {{ ($data && $data->place_id == $place->id) ? 'selected' : '' }}>
+                                                                        {{ $place->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <div class="mb-4">
                                                     <div class="row">
                                                         <div class="col-6">
@@ -154,6 +160,7 @@
 
                                                 <div class="d-flex flex-wrap gap-2">
                                                     <button type="submit"
+                                                            {{($data && $data->id == 1) ? 'disabled' : ''}}
                                                             class="btn btn-success waves-effect waves-light">
                                                         @lang('translation.Save')
                                                     </button>
@@ -162,7 +169,6 @@
                                                         @lang('translation.Cancel')
                                                     </a>
                                                 </div>
-
 
                                             </form>
                                             @if ($errors->any())
@@ -178,13 +184,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($data && $data->id != 0 && $data->place_id == null && !$has_places)
-                                    <div class="tab-pane p-2 @if($tab=="places") active @endif" id="places"
-                                         role="tabpanel">
-                                        @component('components.user-places', ["places" => $places, "user_places" => $user_places, "user_id" => $data->id ?? 0])
-                                        @endcomponent
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>

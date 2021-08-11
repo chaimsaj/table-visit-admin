@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\AppModels\KeyValueModel;
-use App\Core\AppConstant;
 use App\Core\AuthModeEnum;
 use App\Core\GenderEnum;
 use App\Core\MediaObjectTypeEnum;
@@ -11,16 +9,12 @@ use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
-use App\Models\UserToPlace;
 use App\Repositories\CityRepositoryInterface;
-use App\Repositories\PlaceRepository;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\TenantRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
-use App\Repositories\UserToPlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -33,22 +27,19 @@ use Throwable;
 class UsersController extends AdminController
 {
     private UserRepositoryInterface $repository;
-    private UserToPlaceRepositoryInterface $userToPlaceRepository;
+    private TenantRepositoryInterface $tenantRepository;
     private PlaceRepositoryInterface $placeRepository;
-    private CityRepositoryInterface $cityRepository;
 
-    public function __construct(UserRepositoryInterface        $repository,
-                                UserToPlaceRepositoryInterface $userToPlaceRepository,
-                                PlaceRepositoryInterface       $placeRepository,
-                                CityRepositoryInterface        $cityRepository,
-                                LogServiceInterface            $logger)
+    public function __construct(UserRepositoryInterface   $repository,
+                                TenantRepositoryInterface $tenantRepository,
+                                PlaceRepositoryInterface  $placeRepository,
+                                LogServiceInterface       $logger)
     {
         parent::__construct($logger);
 
         $this->repository = $repository;
-        $this->userToPlaceRepository = $userToPlaceRepository;
+        $this->tenantRepository = $tenantRepository;
         $this->placeRepository = $placeRepository;
-        $this->cityRepository = $cityRepository;
     }
 
     public function index()
@@ -59,18 +50,14 @@ class UsersController extends AdminController
 
         if ($is_admin) {
             $data = $this->repository->actives();
-
             foreach ($data as $item) {
                 $item->user_type_name = AppHelper::userType($item->user_type_id);
             }
         } else {
-            $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
-            foreach ($by_user as $selected) {
-                $users = $this->repository->activesByPlace($selected->place_id);
-                foreach ($users as $user) {
-                    $user->user_type_name = AppHelper::userType($user->user_type_id);
-                    $data->push($user);
-                }
+            $users = $this->repository->activesByTenant(Auth::user()->tenant_id);
+            foreach ($users as $user) {
+                $user->user_type_name = AppHelper::userType($user->user_type_id);
+                $data->push($user);
             }
         }
 
@@ -86,63 +73,19 @@ class UsersController extends AdminController
 
         $data = $this->repository->find($id);
 
-        if ($is_admin && isset($data) && $data->place_id != null)
-            return redirect("users");
+        $tenants = $this->tenantRepository->actives();
 
-        $places = [];
-        $user_places = [];
-
-        $current = $id;
-
-        if (!$is_admin)
-            $current = Auth::user()->id;
-
-        $by_user = $this->userToPlaceRepository->findByUser($current);
-
-        if ($is_admin) {
-            $all_places = $this->placeRepository->published();
-
-            foreach ($all_places as $place) {
-                $city = $this->cityRepository->find($place->city_id);
-                if ($city)
-                    $place->city_name = $city->name;
-                else
-                    $place->city_name = AppConstant::getDash();
-
-                foreach ($by_user as $selected) {
-                    if ($selected->place_id == $place->id) {
-                        $place->rel_id = $selected->id;
-                        array_push($user_places, $place);
-                    } else
-                        array_push($places, $place);
-                }
-
-                if ($by_user->count() == 0)
-                    array_push($places, $place);
-            }
-        } else {
-            foreach ($by_user as $selected) {
-                $place = $this->placeRepository->find($selected->place_id);
-
-                if (isset($place)) {
-                    $place->rel_id = $selected->id;
-                    array_push($user_places, $place);
-                }
-            }
-        }
-
-        $has_places = false;
-
-        if (isset($data))
-            $has_places = $data->user_type_id == UserTypeEnum::Admin;
+        if ($is_admin)
+            $places = $this->placeRepository->actives();
+        else
+            $places = $this->placeRepository->activesByTenant(Auth::user()->tenant_id);
 
         $tab = Session::get("tab", "data");
 
         return view('users/detail', ["data" => $data,
             "user_types" => AppHelper::userTypes($is_admin),
+            "tenants" => $tenants,
             "places" => $places,
-            "user_places" => $user_places,
-            "has_places" => $has_places,
             "is_admin" => $is_admin,
             "tab" => $tab
         ]);
@@ -193,9 +136,10 @@ class UsersController extends AdminController
 
                 //$db->dob = date('Y-m-d', strtotime($request->get('dob')));
 
-                if (!$is_admin) {
+                if (!$is_admin)
                     $db->place_id = intval($request->get('place_id'));
-                }
+                else
+                    $db->tenant_id = intval($request->get('tenant_id'));
 
                 $this->repository->save($db);
 
@@ -223,51 +167,9 @@ class UsersController extends AdminController
 
     public function delete($id)
     {
-        $this->repository->delete($id);
+        if ($id != 1)
+            $this->repository->delete($id);
 
         return redirect("users");
-    }
-
-    public function save_user_to_place(Request $request, $id): RedirectResponse
-    {
-        try {
-
-            $validator = Validator::make($request->all(), [
-                'place_id' => ['required', 'int', 'gt:0'],
-            ]);
-
-            if ($validator->fails()) {
-                $this->logger->log("user.save_user_to_place error");
-            } else {
-                $place_id = $request->get('place_id');
-                $exists = $this->userToPlaceRepository->existsByUser($place_id, $id);
-
-                if ($exists == null) {
-                    $db = new UserToPlace();
-
-                    $db->user_id = $id;
-                    $db->place_id = $place_id;
-                    $db->published = 1;
-
-                    $this->userToPlaceRepository->save($db);
-                }
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-        }
-
-        Session::flash('tab', "places");
-
-        return redirect()->back();
-    }
-
-    public function delete_user_to_place($id): RedirectResponse
-    {
-        $this->userToPlaceRepository->delete($id);
-
-        Session::flash('tab', "places");
-
-        return redirect()->back();
     }
 }
