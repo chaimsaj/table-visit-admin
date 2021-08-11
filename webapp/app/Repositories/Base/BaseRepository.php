@@ -67,9 +67,7 @@ class BaseRepository implements BaseRepositoryInterface
 
             if (isset($for_delete)) {
                 $for_delete->published = 0;
-                $for_delete->show = 0;
                 $for_delete->deleted = 1;
-
                 $this->save($for_delete);
                 return true;
             }
