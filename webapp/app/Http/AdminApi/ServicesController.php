@@ -8,6 +8,7 @@ use App\AppModels\ApiModel;
 use App\AppModels\DatatableModel;
 use App\Core\ApiCodeEnum;
 use App\Core\AppConstant;
+use App\Core\UserTypeEnum;
 use App\Http\AdminApi\Base\AdminApiController;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\CountryRepositoryInterface;
@@ -19,6 +20,7 @@ use App\Repositories\TableRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 use Yajra\DataTables\DataTables;
 use function PHPUnit\Framework\isEmpty;
@@ -42,6 +44,8 @@ class ServicesController extends AdminApiController
 
     public function list(Request $request): JsonResponse
     {
+        // $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
         $response = new DatatableModel();
 
         $draw = (int)$request->get('draw');
@@ -51,7 +55,13 @@ class ServicesController extends AdminApiController
         $search = isset($search_param) && isset($search_param["value"]) ? $search_param["value"] : "";
 
         try {
+
             $query = $this->serviceRepository->activesPaged($start, $length, $search);
+            
+            /*if ($is_admin)
+                $query = $this->serviceRepository->activesPaged($start, $length, $search);
+            else
+                $query = $this->serviceRepository->activesPagedByTenant(Auth::user()->tenant_id, $start, $length, $search);*/
 
             foreach ($query["data"] as $item) {
                 $item->place_name = AppConstant::getDash();

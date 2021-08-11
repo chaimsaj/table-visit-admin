@@ -17,7 +17,6 @@ class AdminApiController extends BaseController
 
     public function __construct(LogServiceInterface $logger)
     {
-        //$this->middleware('auth');
         $this->logger = $logger;
     }
 }

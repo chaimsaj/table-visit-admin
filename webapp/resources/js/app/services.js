@@ -11,7 +11,10 @@ function initServices() {
         serverSide: true,
         ajax: {
             url: "/api/admin/services/list",
-            type: "POST"
+            type: "POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
         },
         columns: [
             {data: 'id'},

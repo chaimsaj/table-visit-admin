@@ -28,5 +28,7 @@ interface BaseRepositoryInterface
 
     public function activesPaged(int $start, int $length, string $search): array;
 
+    public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $search): array;
+
     public function activesByTenant(int $tenant_id): Collection;
 }

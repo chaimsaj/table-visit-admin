@@ -92,11 +92,31 @@ class BaseRepository implements BaseRepositoryInterface
         ];
     }
 
+    public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $search): array
+    {
+        $query = $this->model->where('deleted', 0)
+            ->where('name', 'like', $search . '%')
+            ->where("tenant_id", "=", $tenant_id)
+            ->orWhere('tenant_id', "=", null)
+            ->orWhere('tenant_id', "=", 0)
+            ->skip($start)
+            ->take($length)
+            ->get();
+
+        $count = $this->model->count();
+
+        return [
+            "data" => $query,
+            "count" => $count
+        ];
+    }
+
     public function activesByTenant(int $tenant_id): Collection
     {
         return $this->model->where('deleted', 0)
             ->where("tenant_id", "=", $tenant_id)
             ->orWhere('tenant_id', "=", null)
+            ->orWhere('tenant_id', "=", 0)
             ->orderBy('name', 'asc')
             ->get();
     }
