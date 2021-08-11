@@ -4,7 +4,14 @@
     });
 })();
 
-function initUser()
-{
+function initUser() {
+
+}
+
+function initTenants() {
+
+}
+
+function initTenant() {
 
 }
