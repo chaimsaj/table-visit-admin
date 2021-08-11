@@ -41,6 +41,10 @@ class AppHelper
 
             return collect([$undefined, $admin, $place_admin, $customer]);
         } else {
+            $place_admin = new KeyValueModel();
+            $place_admin->setKey(UserTypeEnum::PlaceAdmin);
+            $place_admin->setValue("Place Admin");
+
             $valet_parking = new KeyValueModel();
             $valet_parking->setKey(UserTypeEnum::ValetParking);
             $valet_parking->setValue("Valet Parking");
@@ -49,11 +53,11 @@ class AppHelper
             $waiter->setKey(UserTypeEnum::Waiter);
             $waiter->setValue("Waiter");
 
-            $employee = new KeyValueModel();
-            $employee->setKey(UserTypeEnum::DJ);
-            $employee->setValue("DJ");
+            $dj = new KeyValueModel();
+            $dj->setKey(UserTypeEnum::DJ);
+            $dj->setValue("DJ");
 
-            return collect([$valet_parking, $waiter, $employee]);
+            return collect([$place_admin, $valet_parking, $waiter, $dj]);
         }
     }
 
