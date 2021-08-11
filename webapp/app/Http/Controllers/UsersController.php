@@ -73,11 +73,15 @@ class UsersController extends AdminController
 
         $data = $this->repository->find($id);
 
-        $tenants = $this->tenantRepository->actives();
+        if (isset($data) && !$is_admin && $data->tenant_id != Auth::user()->tenant_id)
+            return redirect("/");
 
-        if ($is_admin)
+        $tenants = new Collection();
+
+        if ($is_admin) {
+            $tenants = $this->tenantRepository->actives();
             $places = $this->placeRepository->actives();
-        else
+        } else
             $places = $this->placeRepository->activesByTenant(Auth::user()->tenant_id);
 
         $tab = Session::get("tab", "data");
@@ -162,12 +166,15 @@ class UsersController extends AdminController
             $this->logger->save($ex);
         }
 
+        if ($id == Auth::user()->id)
+            Auth::logout();
+
         return redirect("users");
     }
 
     public function delete($id)
     {
-        if ($id != 1)
+        if ($id != 1 && $id != Auth::user()->id)
             $this->repository->delete($id);
 
         return redirect("users");

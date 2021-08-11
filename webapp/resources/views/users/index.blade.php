@@ -61,15 +61,8 @@
                                                 class="mdi mdi-delete font-size-18"></i></a>
                                     </td>
                                     <td>
-                                        @if($item->place_id == null && $is_admin)
-                                            <a href="{{route("user.detail", $item->id)}}" class="text-success"><i
-                                                    class="mdi mdi-pencil font-size-18"></i></a>
-                                        @endif
-
-                                        @if($item->place_id != null && !$is_admin)
-                                            <a href="{{route("user.detail", $item->id)}}" class="text-success"><i
-                                                    class="mdi mdi-pencil font-size-18"></i></a>
-                                        @endif
+                                        <a href="{{route("user.detail", $item->id)}}" class="text-success"><i
+                                                class="mdi mdi-pencil font-size-18"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

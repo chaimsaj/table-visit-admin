@@ -15,7 +15,6 @@ use App\Models\PlaceDetail;
 use App\Models\PlaceToFeature;
 use App\Models\PlaceToMusic;
 use App\Repositories\CityRepositoryInterface;
-use App\Repositories\LanguageRepositoryInterface;
 use App\Repositories\PlaceDetailRepositoryInterface;
 use App\Repositories\PlaceFeatureRepositoryInterface;
 use App\Repositories\PlaceMusicRepositoryInterface;
@@ -23,9 +22,8 @@ use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceToFeatureRepositoryInterface;
 use App\Repositories\PlaceToMusicRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
-use App\Repositories\UserToPlaceRepositoryInterface;
+use App\Repositories\TenantRepositoryInterface;
 use App\Services\LogServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -33,7 +31,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
-use Symfony\Component\Console\Input\Input;
 use Throwable;
 
 class PlacesController extends AdminController
@@ -41,7 +38,7 @@ class PlacesController extends AdminController
     private PlaceRepositoryInterface $repository;
     private StateRepositoryInterface $stateRepository;
     private CityRepositoryInterface $cityRepository;
-    private UserToPlaceRepositoryInterface $userToPlaceRepository;
+    private TenantRepositoryInterface $tenantRepository;
     private PlaceFeatureRepositoryInterface $placeFeatureRepository;
     private PlaceMusicRepositoryInterface $placeMusicRepository;
     private PlaceDetailRepositoryInterface $placeDetailRepository;
@@ -51,7 +48,7 @@ class PlacesController extends AdminController
     public function __construct(PlaceRepositoryInterface          $repository,
                                 StateRepositoryInterface          $stateRepository,
                                 CityRepositoryInterface           $cityRepository,
-                                UserToPlaceRepositoryInterface    $userToPlaceRepository,
+                                TenantRepositoryInterface         $tenantRepository,
                                 PlaceFeatureRepositoryInterface   $placeFeatureRepository,
                                 PlaceMusicRepositoryInterface     $placeMusicRepository,
                                 PlaceDetailRepositoryInterface    $placeDetailRepository,
@@ -64,7 +61,7 @@ class PlacesController extends AdminController
         $this->repository = $repository;
         $this->stateRepository = $stateRepository;
         $this->cityRepository = $cityRepository;
-        $this->userToPlaceRepository = $userToPlaceRepository;
+        $this->tenantRepository = $tenantRepository;
         $this->placeFeatureRepository = $placeFeatureRepository;
         $this->placeMusicRepository = $placeMusicRepository;
         $this->placeDetailRepository = $placeDetailRepository;
@@ -74,60 +71,44 @@ class PlacesController extends AdminController
 
     public function index()
     {
-        $data = [];
-        $places = $this->repository->actives();
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+        if ($is_admin)
+            $places = $this->repository->actives();
+        else
+            $places = $this->repository->activesByTenant(Auth::user()->tenant_id);
 
         foreach ($places as $place) {
-            $to_add = true;
+            $city = $this->cityRepository->find($place->city_id);
 
-            if (Auth::user()->user_type_id != UserTypeEnum::Admin) {
-                $to_add = null;
-                $by_user = $this->userToPlaceRepository->findByUser(Auth::user()->id);
-
-                foreach ($by_user as $selected) {
-                    if ($selected->place_id == $place->id) {
-                        $to_add = true;
-                        break;
-                    } else
-                        $to_add = null;
-                }
-            }
-
-            if (isset($to_add)) {
-                $city = $this->cityRepository->find($place->city_id);
-                if ($city)
-                    $place->city_name = $city->name;
-                else
-                    $place->city_name = AppConstant::getDash();
-
-                array_push($data, $place);
-            }
+            if (isset($city))
+                $place->city_name = $city->name;
+            else
+                $place->city_name = AppConstant::getDash();
         }
 
-        return view('places/index', ["data" => $data]);
+        return view('places/index', ["data" => $places]);
     }
 
     public function detail($id)
     {
-        if (Auth::user()->user_type_id != UserTypeEnum::Admin) {
-            $exists = $this->userToPlaceRepository->existsByUser($id, Auth::user()->id);
-
-            if ($exists == null)
-                return redirect("/");
-        }
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
 
         $data = $this->repository->find($id);
+
+        if (isset($data) && !$is_admin && $data->tenant_id != Auth::user()->tenant_id)
+            return redirect("/");
+
         $place_detail = null;
-
-        if (isset($data))
-            $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
-
         $states = $this->stateRepository->published();
-
         $cities = new Collection();
+        $tenants = new Collection();
+
+        if ($is_admin)
+            $tenants = $this->tenantRepository->actives();
 
         if (isset($data)) {
-
+            $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
             $cities = $this->cityRepository->publishedByState($data->state_id);
         }
 
@@ -174,11 +155,13 @@ class PlacesController extends AdminController
         return view('places/detail', ["data" => $data,
             "states" => $states,
             "cities" => $cities,
+            "tenants" => $tenants,
             "place_detail" => $place_detail,
             "features" => $features,
             "place_features" => $place_features,
             "music" => $music_data,
             "place_music" => $place_music,
+            "is_admin" => $is_admin,
             "tab" => $tab
         ]);
     }
@@ -191,10 +174,16 @@ class PlacesController extends AdminController
                 'address' => ['required', 'string', 'max:255'],
             ]);*/
 
+            $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
             $db = $this->repository->find($id);
 
-            if ($db == null)
+            if ($db == null) {
                 $db = new Place();
+
+                if (!$is_admin)
+                    $db->tenant_id = Auth::user()->tenant_id;
+            }
 
             $db->name = $request->get('name');
             $db->address = $request->get('address');
@@ -205,6 +194,9 @@ class PlacesController extends AdminController
             $db->show = $request->get('show') == "on";
             $db->accept_reservations = $request->get('accept_reservations') == "on";
             $db->open = $request->get('open') == "on";
+
+            if ($is_admin)
+                $db->tenant_id = intval($request->get('tenant_id'));
 
             $this->repository->save($db);
 

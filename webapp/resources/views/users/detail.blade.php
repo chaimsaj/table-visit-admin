@@ -126,6 +126,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
+
                                                 @if(!$is_admin)
                                                     <div class="mb-3">
                                                         <label class="form-label">Place</label>
