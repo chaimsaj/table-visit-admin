@@ -28,12 +28,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('api')->group(function () {
     Route::get('/health', [App\Http\Api\MainController::class, 'health'])->name('api.main.health');
-
     Route::post('/sign_in', [App\Http\Api\AuthController::class, 'sign_in'])->name('api.auth.sign_in');
     Route::post('/sign_up', [App\Http\Api\AuthController::class, 'sign_up'])->name('api.auth.sign_up');
+});
 
-    //Admin Api
-
+Route::middleware('api')->group(function () {
     //Locations
     Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin_api.locations.load_states');
     Route::get('/admin/locations/load_cities/{state_id}', [App\Http\AdminApi\LocationsController::class, 'load_cities'])->name('admin_api.locations.load_cities');
@@ -44,8 +43,6 @@ Route::middleware('api')->group(function () {
 
     //Services
     Route::post('/admin/services/list', [App\Http\AdminApi\ServicesController::class, 'list'])->name('admin_api.services.list');
-
-    //Route::get('/admin/main/import', [App\Http\AdminApi\MainController::class, 'import'])->name('admin.api.main.import');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

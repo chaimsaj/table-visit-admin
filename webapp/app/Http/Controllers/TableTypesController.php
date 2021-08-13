@@ -6,8 +6,10 @@ use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\TableType;
 use App\Repositories\TableTypeRepositoryInterface;
+use App\Repositories\TenantRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -15,13 +17,16 @@ use Throwable;
 class TableTypesController extends AdminController
 {
     private TableTypeRepositoryInterface $tableTypeRepository;
+    private TenantRepositoryInterface $tenantRepository;
 
     public function __construct(TableTypeRepositoryInterface $tableTypeRepository,
+                                TenantRepositoryInterface    $tenantRepository,
                                 LogServiceInterface          $logger)
     {
         parent::__construct($logger);
 
         $this->tableTypeRepository = $tableTypeRepository;
+        $this->tenantRepository = $tenantRepository;
     }
 
     public function index()
@@ -40,12 +45,21 @@ class TableTypesController extends AdminController
     {
         $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
 
+        $tenants = new Collection();
+
+        if ($is_admin)
+            $tenants = $this->tenantRepository->actives();
+
         $data = $this->tableTypeRepository->find($id);
 
         if (isset($data) && !$is_admin && $data->tenant_id != Auth::user()->tenant_id)
             return redirect("/");
 
-        return view('table-types/detail', ["data" => $data]);
+        return view('table-types/detail', [
+            "data" => $data,
+            "is_admin" => $is_admin,
+            "tenants" => $tenants,
+        ]);
     }
 
     public function save(Request $request, $id)
@@ -72,6 +86,9 @@ class TableTypesController extends AdminController
                 $db->display_order = intval($request->get('display_order'));
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
+
+                if ($is_admin)
+                    $db->tenant_id = intval($request->get('tenant_id'));
 
                 $this->tableTypeRepository->save($db);
             }

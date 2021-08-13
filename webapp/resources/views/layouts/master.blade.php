@@ -30,7 +30,13 @@
     @show
     <!-- Begin page -->
     <div id="layout-wrapper">
+
+        <input type="hidden" id="user_is_admin"
+               value="{{Auth::user()->user_type_id == App\Core\UserTypeEnum::Admin ? 1 : 0}}"/>
+        <input type="hidden" id="user_tenant_id" value="{{Auth::user()->tenant_id ? Auth::user()->tenant_id : 0}}"/>
+
     @include('layouts.topbar')
+
 
     @if(Auth::user() && Auth::user()->user_type_id == \App\Core\UserTypeEnum::Admin)
         @include('layouts.sidebar')

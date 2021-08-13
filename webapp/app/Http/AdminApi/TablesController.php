@@ -37,6 +37,9 @@ class TablesController extends AdminApiController
 
     public function list(Request $request): JsonResponse
     {
+        $is_admin = boolval($request->get('is_admin'));
+        $tenant_id = intval($request->get('tenant_id'));
+
         $response = new DatatableModel();
 
         $draw = (int)$request->get('draw');
@@ -46,7 +49,10 @@ class TablesController extends AdminApiController
         $search = isset($search_param) && isset($search_param["value"]) ? $search_param["value"] : "";
 
         try {
-            $query = $this->tableRepository->activesPaged($start, $length, $search);
+            if ($is_admin)
+                $query = $this->tableRepository->activesPaged($start, $length, $search);
+            else
+                $query = $this->tableRepository->activesPagedByTenant($tenant_id, $start, $length, $search);
 
             foreach ($query["data"] as $item) {
                 $item->place_name = AppConstant::getDash();

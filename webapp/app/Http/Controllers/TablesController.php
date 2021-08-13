@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\LanguageEnum;
+use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\City;
 use App\Models\PlaceDetail;
@@ -21,6 +22,7 @@ use App\Services\LogServiceInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -83,6 +85,8 @@ class TablesController extends AdminController
     public function save(Request $request, $id)
     {
         try {
+            $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
                 'display_order' => ['required', 'int'],
@@ -93,8 +97,11 @@ class TablesController extends AdminController
             if ($validator->fails() && $db == null) {
                 return view('tables/detail', ["data" => $request])->withErrors($validator);
             } else {
-                if ($db == null)
+                if ($db == null) {
                     $db = new Table();
+                    if (!$is_admin)
+                        $db->tenant_id = Auth::user()->tenant_id;
+                }
 
                 $db->name = $request->get('name');
                 $db->minimum_spend = floatval($request->get('minimum_spend'));
@@ -104,6 +111,13 @@ class TablesController extends AdminController
                 $db->place_id = $request->get('place_id');
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
+
+                if ($is_admin) {
+                    $place = $this->placeRepository->find($db->place_id);
+
+                    if (isset($place))
+                        $db->tenant_id = $place->tenant_id;
+                }
 
                 $this->tableRepository->save($db);
             }

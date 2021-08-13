@@ -38,6 +38,23 @@
                                     </div>
                                 </div>
 
+                                @if($is_admin)
+                                    <div class="mb-3">
+                                        <label class="form-label">Tenant</label>
+                                        <div>
+                                            <select class="form-select" name="tenant_id">
+                                                <option value="0">@lang('translation.Select')</option>
+                                                @foreach($tenants as $tenant)
+                                                    <option
+                                                        value="{{ $tenant->id }}" {{ ($data && $data->tenant_id == $tenant->id) ? 'selected' : '' }}>
+                                                        {{ $tenant->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <div class="mb-4">
                                     <div class="row">
                                         <div class="col-6">

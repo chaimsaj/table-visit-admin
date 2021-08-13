@@ -11,7 +11,11 @@ function initTables() {
         serverSide: true,
         ajax: {
             url: "/api/admin/tables/list",
-            type: "POST"
+            type: "POST",
+            data: {
+                is_admin: $("#user_is_admin").val(),
+                tenant_id: $("#user_tenant_id").val(),
+            }
         },
         columns: [
             {data: 'id'},

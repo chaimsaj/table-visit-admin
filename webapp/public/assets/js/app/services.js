@@ -12,9 +12,10 @@ function initServices() {
         ajax: {
             url: "/api/admin/services/list",
             type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-            },
+            data: {
+                is_admin: $("#user_is_admin").val(),
+                tenant_id: $("#user_tenant_id").val(),
+            }
         },
         columns: [
             {data: 'id'},

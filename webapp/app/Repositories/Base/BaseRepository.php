@@ -96,9 +96,11 @@ class BaseRepository implements BaseRepositoryInterface
     {
         $query = $this->model->where('deleted', 0)
             ->where('name', 'like', $search . '%')
-            ->where("tenant_id", "=", $tenant_id)
-            ->orWhere('tenant_id', "=", null)
-            ->orWhere('tenant_id', "=", 0)
+            ->where(function ($query) use ($tenant_id) {
+                $query->where("tenant_id", "=", $tenant_id)
+                    ->orWhere('tenant_id', "=", null)
+                    ->orWhere('tenant_id', "=", 0);
+            })
             ->skip($start)
             ->take($length)
             ->get();
@@ -114,9 +116,11 @@ class BaseRepository implements BaseRepositoryInterface
     public function activesByTenant(int $tenant_id): Collection
     {
         return $this->model->where('deleted', 0)
-            ->where("tenant_id", "=", $tenant_id)
-            ->orWhere('tenant_id', "=", null)
-            ->orWhere('tenant_id', "=", 0)
+            ->where(function ($query) use ($tenant_id) {
+                $query->where("tenant_id", "=", $tenant_id)
+                    ->orWhere('tenant_id', "=", null)
+                    ->orWhere('tenant_id', "=", 0);
+            })
             ->orderBy('name', 'asc')
             ->get();
     }

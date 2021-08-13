@@ -44,7 +44,8 @@ class ServicesController extends AdminApiController
 
     public function list(Request $request): JsonResponse
     {
-        // $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+        $is_admin = boolval($request->get('is_admin'));
+        $tenant_id = intval($request->get('tenant_id'));
 
         $response = new DatatableModel();
 
@@ -56,12 +57,10 @@ class ServicesController extends AdminApiController
 
         try {
 
-            $query = $this->serviceRepository->activesPaged($start, $length, $search);
-            
-            /*if ($is_admin)
+            if ($is_admin)
                 $query = $this->serviceRepository->activesPaged($start, $length, $search);
             else
-                $query = $this->serviceRepository->activesPagedByTenant(Auth::user()->tenant_id, $start, $length, $search);*/
+                $query = $this->serviceRepository->activesPagedByTenant($tenant_id, $start, $length, $search);
 
             foreach ($query["data"] as $item) {
                 $item->place_name = AppConstant::getDash();
