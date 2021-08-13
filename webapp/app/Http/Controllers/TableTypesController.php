@@ -102,7 +102,12 @@ class TableTypesController extends AdminController
 
     public function delete($id)
     {
-        $this->tableTypeRepository->deleteLogic($id);
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+        $data = $this->tableTypeRepository->find($id);
+
+        if (isset($data) && ($is_admin || $data->tenant_id == Auth::user()->tenant_id))
+            $this->tableTypeRepository->deleteLogic($id);
 
         return redirect("table-types");
     }

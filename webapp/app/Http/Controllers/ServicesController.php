@@ -111,7 +111,13 @@ class ServicesController extends AdminController
 
     public function delete($id)
     {
-        $this->serviceRepository->deleteLogic($id);
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+        $data = $this->serviceRepository->find($id);
+
+        if (isset($data) && ($is_admin || $data->tenant_id == Auth::user()->tenant_id))
+            $this->serviceRepository->deleteLogic($id);
+
         return redirect("services");
     }
 }
