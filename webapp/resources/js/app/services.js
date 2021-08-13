@@ -21,7 +21,6 @@ function initServices() {
             {data: 'id'},
             {data: 'name'},
             {data: 'service_type_name'},
-            {data: 'place_name'},
             {data: 'display_order'},
             {
                 data: null, render: function (data) {
