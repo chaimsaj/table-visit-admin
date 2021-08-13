@@ -39,7 +39,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Table type</label>
+                                    <label class="form-label">Drink type</label>
                                     <div>
                                         <select id="service_type_id" class="form-select" name="service_type_id">
                                             <option value="0">@lang('translation.Select')</option>

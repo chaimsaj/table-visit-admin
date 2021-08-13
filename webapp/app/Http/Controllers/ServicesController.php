@@ -93,7 +93,6 @@ class ServicesController extends AdminController
                 $db->name = $request->get('name');
                 $db->display_order = intval($request->get('display_order'));
                 $db->service_type_id = $request->get('service_type_id');
-                $db->place_id = 0;
                 $db->published = $request->get('published') == "on";
                 $db->show = $request->get('show') == "on";
 
