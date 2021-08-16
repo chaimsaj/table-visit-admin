@@ -3,6 +3,8 @@ ssh centos-vm@table-visit.southcentralus.cloudapp.azure.com
 centos-vm
 d7LFhnPmbwuIln3l
 
+/usr/share/nginx/html/table-visit
+
 mariadb
 pBJRetR2EKPg
 

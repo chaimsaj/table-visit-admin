@@ -1,5 +1,52 @@
 'use strict';
 
+function initPlaces() {
+    let datatable = $('#places-datatable').DataTable({
+        columnDefs: [
+            {
+                targets: 'no-sort', orderable: false
+            }
+        ],
+        order: [[2, "asc"]],
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "/api/admin/places/list",
+            type: "POST",
+            data: {
+                is_admin: $("#user_is_admin").val(),
+                tenant_id: $("#user_tenant_id").val(),
+            }
+        },
+        columns: [
+            {data: 'id'},
+            {
+                data: null, render: function (data) {
+                    return '<img class="rounded avatar-sm" src="' + data['image'] + '" alt="' + data['name'] + '"/>';
+                }
+            },
+            {data: 'name'},
+            {data: 'city_name'},
+            {data: 'state_name'},
+            {data: 'display_order'},
+            {
+                data: null, render: function (data) {
+                    return '<a href="/place/delete/' + data['id'] + '" class="text-danger sweet-warning"><i class="mdi mdi-delete font-size-18"></i></a>';
+                }
+            },
+            {
+                data: null, render: function (data) {
+                    return '<a href="/place/' + data['id'] + '" class="text-success load"><i class="mdi mdi-pencil font-size-18"></i></a>';
+                }
+            }
+        ],
+        drawCallback: function () {
+            initLoad();
+            sweetWarning();
+        }
+    });
+}
+
 function initPlace() {
     if ($("#place_detail").length > 0) {
         tinymce.init({
@@ -44,10 +91,6 @@ function initPlace() {
             }
         });
     });
-}
-
-function initPlaces() {
-
 }
 
 function initPlaceFeatures() {

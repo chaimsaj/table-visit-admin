@@ -103,7 +103,7 @@
                                                     <label class="form-label">Display order</label>
                                                     <div>
                                                         <input name="display_order"
-                                                               value="{{$data->display_order ?? ''}}"
+                                                               value="{{$data->display_order ?? '1'}}"
                                                                class="form-control" required
                                                                placeholder="Display order"/>
                                                     </div>
@@ -112,7 +112,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">State</label>
                                                     <div>
-                                                        <select class="form-select" id="state_id" name="state_id">
+                                                        <select class="form-select select2" id="state_id"
+                                                                name="state_id">
                                                             <option value="0">@lang('translation.Select')</option>
                                                             @foreach($states as $state)
                                                                 <option
@@ -127,7 +128,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">City</label>
                                                     <div>
-                                                        <select class="form-select" id="city_id" name="city_id">
+                                                        <select class="form-select select2" id="city_id" name="city_id">
                                                             <option value="0">@lang('translation.Select')</option>
                                                             @foreach($cities as $city)
                                                                 <option
@@ -143,7 +144,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Tenant</label>
                                                         <div>
-                                                            <select class="form-select" name="tenant_id">
+                                                            <select class="form-select select2" name="tenant_id">
                                                                 <option value="0">@lang('translation.Select')</option>
                                                                 @foreach($tenants as $tenant)
                                                                     <option
@@ -171,7 +172,7 @@
                                                         <div class="col-3">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                       {{($data && $data->published == 1) ? 'checked' : ''}}
+                                                                       {{(!$data || $data->published == 1) ? 'checked' : ''}}
                                                                        id="published"
                                                                        name="published">
                                                                 <label class="form-check-label" for="published">
@@ -183,7 +184,7 @@
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                        id="show"
-                                                                       {{($data && $data->show == 1) ? 'checked' : ''}}
+                                                                       {{(!$data || $data->show == 1) ? 'checked' : ''}}
                                                                        name="show">
                                                                 <label class="form-check-label" for="show">
                                                                     Show
@@ -194,7 +195,7 @@
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                        id="accept_reservations"
-                                                                       {{($data && $data->accept_reservations == 1) ? 'checked' : ''}}
+                                                                       {{(!$data || $data->accept_reservations == 1) ? 'checked' : ''}}
                                                                        name="accept_reservations">
                                                                 <label class="form-check-label"
                                                                        for="accept_reservations">
@@ -206,7 +207,7 @@
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                        id="open"
-                                                                       {{($data && $data->open == 1) ? 'checked' : ''}}
+                                                                       {{(!$data || $data->open == 1) ? 'checked' : ''}}
                                                                        name="open">
                                                                 <label class="form-check-label" for="open">
                                                                     Open

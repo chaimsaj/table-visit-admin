@@ -33,15 +33,18 @@ Route::middleware('api')->group(function () {
 });
 
 Route::middleware('api')->group(function () {
-    //Locations
+    // Locations
     Route::get('/admin/locations/load_states/{country_id}', [App\Http\AdminApi\LocationsController::class, 'load_states'])->name('admin_api.locations.load_states');
     Route::get('/admin/locations/load_cities/{state_id}', [App\Http\AdminApi\LocationsController::class, 'load_cities'])->name('admin_api.locations.load_cities');
     Route::post('/admin/locations/cities', [App\Http\AdminApi\LocationsController::class, 'cities'])->name('admin_api.locations.cities');
 
-    //Tables
+    // Places
+    Route::post('/admin/places/list', [App\Http\AdminApi\PlacesController::class, 'list'])->name('admin_api.places.list');
+
+    // Tables
     Route::post('/admin/tables/list', [App\Http\AdminApi\TablesController::class, 'list'])->name('admin_api.tables.list');
 
-    //Services
+    // Services
     Route::post('/admin/services/list', [App\Http\AdminApi\ServicesController::class, 'list'])->name('admin_api.services.list');
 });
 

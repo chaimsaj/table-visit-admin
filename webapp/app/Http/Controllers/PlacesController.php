@@ -231,7 +231,12 @@ class PlacesController extends AdminController
 
     public function delete($id)
     {
-        $this->repository->deleteLogic($id);
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+        $data = $this->repository->find($id);
+
+        if (isset($data) && ($is_admin || $data->tenant_id == Auth::user()->tenant_id))
+            $this->repository->deleteLogic($id);
 
         return redirect("places");
     }
