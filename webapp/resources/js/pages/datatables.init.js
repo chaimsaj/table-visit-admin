@@ -1,17 +1,12 @@
-/*
-Template Name: Skote - Admin & Dashboard Template
-Author: Themesbrand
-Website: https://themesbrand.com/
-Contact: themesbrand@gmail.com
-File: Datatables Js File
-*/
-
 $(document).ready(function () {
     $('#datatable').DataTable(
         {
             columnDefs: [
-                {targets: 'no-sort', orderable: false}
+                {
+                    targets: 'no-sort', orderable: false
+                }
             ],
+            order: [[1, "asc"]],
         }
     );
 
