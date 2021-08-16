@@ -48,7 +48,7 @@
             <div class="mb-4">
                 <label class="form-label">@lang('translation.AddMusic')</label>
                 <div>
-                    <select id="place_music_id" class="form-select" name="place_music_id">
+                    <select id="place_music_id" class="form-select select2" name="place_music_id">
                         <option value="0">@lang('translation.Select')</option>
                         @if (isset($music))
                             @foreach($music as $music_item)

@@ -100,7 +100,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">User Type</label>
                                                     <div>
-                                                        <select class="form-select" name="user_type_id">
+                                                        <select class="form-select select2" name="user_type_id">
                                                             @foreach($user_types as $user_type)
                                                                 <option
                                                                     value="{{ $user_type->key }}" {{ ($data && $data->user_type_id == $user_type->key) ? 'selected' : '' }}>
@@ -112,7 +112,7 @@
                                                 </div>
                                                 @if($is_admin)
                                                     <div class="mb-3">
-                                                        <label class="form-label">Tenant</label>
+                                                        <label class="form-label select2">Tenant</label>
                                                         <div>
                                                             <select class="form-select" name="tenant_id">
                                                                 <option value="0">@lang('translation.Select')</option>

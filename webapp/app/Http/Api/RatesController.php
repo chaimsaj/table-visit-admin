@@ -27,15 +27,14 @@ class RatesController extends ApiController
         $this->serviceRateRepository = $serviceRateRepository;
     }
 
-    public function list(): JsonResponse
+    public function rates($service_id, $place_id): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
 
         try {
-            $user = Auth::user();
-
-
+            $query = $this->serviceRepository->loadByPlace($place_id);
+            $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }

@@ -48,7 +48,7 @@
             <div class="mb-4">
                 <label class="form-label">@lang('translation.AddFeatures')</label>
                 <div>
-                    <select id="place_feature_id" class="form-select" name="place_feature_id">
+                    <select id="place_feature_id" class="form-select select2" name="place_feature_id">
                         <option value="0">@lang('translation.Select')</option>
                         @if (isset($features))
                             @foreach($features as $feature)
