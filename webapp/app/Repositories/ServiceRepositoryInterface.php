@@ -8,4 +8,5 @@ use Illuminate\Support\Collection;
 
 interface ServiceRepositoryInterface extends BaseRepositoryInterface
 {
+    public function loadByPlace(int $place_id): Collection;
 }

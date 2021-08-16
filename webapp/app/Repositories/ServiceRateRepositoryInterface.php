@@ -11,5 +11,7 @@ interface ServiceRateRepositoryInterface extends BaseRepositoryInterface
 {
     public function loadBy(int $service_id, int $place_id): Collection;
 
+    public function loadByPlace(int $place_id): Collection;
+
     public function firstBy(int $service_id, int $place_id): ?Model;
 }

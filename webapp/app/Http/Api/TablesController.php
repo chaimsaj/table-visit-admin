@@ -11,8 +11,6 @@ use App\Repositories\TableRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class TablesController extends ApiController
@@ -42,6 +40,8 @@ class TablesController extends ApiController
             foreach ($query as $item) {
                 $item->detail = $this->detail($item->id, $language);
             }
+
+            $response->setData($query);
 
         } catch (Throwable $ex) {
             $this->logger->save($ex);

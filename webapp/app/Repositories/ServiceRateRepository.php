@@ -22,6 +22,16 @@ class ServiceRateRepository extends BaseRepository implements ServiceRateReposit
             ->where('deleted', '=', 0)
             ->where('service_id', '=', $service_id)
             ->where('place_id', '=', $place_id)
+            // ->groupBy('service_id', 'place_id')
+            ->get();
+    }
+
+    public function loadByPlace(int $place_id): Collection
+    {
+        return $this->model->where('published', '=', 1)
+            ->where('show', '=', 1)
+            ->where('deleted', '=', 0)
+            ->where('place_id', '=', $place_id)
             ->get();
     }
 

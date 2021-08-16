@@ -1,10 +1,5 @@
 <?php
 
-
-use App\AppModels\ApiModel;
-use App\Core\ApiCodeEnum;
-use App\Http\Api\CountriesController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,4 +71,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/place_features', [App\Http\Api\PlaceFeaturesController::class, 'list'])->name('api.place_features.list');
     Route::get('/place_feature/{id}', [App\Http\Api\PlaceFeaturesController::class, 'find'])->name('api.place_features.find');
+
+    // Services
+    Route::get('/services/rates/{place_id}', [App\Http\Api\ServicesController::class, 'rates'])->name('api.services.rates');
+
+    // Tables
+    Route::get('/tables/{place_id}', [App\Http\Api\TablesController::class, 'list'])->name('api.tables.list');
 });
