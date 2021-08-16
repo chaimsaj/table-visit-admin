@@ -70,7 +70,8 @@
                                                        name="valid_from" id="valid_from"
                                                        data-date-orientation="top"
                                                        data-date-autoclose="true"
-                                                       data-date-format="mm-dd-yyyy" data-date-container='#cnt_valid_from'
+                                                       data-date-format="mm-dd-yyyy"
+                                                       data-date-container='#cnt_valid_from'
                                                        data-provide="datepicker"
                                                        value="{{$data->valid_from_data ?? ''}}">
                                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
@@ -97,7 +98,7 @@
                                         <div class="col-6">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
-                                                       {{($data && $data->published == 1) ? 'checked' : ''}}
+                                                       {{(!$data || $data->published == 1) ? 'checked' : ''}}
                                                        id="published"
                                                        name="published">
                                                 <label class="form-check-label" for="published">
@@ -108,7 +109,7 @@
                                         <div class="col-6">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" id="show"
-                                                       {{($data && $data->show == 1) ? 'checked' : ''}}
+                                                       {{(!$data || $data->show == 1) ? 'checked' : ''}}
                                                        name="show">
                                                 <label class="form-check-label" for="show">
                                                     Show

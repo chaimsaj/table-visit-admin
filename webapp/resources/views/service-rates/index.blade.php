@@ -32,8 +32,9 @@
                         <thead class="table-light">
                         <tr class="text-center">
                             <th>@lang('translation.Id')</th>
-                            <th>@lang('translation.Name')</th>
-                            <th>@lang('translation.DisplayOrder')</th>
+                            <th>@lang('translation.Service')</th>
+                            <th>@lang('translation.Place')</th>
+                            <th>@lang('translation.Rate')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
@@ -44,8 +45,9 @@
                         @foreach ($data as $item)
                             <tr class="text-center">
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->display_order }}</td>
+                                <td>{{ $item->service_name }}</td>
+                                <td>{{ $item->place_name }}</td>
+                                <td>{{ $item->rate }}</td>
                                 <td>
                                     <a href="{{route("service-rate.delete", $item->id)}}"
                                        class="text-danger sweet-warning"><i

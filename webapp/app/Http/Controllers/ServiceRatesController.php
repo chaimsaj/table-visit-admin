@@ -49,6 +49,17 @@ class ServiceRatesController extends AdminController
         else
             $data = $this->serviceRateRepository->activesByTenant(Auth::user()->tenant_id);
 
+        foreach ($data as $item) {
+            $service = $this->serviceRepository->find($item->service_id);
+            $place = $this->placeRepository->find($item->place_id);
+
+            if (isset($service))
+                $item->service_name = $service->name;
+
+            if (isset($place))
+                $item->place_name = $place->name;
+        }
+
         return view('service-rates/index', ["data" => $data]);
     }
 
@@ -66,7 +77,10 @@ class ServiceRatesController extends AdminController
         else
             $services = $this->serviceRepository->activesByTenant(Auth::user()->tenant_id);
 
-        $data = $this->serviceRateRepository->find($id);
+        $data = null;
+
+        if ($id != 0)
+            $data = $this->serviceRateRepository->find($id);
 
         if (isset($data)) {
             $data->valid_from_data = AppHelper::toDateString($data->valid_from, 'm-d-Y');
@@ -151,7 +165,12 @@ class ServiceRatesController extends AdminController
 
     public function delete($id)
     {
-        $this->serviceRateRepository->deleteLogic($id);
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+        $data = $this->serviceRateRepository->find($id);
+
+        if (isset($data) && ($is_admin || $data->tenant_id == Auth::user()->tenant_id))
+            $this->serviceRateRepository->deleteLogic($id);
 
         return redirect("service-rates");
     }
