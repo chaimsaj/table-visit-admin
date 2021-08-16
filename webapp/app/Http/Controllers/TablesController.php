@@ -33,13 +33,11 @@ class TablesController extends AdminController
     private TableTypeRepositoryInterface $tableTypeRepository;
     private PlaceRepositoryInterface $placeRepository;
     private TableDetailRepositoryInterface $tableDetailRepository;
-    private TableRateRepositoryInterface $tableRateRepository;
 
     public function __construct(TableRepositoryInterface       $tableRepository,
                                 TableTypeRepositoryInterface   $tableTypeRepository,
                                 PlaceRepositoryInterface       $placeRepository,
                                 TableDetailRepositoryInterface $tableDetailRepository,
-                                TableRateRepositoryInterface   $tableRateRepository,
                                 LogServiceInterface            $logger)
     {
         parent::__construct($logger);
@@ -48,7 +46,6 @@ class TablesController extends AdminController
         $this->tableTypeRepository = $tableTypeRepository;
         $this->placeRepository = $placeRepository;
         $this->tableDetailRepository = $tableDetailRepository;
-        $this->tableRateRepository = $tableRateRepository;
     }
 
     public function index()
@@ -62,11 +59,9 @@ class TablesController extends AdminController
         $table_types = $this->tableTypeRepository->published();
         $places = $this->placeRepository->published();
         $table_detail = null;
-        $table_rates = new Collection;
 
         if (isset($data)) {
             $table_detail = $this->tableDetailRepository->loadBy($id, LanguageEnum::English);
-            $table_rates = $this->tableRateRepository->loadBy($id);
         }
 
         $tab = Session::get("tab", "data");
@@ -77,7 +72,6 @@ class TablesController extends AdminController
                 "table_types" => $table_types,
                 "places" => $places,
                 "table_detail" => $table_detail,
-                "table_rates" => $table_rates,
                 "tab" => $tab
             ]);
     }
@@ -95,7 +89,24 @@ class TablesController extends AdminController
             $db = $this->tableRepository->find($id);
 
             if ($validator->fails() && $db == null) {
-                return view('tables/detail', ["data" => $request])->withErrors($validator);
+
+                $table_types = $this->tableTypeRepository->published();
+                $places = $this->placeRepository->published();
+                $table_detail = null;
+
+                if (isset($data)) {
+                    $table_detail = $this->tableDetailRepository->loadBy($id, LanguageEnum::English);
+                }
+
+                $tab = Session::get("tab", "data");
+
+                return view('tables/detail', [
+                    "data" => $request,
+                    "table_types" => $table_types,
+                    "places" => $places,
+                    "table_detail" => $table_detail,
+                    "tab" => $tab
+                ])->withErrors($validator);
             } else {
                 if ($db == null) {
                     $db = new Table();
@@ -131,7 +142,13 @@ class TablesController extends AdminController
 
     public function delete($id)
     {
-        $this->tableRepository->deleteLogic($id);
+        $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+        $data = $this->tableRepository->find($id);
+
+        if (isset($data) && ($is_admin || $data->tenant_id == Auth::user()->tenant_id))
+            $this->tableRepository->deleteLogic($id);
+
         return redirect("tables");
     }
 
@@ -157,66 +174,6 @@ class TablesController extends AdminController
         }
 
         Session::flash('tab', "details");
-
-        return redirect()->back();
-    }
-
-    public function save_rate(Request $request, $id): RedirectResponse
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'table_id' => ['required', 'int', 'gt:0'],
-            ]);
-
-            if ($validator->fails()) {
-                $this->logger->log("table.save_rate error");
-            } else {
-                $table = $this->tableRepository->find($id);
-
-                if (isset($table)) {
-                    $db = new TableRate();
-
-                    $db->rate = floatval($request->get('rate'));
-                    $db->tax = 0;
-                    $db->total_rate = floatval($request->get('rate'));
-                    $db->valid_from = $request->get('valid_from');
-                    $db->valid_to = $request->get('valid_to');
-                    $db->table_id = $id;
-                    $db->place_id = $table->place_id;
-                    $db->show = $request->get('show') == "on";
-                    $db->published = $request->get('published') == "on";
-
-                    $this->tableRateRepository->save($db);
-                }
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-        }
-
-        Session::flash('tab', "rates");
-
-        return redirect()->back();
-    }
-
-    public function edit_rate(Request $request, $id): RedirectResponse
-    {
-        try {
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-        }
-
-        Session::flash('tab', "rates");
-
-        return redirect()->back();
-    }
-
-    public function delete_rate($id): RedirectResponse
-    {
-        $this->tableRateRepository->delete($id);
-
-        Session::flash('tab', "rates");
 
         return redirect()->back();
     }

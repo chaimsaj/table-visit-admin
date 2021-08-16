@@ -7,6 +7,7 @@ function initTables() {
                 targets: 'no-sort', orderable: false
             }
         ],
+        order: [[1, "asc"]],
         processing: true,
         serverSide: true,
         ajax: {
@@ -20,8 +21,10 @@ function initTables() {
         columns: [
             {data: 'id'},
             {data: 'name'},
+            {data: 'table_type_name'},
+            {data: 'minimum_spend'},
+            {data: 'guests_count'},
             {data: 'place_name'},
-            {data: 'display_order'},
             {
                 data: null, render: function (data) {
                     return '<a href="/table/delete/' + data['id'] + '" class="text-danger sweet-warning"><i class="mdi mdi-delete font-size-18"></i></a>';

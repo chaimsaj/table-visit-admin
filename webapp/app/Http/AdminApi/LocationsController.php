@@ -26,9 +26,9 @@ class LocationsController extends AdminApiController
     private CityRepositoryInterface $cityRepository;
 
     public function __construct(CountryRepositoryInterface $countryRepository,
-                                StateRepositoryInterface $stateRepository,
-                                CityRepositoryInterface $cityRepository,
-                                LogServiceInterface $logger)
+                                StateRepositoryInterface   $stateRepository,
+                                CityRepositoryInterface    $cityRepository,
+                                LogServiceInterface        $logger)
     {
         parent::__construct($logger);
         $this->countryRepository = $countryRepository;
@@ -76,8 +76,16 @@ class LocationsController extends AdminApiController
         $search_param = $request->get('search');
         $search = isset($search_param) && isset($search_param["value"]) ? $search_param["value"] : "";
 
+        $order_by = 'name';
+
+        switch ($this->orderColumn()) {
+            case 2:
+                $order_by = 'iso_code';
+                break;
+        }
+
         try {
-            $query = $this->cityRepository->activesPaged($start, $length, $search);
+            $query = $this->cityRepository->activesPaged($start, $length, $order_by, $this->order(), $search);
 
             foreach ($query["data"] as $item) {
                 $item->state_name = AppConstant::getDash();

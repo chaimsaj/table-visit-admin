@@ -30,7 +30,7 @@
                                     <label class="form-label">Display order</label>
                                     <div>
                                         <input name="display_order"
-                                               value="{{$data->display_order ?? ''}}"
+                                               value="{{$data->display_order ?? '1'}}"
                                                class="form-control"
                                                data-parsley-type="number"
                                                required

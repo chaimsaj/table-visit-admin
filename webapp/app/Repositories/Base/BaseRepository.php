@@ -76,13 +76,18 @@ class BaseRepository implements BaseRepositoryInterface
         }
     }
 
-    public function activesPaged(int $start, int $length, string $search): array
+    public function activesPaged(int $start, int $length, string $order_by, string $order, string $search): array
     {
         $query = $this->model->where('deleted', 0)
             ->where('name', 'like', $search . '%')
             ->skip($start)
-            ->take($length)
-            ->get();
+            ->take($length);
+
+        // 'asc'
+        if (!empty($order_by))
+            $query = $query->orderBy($order_by, $order);
+
+        $query = $query->get();
 
         $count = $this->model->count();
 
@@ -92,7 +97,7 @@ class BaseRepository implements BaseRepositoryInterface
         ];
     }
 
-    public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $search): array
+    public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $order_by, string $order, string $search): array
     {
         $query = $this->model->where('deleted', 0)
             ->where('name', 'like', $search . '%')
@@ -102,8 +107,12 @@ class BaseRepository implements BaseRepositoryInterface
                     ->orWhere('tenant_id', "=", 0);
             })
             ->skip($start)
-            ->take($length)
-            ->get();
+            ->take($length);
+
+        if (!empty($order_by))
+            $query = $query->orderBy($order_by, $order);
+
+        $query = $query->get();
 
         $count = $this->model->count();
 

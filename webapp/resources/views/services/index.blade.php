@@ -31,7 +31,7 @@
                         <thead class="table-light">
                         <tr class="text-center">
                             <th class="no-sort">@lang('translation.Id')</th>
-                            <th class="no-sort">@lang('translation.Name')</th>
+                            <th>@lang('translation.Name')</th>
                             <th class="no-sort">@lang('translation.Type')</th>
                             <th class="no-sort">@lang('translation.DisplayOrder')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>

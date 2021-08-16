@@ -3,35 +3,31 @@
 
 namespace App\Http\AdminApi;
 
-
-use App\AppModels\ApiModel;
 use App\AppModels\DatatableModel;
-use App\Core\ApiCodeEnum;
 use App\Core\AppConstant;
 use App\Http\AdminApi\Base\AdminApiController;
-use App\Repositories\CityRepositoryInterface;
-use App\Repositories\CountryRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
-use App\Repositories\StateRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
+use App\Repositories\TableTypeRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Throwable;
-use Yajra\DataTables\DataTables;
-use function PHPUnit\Framework\isEmpty;
 
 class TablesController extends AdminApiController
 {
     private TableRepositoryInterface $tableRepository;
+    private TableTypeRepositoryInterface $tableTypeRepository;
     private PlaceRepositoryInterface $placeRepository;
 
-    public function __construct(TableRepositoryInterface $tableRepository,
-                                PlaceRepositoryInterface $placeRepository,
-                                LogServiceInterface      $logger)
+    public function __construct(TableRepositoryInterface     $tableRepository,
+                                TableTypeRepositoryInterface $tableTypeRepository,
+                                PlaceRepositoryInterface     $placeRepository,
+                                LogServiceInterface          $logger)
     {
         parent::__construct($logger);
         $this->tableRepository = $tableRepository;
+        $this->tableTypeRepository = $tableTypeRepository;
         $this->placeRepository = $placeRepository;
     }
 
@@ -47,20 +43,28 @@ class TablesController extends AdminApiController
         $length = (int)$request->get('length');
         $search_param = $request->get('search');
         $search = isset($search_param) && isset($search_param["value"]) ? $search_param["value"] : "";
+        $order_by = 'name';
 
         try {
             if ($is_admin)
-                $query = $this->tableRepository->activesPaged($start, $length, $search);
+                $query = $this->tableRepository->activesPaged($start, $length, $order_by, $this->order(), $search);
             else
-                $query = $this->tableRepository->activesPagedByTenant($tenant_id, $start, $length, $search);
+                $query = $this->tableRepository->activesPagedByTenant($tenant_id, $start, $length, $order_by, $this->order(), $search);
 
             foreach ($query["data"] as $item) {
                 $item->place_name = AppConstant::getDash();
+                $item->table_type_name = AppConstant::getDash();
 
                 $place = $this->placeRepository->find($item->place_id);
 
                 if (isset($place)) {
                     $item->place_name = $place->name;
+                }
+
+                $table_type = $this->tableTypeRepository->find($item->table_type_id);
+
+                if (isset($table_type)) {
+                    $item->table_type_name = $table_type->name;
                 }
             }
 

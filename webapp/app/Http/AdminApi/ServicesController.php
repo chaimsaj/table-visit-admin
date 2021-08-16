@@ -54,13 +54,14 @@ class ServicesController extends AdminApiController
         $length = (int)$request->get('length');
         $search_param = $request->get('search');
         $search = isset($search_param) && isset($search_param["value"]) ? $search_param["value"] : "";
+        $order_by = 'name';
 
         try {
 
             if ($is_admin)
-                $query = $this->serviceRepository->activesPaged($start, $length, $search);
+                $query = $this->serviceRepository->activesPaged($start, $length, $order_by, $this->order(), $search);
             else
-                $query = $this->serviceRepository->activesPagedByTenant($tenant_id, $start, $length, $search);
+                $query = $this->serviceRepository->activesPagedByTenant($tenant_id, $start, $length, $order_by, $this->order(), $search);
 
             foreach ($query["data"] as $item) {
                 $item->place_name = AppConstant::getDash();

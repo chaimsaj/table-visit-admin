@@ -37,9 +37,12 @@ return [
     "Tables" => "Tables",
     "Table" => "Table",
     "TableDescription" => "Table description",
+    "MinimumSpend" => "Minimum spend",
+    "GuestsCount" => "Guests count",
 
     "TableTypes" => "Table Types",
     "TableType" => "Table Type",
+    "TableTypeName" => "Table type",
     "Rates" => "Rates",
 
     "TableRates" => "Table Rates",

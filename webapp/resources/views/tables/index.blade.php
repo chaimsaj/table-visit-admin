@@ -31,9 +31,11 @@
                         <thead class="table-light">
                         <tr class="text-center">
                             <th class="no-sort">@lang('translation.Id')</th>
-                            <th class="no-sort">@lang('translation.Name')</th>
+                            <th>@lang('translation.Name')</th>
+                            <th class="no-sort">@lang('translation.TableTypeName')</th>
+                            <th class="no-sort">@lang('translation.MinimumSpend')</th>
+                            <th class="no-sort">@lang('translation.GuestsCount')</th>
                             <th class="no-sort">@lang('translation.Place')</th>
-                            <th class="no-sort">@lang('translation.DisplayOrder')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>

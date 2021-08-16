@@ -31,13 +31,6 @@
                                             <span class="d-none d-sm-block">@lang('translation.Detail')</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link @if($tab=="rates") active @endif" data-bs-toggle="tab"
-                                           href="#rates" role="tab">
-                                            <span class="d-block d-sm-none"><i class="bx bx-data"></i></span>
-                                            <span class="d-none d-sm-block">@lang('translation.Rates')</span>
-                                        </a>
-                                    </li>
                                 @endif
                             </ul>
                             <div class="tab-content">
@@ -83,7 +76,7 @@
                                                     <label class="form-label">Display order</label>
                                                     <div>
                                                         <input name="display_order"
-                                                               value="{{$data->display_order ?? ''}}"
+                                                               value="{{$data->display_order ?? '1'}}"
                                                                class="form-control"
                                                                data-parsley-type="number"
                                                                required
@@ -93,7 +86,7 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Table type</label>
                                                     <div>
-                                                        <select id="table_type_id" class="form-select"
+                                                        <select id="table_type_id" class="form-select select2"
                                                                 name="table_type_id">
                                                             <option value="0">@lang('translation.Select')</option>
                                                             @foreach($table_types as $table_type)
@@ -108,7 +101,8 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Place</label>
                                                     <div>
-                                                        <select id="place_id" class="form-select" name="place_id">
+                                                        <select id="place_id" class="form-select select2"
+                                                                name="place_id">
                                                             <option value="0">@lang('translation.Select')</option>
                                                             @foreach($places as $place)
                                                                 <option
@@ -124,7 +118,7 @@
                                                         <div class="col-6">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                       {{($data && $data->published == 1) ? 'checked' : ''}}
+                                                                       {{(!$data || $data->published == 1) ? 'checked' : ''}}
                                                                        id="published"
                                                                        name="published">
                                                                 <label class="form-check-label" for="published">
@@ -136,7 +130,7 @@
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
                                                                        id="show"
-                                                                       {{($data && $data->show == 1) ? 'checked' : ''}}
+                                                                       {{(!$data || $data->show == 1) ? 'checked' : ''}}
                                                                        name="show">
                                                                 <label class="form-check-label" for="show">
                                                                     Show
@@ -177,13 +171,6 @@
                                          role="tabpanel">
                                         <p class="mb-0">
                                             @component('components.table-details', ["table_detail" => $table_detail ?? null, "data" => $data ?? null])
-                                            @endcomponent
-                                        </p>
-                                    </div>
-                                    <div class="tab-pane p-2 @if($tab=="rates") active @endif" id="rates"
-                                         role="tabpanel">
-                                        <p class="mb-0">
-                                            @component('components.table-rates', ["table_rates" => $table_rates ?? null, "data" => $data ?? null])
                                             @endcomponent
                                         </p>
                                     </div>

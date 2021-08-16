@@ -13,6 +13,7 @@ function initCities() {
                 targets: 'no-sort', orderable: false
             }
         ],
+        order: [[1, "asc"]],
         processing: true,
         serverSide: true,
         ajax: {
