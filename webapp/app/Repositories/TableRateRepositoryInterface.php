@@ -10,5 +10,4 @@ use Illuminate\Support\Collection;
 
 interface TableRateRepositoryInterface extends BaseRepositoryInterface
 {
-    public function loadBy(int $table_id): Collection;
 }

@@ -141,8 +141,6 @@ class PlacesController extends ApiController
                 $data_item = $this->load_place($item);
                 $data->add($data_item);
             }
-
-            $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }

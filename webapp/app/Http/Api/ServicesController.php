@@ -8,6 +8,7 @@ use App\Http\Api\Base\ApiController;
 use App\Repositories\ServiceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 
@@ -23,15 +24,14 @@ class ServicesController extends ApiController
         $this->serviceRepository = $serviceRepository;
     }
 
-    public function list(): JsonResponse
+    public function list($place_id): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
 
         try {
-            $user = Auth::user();
-
-
+            $query = $this->serviceRepository->loadByPlace($place_id);
+            $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }

@@ -17,4 +17,13 @@ class TableRepository extends BaseRepository implements TableRepositoryInterface
     {
         parent::__construct($model);
     }
+
+    public function loadByPlace(int $place_id): Collection
+    {
+        return $this->model->where('published', '=', 1)
+            ->where('show', '=', 1)
+            ->where('deleted', '=', 0)
+            ->where('place_id', '=', $place_id)
+            ->get();
+    }
 }

@@ -14,12 +14,4 @@ class TableRateRepository extends BaseRepository implements TableRateRepositoryI
     {
         parent::__construct($model);
     }
-
-    public function loadBy(int $table_id): Collection
-    {
-        return $this->model->where('deleted', 0)
-            ->where('published', 1)
-            ->where('table_id', $table_id)
-            ->get();
-    }
 }
