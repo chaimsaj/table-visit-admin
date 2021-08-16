@@ -6,6 +6,8 @@ namespace App\Helpers;
 
 use App\AppModels\KeyValueModel;
 use App\Core\UserTypeEnum;
+use DateTime;
+use Exception;
 use Illuminate\Support\Collection;
 
 class AppHelper
@@ -94,5 +96,28 @@ class AppHelper
             $new_string = substr($new_string, 0, strrpos($new_string, " "));
 
         return $new_string . "..";
+    }
+
+    static function toDateString($data, $format): string
+    {
+        try {
+            if (isset($data) && !empty($data)) {
+                $date = new DateTime(strval($data));
+                return $date->format($format);
+            }
+        } catch (Exception $e) {
+        }
+
+        return '';
+    }
+
+    static function toDate($data, $format)
+    {
+        try {
+            return DateTime::createFromFormat($format, strval($data));
+        } catch (Exception $e) {
+        }
+
+        return null;
     }
 }

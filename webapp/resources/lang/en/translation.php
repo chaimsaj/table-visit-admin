@@ -50,6 +50,7 @@ return [
     "Tenants" => "Tenants",
     "Tenant" => "Tenant",
     "UUID" => "UUID",
+    "FeeMarkup" => "Fee markup",
 
     "TablesAndBottles" => "Tables & Bottles",
     "Bottles" => "Bottles",

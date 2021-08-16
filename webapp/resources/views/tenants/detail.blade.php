@@ -27,6 +27,19 @@
                                            class="form-control" value="" required placeholder="Name"/>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label class="form-label">Fee markup %</label>
+                                    <div>
+                                        <input name="fee_markup"
+                                               id="fee_markup"
+                                               value="{{$data->fee_markup ?? ''}}"
+                                               class="form-control"
+                                               required
+                                               data-parsley-type="number"
+                                               placeholder="Fee markup"/>
+                                    </div>
+                                </div>
+
                                 <div class="mb-4">
                                     <div class="row">
                                         <div class="col-6">

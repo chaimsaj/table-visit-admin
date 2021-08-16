@@ -52,6 +52,8 @@ class TenantsController extends AdminController
                 }
 
                 $db->name = $request->get('name');
+                $db->detail = '';
+                $db->fee_markup = floatval($request->get('fee_markup'));
                 $db->published = $request->get('published') == "on";
 
                 $this->tenantRepository->save($db);

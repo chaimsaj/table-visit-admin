@@ -9,14 +9,19 @@
 
 {{--APP--}}
 <!-- datatables -->
-<script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/datatables/datatables.min.js') }}"></script>
 
 <!-- validation -->
-<script src="{{ URL::asset('/assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/js/pages/form-validation.init.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/parsleyjs/parsleyjs.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/pages/form-validation.init.js') }}"></script>
 
 <!-- Sweet Alerts js -->
-<script src="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+<script src="{{ URL::asset('assets/libs/select2/select2.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
+<script src="{{ URL::asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
 
 {{--<script>
     $('#change-password').on('submit',function(event){
@@ -62,6 +67,7 @@
 
 <!-- App js -->
 <script src="{{ URL::asset('assets/js/app.min.js')}}"></script>
+<script src="{{ URL::asset('assets/js/pages/form-advanced.init.js')}}"></script>
 
 <script src="{{ URL::asset('assets/js/app/shared.js')}}"></script>
 

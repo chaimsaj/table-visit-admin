@@ -41,7 +41,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Drink type</label>
                                     <div>
-                                        <select id="service_type_id" class="form-select" name="service_type_id">
+                                        <select id="service_type_id" class="form-select select2" name="service_type_id">
                                             <option value="0">@lang('translation.Select')</option>
                                             @foreach($service_types as $service_type)
                                                 <option

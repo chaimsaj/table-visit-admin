@@ -34,6 +34,7 @@
                             <th>@lang('translation.Id')</th>
                             <th>@lang('translation.Name')</th>
                             <th>@lang('translation.UUID')</th>
+                            <th>@lang('translation.FeeMarkup')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
@@ -46,6 +47,7 @@
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->tenant_uuid }}</td>
+                                <td>{{ $item->fee_markup }}</td>
                                 <td>
                                     <a href="{{route("tenant.delete", $item->id)}}"
                                        class="text-danger sweet-warning"><i
