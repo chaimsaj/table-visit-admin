@@ -21,6 +21,7 @@ return [
     "Trace" => "Trace",
     "Date" => "Date",
     "Settings" => "Settings",
+    "Clear" => "Clear",
 
     "Services" => "Services",
     "Service" => "Service",

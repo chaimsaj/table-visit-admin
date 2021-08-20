@@ -32,4 +32,10 @@ class LogController extends BaseController
 
         return redirect("logs");
     }
+
+    public function truncate()
+    {
+        $this->repository->truncate();
+        return redirect("logs");
+    }
 }

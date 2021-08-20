@@ -31,4 +31,6 @@ interface BaseRepositoryInterface
     public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $order_by, string $order, string $search): array;
 
     public function activesByTenant(int $tenant_id): Collection;
+
+    public function truncate(): void;
 }

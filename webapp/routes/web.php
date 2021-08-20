@@ -136,6 +136,7 @@ Route::get('/place-music/delete/{id}', [App\Http\Controllers\PlaceMusicControlle
 
 // Logs
 Route::get('/logs', [App\Http\Controllers\LogController::class, 'index'])->name('logs');
+Route::post('/logs/truncate', [App\Http\Controllers\LogController::class, 'truncate'])->name('logs.truncate');
 Route::get('/log/{id}', [App\Http\Controllers\LogController::class, 'detail'])->name('log.detail');
 Route::get('/log/delete/{id}', [App\Http\Controllers\LogController::class, 'delete'])->name('log.delete');
 

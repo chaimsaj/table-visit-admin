@@ -12,7 +12,7 @@
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect nav-item">
                         <i class="bx bx-user-circle"></i>
                         <span key="t-users">@lang('translation.Users')</span>
                     </a>

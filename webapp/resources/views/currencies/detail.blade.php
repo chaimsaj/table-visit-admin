@@ -16,8 +16,7 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <form autocomplete="off" method="POST" class="form-horizontal custom-validation"
-                                  action="{{route("currency.save", $data->id ?? 0)}}"
-                                  enctype="multipart/form-data">
+                                  action="{{route("currency.save", $data->id ?? 0)}}">
                                 @csrf
                                 <hr/>
                                 <div class="mb-3">

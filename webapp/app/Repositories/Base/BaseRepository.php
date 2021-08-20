@@ -133,4 +133,9 @@ class BaseRepository implements BaseRepositoryInterface
             ->orderBy('name', 'asc')
             ->get();
     }
+
+    public function truncate(): void
+    {
+        $this->model->truncate();
+    }
 }
