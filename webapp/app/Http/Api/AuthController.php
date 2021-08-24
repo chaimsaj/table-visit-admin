@@ -9,11 +9,14 @@ use App\Core\ApiCodeEnum;
 use App\Core\AuthModeEnum;
 use App\Core\BaseEnum;
 use App\Core\GenderEnum;
+use App\Core\MediaSizeEnum;
 use App\Core\UserTypeEnum;
+use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\User;
 use App\Repositories\CityRepositoryInterface;
 use App\Services\LogServiceInterface;
+use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -120,6 +123,8 @@ class AuthController extends ApiController
 
             if (isset($user->dob))
                 $user->dob = DateTime::createFromFormat('Y-m-d', $user->dob)->format('d-m-Y');
+
+            $user->avatar = MediaHelper::getImageUrl($user->avatar, MediaSizeEnum::medium);
 
             $response->setData($user);
         } else
