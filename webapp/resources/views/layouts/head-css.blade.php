@@ -28,5 +28,6 @@
       type="text/css"/>
 
 <!-- App Css-->
-<link href="{{ URL::asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css"/>
+<link href="{{ URL::asset('assets/css/app.min.css?') . config('app.version') }}" id="app-style" rel="stylesheet"
+      type="text/css"/>
 

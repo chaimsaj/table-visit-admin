@@ -26,7 +26,21 @@ class PlaceFeatureRepository extends BaseRepository implements PlaceFeatureRepos
             ->where('place_features.published', '=', 1)
             ->where('place_features.deleted', '=', 0)
             ->where('place_to_features.place_id', $place_id)
-            ->select('place_features.id', 'place_features.name')
+            ->select('place_features.id', 'place_features.name', 'place_to_features.id AS rel_id')
+            ->get();
+    }
+
+    public function publishedExclude(Collection $exclude, int $tenant_id = null): Collection
+    {
+        return $this->model->whereNotIn('id', $exclude)
+            ->where('published', '=', 1)
+            ->where('deleted', '=', 0)
+            ->where(function ($query) use ($tenant_id) {
+                if (isset($tenant_id))
+                    $query->where("tenant_id", "=", $tenant_id)
+                        ->orWhere('tenant_id', "=", null)
+                        ->orWhere('tenant_id', "=", 0);
+            })
             ->get();
     }
 }

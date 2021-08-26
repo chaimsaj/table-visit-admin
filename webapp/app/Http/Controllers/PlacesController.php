@@ -112,43 +112,16 @@ class PlacesController extends AdminController
             $cities = $this->cityRepository->publishedByState($data->state_id);
         }
 
-        $all_features = $this->placeFeatureRepository->published();
-        $place_to_features = $this->placeToFeatureRepository->published();
+        $tenant_id = null;
 
-        $features = [];
-        $place_features = [];
+        if (!$is_admin)
+            $tenant_id = Auth::user()->tenant_id;
 
-        foreach ($all_features as $feature) {
-            foreach ($place_to_features as $selected) {
-                if ($selected->place_feature_id == $feature->id) {
-                    $feature->rel_id = $selected->id;
-                    array_push($place_features, $feature);
-                } else
-                    array_push($features, $feature);
-            }
+        $place_features = $this->placeFeatureRepository->shown($id);
+        $features = $this->placeFeatureRepository->publishedExclude($place_features->pluck('id'), $tenant_id);
 
-            if ($place_to_features->count() == 0)
-                array_push($features, $feature);
-        }
-
-        $all_music = $this->placeMusicRepository->published();
-        $place_to_music = $this->placeToMusicRepository->published();
-
-        $music_data = [];
-        $place_music = [];
-
-        foreach ($all_music as $music) {
-            foreach ($place_to_music as $selected) {
-                if ($selected->place_music_id == $music->id) {
-                    $music->rel_id = $selected->id;
-                    array_push($place_music, $music);
-                } else
-                    array_push($music_data, $music);
-            }
-
-            if ($place_to_music->count() == 0)
-                array_push($music_data, $music);
-        }
+        $place_music = $this->placeMusicRepository->shown($id);
+        $music = $this->placeMusicRepository->publishedExclude($place_music->pluck('id'), $tenant_id);
 
         $tab = Session::get("tab", "data");
 
@@ -159,7 +132,7 @@ class PlacesController extends AdminController
             "place_detail" => $place_detail,
             "features" => $features,
             "place_features" => $place_features,
-            "music" => $music_data,
+            "music" => $music,
             "place_music" => $place_music,
             "is_admin" => $is_admin,
             "tab" => $tab
@@ -169,11 +142,6 @@ class PlacesController extends AdminController
     public function save(Request $request, $id)
     {
         try {
-            /*$validator = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-            ]);*/
-
             $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
 
             $db = $this->repository->find($id);

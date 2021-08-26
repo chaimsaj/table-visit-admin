@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'TableVisit'),
-    'version' => env('APP_VERSION', '0.5'),
+    'version' => env('APP_VERSION', '0.1'),
 
     /*
     |--------------------------------------------------------------------------

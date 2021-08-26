@@ -69,6 +69,6 @@
 <script src="{{ URL::asset('assets/js/app.min.js')}}"></script>
 <script src="{{ URL::asset('assets/js/pages/form-advanced.init.js')}}"></script>
 
-<script src="{{ URL::asset('assets/js/app/shared.js')}}"></script>
+<script src="{{ URL::asset('assets/js/app/shared.js?') . config('app.version') }}"></script>
 
 @yield('script-bottom')

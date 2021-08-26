@@ -278,7 +278,7 @@
     <!--tinymce js-->
     <script src="{{ URL::asset('/assets/libs/tinymce/tinymce.min.js') }}"></script>
     <!-- places -->
-    <script src="{{ URL::asset('/assets/js/app/places.js') }}"></script>
+    <script src="{{ URL::asset('/assets/js/app/places.js?') . config('app.version') }}"></script>
     <script type="application/javascript">
         (function () {
             initPlace();

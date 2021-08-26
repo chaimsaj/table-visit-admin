@@ -26,7 +26,21 @@ class PlaceMusicRepository extends BaseRepository implements PlaceMusicRepositor
             ->where('place_music.published', '=', 1)
             ->where('place_music.deleted', '=', 0)
             ->where('place_to_music.place_id', $place_id)
-            ->select('place_music.id', 'place_music.name')
+            ->select('place_music.id', 'place_music.name', 'place_to_music.id AS rel_id')
+            ->get();
+    }
+
+    public function publishedExclude(Collection $exclude, int $tenant_id = null): Collection
+    {
+        return $this->model->whereNotIn('id', $exclude)
+            ->where('published', '=', 1)
+            ->where('deleted', '=', 0)
+            ->where(function ($query) use ($tenant_id) {
+                if (isset($tenant_id))
+                    $query->where("tenant_id", "=", $tenant_id)
+                        ->orWhere('tenant_id', "=", null)
+                        ->orWhere('tenant_id', "=", 0);
+            })
             ->get();
     }
 }

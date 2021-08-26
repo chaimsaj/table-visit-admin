@@ -10,4 +10,6 @@ use Illuminate\Support\Collection;
 interface PlaceFeatureRepositoryInterface extends BaseRepositoryInterface
 {
     public function shown(int $place_id): Collection;
+
+    public function publishedExclude(Collection $exclude, int $tenant_id): Collection;
 }
