@@ -27,6 +27,7 @@ class PlaceFeatureRepository extends BaseRepository implements PlaceFeatureRepos
             ->where('place_features.deleted', '=', 0)
             ->where('place_to_features.place_id', $place_id)
             ->select('place_features.id', 'place_features.name', 'place_to_features.id AS rel_id')
+            ->orderBy('place_features.name')
             ->get();
     }
 
@@ -41,6 +42,7 @@ class PlaceFeatureRepository extends BaseRepository implements PlaceFeatureRepos
                         ->orWhere('tenant_id', "=", null)
                         ->orWhere('tenant_id', "=", 0);
             })
+            ->orderBy('name')
             ->get();
     }
 }

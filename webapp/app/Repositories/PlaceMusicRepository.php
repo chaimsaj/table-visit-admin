@@ -27,6 +27,7 @@ class PlaceMusicRepository extends BaseRepository implements PlaceMusicRepositor
             ->where('place_music.deleted', '=', 0)
             ->where('place_to_music.place_id', $place_id)
             ->select('place_music.id', 'place_music.name', 'place_to_music.id AS rel_id')
+            ->orderBy('place_music.name')
             ->get();
     }
 
@@ -41,6 +42,7 @@ class PlaceMusicRepository extends BaseRepository implements PlaceMusicRepositor
                         ->orWhere('tenant_id', "=", null)
                         ->orWhere('tenant_id', "=", 0);
             })
+            ->orderBy('name')
             ->get();
     }
 }
