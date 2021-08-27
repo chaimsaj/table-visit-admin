@@ -59,4 +59,18 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->take($top)
             ->get();
     }
+
+    public function favorites($user_id): Collection
+    {
+        return DB::table('places')
+            ->join('favorites', 'places.id', '=', 'favorites.place_id')
+            ->where('places.published', '=', 1)
+            ->where('places.show', '=', 1)
+            ->where('places.deleted', '=', 0)
+            ->where('favorites.published', '=', 1)
+            ->where('favorites.deleted', '=', 0)
+            ->where('favorites.user_id', '=', $user_id)
+            ->select('places.*', 'favorites.id AS rel_id')
+            ->get();
+    }
 }

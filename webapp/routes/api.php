@@ -77,4 +77,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Tables
     Route::get('/tables/{place_id}', [App\Http\Api\TablesController::class, 'list'])->name('api.tables.list');
+
+    // Favorites
+    Route::get('/user/favorites', [App\Http\Api\FavoritesController::class, 'list'])->name('api.user.favorites.list');
+    Route::get('/user/favorite/add/{place_id}', [App\Http\Api\FavoritesController::class, 'add'])->name('api.user.favorites.add');
+    Route::get('/user/favorite/remove/{rel_id}', [App\Http\Api\FavoritesController::class, 'remove'])->name('api.user.favorites.remove');
 });
