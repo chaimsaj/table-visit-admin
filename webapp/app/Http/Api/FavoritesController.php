@@ -30,6 +30,29 @@ class FavoritesController extends ApiController
         $this->placeRepository = $placeRepository;
     }
 
+    public function user_favorites(): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $query = $this->favoriteRepository->userFavorites($user->id);
+                    $response->setData($query);
+                }
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
     public function list(): JsonResponse
     {
         $response = new ApiModel();

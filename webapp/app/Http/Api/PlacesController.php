@@ -11,6 +11,7 @@ use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\Place;
 use App\Models\PlaceFeature;
+use App\Repositories\FavoriteRepositoryInterface;
 use App\Repositories\PlaceDetailRepositoryInterface;
 use App\Repositories\PlaceFeatureRepositoryInterface;
 use App\Repositories\PlaceMusicRepositoryInterface;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class PlacesController extends ApiController
@@ -30,12 +32,14 @@ class PlacesController extends ApiController
     private PlaceTypeRepositoryInterface $placeTypeRepository;
     private PlaceFeatureRepositoryInterface $placeFeatureRepository;
     private PlaceMusicRepositoryInterface $placeMusicRepository;
+    private FavoriteRepositoryInterface $favoriteRepository;
 
     public function __construct(PlaceRepositoryInterface        $placeRepository,
                                 PlaceDetailRepositoryInterface  $placeDetailRepository,
                                 PlaceTypeRepositoryInterface    $placeTypeRepository,
                                 PlaceFeatureRepositoryInterface $placeFeatureRepository,
                                 PlaceMusicRepositoryInterface   $placeMusicRepository,
+                                FavoriteRepositoryInterface     $favoriteRepository,
                                 LogServiceInterface             $logger)
     {
         parent::__construct($logger);
@@ -45,6 +49,7 @@ class PlacesController extends ApiController
         $this->placeTypeRepository = $placeTypeRepository;
         $this->placeFeatureRepository = $placeFeatureRepository;
         $this->placeMusicRepository = $placeMusicRepository;
+        $this->favoriteRepository = $favoriteRepository;
     }
 
     public function list(): JsonResponse
@@ -54,8 +59,19 @@ class PlacesController extends ApiController
 
         try {
             $query = $this->placeRepository->published();
+            $user_favorites = new Collection;
+
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $user_favorites = $this->favoriteRepository->userFavorites($user->id);
+                }
+            }
 
             foreach ($query as $item) {
+                $has = $user_favorites->firstWhere('place_id', '=', $item->id);
+                $item->is_favorite = isset($has);
                 $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
             }
 
@@ -74,11 +90,23 @@ class PlacesController extends ApiController
 
         try {
             $query = $this->placeRepository->find($id);
+            $user_favorites = new Collection;
+
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $user_favorites = $this->favoriteRepository->userFavorites($user->id);
+                }
+            }
 
             $language = LanguageEnum::English;
 
             $data = $this->load_place($query);
             $data->detail = $this->detail($data->id, $language);
+
+            $has = $user_favorites->firstWhere('place_id', '=', $data->id);
+            $data->is_favorite = isset($has);
 
             if (isset($data->detail))
                 $data->detail->short_detail = AppHelper::truncateString(strip_tags($data->detail->detail), 145);
@@ -115,8 +143,20 @@ class PlacesController extends ApiController
         try {
             $query = $this->placeRepository->featured($top);
 
+            $user_favorites = new Collection;
+
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $user_favorites = $this->favoriteRepository->userFavorites($user->id);
+                }
+            }
+
             foreach ($query as $item) {
+                $has = $user_favorites->firstWhere('place_id', '=', $item->id);
                 $data_item = $this->load_place($item);
+                $data_item->is_favorite = isset($has);
                 $data->add($data_item);
             }
         } catch (Throwable $ex) {
@@ -167,8 +207,21 @@ class PlacesController extends ApiController
             if (strlen($word) >= 3) {
                 $query = $this->placeRepository->search($word);
 
+                $user_favorites = new Collection;
+
+                if (Auth::check()) {
+                    $user = Auth::user();
+
+                    if (isset($user)) {
+                        $user_favorites = $this->favoriteRepository->userFavorites($user->id);
+                    }
+                }
+
                 foreach ($query as $item) {
+                    $has = $user_favorites->firstWhere('place_id', '=', $item->id);
+
                     $data_item = $this->load_place($item);
+                    $data_item->is_favorite = isset($has);
                     $data->add($data_item);
                 }
             }
