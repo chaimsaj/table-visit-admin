@@ -38,6 +38,7 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->where('show', '=', 1)
             ->where('deleted', '=', 0)
             ->take($top)
+            ->orderBy('name')
             ->get();
     }
 
@@ -47,6 +48,7 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->where('show', '=', 1)
             ->where('deleted', '=', 0)
             ->take($top)
+            ->orderBy('name')
             ->get();
     }
 
@@ -71,6 +73,7 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->where('favorites.deleted', '=', 0)
             ->where('favorites.user_id', '=', $user_id)
             ->select('places.*', 'favorites.id AS rel_id')
+            ->orderBy('places.name')
             ->get();
     }
 }

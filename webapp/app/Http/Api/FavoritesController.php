@@ -4,6 +4,8 @@
 namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
+use App\Core\MediaSizeEnum;
+use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\Favorite;
 use App\Repositories\FavoriteRepositoryInterface;
@@ -39,6 +41,9 @@ class FavoritesController extends ApiController
 
                 if (isset($user)) {
                     $query = $this->placeRepository->favorites($user->id);
+                    foreach ($query as $item) {
+                        $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
+                    }
                     $response->setData($query);
                 }
             }
@@ -61,13 +66,18 @@ class FavoritesController extends ApiController
                 $user = Auth::user();
 
                 if (isset($user)) {
-                    $db = new Favorite();
-                    $db->user_id = $user->id;
-                    $db->place_id = $place_id;
-                    $db->published = 1;
-                    $db->deleted = 0;
 
-                    $this->favoriteRepository->save($db);
+                    $exists = $this->favoriteRepository->exists($place_id, $user->id);
+
+                    if (!isset($exists)) {
+                        $db = new Favorite();
+                        $db->user_id = $user->id;
+                        $db->place_id = $place_id;
+                        $db->published = 1;
+                        $db->deleted = 0;
+
+                        $this->favoriteRepository->save($db);
+                    }
                 }
             }
         } catch (Throwable $ex) {
