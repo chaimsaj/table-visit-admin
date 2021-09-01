@@ -139,6 +139,9 @@ return [
     "PlaceCancellationPolicy" => "Cancellation Policy",
     "Policies" => "Policies",
 
+    "TotalRate" => "Total Rate",
+    "Tax" => "Tax",
+
     "Types" => "Types",
     "PlaceTypes" => "Place Types",
     "PlaceType" => "Place Type",

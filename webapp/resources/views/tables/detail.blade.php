@@ -31,6 +31,13 @@
                                             <span class="d-none d-sm-block">@lang('translation.Detail')</span>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="rates") active @endif" data-bs-toggle="tab"
+                                           href="#rates" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Rates')</span>
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                             <div class="tab-content">
@@ -171,6 +178,13 @@
                                          role="tabpanel">
                                         <p class="mb-0">
                                             @component('components.table-details', ["table_detail" => $table_detail ?? null, "data" => $data ?? null])
+                                            @endcomponent
+                                        </p>
+                                    </div>
+                                    <div class="tab-pane p-2 @if($tab=="rates") active @endif" id="rates"
+                                         role="tabpanel">
+                                        <p class="mb-0">
+                                            @component('components.table-rates', ["table_rates" => $table_rates ?? [], "data" => $data ?? null])
                                             @endcomponent
                                         </p>
                                     </div>

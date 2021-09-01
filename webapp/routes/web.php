@@ -148,8 +148,9 @@ Route::post('/table/{id}', [App\Http\Controllers\TablesController::class, 'save'
 Route::get('/table/delete/{id}', [App\Http\Controllers\TablesController::class, 'delete'])->name('table.delete');
 Route::post('/table/save_details/{id}', [App\Http\Controllers\TablesController::class, 'save_details'])->name('table.save_details');
 
+// Table Rates
 Route::post('/table/save_rate/{id}', [App\Http\Controllers\TablesController::class, 'save_rate'])->name('table.save_rate');
-Route::post('/table/edit_rate/{id}', [App\Http\Controllers\TablesController::class, 'edit_rate'])->name('table.edit_rate');
+// Route::post('/table/edit_rate/{id}', [App\Http\Controllers\TablesController::class, 'edit_rate'])->name('table.edit_rate');
 Route::get('/table/delete_rate/{id}', [App\Http\Controllers\TablesController::class, 'delete_rate'])->name('table.delete_rate');
 
 // Table Types
