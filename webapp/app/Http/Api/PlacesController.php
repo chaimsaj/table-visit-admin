@@ -119,17 +119,24 @@ class PlacesController extends ApiController
         return response()->json($response);
     }
 
-    public function list_by_city(int $city_id): JsonResponse
+    public function near_by_city(int $city_id): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
+        $data = new Collection;
 
         try {
-            $query = $this->placeRepository->publishedByCity($city_id);
-            $response->setData($query);
+            $query = $this->placeRepository->byCity($city_id);
+
+            foreach ($query as $item) {
+                $data_item = $this->load_place($item);
+                $data->add($data_item);
+            }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
+
+        $response->setData($data);
 
         return response()->json($response);
     }

@@ -62,8 +62,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/places', [App\Http\Api\PlacesController::class, 'list'])->name('api.places.list');
     Route::get('/places/featured', [App\Http\Api\PlacesController::class, 'featured'])->name('api.places.featured');
     Route::get('/places/near', [App\Http\Api\PlacesController::class, 'near'])->name('api.places.near');
+    Route::get('/places/near', [App\Http\Api\PlacesController::class, 'near'])->name('api.places.near');
     Route::get('/place/{id}', [App\Http\Api\PlacesController::class, 'find'])->name('api.places.find');
-    Route::get('/places/list_by_city/{city_id}', [App\Http\Api\PlacesController::class, 'list_by_city'])->name('api.places.list_by_city');
+    Route::get('/places/near_by_city/{city_id}', [App\Http\Api\PlacesController::class, 'near_by_city'])->name('api.places.near_by_city');
     Route::post('/places/search', [App\Http\Api\PlacesController::class, 'search'])->name('api.places.search');
 
     Route::get('/place_music', [App\Http\Api\PlaceMusicController::class, 'list'])->name('api.place_music.list');
@@ -77,6 +78,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Tables
     Route::get('/tables/{place_id}', [App\Http\Api\TablesController::class, 'list'])->name('api.tables.list');
+    Route::post('/tables/rates', [App\Http\Api\TablesController::class, 'rates'])->name('api.tables.rates');
+    Route::post('/tables/rate', [App\Http\Api\TablesController::class, 'rate'])->name('api.tables.rate');
 
     // Favorites
     Route::get('/user/favorites', [App\Http\Api\FavoritesController::class, 'list'])->name('api.user.favorites.list');
