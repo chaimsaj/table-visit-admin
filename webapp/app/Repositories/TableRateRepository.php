@@ -40,10 +40,10 @@ class TableRateRepository extends BaseRepository implements TableRateRepositoryI
             ->where('show', '=', 1)
             ->where('deleted', '=', 0)
             ->where('table_id', '=', $table_id)
-            ->where("valid_from", "<=", $date)
+            ->whereDate("valid_from", "<=", $date)
             ->where(function ($query) use ($date) {
-                $query->where("valid_to", ">=", $date)
-                    ->orWhere('valid_to', "=", null);
-            })->first();
+                $query->whereDate("valid_to", ">=", $date)
+                    ->orWhereDate('valid_to', "=", null);
+            })->orderBy('id', 'desc')->first();
     }
 }
