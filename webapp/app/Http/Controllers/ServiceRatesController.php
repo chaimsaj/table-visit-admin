@@ -140,12 +140,12 @@ class ServiceRatesController extends AdminController
                 $db->service_id = intval($request->get('service_id'));
 
                 if (!empty($request->get('valid_from')))
-                    $db->valid_from = DateTime::createFromFormat('m-d-Y', $request->get('valid_from'));
+                    $db->valid_from = DateTime::createFromFormat('m-d-Y H:i:s', $request->get('valid_from') . ' 00:00:00');
                 else
                     $db->valid_from = null;
 
                 if (!empty($request->get('valid_to')))
-                    $db->valid_to = DateTime::createFromFormat('m-d-Y', $request->get('valid_to'));
+                    $db->valid_to = DateTime::createFromFormat('m-d-Y H:i:s', $request->get('valid_to') . ' 00:00:00');
                 else
                     $db->valid_to = null;
 

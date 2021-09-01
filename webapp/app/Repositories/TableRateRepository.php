@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Models\TableRate;
+use DateTime;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -31,5 +32,18 @@ class TableRateRepository extends BaseRepository implements TableRateRepositoryI
             ->where('deleted', '=', 0)
             ->where('table_id', '=', $table_id)
             ->first();
+    }
+
+    public function rate(int $table_id, DateTime $date): ?Model
+    {
+        return $this->model->where('published', '=', 1)
+            ->where('show', '=', 1)
+            ->where('deleted', '=', 0)
+            ->where('table_id', '=', $table_id)
+            ->where("valid_from", "<=", $date)
+            ->where(function ($query) use ($date) {
+                $query->where("valid_to", ">=", $date)
+                    ->orWhere('valid_to', "=", null);
+            })->first();
     }
 }

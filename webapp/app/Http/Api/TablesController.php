@@ -10,6 +10,7 @@ use App\Repositories\TableDetailRepositoryInterface;
 use App\Repositories\TableRateRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
 use App\Services\LogServiceInterface;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -93,7 +94,8 @@ class TablesController extends ApiController
         $response->setSuccess();
 
         try {
-            $query = $this->tableRateRepository->firstByTable($request->get('table_id'));
+            $date = DateTime::createFromFormat('m-d-Y H:i:s', $request->get('date') . ' 00:00:00');
+            $query = $this->tableRateRepository->rate($request->get('table_id'), $date);
 
             $response->setData($query);
 
