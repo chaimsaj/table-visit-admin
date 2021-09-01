@@ -129,6 +129,9 @@ class PlacesController extends AdminController
         $place_music = $this->placeMusicRepository->shown($id);
         $music = $this->placeMusicRepository->publishedExclude($place_music->pluck('id'), $tenant_id);
 
+        $place_reservation_policy = $this->policyRepository->loadBy($id, PolicyTypeEnum::Reservation, LanguageEnum::English);
+        $place_cancellation_policy = $this->policyRepository->loadBy($id, PolicyTypeEnum::Cancellation, LanguageEnum::English);
+
         $tab = Session::get("tab", "data");
 
         return view('places/detail', ["data" => $data,
@@ -140,6 +143,8 @@ class PlacesController extends AdminController
             "place_features" => $place_features,
             "music" => $music,
             "place_music" => $place_music,
+            "place_reservation_policy" => $place_reservation_policy,
+            "place_cancellation_policy" => $place_cancellation_policy,
             "is_admin" => $is_admin,
             "tab" => $tab
         ]);
@@ -403,14 +408,15 @@ class PlacesController extends AdminController
             $this->logger->save($ex);
         }
 
-        Session::flash('tab', "details");
+        Session::flash('tab', "policies");
 
         return redirect()->back();
     }
 
     private function save_policy($detail, $place, $policy_type)
     {
-        $db = $this->policyRepository->loadBy($place->id, $policy_type, LanguageEnum::English);
+        $language = LanguageEnum::English;
+        $db = $this->policyRepository->loadBy($place->id, $policy_type, $language);
 
         if ($db == null)
             $db = new Policy();
@@ -419,10 +425,10 @@ class PlacesController extends AdminController
         $db->introduction = '';
         $db->detail = $detail;
         $db->show = 1;
-        $db->policy_type = PolicyTypeEnum::Cancellation;
+        $db->policy_type = $policy_type;
         $db->place_id = $place->id;
         $db->tenant_id = $place->tenant_id;
-        $db->language_id = LanguageEnum::English;
+        $db->language_id = $language;
         $db->published = 1;
 
         $this->policyRepository->save($db);

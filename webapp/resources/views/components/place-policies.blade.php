@@ -7,14 +7,14 @@
             <div class="mb-3 mt-3">
                 <label class="form-label">@lang('translation.PlaceReservationPolicy')</label>
                 <div>
-                    <textarea id="place_reservation_policy"
+                    <textarea class="form-control" rows="4" id="place_reservation_policy"
                               name="place_reservation_policy">{{$place_reservation_policy->detail ?? ''}}</textarea>
                 </div>
             </div>
             <div class="mb-4 mt-3">
                 <label class="form-label">@lang('translation.PlaceCancellationPolicy')</label>
                 <div>
-                    <textarea id="place_cancellation_policy"
+                    <textarea class="form-control" rows="4" id="place_cancellation_policy"
                               name="place_cancellation_policy">{{$place_cancellation_policy->detail ?? ''}}</textarea>
                 </div>
             </div>

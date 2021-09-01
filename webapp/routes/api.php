@@ -82,4 +82,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/favorites', [App\Http\Api\FavoritesController::class, 'list'])->name('api.user.favorites.list');
     Route::get('/user/favorite/add/{place_id}', [App\Http\Api\FavoritesController::class, 'add'])->name('api.user.favorites.add');
     Route::get('/user/favorite/remove/{rel_id}', [App\Http\Api\FavoritesController::class, 'remove'])->name('api.user.favorites.remove');
+
+    // Policies
+    Route::get('/place_policies/{place_id}', [App\Http\Api\PoliciesController::class, 'list'])->name('api.place_policies.list');
+    Route::get('/place_policy/{place_id}/{policy_type}', [App\Http\Api\PoliciesController::class, 'load_by_type'])->name('api.place_policies.load_by_type');
 });

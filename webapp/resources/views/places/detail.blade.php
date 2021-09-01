@@ -66,6 +66,13 @@
                                             <span class="d-none d-sm-block">@lang('translation.Music')</span>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link @if($tab=="policies") active @endif" data-bs-toggle="tab"
+                                           href="#policies" role="tab">
+                                            <span class="d-block d-sm-none"><i class="bx bx-news"></i></span>
+                                            <span class="d-none d-sm-block">@lang('translation.Policies')</span>
+                                        </a>
+                                    </li>
                                 @endif
                             </ul>
                             <div class="tab-content">
@@ -264,6 +271,18 @@
                                          role="tabpanel">
                                         @component('components.place-music', ["music" => $music, "data" => $data ?? null, "place_music" => $place_music])
                                         @endcomponent
+                                    </div>
+                                    <div class="tab-pane p-2 @if($tab=="policies") active @endif" id="policies"
+                                         role="tabpanel">
+                                        <p class="mb-0">
+                                            @component('components.place-policies',
+                                                [
+                                                    "place_reservation_policy" => $place_reservation_policy ?? null,
+                                                    "place_cancellation_policy" => $place_cancellation_policy ?? null,
+                                                    "data" => $data ?? null
+                                                ])
+                                            @endcomponent
+                                        </p>
                                     </div>
                                 @endif
                             </div>
