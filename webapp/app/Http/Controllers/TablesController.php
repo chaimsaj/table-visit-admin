@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\LanguageEnum;
 use App\Core\UserTypeEnum;
+use App\Helpers\AppHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\City;
 use App\Models\PlaceDetail;
@@ -69,6 +70,14 @@ class TablesController extends AdminController
         }
 
         $table_rates = $this->tableRateRepository->loadByTable($id);
+
+        foreach ($table_rates as $item) {
+            if (isset($item->valid_from))
+                $item->valid_from_data = AppHelper::toDateString($item->valid_from, 'm-d-Y');
+
+            if (isset($item->valid_to))
+                $item->valid_to_data = AppHelper::toDateString($item->valid_to, 'm-d-Y');
+        }
 
         $tab = Session::get("tab", "data");
 

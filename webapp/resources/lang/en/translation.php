@@ -141,6 +141,8 @@ return [
 
     "TotalRate" => "Total Rate",
     "Tax" => "Tax",
+    "ValidFrom" => "Valid From",
+    "ValidTo" => "Valid To",
 
     "Types" => "Types",
     "PlaceTypes" => "Place Types",

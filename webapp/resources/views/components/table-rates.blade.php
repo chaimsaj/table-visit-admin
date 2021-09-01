@@ -8,6 +8,8 @@
                     <th>@lang('translation.Rate')</th>
                     <th>@lang('translation.Tax')</th>
                     <th>@lang('translation.TotalRate')</th>
+                    <th>@lang('translation.ValidFrom')</th>
+                    <th>@lang('translation.ValidTo')</th>
                     <th class="th45 no-sort">@lang('translation.Delete')</th>
                 </tr>
                 </thead>
@@ -18,6 +20,8 @@
                         <td>{{ $item->rate }}</td>
                         <td>{{ $item->tax }}</td>
                         <td>{{ $item->total_rate }}</td>
+                        <td>{{ $item->valid_from_data }}</td>
+                        <td>{{ $item->valid_to_data }}</td>
                         <td>
                             <a href="{{route("table.delete_rate", $item->id)}}"
                                class="text-danger sweet-warning"><i
