@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\AppConstant;
 use App\Core\LanguageEnum;
 use App\Core\MediaObjectTypeEnum;
+use App\Core\PolicyTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
@@ -14,6 +15,7 @@ use App\Models\Place;
 use App\Models\PlaceDetail;
 use App\Models\PlaceToFeature;
 use App\Models\PlaceToMusic;
+use App\Models\Policy;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\PlaceDetailRepositoryInterface;
 use App\Repositories\PlaceFeatureRepositoryInterface;
@@ -21,6 +23,7 @@ use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceToFeatureRepositoryInterface;
 use App\Repositories\PlaceToMusicRepositoryInterface;
+use App\Repositories\PolicyRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
 use App\Repositories\TenantRepositoryInterface;
 use App\Services\LogServiceInterface;
@@ -44,6 +47,7 @@ class PlacesController extends AdminController
     private PlaceDetailRepositoryInterface $placeDetailRepository;
     private PlaceToFeatureRepositoryInterface $placeToFeatureRepository;
     private PlaceToMusicRepositoryInterface $placeToMusicRepository;
+    private PolicyRepositoryInterface $policyRepository;
 
     public function __construct(PlaceRepositoryInterface          $repository,
                                 StateRepositoryInterface          $stateRepository,
@@ -54,6 +58,7 @@ class PlacesController extends AdminController
                                 PlaceDetailRepositoryInterface    $placeDetailRepository,
                                 PlaceToFeatureRepositoryInterface $placeToFeatureRepository,
                                 PlaceToMusicRepositoryInterface   $placeToMusicRepository,
+                                PolicyRepositoryInterface         $policyRepository,
                                 LogServiceInterface               $logger)
     {
         parent::__construct($logger);
@@ -67,6 +72,7 @@ class PlacesController extends AdminController
         $this->placeDetailRepository = $placeDetailRepository;
         $this->placeToFeatureRepository = $placeToFeatureRepository;
         $this->placeToMusicRepository = $placeToMusicRepository;
+        $this->policyRepository = $policyRepository;
     }
 
     public function index()
@@ -209,7 +215,7 @@ class PlacesController extends AdminController
         return redirect("places");
     }
 
-    //Details
+    // Details
     public function save_details(Request $request, $id): RedirectResponse
     {
         try {
@@ -234,7 +240,7 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
-    //Floor Plan
+    // Floor Plan
     public function save_floor_plan(Request $request, $id): RedirectResponse
     {
         try {
@@ -264,7 +270,7 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
-    //Food Menu
+    // Food Menu
     public function save_food_menu(Request $request, $id): RedirectResponse
     {
         try {
@@ -294,7 +300,7 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
-    //Features
+    // Features
     public function save_feature_to_place(Request $request, $id): RedirectResponse
     {
         try {
@@ -338,7 +344,7 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
-    //Music
+    // Music
     public function save_music_to_place(Request $request, $id): RedirectResponse
     {
         try {
@@ -380,5 +386,45 @@ class PlacesController extends AdminController
         Session::flash('tab', "music");
 
         return redirect()->back();
+    }
+
+    // Policies
+    public function save_policies(Request $request, $id): RedirectResponse
+    {
+        try {
+            $place = $this->repository->find($id);
+
+            if (isset($place)) {
+                $this->save_policy($request->get('place_reservation_policy'), $place, PolicyTypeEnum::Reservation);
+                $this->save_policy($request->get('place_cancellation_policy'), $place, PolicyTypeEnum::Cancellation);
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        Session::flash('tab', "details");
+
+        return redirect()->back();
+    }
+
+    private function save_policy($detail, $place, $policy_type)
+    {
+        $db = $this->policyRepository->loadBy($place->id, $policy_type, LanguageEnum::English);
+
+        if ($db == null)
+            $db = new Policy();
+
+        $db->title = '';
+        $db->introduction = '';
+        $db->detail = $detail;
+        $db->show = 1;
+        $db->policy_type = PolicyTypeEnum::Cancellation;
+        $db->place_id = $place->id;
+        $db->tenant_id = $place->tenant_id;
+        $db->language_id = LanguageEnum::English;
+        $db->published = 1;
+
+        $this->policyRepository->save($db);
     }
 }

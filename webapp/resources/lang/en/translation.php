@@ -135,6 +135,8 @@ return [
     "Places" => "Places",
     "Place" => "Place",
     "AddPlaces" => "Add Places",
+    "PlaceReservationPolicy" => "Reservation Policy",
+    "PlaceCancellationPolicy" => "Cancellation Policy",
 
     "Types" => "Types",
     "PlaceTypes" => "Place Types",

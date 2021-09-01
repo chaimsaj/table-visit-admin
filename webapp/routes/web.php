@@ -109,6 +109,7 @@ Route::get('/place/delete/{id}', [App\Http\Controllers\PlacesController::class, 
 Route::post('/place/save_details/{id}', [App\Http\Controllers\PlacesController::class, 'save_details'])->name('place.save_details');
 Route::post('/place/save_floor_plan/{id}', [App\Http\Controllers\PlacesController::class, 'save_floor_plan'])->name('place.save_floor_plan');
 Route::post('/place/save_food_menu/{id}', [App\Http\Controllers\PlacesController::class, 'save_food_menu'])->name('place.save_food_menu');
+Route::post('/place/save_policies/{id}', [App\Http\Controllers\PlacesController::class, 'save_policies'])->name('place.save_policies');
 
 Route::post('/place/save_feature_to_place/{id}', [App\Http\Controllers\PlacesController::class, 'save_feature_to_place'])->name('place.save_feature_to_place');
 Route::get('/place/delete_feature_to_place/{id}', [App\Http\Controllers\PlacesController::class, 'delete_feature_to_place'])->name('place.delete_feature_to_place');
