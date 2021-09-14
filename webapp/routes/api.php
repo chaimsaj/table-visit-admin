@@ -104,4 +104,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/bookings', [App\Http\Api\BookingsController::class, 'list'])->name('api.user.bookings.list');
     Route::post('/user/booking/book', [App\Http\Api\BookingsController::class, 'book'])->name('api.user.bookings.book');
     Route::post('/user/booking/cancel', [App\Http\Api\BookingsController::class, 'cancel'])->name('api.user.bookings.cancel');
+
+    // Payments
+    Route::post('/payments/stripe', [App\Http\Api\PaymentsController::class, 'stripe'])->name('api.payments.stripe');
 });
