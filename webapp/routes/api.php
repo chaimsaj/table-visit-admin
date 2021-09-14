@@ -89,4 +89,19 @@ Route::middleware('auth:sanctum')->group(function () {
     // Policies
     Route::get('/place_policies/{place_id}', [App\Http\Api\PoliciesController::class, 'list'])->name('api.place_policies.list');
     Route::get('/place_policy/{place_id}/{policy_type}', [App\Http\Api\PoliciesController::class, 'load_by_type'])->name('api.place_policies.load_by_type');
+
+    // Ratings
+    Route::get('/user/ratings', [App\Http\Api\RatingsController::class, 'list'])->name('api.user.ratings.list');
+    Route::get('/user/rating/add/{place_id}', [App\Http\Api\RatingsController::class, 'add'])->name('api.user.ratings.add');
+    Route::get('/user/rating/remove/{rel_id}', [App\Http\Api\RatingsController::class, 'remove'])->name('api.user.ratings.remove');
+
+    // Reviews
+    Route::get('/user/reviews', [App\Http\Api\ReviewsController::class, 'list'])->name('api.user.reviews.list');
+    Route::get('/user/review/add/{place_id}', [App\Http\Api\ReviewsController::class, 'add'])->name('api.user.reviews.add');
+    Route::get('/user/review/remove/{rel_id}', [App\Http\Api\ReviewsController::class, 'remove'])->name('api.user.reviews.remove');
+
+    // Bookings
+    Route::get('/user/bookings', [App\Http\Api\BookingsController::class, 'list'])->name('api.user.bookings.list');
+    Route::post('/user/booking/book', [App\Http\Api\BookingsController::class, 'book'])->name('api.user.bookings.book');
+    Route::post('/user/booking/cancel', [App\Http\Api\BookingsController::class, 'cancel'])->name('api.user.bookings.cancel');
 });

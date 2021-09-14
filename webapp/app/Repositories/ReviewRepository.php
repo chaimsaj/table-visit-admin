@@ -3,14 +3,14 @@
 
 namespace App\Repositories;
 
-use App\Models\Rating;
+use App\Models\Review;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class RatingRepository extends BaseRepository implements RatingRepositoryInterface
+class ReviewRepository extends BaseRepository implements ReviewRepositoryInterface
 {
-    public function __construct(Rating $model)
+    public function __construct(Review $model)
     {
         parent::__construct($model);
     }
@@ -24,7 +24,7 @@ class RatingRepository extends BaseRepository implements RatingRepositoryInterfa
             ->first();
     }
 
-    public function userRatings($user_id): Collection
+    public function userReviews($user_id): Collection
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)

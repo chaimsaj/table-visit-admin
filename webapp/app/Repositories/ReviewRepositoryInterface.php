@@ -7,9 +7,9 @@ use App\Repositories\Base\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-interface RatingRepositoryInterface extends BaseRepositoryInterface
+interface ReviewRepositoryInterface extends BaseRepositoryInterface
 {
     public function exists($place_id, $user_id): ?Model;
 
-    public function userRatings($user_id): Collection;
+    public function userReviews($user_id): Collection;
 }

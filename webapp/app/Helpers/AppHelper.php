@@ -9,6 +9,7 @@ use App\Core\UserTypeEnum;
 use DateTime;
 use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class AppHelper
 {
@@ -119,5 +120,15 @@ class AppHelper
         }
 
         return null;
+    }
+
+    static function getBookingCode($booking_id, $place_id): string
+    {
+        return sprintf("%04d", $place_id) . sprintf("%08d", $booking_id);
+    }
+
+    static function getBookingConfirmationCode($id): string
+    {
+        return strtoupper(Str::random(4)) . sprintf("%08d", $id);
     }
 }

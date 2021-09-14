@@ -57,6 +57,8 @@ use App\Repositories\PolicyRepository;
 use App\Repositories\PolicyRepositoryInterface;
 use App\Repositories\RatingRepository;
 use App\Repositories\RatingRepositoryInterface;
+use App\Repositories\ReviewRepository;
+use App\Repositories\ReviewRepositoryInterface;
 use App\Repositories\ServiceRateRepository;
 use App\Repositories\ServiceRateRepositoryInterface;
 use App\Repositories\ServiceRepository;
@@ -127,6 +129,7 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(PlaceWorkHourRepositoryInterface::class, PlaceWorkHourRepository::class);
         $this->app->bind(PolicyRepositoryInterface::class, PolicyRepository::class);
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
+        $this->app->bind(ReviewRepositoryInterface::class, ReviewRepository::class);
         $this->app->bind(ServiceRateRepositoryInterface::class, ServiceRateRepository::class);
         $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
         $this->app->bind(ServiceTypeRepositoryInterface::class, ServiceTypeRepository::class);
