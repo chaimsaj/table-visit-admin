@@ -9,6 +9,7 @@ use App\Http\Api\Base\ApiController;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\PaymentRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,13 +24,16 @@ use Throwable;
 class PaymentsController extends ApiController
 {
     private PaymentRepositoryInterface $paymentRepository;
+    private UserRepositoryInterface $userRepository;
 
     public function __construct(PaymentRepositoryInterface $paymentRepository,
+                                UserRepositoryInterface    $userRepository,
                                 LogServiceInterface        $logger)
     {
         parent::__construct($logger);
 
         $this->paymentRepository = $paymentRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function stripe(Request $request): JsonResponse
@@ -42,9 +46,7 @@ class PaymentsController extends ApiController
             $data = $request->json()->all();
 
             $validator = Validator::make($data, [
-                'amount' => ['required', 'numeric'],
-                'name' => ['required', 'string'],
-                'email' => ['required', 'string'],
+                'amount' => ['required', 'numeric']
             ]);
 
             if ($validator->fails()) {
@@ -55,25 +57,38 @@ class PaymentsController extends ApiController
             if (Auth::check()) {
                 $user = Auth::user();
 
-                Stripe::setApiKey('sk_test_3vFmt8WPsBjG0JaWElA4ydbT');
+                Stripe::setApiKey(env('STRIPE_API_KEY', ''));
 
-                $customer = Customer::create(['email' => $request->get('email'), 'name' => $request->get('name')]);
+                if (!isset($user->payment_data)) {
+                    $full_name = $user->name . ' ' . $user->last_name;
+                    $customer = Customer::create(['email' => $user->email, 'name' => $full_name]);
+                    $customer_id = $customer->id;
+                    $user->payment_data = $customer->id;
+
+                    $db = $this->userRepository->find($user->id);
+
+                    if ($db) {
+                        $db->payment_data = $customer_id;
+                        $this->userRepository->save($db);
+                    }
+                } else
+                    $customer_id = $user->payment_data;
 
                 $ephemeralKey = EphemeralKey::create(
-                    ['customer' => $customer->id],
+                    ['customer' => $customer_id],
                     ['stripe_version' => '2020-08-27']
                 );
 
                 $paymentIntent = PaymentIntent::create([
                     'amount' => $request->get('amount'),
                     'currency' => 'usd',
-                    'customer' => $customer->id
+                    'customer' => $customer_id
                 ]);
 
                 $stripe = new StripeModel();
                 $stripe->paymentIntent = $paymentIntent->client_secret;
                 $stripe->ephemeralKey = $ephemeralKey->secret;
-                $stripe->customer = $customer->id;
+                $stripe->customer = $customer_id;
 
                 $response->setData($stripe);
 
