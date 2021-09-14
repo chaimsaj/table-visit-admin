@@ -8,6 +8,7 @@ use App\Core\BookingStatusEnum;
 use App\Helpers\AppHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\Booking;
+use App\Models\BookingTable;
 use App\Models\Favorite;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\BookingServiceRepositoryInterface;
@@ -26,11 +27,13 @@ class BookingsController extends ApiController
 {
     private BookingRepositoryInterface $bookingRepository;
     private PlaceRepositoryInterface $placeRepository;
+    private TableRepositoryInterface $tableRepository;
     private BookingServiceRepositoryInterface $bookingServiceRepository;
     private BookingTableRepositoryInterface $bookingTableRepository;
 
     public function __construct(BookingRepositoryInterface        $bookingRepository,
                                 PlaceRepositoryInterface          $placeRepository,
+                                TableRepositoryInterface          $tableRepository,
                                 BookingServiceRepositoryInterface $bookingServiceRepository,
                                 BookingTableRepositoryInterface   $bookingTableRepository,
                                 LogServiceInterface               $logger)
@@ -39,6 +42,7 @@ class BookingsController extends ApiController
 
         $this->bookingRepository = $bookingRepository;
         $this->placeRepository = $placeRepository;
+        $this->tableRepository = $tableRepository;
         $this->bookingServiceRepository = $bookingServiceRepository;
         $this->bookingTableRepository = $bookingTableRepository;
     }
@@ -53,12 +57,13 @@ class BookingsController extends ApiController
             $data = $request->json()->all();
 
             $validator = Validator::make($data, [
-                'amount' => ['required', 'numeric'],
-                'tax_amount' => ['required', 'numeric'],
-                'total_amount' => ['required', 'numeric'],
+                'rate' => ['required', 'numeric'],
+                'tax' => ['required', 'numeric'],
+                'total_rate' => ['required', 'numeric'],
                 'date' => ['required', 'date'],
                 'place_id' => ['required', 'int'],
-                'guests_count' => ['required', 'int']
+                'table_id' => ['required', 'int'],
+                'table_rate_id' => ['required', 'int'],
             ]);
 
             if ($validator->fails()) {
@@ -70,25 +75,19 @@ class BookingsController extends ApiController
                 $user = Auth::user();
 
                 $place = $this->placeRepository->find($request->get('place_id'));
+                $table = $this->tableRepository->find($request->get('table_id'));
 
-                // DateTime::createFromFormat('Y-m-d H:i:s', $request->get('last_update'));
-
-                if (isset($user) && isset($place)) {
+                if (isset($user) && isset($place) && isset($table)) {
                     $db = new Booking();
 
-                    $db->code = 0;
-                    $db->confirmation_code = 0;
-                    $db->amount = $request->get('amount');
-                    $db->tax_amount = $request->get('tax_amount');
-                    $db->total_amount = $request->get('total_amount');
-                    $db->guests_count = $request->get('guests_count');
-                    $db->date = DateTime::createFromFormat('Y-m-d H:i:s', $request->get('date'));
-
-                    if ($request->has('comment'))
-                        $db->comment = $request->get('comment');
-                    else
-                        $db->comment = '';
-
+                    $db->code = '';
+                    $db->confirmation_code = '';
+                    $db->amount = $request->get('rate');
+                    $db->tax_amount = $request->get('tax');
+                    $db->total_amount = $request->get('total_rate');
+                    $db->guests_count = $table->guests_count;
+                    $db->book_date = DateTime::createFromFormat('Y-m-d H:i:s', $request->get('date'));
+                    $db->comment = '';
                     $db->booking_status = BookingStatusEnum::Approved;
                     $db->canceled_at = null;
                     $db->approved_at = now();
@@ -100,9 +99,38 @@ class BookingsController extends ApiController
 
                     $this->bookingRepository->save($db);
 
+                    // Update Booking Code
                     $db->code = AppHelper::getBookingCode($db->id, $db->place_id);
                     $db->confirmation_code = AppHelper::getBookingConfirmationCode($db->id);
                     $this->bookingRepository->save($db);
+
+                    $booking_table = new BookingTable();
+                    $booking_table->rate = $request->get('rate');
+                    $booking_table->tax = $request->get('tax');
+                    $booking_table->total_rate = $request->get('total_rate');
+                    $booking_table->table_number = $table->table_number;
+                    $booking_table->table_code = $table->table_number;
+                    $booking_table->detail = '';
+                    $booking_table->count = 1;
+
+                    if ($request->has('special_comment')) {
+                        $booking_table->is_special = 1;
+                        $booking_table->special_comment = $request->get('special_comment');
+                    } else {
+                        $booking_table->is_special = 0;
+                        $booking_table->special_comment = '';
+                    }
+
+                    $booking_table->canceled_at = null;
+                    $booking_table->approved_at = now();
+                    $booking_table->table_rate_id = $request->get('table_rate_id');
+                    $booking_table->table_id = $request->get('table_id');
+                    $booking_table->user_id = $user->id;
+                    $booking_table->booking_id = $db->id;
+                    $booking_table->published = 1;
+                    $booking_table->deleted = 0;
+
+                    $this->bookingTableRepository->save($booking_table);
                 }
             }
 
