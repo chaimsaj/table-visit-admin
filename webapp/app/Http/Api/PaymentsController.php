@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Stripe\Customer;
 use Stripe\EphemeralKey;
 use Stripe\PaymentIntent;
+use Stripe\Stripe;
 use Throwable;
 
 class PaymentsController extends ApiController
@@ -41,7 +42,9 @@ class PaymentsController extends ApiController
             $data = $request->json()->all();
 
             $validator = Validator::make($data, [
-                'amount' => ['required', 'numeric']
+                'amount' => ['required', 'numeric'],
+                'name' => ['required', 'string'],
+                'email' => ['required', 'string'],
             ]);
 
             if ($validator->fails()) {
@@ -52,7 +55,9 @@ class PaymentsController extends ApiController
             if (Auth::check()) {
                 $user = Auth::user();
 
-                $customer = Customer::create();
+                Stripe::setApiKey('sk_test_3vFmt8WPsBjG0JaWElA4ydbT');
+
+                $customer = Customer::create(['email' => $request->get('email'), 'name' => $request->get('name')]);
 
                 $ephemeralKey = EphemeralKey::create(
                     ['customer' => $customer->id],
@@ -60,7 +65,7 @@ class PaymentsController extends ApiController
                 );
 
                 $paymentIntent = PaymentIntent::create([
-                    'amount' => 1099,
+                    'amount' => $request->get('amount'),
                     'currency' => 'usd',
                     'customer' => $customer->id
                 ]);
