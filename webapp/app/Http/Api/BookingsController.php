@@ -30,23 +30,17 @@ class BookingsController extends ApiController
     private BookingRepositoryInterface $bookingRepository;
     private PlaceRepositoryInterface $placeRepository;
     private TableRepositoryInterface $tableRepository;
-    private BookingServiceRepositoryInterface $bookingServiceRepository;
-    private BookingTableRepositoryInterface $bookingTableRepository;
 
-    public function __construct(BookingRepositoryInterface        $bookingRepository,
-                                PlaceRepositoryInterface          $placeRepository,
-                                TableRepositoryInterface          $tableRepository,
-                                BookingServiceRepositoryInterface $bookingServiceRepository,
-                                BookingTableRepositoryInterface   $bookingTableRepository,
-                                LogServiceInterface               $logger)
+    public function __construct(BookingRepositoryInterface $bookingRepository,
+                                PlaceRepositoryInterface   $placeRepository,
+                                TableRepositoryInterface   $tableRepository,
+                                LogServiceInterface        $logger)
     {
         parent::__construct($logger);
 
         $this->bookingRepository = $bookingRepository;
         $this->placeRepository = $placeRepository;
         $this->tableRepository = $tableRepository;
-        $this->bookingServiceRepository = $bookingServiceRepository;
-        $this->bookingTableRepository = $bookingTableRepository;
     }
 
     public function book(Request $request): JsonResponse
@@ -89,15 +83,20 @@ class BookingsController extends ApiController
                     $db->total_amount = $request->get('total_rate');
                     $db->guests_count = $table->guests_count;
                     $db->book_date = DateTime::createFromFormat('Y-m-d H:i:s', $request->get('date'));
-                    $db->comment = '';
                     $db->booking_status = BookingStatusEnum::Approved;
                     $db->canceled_at = null;
                     $db->approved_at = now();
                     $db->user_id = $user->id;
+                    $db->table_id = $request->get('table_id');
+                    $db->table_rate_id = $request->get('table_rate_id');
                     $db->place_id = $place->id;
                     $db->tenant_id = $place->tenant_id;
                     $db->published = 1;
                     $db->deleted = 0;
+
+                    if ($request->has('special_comment')) {
+                        $db->special_comment = $request->get('special_comment');
+                    }
 
                     $this->bookingRepository->save($db);
 
@@ -106,7 +105,7 @@ class BookingsController extends ApiController
                     $db->confirmation_code = AppHelper::getBookingConfirmationCode($db->id);
                     $this->bookingRepository->save($db);
 
-                    $booking_table = new BookingTable();
+                    /*$booking_table = new BookingTable();
                     $booking_table->rate = $request->get('rate');
                     $booking_table->tax = $request->get('tax');
                     $booking_table->total_rate = $request->get('total_rate');
@@ -132,7 +131,7 @@ class BookingsController extends ApiController
                     $booking_table->published = 1;
                     $booking_table->deleted = 0;
 
-                    $this->bookingTableRepository->save($booking_table);
+                    $this->bookingTableRepository->save($booking_table);*/
                 }
             }
 
@@ -182,14 +181,14 @@ class BookingsController extends ApiController
 
                     foreach ($query as $item) {
                         $place = $this->placeRepository->find($item->place_id);
-                        $booking_table = $this->bookingTableRepository->loadFirstByBooking($item->id);
+                        $table = $this->tableRepository->find($item->table_id);
 
                         if (isset($place)) {
                             $item->place = PlaceHelper::load($place);
                         }
 
-                        if (isset($booking_table)) {
-                            $item->booking_table = $booking_table;
+                        if (isset($table)) {
+                            $item->table = $table;
                         }
                     }
 
