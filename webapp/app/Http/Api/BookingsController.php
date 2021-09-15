@@ -181,10 +181,15 @@ class BookingsController extends ApiController
                     $query = $this->bookingRepository->userBookings($user->id);
 
                     foreach ($query as $item) {
-                        $db = $this->placeRepository->find($item->place_id);
+                        $place = $this->placeRepository->find($item->place_id);
+                        $booking_table = $this->bookingTableRepository->loadFirstByBooking($item->id);
 
-                        if (isset($db)) {
-                            $item->place = PlaceHelper::load($db);
+                        if (isset($place)) {
+                            $item->place = PlaceHelper::load($place);
+                        }
+
+                        if (isset($booking_table)) {
+                            $item->booking_table = $booking_table;
                         }
                     }
 

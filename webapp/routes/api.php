@@ -78,6 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Tables
     Route::get('/tables/{place_id}', [App\Http\Api\TablesController::class, 'list'])->name('api.tables.list');
+    Route::get('/table/{id}', [App\Http\Api\TablesController::class, 'find'])->name('api.tables.find');
     Route::post('/tables/rates', [App\Http\Api\TablesController::class, 'rates'])->name('api.tables.rates');
     Route::post('/tables/rate', [App\Http\Api\TablesController::class, 'rate'])->name('api.tables.rate');
 

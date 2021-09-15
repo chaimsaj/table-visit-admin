@@ -56,6 +56,27 @@ class TablesController extends ApiController
         return response()->json($response);
     }
 
+    public function find($id): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+        $language = LanguageEnum::English;
+
+        try {
+            $query = $this->tableRepository->find($id);
+
+            if (isset($query))
+                $query->detail = $this->detail($query->id, $language);
+
+            $response->setData($query);
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
+    }
+
     private function detail(int $table_id, int $language_id): ?Model
     {
         try {
