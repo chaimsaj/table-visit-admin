@@ -6,6 +6,7 @@ namespace App\Http\Api;
 use App\AppModels\ApiModel;
 use App\Core\BookingStatusEnum;
 use App\Helpers\AppHelper;
+use App\Helpers\PlaceHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\Booking;
 use App\Models\BookingTable;
@@ -19,6 +20,7 @@ use App\Services\LogServiceInterface;
 use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -177,6 +179,15 @@ class BookingsController extends ApiController
 
                 if (isset($user)) {
                     $query = $this->bookingRepository->userBookings($user->id);
+
+                    foreach ($query as $item) {
+                        $db = $this->placeRepository->find($item->place_id);
+
+                        if (isset($db)) {
+                            $item->place = PlaceHelper::load($db);
+                        }
+                    }
+
                     $response->setData($query);
                 }
             }
