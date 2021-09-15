@@ -181,14 +181,9 @@ class BookingsController extends ApiController
 
                     foreach ($query as $item) {
                         $place = $this->placeRepository->find($item->place_id);
-                        $table = $this->tableRepository->find($item->table_id);
 
                         if (isset($place)) {
                             $item->place = PlaceHelper::load($place);
-                        }
-
-                        if (isset($table)) {
-                            $item->table = $table;
                         }
                     }
 

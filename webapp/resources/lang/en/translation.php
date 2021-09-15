@@ -64,6 +64,10 @@ return [
     "BottlesAndDrinks" => "Bottles & Drinks",
     "BottleRate" => "Bottle Rate",
 
+    "ConfirmationCode" => "Confirmation Code",
+    "BookDate" => "Date",
+    "TotalAmount" => "Total Amount",
+
     "Name" => "Name",
     "Code" => "Code",
     "Email" => "Email",

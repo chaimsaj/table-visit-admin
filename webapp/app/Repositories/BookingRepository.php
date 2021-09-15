@@ -19,6 +19,54 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where('user_id', $user_id)
+            ->orderBy('id', 'desc')
             ->get();
+    }
+
+    public function activesPaged(int $start, int $length, string $order_by, string $order, string $search): array
+    {
+        $query = $this->model->where('deleted', 0)
+            ->where('code', 'like', $search . '%')
+            ->orWhere('confirmation_code', 'like', $search . '%')
+            ->skip($start)
+            ->take($length);
+
+        if (!empty($order_by))
+            $query = $query->orderBy($order_by, $order);
+
+        $query = $query->get();
+
+        $count = $this->model->count();
+
+        return [
+            "data" => $query,
+            "count" => $count
+        ];
+    }
+
+    public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $order_by, string $order, string $search): array
+    {
+        $query = $this->model->where('deleted', 0)
+            ->where('code', 'like', $search . '%')
+            ->orWhere('confirmation_code', 'like', $search . '%')
+            ->where(function ($query) use ($tenant_id) {
+                $query->where("tenant_id", "=", $tenant_id)
+                    ->orWhere('tenant_id', "=", null)
+                    ->orWhere('tenant_id', "=", 0);
+            })
+            ->skip($start)
+            ->take($length);
+
+        if (!empty($order_by))
+            $query = $query->orderBy($order_by, $order);
+
+        $query = $query->get();
+
+        $count = $this->model->count();
+
+        return [
+            "data" => $query,
+            "count" => $count
+        ];
     }
 }

@@ -41,6 +41,9 @@ Route::middleware('api')->group(function () {
 
     // Services
     Route::post('/admin/services/list', [App\Http\AdminApi\ServicesController::class, 'list'])->name('admin_api.services.list');
+
+    // Places
+    Route::post('/admin/bookings/list', [App\Http\AdminApi\BookingsController::class, 'list'])->name('admin_api.bookings.list');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

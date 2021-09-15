@@ -16,12 +16,22 @@
                         <h4 class="card-title col-sm-4">
                             @lang('translation.Bookings')
                         </h4>
-                        <div class="col-sm-8">
-
-                        </div>
                     </div>
                     <hr/>
-                    <div>Coming soon..</div>
+                    <table id="bookings-datatable"
+                           class="table table-bordered dt-responsive nowrap w-100 align-middle text-center">
+                        <thead class="table-light">
+                        <tr class="text-center">
+                            <th>@lang('translation.Code')</th>
+                            <th>@lang('translation.ConfirmationCode')</th>
+                            <th>@lang('translation.BookDate')</th>
+                            <th>@lang('translation.TotalAmount')</th>
+                            <th>@lang('translation.GuestsCount')</th>
+                            <th class="th45 no-sort">@lang('translation.Delete')</th>
+                            <th class="th45 no-sort">@lang('translation.Edit')</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
