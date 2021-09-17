@@ -111,4 +111,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Payments
     Route::post('/payments/stripe', [App\Http\Api\PaymentsController::class, 'stripe'])->name('api.payments.stripe');
+
+    // Profile
+    Route::post('/user/profile/update', [App\Http\Api\UsersController::class, 'update'])->name('api.user.profile.update');
 });
