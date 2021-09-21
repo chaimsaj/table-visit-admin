@@ -83,7 +83,11 @@ class RatingsController extends ApiController
                         $this->ratingRepository->save($rating);
 
                         $review = new Review();
-                        $review->review = Str::limit($request->get('review'), 250);
+                        $review->review = '';
+
+                        if ($request->has('review'))
+                            $review->review = Str::limit($request->get('review'), 250);
+
                         $review->rating_id = $rating->id;
                         $review->user_id = $rating->user_id;
                         $review->place_id = $rating->place_id;
