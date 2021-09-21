@@ -15,12 +15,11 @@ class ReviewRepository extends BaseRepository implements ReviewRepositoryInterfa
         parent::__construct($model);
     }
 
-    public function exists($place_id, $user_id): ?Model
+    public function existsByRating($rating_id): ?Model
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('place_id', $place_id)
-            ->where('user_id', $user_id)
+            ->where('rating_id', $rating_id)
             ->first();
     }
 

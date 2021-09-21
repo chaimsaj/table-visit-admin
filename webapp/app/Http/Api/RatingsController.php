@@ -9,27 +9,34 @@ use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\Favorite;
 use App\Models\Rating;
+use App\Models\Review;
 use App\Repositories\FavoriteRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\RatingRepositoryInterface;
+use App\Repositories\ReviewRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Throwable;
 
 class RatingsController extends ApiController
 {
     private RatingRepositoryInterface $ratingRepository;
+    private ReviewRepositoryInterface $reviewRepository;
 
     public function __construct(RatingRepositoryInterface $ratingRepository,
+                                ReviewRepositoryInterface $reviewRepository,
                                 LogServiceInterface       $logger)
     {
         parent::__construct($logger);
 
         $this->ratingRepository = $ratingRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
-    public function user_ratings(): JsonResponse
+    public function list(): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -52,7 +59,7 @@ class RatingsController extends ApiController
         return response()->json($response);
     }
 
-    public function add($place_id): JsonResponse
+    public function add(Request $request): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -63,17 +70,28 @@ class RatingsController extends ApiController
 
                 if (isset($user)) {
 
-                    $exists = $this->ratingRepository->exists($place_id, $user->id);
+                    $exists = $this->ratingRepository->exists($request->get('place_id'), $user->id);
 
                     if (!isset($exists)) {
-                        $db = new Rating();
-                        $db->rating = 0;
-                        $db->user_id = $user->id;
-                        $db->place_id = $place_id;
-                        $db->published = 1;
-                        $db->deleted = 0;
+                        $rating = new Rating();
+                        $rating->rating = $request->get('rating');
+                        $rating->user_id = $user->id;
+                        $rating->place_id = $request->get('place_id');
+                        $rating->published = 1;
+                        $rating->deleted = 0;
 
-                        $this->ratingRepository->save($db);
+                        $this->ratingRepository->save($rating);
+
+                        $review = new Review();
+                        $review->review = Str::limit($request->get('review'), 250);
+                        $review->rating_id = $rating->id;
+                        $review->user_id = $rating->user_id;
+                        $review->place_id = $rating->place_id;
+                        $review->show = 1;
+                        $review->published = 1;
+                        $review->deleted = 0;
+
+                        $this->reviewRepository->save($review);
                     }
                 }
             }
@@ -85,7 +103,7 @@ class RatingsController extends ApiController
         return response()->json($response);
     }
 
-    public function remove($rel_id): JsonResponse
+    public function remove($rating_id): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -95,7 +113,12 @@ class RatingsController extends ApiController
                 $user = Auth::user();
 
                 if (isset($user)) {
-                    $this->ratingRepository->delete($rel_id);
+                    $review = $this->reviewRepository->existsByRating($rating_id);
+
+                    if (isset($review))
+                        $this->reviewRepository->delete($review->id);
+
+                    $this->ratingRepository->delete($rating_id);
                 }
             }
         } catch (Throwable $ex) {

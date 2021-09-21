@@ -88,7 +88,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Favorites
     Route::get('/user/favorites', [App\Http\Api\FavoritesController::class, 'list'])->name('api.user.favorites.list');
     Route::get('/user/favorite/add/{place_id}', [App\Http\Api\FavoritesController::class, 'add'])->name('api.user.favorites.add');
-    Route::get('/user/favorite/remove/{rel_id}', [App\Http\Api\FavoritesController::class, 'remove'])->name('api.user.favorites.remove');
+    Route::get('/user/favorite/remove/{favorite_id}', [App\Http\Api\FavoritesController::class, 'remove'])->name('api.user.favorites.remove');
 
     // Policies
     Route::get('/place_policies/{place_id}', [App\Http\Api\PoliciesController::class, 'list'])->name('api.place_policies.list');
@@ -96,13 +96,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Ratings
     Route::get('/user/ratings', [App\Http\Api\RatingsController::class, 'list'])->name('api.user.ratings.list');
-    Route::get('/user/rating/add/{place_id}', [App\Http\Api\RatingsController::class, 'add'])->name('api.user.ratings.add');
-    Route::get('/user/rating/remove/{rel_id}', [App\Http\Api\RatingsController::class, 'remove'])->name('api.user.ratings.remove');
-
-    // Reviews
-    Route::get('/user/reviews', [App\Http\Api\ReviewsController::class, 'list'])->name('api.user.reviews.list');
-    Route::get('/user/review/add/{place_id}', [App\Http\Api\ReviewsController::class, 'add'])->name('api.user.reviews.add');
-    Route::get('/user/review/remove/{rel_id}', [App\Http\Api\ReviewsController::class, 'remove'])->name('api.user.reviews.remove');
+    Route::post('/user/rating/add', [App\Http\Api\RatingsController::class, 'add'])->name('api.user.ratings.add');
+    Route::get('/user/rating/remove/{rating_id}', [App\Http\Api\RatingsController::class, 'remove'])->name('api.user.ratings.remove');
 
     // Bookings
     Route::get('/user/bookings', [App\Http\Api\BookingsController::class, 'list'])->name('api.user.bookings.list');

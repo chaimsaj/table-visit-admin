@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 interface ReviewRepositoryInterface extends BaseRepositoryInterface
 {
-    public function exists($place_id, $user_id): ?Model;
+    public function existsByRating($rating_id): ?Model;
 
     public function userReviews($user_id): Collection;
 }

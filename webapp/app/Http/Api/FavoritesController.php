@@ -111,7 +111,7 @@ class FavoritesController extends ApiController
         return response()->json($response);
     }
 
-    public function remove($rel_id): JsonResponse
+    public function remove($favorite_id): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -121,7 +121,7 @@ class FavoritesController extends ApiController
                 $user = Auth::user();
 
                 if (isset($user)) {
-                    $this->favoriteRepository->delete($rel_id);
+                    $this->favoriteRepository->delete($favorite_id);
                 }
             }
         } catch (Throwable $ex) {
