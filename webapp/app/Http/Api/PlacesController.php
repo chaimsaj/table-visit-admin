@@ -17,6 +17,7 @@ use App\Repositories\PlaceFeatureRepositoryInterface;
 use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceTypeRepositoryInterface;
+use App\Repositories\RatingRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -33,6 +34,7 @@ class PlacesController extends ApiController
     private PlaceFeatureRepositoryInterface $placeFeatureRepository;
     private PlaceMusicRepositoryInterface $placeMusicRepository;
     private FavoriteRepositoryInterface $favoriteRepository;
+    private RatingRepositoryInterface $ratingRepository;
 
     public function __construct(PlaceRepositoryInterface        $placeRepository,
                                 PlaceDetailRepositoryInterface  $placeDetailRepository,
@@ -40,6 +42,7 @@ class PlacesController extends ApiController
                                 PlaceFeatureRepositoryInterface $placeFeatureRepository,
                                 PlaceMusicRepositoryInterface   $placeMusicRepository,
                                 FavoriteRepositoryInterface     $favoriteRepository,
+                                RatingRepositoryInterface       $ratingRepository,
                                 LogServiceInterface             $logger)
     {
         parent::__construct($logger);
@@ -50,6 +53,7 @@ class PlacesController extends ApiController
         $this->placeFeatureRepository = $placeFeatureRepository;
         $this->placeMusicRepository = $placeMusicRepository;
         $this->favoriteRepository = $favoriteRepository;
+        $this->ratingRepository = $ratingRepository;
     }
 
     public function list(): JsonResponse
@@ -312,8 +316,13 @@ class PlacesController extends ApiController
         $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::large);
         $item->food_menu_path = MediaHelper::getImageUrl($item->food_menu_path, MediaSizeEnum::large);
 
-        $item->place_rating_count = rand(0, 100);
-        $item->place_rating_avg = rand(1, 5);
+        $ratings = $this->ratingRepository->ratingByPlace($item->id);
+
+        $item->place_rating_count = $ratings->count();
+        $item->place_rating_avg = $ratings->avg('rating');
+
+        if($item->place_rating_count == 0)
+            $item->place_rating_avg = 0;
 
         $item->place_types = $this->place_types($item->id);
 

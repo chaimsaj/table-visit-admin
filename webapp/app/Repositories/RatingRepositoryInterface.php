@@ -11,5 +11,7 @@ interface RatingRepositoryInterface extends BaseRepositoryInterface
 {
     public function exists($place_id, $user_id): ?Model;
 
-    public function userRatings($user_id): Collection;
+    public function ratingByUser($user_id): Collection;
+
+    public function ratingByPlace($place_id): Collection;
 }

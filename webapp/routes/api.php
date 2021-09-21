@@ -109,4 +109,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Profile
     Route::post('/user/profile/update', [App\Http\Api\UsersController::class, 'update'])->name('api.user.profile.update');
+
+    // Twilio/ChatController
+    Route::post('/chat/token', [App\Http\Api\Twilio\ChatController::class, 'token'])->name('api.chat.token');
 });

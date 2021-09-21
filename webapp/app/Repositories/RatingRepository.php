@@ -24,11 +24,19 @@ class RatingRepository extends BaseRepository implements RatingRepositoryInterfa
             ->first();
     }
 
-    public function userRatings($user_id): Collection
+    public function ratingByUser($user_id): Collection
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where('user_id', $user_id)
+            ->get();
+    }
+
+    public function ratingByPlace($place_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('place_id', $place_id)
             ->get();
     }
 }
