@@ -53,7 +53,7 @@ class AuthController extends ApiController
         return response()->json($response);
     }
 
-    public function sign_out(Request $request): JsonResponse
+    public function sign_out(): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();

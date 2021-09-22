@@ -2,14 +2,11 @@
 
 namespace App\Http\Api\Twilio;
 
-// require_once 'vendor/twilio/sdk/src/Twilio/autoload.php'; // Loads the library
-
 use App\AppModels\ApiModel;
 use App\AppModels\KeyValueModel;
 use App\Http\Api\Base\ApiController;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
 use Twilio\Jwt\AccessToken;
@@ -30,29 +27,30 @@ class ChatController extends ApiController
         try {
             if (Auth::check()) {
                 $user = Auth::user();
+
                 // Required for all Twilio access tokens
-                $twilioAccountSid = 'ACffd9af3534c4d7e385bfb0dc4197a48e';
-                $twilioApiKey = 'SKae8b733842636fcf1125e9cc40fc8f9b';
-                $twilioApiSecret = 'YFor12UIcutozv0d2RFSSMEfeYlgA9Aj';
+                $twilio_account_sid = env('TWILIO_ACCOUNT_SID', '');
+                $twilio_api_key = env('TWILIO_API_KEY', '');
+                $twilio_api_secret = env('TWILIO_API_SECRET', '');
 
                 // Required for Chat grant
-                $serviceSid = 'IS75e97e90a9474a13a8572aeadb9fc693';
+                $service_sid = env('TWILIO_SERVICE_SID', '');
 
                 // choose a random username for the connecting user
                 $identity = $user->email;
 
                 // Create access token, which we will serialize and send to the client
                 $token = new AccessToken(
-                    $twilioAccountSid,
-                    $twilioApiKey,
-                    $twilioApiSecret,
+                    $twilio_account_sid,
+                    $twilio_api_key,
+                    $twilio_api_secret,
                     3600,
                     $identity
                 );
 
                 // Create Chat grant
                 $chatGrant = new ChatGrant();
-                $chatGrant->setServiceSid($serviceSid);
+                $chatGrant->setServiceSid($service_sid);
 
                 // Add grant to token
                 $token->addGrant($chatGrant);
