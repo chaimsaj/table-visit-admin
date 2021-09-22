@@ -78,7 +78,17 @@
                                                                placeholder="Guests count"/>
                                                     </div>
                                                 </div>
-
+                                                <div class="mb-3">
+                                                    <label class="form-label">Table Number</label>
+                                                    <div>
+                                                        <input name="table_number"
+                                                               value="{{$data->table_number ?? '0'}}"
+                                                               class="form-control"
+                                                               data-parsley-type="number"
+                                                               required
+                                                               placeholder="Table Number"/>
+                                                    </div>
+                                                </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Display order</label>
                                                     <div>

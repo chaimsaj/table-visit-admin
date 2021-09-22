@@ -133,6 +133,7 @@ class TablesController extends AdminController
                 $db->name = $request->get('name');
                 $db->minimum_spend = floatval($request->get('minimum_spend'));
                 $db->guests_count = intval($request->get('guests_count'));
+                $db->table_number = intval($request->get('table_number'));
                 $db->display_order = intval($request->get('display_order'));
                 $db->table_type_id = $request->get('table_type_id');
                 $db->place_id = $request->get('place_id');

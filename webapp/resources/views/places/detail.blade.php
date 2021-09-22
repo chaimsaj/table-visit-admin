@@ -107,6 +107,30 @@
                                                 </div>
 
                                                 <div class="mb-3">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <label class="form-label">Open from (24 hs format)</label>
+                                                            <div>
+                                                                <input name="open_at"
+                                                                       value="{{$data->open_at ?? ''}}"
+                                                                       class="form-control" required
+                                                                       placeholder="Open from"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label class="form-label">Close at (24 hs format)</label>
+                                                            <div>
+                                                                <input name="close_at"
+                                                                       value="{{$data->close_at ?? ''}}"
+                                                                       class="form-control" required
+                                                                       placeholder="Close at"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="mb-3">
                                                     <label class="form-label">Display order</label>
                                                     <div>
                                                         <input name="display_order"

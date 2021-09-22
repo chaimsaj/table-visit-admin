@@ -10,6 +10,7 @@ use App\Http\Api\Base\ApiController;
 use App\Models\Favorite;
 use App\Repositories\FavoriteRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\RatingRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -19,15 +20,18 @@ class FavoritesController extends ApiController
 {
     private FavoriteRepositoryInterface $favoriteRepository;
     private PlaceRepositoryInterface $placeRepository;
+    private RatingRepositoryInterface $ratingRepository;
 
     public function __construct(FavoriteRepositoryInterface $favoriteRepository,
                                 PlaceRepositoryInterface    $placeRepository,
+                                RatingRepositoryInterface   $ratingRepository,
                                 LogServiceInterface         $logger)
     {
         parent::__construct($logger);
 
         $this->favoriteRepository = $favoriteRepository;
         $this->placeRepository = $placeRepository;
+        $this->ratingRepository = $ratingRepository;
     }
 
     public function user_favorites(): JsonResponse
@@ -65,6 +69,20 @@ class FavoritesController extends ApiController
                 if (isset($user)) {
                     $query = $this->placeRepository->favorites($user->id);
                     foreach ($query as $item) {
+                        $ratings = $this->ratingRepository->ratingByPlace($item->id);
+
+                        $item->place_rating_count = $ratings->count();
+                        $item->place_rating_avg = $ratings->avg('rating');
+
+                        if ($item->place_rating_count == 0)
+                            $item->place_rating_avg = 0;
+
+                        if (!isset($item->open_at))
+                            $item->open_at = 0;
+
+                        if (!isset($item->close_at))
+                            $item->close_at = 0;
+
                         $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
                     }
                     $response->setData($query);

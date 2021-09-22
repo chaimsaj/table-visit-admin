@@ -321,8 +321,14 @@ class PlacesController extends ApiController
         $item->place_rating_count = $ratings->count();
         $item->place_rating_avg = $ratings->avg('rating');
 
-        if($item->place_rating_count == 0)
+        if ($item->place_rating_count == 0)
             $item->place_rating_avg = 0;
+
+        if (!isset($item->open_at))
+            $item->open_at = 0;
+
+        if (!isset($item->close_at))
+            $item->close_at = 0;
 
         $item->place_types = $this->place_types($item->id);
 
