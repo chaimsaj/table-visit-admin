@@ -6,7 +6,10 @@ namespace App\Http\Api;
 use App\AppModels\ApiModel;
 use App\Core\AuthModeEnum;
 use App\Core\GenderEnum;
+use App\Core\MediaObjectTypeEnum;
 use App\Core\UserTypeEnum;
+use App\Helpers\AppHelper;
+use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
@@ -16,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 use PhpParser\Node\Expr\Array_;
 use Throwable;
 
@@ -106,6 +110,30 @@ class UsersController extends ApiController
                     $db->last_name = $data['last_name'];
 
                     $this->userRepository->save($db);
+                }
+            }
+        } catch (Throwable $ex) {
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function upload_id(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                $db = $this->userRepository->find($user->id);
+
+                if (isset($db)) {
+                    if ($request->has('id_data')) {
+                        $image_file = $request->file('id_data');
+                    }
                 }
             }
         } catch (Throwable $ex) {

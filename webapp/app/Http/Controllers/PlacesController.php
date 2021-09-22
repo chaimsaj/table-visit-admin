@@ -179,10 +179,10 @@ class PlacesController extends AdminController
 
             $this->repository->save($db);
 
-            if (request()->has('image_path')) {
+            if ($request->has('image_path')) {
                 MediaHelper::deletePlacesImage($db->image_path);
 
-                $image_file = request()->file('image_path');
+                $image_file = $request->file('image_path');
                 $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
                 $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 

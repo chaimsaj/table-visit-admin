@@ -151,10 +151,10 @@ class UsersController extends AdminController
 
                 $this->repository->save($db);
 
-                if (request()->has('avatar')) {
+                if ($request->has('avatar')) {
                     MediaHelper::deleteUsersImage($db->avatar);
 
-                    $image_file = request()->file('avatar');
+                    $image_file = $request->file('avatar');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
                     $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
