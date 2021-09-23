@@ -325,6 +325,7 @@ lodash(app_pages_assets).forEach(function (assets, type) {
 var app_assets = {
     js: [
         //app
+        folder.src + "js/app/financial.js",
         folder.src + "js/app/localization.js",
         folder.src + "js/app/locations.js",
         folder.src + "js/app/places.js",

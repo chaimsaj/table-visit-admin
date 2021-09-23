@@ -17,19 +17,55 @@
                             @lang('translation.Commissions')
                         </h4>
                         <div class="col-sm-8">
-
-                        </div>
+                            <div class="text-sm-end">
+                                <a href="{{route("commission.detail", 0)}}"
+                                   class="btn btn-primary waves-effect waves-light"><i
+                                        class="mdi mdi-plus me-1"></i> @lang('translation.AddNew')
+                                </a>
+                            </div>
+                        </div><!-- end col-->
                     </div>
                     <hr/>
-                    <div>Coming soon..</div>
+                    <table id="datatable"
+                           class="table table-bordered dt-responsive nowrap w-100 align-middle">
+                        <thead class="table-light">
+                        <tr class="text-center">
+                            <th>@lang('translation.Id')</th>
+                            <th>@lang('translation.Name')</th>
+                            <th>@lang('translation.Code')</th>
+                            <th>@lang('translation.DisplayOrder')</th>
+                            <th class="th45 no-sort">@lang('translation.Delete')</th>
+                            <th class="th45 no-sort">@lang('translation.Edit')</th>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        @foreach ($data as $item)
+                            <tr class="text-center">
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->iso_code }}</td>
+                                <td>{{ $item->display_order }}</td>
+                                <td>
+                                    <a href="{{route("commission.delete", $item->id)}}" class="text-danger sweet-warning"><i
+                                            class="mdi mdi-delete font-size-18"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{{route("commission.detail", $item->id)}}" class="text-success"><i
+                                            class="mdi mdi-pencil font-size-18"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
-    <!-- reservations -->
+    <!-- financial -->
     <script src="{{ URL::asset('/assets/js/app/financial.js?') . config('app.version') }}"></script>
     <script type="application/javascript">
         (function () {

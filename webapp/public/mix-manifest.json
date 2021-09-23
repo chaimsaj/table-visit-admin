@@ -207,6 +207,7 @@
     "/assets/css/icons.min.css": "/assets/css/icons.min.css",
     "/assets/css/app.min.css": "/assets/css/app.min.css",
     "/assets/css/app-dark.min.css": "/assets/css/app-dark.min.css",
+    "/assets/js/app/financial.js": "/assets/js/app/financial.js",
     "/assets/js/app/localization.js": "/assets/js/app/localization.js",
     "/assets/js/app/locations.js": "/assets/js/app/locations.js",
     "/assets/js/app/places.js": "/assets/js/app/places.js",
