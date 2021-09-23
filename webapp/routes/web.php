@@ -188,3 +188,15 @@ Route::get('/tenants', [App\Http\Controllers\TenantsController::class, 'index'])
 Route::get('/tenant/{id}', [App\Http\Controllers\TenantsController::class, 'detail'])->name('tenant.detail');
 Route::post('/tenant/{id}', [App\Http\Controllers\TenantsController::class, 'save'])->name('tenant.save');
 Route::get('/tenant/delete/{id}', [App\Http\Controllers\TenantsController::class, 'delete'])->name('tenant.delete');
+
+// Commissions
+Route::get('/commissions', [App\Http\Controllers\CommissionsController::class, 'index'])->name('commissions');
+Route::get('/commission/{id}', [App\Http\Controllers\CommissionsController::class, 'detail'])->name('commission.detail');
+Route::post('/commission/{id}', [App\Http\Controllers\CommissionsController::class, 'save'])->name('commission.save');
+Route::get('/commission/delete/{id}', [App\Http\Controllers\CommissionsController::class, 'delete'])->name('commission.delete');
+
+// Fees
+Route::get('/fees', [App\Http\Controllers\FeesController::class, 'index'])->name('fees');
+Route::get('/fee/{id}', [App\Http\Controllers\FeesController::class, 'detail'])->name('fee.detail');
+Route::post('/fee/{id}', [App\Http\Controllers\FeesController::class, 'save'])->name('fee.save');
+Route::get('/fee/delete/{id}', [App\Http\Controllers\FeesController::class, 'delete'])->name('fee.delete');

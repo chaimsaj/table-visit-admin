@@ -170,6 +170,15 @@ return [
     "Payment" => "Payment",
     "Payments" => "Payments",
 
+    "Financial" => "Financial",
+    "Commissions" => "Commissions",
+    "Fees" => "Fees",
+
+    "Reports" => "Reports",
+
+    "Commission" => "Commission",
+    "Fee" => "Fee",
+
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",
     "Blog" => "Blog",

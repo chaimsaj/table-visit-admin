@@ -81,7 +81,8 @@
                             @lang('translation.BottlesAndDrinks')
                         </li>
                         <li><a href="{{route("services")}}" key="t-services">@lang('translation.Bottles')</a></li>
-                        <li><a href="{{route("service-rates")}}" key="t-service-rates">@lang('translation.BottleRates')</a>
+                        <li><a href="{{route("service-rates")}}"
+                               key="t-service-rates">@lang('translation.BottleRates')</a>
                         </li>
                         <li><a href="{{route("service-types")}}"
                                key="t-service-types">@lang('translation.DrinkTypes')</a></li>
@@ -95,6 +96,27 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("bookings")}}" key="t-bookings">@lang('translation.Bookings')</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-money"></i>
+                        <span key="t-financial">@lang('translation.Financial')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("commissions")}}" key="t-commissions">@lang('translation.Commissions')</a>
+                        </li>
+                        <li><a href="{{route("fees")}}" key="t-fees">@lang('translation.Fees')</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-chart"></i>
+                        <span key="t-reports">@lang('translation.Reports')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("payments")}}" key="t-payments">@lang('translation.Payments')</a></li>
                     </ul>
                 </li>
