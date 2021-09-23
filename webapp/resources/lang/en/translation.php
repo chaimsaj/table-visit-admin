@@ -179,6 +179,11 @@ return [
     "Commission" => "Commission",
     "Fee" => "Fee",
 
+    "Percentage" => "Percentage",
+    "FixedRate" => "Fixed rate",
+    "MinRate" => "Min rate",
+    "MaxRate" => "Max rate",
+
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",
     "Blog" => "Blog",

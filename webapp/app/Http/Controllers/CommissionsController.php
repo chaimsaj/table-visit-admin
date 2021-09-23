@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\CommissionTypeEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Commission;
 use App\Repositories\CommissionRepositoryInterface;
@@ -38,7 +39,6 @@ class CommissionsController extends AdminController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:255'],
             ]);
 
             $db = $this->repository->find($id);
@@ -48,6 +48,14 @@ class CommissionsController extends AdminController
             } else {
                 if ($db == null)
                     $db = new Commission();
+
+                $db->percentage = floatval($request->get('percentage'));
+                $db->rate = floatval($request->get('rate'));
+                $db->commission_type = CommissionTypeEnum::Undefined;
+                $db->min_rate = floatval($request->get('min_rate'));
+                $db->max_rate = floatval($request->get('max_rate'));
+                $db->published = $request->get('published') == "on";
+                $db->deleted = 0;
 
                 $this->repository->save($db);
             }

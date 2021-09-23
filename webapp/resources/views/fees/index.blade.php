@@ -5,8 +5,8 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.Fees') @endslot
-        @slot('title') @lang('translation.Financial') @endslot
+        @slot('li_1') @lang('translation.Financial') @endslot
+        @slot('title') @lang('translation.Fees') @endslot
     @endcomponent
     <div class="row">
         <div class="col-12">
@@ -31,9 +31,10 @@
                         <thead class="table-light">
                         <tr class="text-center">
                             <th>@lang('translation.Id')</th>
-                            <th>@lang('translation.Name')</th>
-                            <th>@lang('translation.Code')</th>
-                            <th>@lang('translation.DisplayOrder')</th>
+                            <th>@lang('translation.Percentage')</th>
+                            <th>@lang('translation.FixedRate')</th>
+                            <th>@lang('translation.MinRate')</th>
+                            <th>@lang('translation.MaxRate')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
@@ -44,9 +45,10 @@
                         @foreach ($data as $item)
                             <tr class="text-center">
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->iso_code }}</td>
-                                <td>{{ $item->display_order }}</td>
+                                <td>{{ $item->percentage }}</td>
+                                <td>{{ $item->rate }}</td>
+                                <td>{{ $item->min_rate }}</td>
+                                <td>{{ $item->max_rate }}</td>
                                 <td>
                                     <a href="{{route("fee.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>

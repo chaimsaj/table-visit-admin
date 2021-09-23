@@ -5,8 +5,8 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') @lang('translation.Fee') @endslot
-        @slot('title') @lang('translation.Financial') @endslot
+        @slot('li_1') @lang('translation.Financial') @endslot
+        @slot('title') @lang('translation.Fee') @endslot
     @endcomponent
 
     <div class="row">
@@ -21,29 +21,46 @@
                                 @csrf
                                 <hr/>
                                 <div class="mb-3">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" name="name"
-                                           value="{{$data->name ?? ''}}"
-                                           class="form-control" value="" required placeholder="Name"/>
+                                    <label class="form-label">Percentage</label>
+                                    <input name="percentage"
+                                           data-parsley-type="number"
+                                           value="{{$data->percentage ?? ''}}"
+                                           class="form-control" placeholder="Percentage"/>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Code</label>
+                                    <label class="form-label">Fixed rate</label>
                                     <div>
-                                        <input name="iso_code"
-                                               value="{{$data->iso_code ?? ''}}"
-                                               class="form-control" required
-                                               placeholder="Code"/>
+                                        <input name="rate"
+                                               data-parsley-type="number"
+                                               value="{{$data->rate ?? ''}}"
+                                               class="form-control"
+                                               placeholder="Fixed rate"/>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Display order</label>
-                                    <div>
-                                        <input name="display_order"
-                                               value="{{$data->display_order ?? ''}}"
-                                               class="form-control" required
-                                               placeholder="Display order"/>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="form-label">Min rate</label>
+                                            <div>
+                                                <input name="min_rate"
+                                                       data-parsley-type="number"
+                                                       value="{{$data->min_rate ?? ''}}"
+                                                       class="form-control"
+                                                       placeholder="Min rate"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label">Max rate</label>
+                                            <div>
+                                                <input name="max_rate"
+                                                       data-parsley-type="number"
+                                                       value="{{$data->max_rate ?? ''}}"
+                                                       class="form-control"
+                                                       placeholder="Max rate"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -60,16 +77,6 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="show"
-                                                       {{($data && $data->show == 1) ? 'checked' : ''}}
-                                                       name="show">
-                                                <label class="form-check-label" for="show">
-                                                    Show
-                                                </label>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -77,7 +84,7 @@
                                     <button type="submit" class="btn btn-success waves-effect waves-light">
                                         @lang('translation.Save')
                                     </button>
-                                    <a href="{{route("currencies")}}"
+                                    <a href="{{route("fees")}}"
                                        class="btn btn-danger waves-effect">
                                         @lang('translation.Cancel')
                                     </a>

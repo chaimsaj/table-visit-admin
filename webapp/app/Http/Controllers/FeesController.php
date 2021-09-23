@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\FeeTypeEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Currency;
 use App\Models\Fee;
@@ -39,7 +40,6 @@ class FeesController extends AdminController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:255'],
             ]);
 
             $db = $this->repository->find($id);
@@ -49,6 +49,14 @@ class FeesController extends AdminController
             } else {
                 if ($db == null)
                     $db = new Fee();
+
+                $db->percentage = floatval($request->get('percentage'));
+                $db->rate = floatval($request->get('rate'));
+                $db->fee_type = FeeTypeEnum::Undefined;
+                $db->min_rate = floatval($request->get('min_rate'));
+                $db->max_rate = floatval($request->get('max_rate'));
+                $db->published = $request->get('published') == "on";
+                $db->deleted = 0;
 
                 $this->repository->save($db);
             }

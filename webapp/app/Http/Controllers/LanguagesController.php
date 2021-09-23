@@ -53,6 +53,7 @@ class LanguagesController extends AdminController
                 $db->iso_code = $request->get('iso_code');
                 $db->display_order = intval($request->get('display_order'));
                 $db->published = $request->get('published') == "on";
+                $db->deleted = 0;
                 $db->show = $request->get('show') == "on";
 
                 $this->repository->save($db);

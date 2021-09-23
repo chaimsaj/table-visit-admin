@@ -41,6 +41,7 @@
                                     <label class="form-label">Display order</label>
                                     <div>
                                         <input name="display_order"
+                                               data-parsley-type="number"
                                                value="{{$data->display_order ?? ''}}"
                                                class="form-control" required
                                                placeholder="Display order"/>
