@@ -64,6 +64,22 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3">
+                                    <label class="form-label">Place</label>
+                                    <div>
+                                        <select id="place_id" class="form-select select2"
+                                                name="place_id">
+                                            <option value="0">@lang('translation.All')</option>
+                                            @foreach($places as $place)
+                                                <option
+                                                    value="{{ $place->id }}" {{ ($data && $data->place_id == $place->id) ? 'selected' : '' }}>
+                                                    {{ $place->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="mb-4">
                                     <div class="row">
                                         <div class="col-6">

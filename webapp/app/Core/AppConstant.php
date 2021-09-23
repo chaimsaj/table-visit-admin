@@ -8,6 +8,7 @@ class AppConstant
 {
     public static string $select = "Select..";
     public static string $dash = "-";
+    public static string $all = "All";
 
     /**
      * @return string
@@ -23,5 +24,13 @@ class AppConstant
     public static function getDash(): string
     {
         return self::$dash;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getAll(): string
+    {
+        return self::$all;
     }
 }

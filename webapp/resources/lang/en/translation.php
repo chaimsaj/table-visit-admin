@@ -183,6 +183,7 @@ return [
     "FixedRate" => "Fixed rate",
     "MinRate" => "Min rate",
     "MaxRate" => "Max rate",
+    "All" => "All",
 
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",

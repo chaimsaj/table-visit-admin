@@ -35,6 +35,7 @@
                             <th>@lang('translation.FixedRate')</th>
                             <th>@lang('translation.MinRate')</th>
                             <th>@lang('translation.MaxRate')</th>
+                            <th>@lang('translation.Place')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
@@ -49,6 +50,7 @@
                                 <td>{{ $item->rate }}</td>
                                 <td>{{ $item->min_rate }}</td>
                                 <td>{{ $item->max_rate }}</td>
+                                <td>{{ $item->place_name }}</td>
                                 <td>
                                     <a href="{{route("fee.delete", $item->id)}}" class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
