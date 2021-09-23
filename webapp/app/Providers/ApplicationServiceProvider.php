@@ -79,6 +79,8 @@ use App\Repositories\TableRateRepository;
 use App\Repositories\TableRateRepositoryInterface;
 use App\Repositories\TableRepository;
 use App\Repositories\TableRepositoryInterface;
+use App\Repositories\TableSpendRepository;
+use App\Repositories\TableSpendRepositoryInterface;
 use App\Repositories\TableTypeRepository;
 use App\Repositories\TableTypeRepositoryInterface;
 use App\Repositories\TenantRepository;
@@ -144,6 +146,7 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(TableDetailRepositoryInterface::class, TableDetailRepository::class);
         $this->app->bind(TableRateRepositoryInterface::class, TableRateRepository::class);
         $this->app->bind(TableRepositoryInterface::class, TableRepository::class);
+        $this->app->bind(TableSpendRepositoryInterface::class, TableSpendRepository::class);
         $this->app->bind(TableTypeRepositoryInterface::class, TableTypeRepository::class);
         $this->app->bind(TenantRepositoryInterface::class, TenantRepository::class);
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);

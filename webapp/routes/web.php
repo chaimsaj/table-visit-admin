@@ -200,3 +200,9 @@ Route::get('/fees', [App\Http\Controllers\FeesController::class, 'index'])->name
 Route::get('/fee/{id}', [App\Http\Controllers\FeesController::class, 'detail'])->name('fee.detail');
 Route::post('/fee/{id}', [App\Http\Controllers\FeesController::class, 'save'])->name('fee.save');
 Route::get('/fee/delete/{id}', [App\Http\Controllers\FeesController::class, 'delete'])->name('fee.delete');
+
+// Table Spends
+Route::get('/table-spends', [App\Http\Controllers\TableSpendsController::class, 'index'])->name('table-spends');
+Route::get('/table-spend/{id}', [App\Http\Controllers\TableSpendsController::class, 'detail'])->name('table-spend.detail');
+Route::post('/table-spend/{id}', [App\Http\Controllers\TableSpendsController::class, 'save'])->name('table-spend.save');
+Route::get('/table-spend/delete/{id}', [App\Http\Controllers\TableSpendsController::class, 'delete'])->name('table-spend.delete');

@@ -105,6 +105,8 @@
                         <span key="t-financial">@lang('translation.Financial')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("table-spends")}}"
+                               key="t-table-spends">@lang('translation.Spends')</a></li>
                         <li><a href="{{route("commissions")}}" key="t-commissions">@lang('translation.Commissions')</a>
                         </li>
                         <li><a href="{{route("fees")}}" key="t-fees">@lang('translation.Fees')</a></li>

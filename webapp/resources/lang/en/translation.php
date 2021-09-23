@@ -185,6 +185,10 @@ return [
     "MaxRate" => "Max rate",
     "All" => "All",
 
+    "TableSpends" => "Table spends",
+    "TableSpend" => "Table spends",
+    "Spends" => "Spends",
+
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",
     "Blog" => "Blog",
