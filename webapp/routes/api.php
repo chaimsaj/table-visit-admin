@@ -133,4 +133,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/send_email', [App\Http\Api\NotificationsController::class, 'send_email'])->name('api.notifications.send_email');
     Route::post('/notifications/send_sms', [App\Http\Api\NotificationsController::class, 'send_sms'])->name('api.notifications.send_sms');
     Route::post('/notifications/send_validation', [App\Http\Api\NotificationsController::class, 'send_validation'])->name('api.notifications.send_validation');
+
+    // Table Spends
+    Route::get('/table/spends', [App\Http\Api\TableSpendsController::class, 'list'])->name('api.table.spends');
+    Route::post('/table/spend/add', [App\Http\Api\TableSpendsController::class, 'add'])->name('api.table.spends.add');
+    Route::get('/table/spend/remove/{id}', [App\Http\Api\TableSpendsController::class, 'remove'])->name('api.table.spends.remove');
 });
