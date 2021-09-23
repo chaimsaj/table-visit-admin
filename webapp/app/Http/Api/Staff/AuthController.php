@@ -5,6 +5,7 @@ namespace App\Http\Api\Staff;
 use App\AppModels\ApiModel;
 use App\AppModels\TokenModel;
 use App\Core\MediaSizeEnum;
+use App\Core\UserTypeEnum;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Services\LogServiceInterface;
@@ -30,17 +31,20 @@ class AuthController extends ApiController
             $credentials = $request->only('email', 'password');
 
             if (Auth::attempt($credentials)) {
+                if (Auth::user()->user_type_id != UserTypeEnum::Customer
+                    && Auth::user()->user_type_id != UserTypeEnum::Admin
+                    && Auth::user()->user_type_id != UserTypeEnum::PlaceAdmin) {
+                    $auth_token = $request->user()->createToken('auth_token');
 
+                    $token = new TokenModel();
+                    $token->setAccessToken($auth_token->plainTextToken);
+                    $token->setTokenType('Bearer');
 
-                $auth_token = $request->user()->createToken('auth_token');
-
-                $token = new TokenModel();
-                $token->setAccessToken($auth_token->plainTextToken);
-                $token->setTokenType('Bearer');
-
-                $response->setData($token);
+                    $response->setData($token);
+                } else
+                    $response->setError("Invalid user or password..");
             } else
-                $response->setError();
+                $response->setError("Invalid user or password..");
         } catch (Throwable $ex) {
             $this->logger->save($ex);
             $response->setError($ex->getMessage());

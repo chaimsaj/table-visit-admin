@@ -40,15 +40,18 @@ class AuthController extends ApiController
 
         if (Auth::attempt($credentials)) {
 
-            $auth_token = $request->user()->createToken('auth_token');
+            if (Auth::user()->user_type_id == UserTypeEnum::Customer) {
+                $auth_token = $request->user()->createToken('auth_token');
 
-            $token = new TokenModel();
-            $token->setAccessToken($auth_token->plainTextToken);
-            $token->setTokenType('Bearer');
+                $token = new TokenModel();
+                $token->setAccessToken($auth_token->plainTextToken);
+                $token->setTokenType('Bearer');
 
-            $response->setData($token);
+                $response->setData($token);
+            } else
+                $response->setError("Invalid user or password..");
         } else
-            $response->setError();
+            $response->setError("Invalid user or password..");
 
         return response()->json($response);
     }
@@ -92,7 +95,8 @@ class AuthController extends ApiController
         ]);
 
         if ($validator->fails()) {
-            $response->setError($validator->getMessageBag());
+            // $validator->getMessageBag()
+            $response->setError('Please fill out all fields as required..');
             return response()->json($response);
         }
 
