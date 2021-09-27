@@ -3,7 +3,7 @@ table-visit-db
 
 table-visit-vm	
 
-34.83.169.88
+34.122.237.30
 
 ssh-keygen -t rsa -f ~/.ssh/table-visit -C table-visit-usr
 /Users/develop/.ssh/
@@ -46,3 +46,13 @@ server {
         deny all;
     }
 }
+
+http://35.231.16.88/
+http://jetware.io/blog/google_cloud_launcher_getting_started_guide
+http://jetware.io/appliances/jetware/lemp7_optimized_g2-170723/profile
+sudo ln -s /jet/bin/php /usr/bin/php
+
+debian sudo -i
+
+administrator@tablevisit.com
+1234qwerty

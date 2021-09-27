@@ -88,6 +88,10 @@ server {
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
+	
+	location / {
+	        try_files $uri $uri/ /index.php?$args;
+	    }
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location = /robots.txt  { access_log off; log_not_found off; }
@@ -131,3 +135,7 @@ mysqldump -u root -p table-visit > /usr/share/nginx/html/db/table-visit.sql
 mysqldump -u root -p -h 127.0.0.1 table-visit > /usr/share/nginx/html/table-visit-sql.sql
 
 ssh-keygen -t rsa -f ~/.ssh/table-visit -C table-visit-usr
+
+sudo yum-config-manager --enable remi-php80
+
+sudo chown -R nginx.nginx /usr/share/nginx/html/
