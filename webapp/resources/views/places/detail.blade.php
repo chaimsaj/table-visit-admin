@@ -131,6 +131,21 @@
                                                 </div>
 
                                                 <div class="mb-3">
+                                                    <label class="form-label">Type</label>
+                                                    <div>
+                                                        <select class="form-select select2" name="place_type_id">
+                                                            <option value="0">@lang('translation.Select')</option>
+                                                            @foreach($place_types as $place_type)
+                                                                <option
+                                                                    value="{{ $place_type->id }}" {{ ($data && $data->place_type_id == $place_type->id) ? 'selected' : '' }}>
+                                                                    {{ $place_type->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mb-3">
                                                     <label class="form-label">Display order</label>
                                                     <div>
                                                         <input name="display_order"

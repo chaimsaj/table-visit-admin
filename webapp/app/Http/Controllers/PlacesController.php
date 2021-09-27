@@ -23,6 +23,7 @@ use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceToFeatureRepositoryInterface;
 use App\Repositories\PlaceToMusicRepositoryInterface;
+use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\PolicyRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
 use App\Repositories\TenantRepositoryInterface;
@@ -48,6 +49,7 @@ class PlacesController extends AdminController
     private PlaceToFeatureRepositoryInterface $placeToFeatureRepository;
     private PlaceToMusicRepositoryInterface $placeToMusicRepository;
     private PolicyRepositoryInterface $policyRepository;
+    private PlaceTypeRepositoryInterface $placeTypeRepository;
 
     public function __construct(PlaceRepositoryInterface          $repository,
                                 StateRepositoryInterface          $stateRepository,
@@ -59,6 +61,7 @@ class PlacesController extends AdminController
                                 PlaceToFeatureRepositoryInterface $placeToFeatureRepository,
                                 PlaceToMusicRepositoryInterface   $placeToMusicRepository,
                                 PolicyRepositoryInterface         $policyRepository,
+                                PlaceTypeRepositoryInterface      $placeTypeRepository,
                                 LogServiceInterface               $logger)
     {
         parent::__construct($logger);
@@ -73,6 +76,7 @@ class PlacesController extends AdminController
         $this->placeToFeatureRepository = $placeToFeatureRepository;
         $this->placeToMusicRepository = $placeToMusicRepository;
         $this->policyRepository = $policyRepository;
+        $this->placeTypeRepository = $placeTypeRepository;
     }
 
     public function index()
@@ -132,6 +136,8 @@ class PlacesController extends AdminController
         $place_reservation_policy = $this->policyRepository->loadBy($id, PolicyTypeEnum::Reservation, LanguageEnum::English);
         $place_cancellation_policy = $this->policyRepository->loadBy($id, PolicyTypeEnum::Cancellation, LanguageEnum::English);
 
+        $place_types = $this->placeTypeRepository->published();
+
         $tab = Session::get("tab", "data");
 
         return view('places/detail', ["data" => $data,
@@ -146,6 +152,7 @@ class PlacesController extends AdminController
             "place_reservation_policy" => $place_reservation_policy,
             "place_cancellation_policy" => $place_cancellation_policy,
             "is_admin" => $is_admin,
+            "place_types" => $place_types,
             "tab" => $tab
         ]);
     }
@@ -178,6 +185,12 @@ class PlacesController extends AdminController
 
             if ($is_admin)
                 $db->tenant_id = intval($request->get('tenant_id'));
+
+            $place_type_id = intval($request->get('place_type_id'));
+
+            if ($place_type_id > 0) {
+                
+            }
 
             $this->repository->save($db);
 
