@@ -1,5 +1,5 @@
 NEW
-ssh centos-vm@table-visit.southcentralus.cloudapp.azure.com
+ssh centos-vm@develop.southcentralus.cloudapp.azure.com
 centos-vm
 d7LFhnPmbwuIln3l
 
