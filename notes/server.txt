@@ -125,3 +125,9 @@ mysql -u root -p pBJRetR2EKPg
 mv /etc/php-fpm.d/www.conf.rpmsave /etc/php-fpm.d/www.conf
 
 sudo chown -R nginx.nginx /usr/share/nginx/html/table-visit/storage/logs/laravel.log
+
+mysqldump -u root -p table-visit > /usr/share/nginx/html/db/table-visit.sql
+
+mysqldump -u root -p -h 127.0.0.1 table-visit > /usr/share/nginx/html/table-visit-sql.sql
+
+ssh-keygen -t rsa -f ~/.ssh/table-visit -C table-visit-usr

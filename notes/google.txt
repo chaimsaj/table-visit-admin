@@ -1,0 +1,48 @@
+table-visit-db
+3q32j5MAppnwcEkp
+
+table-visit-vm	
+
+34.83.169.88
+
+ssh-keygen -t rsa -f ~/.ssh/table-visit -C table-visit-usr
+/Users/develop/.ssh/
+
+table-visit
+table-visit.pub
+
+sudo chown -R table-visit-usr:table-visit-usr /usr/share/nginx/html
+sudo chown -R table-visit-usr:table-visit-usr /usr/share/nginx/html/table-visit
+
+server {
+    listen 80;
+    server_name table-visit.southcentralus.cloudapp.azure.com;
+    root /usr/share/nginx/html/table-visit/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.php;
+
+    charset utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_read_timeout 300;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
