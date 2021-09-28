@@ -107,3 +107,5 @@ brewtopia-centos
 sudo chown -R nginx:nginx
 
 nano /usr/share/nginx/html/table-visit/public/info.php
+
+us-central1-a
