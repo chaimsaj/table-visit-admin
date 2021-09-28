@@ -3,7 +3,7 @@ ssh centos-vm@develop.southcentralus.cloudapp.azure.com
 centos-vm
 d7LFhnPmbwuIln3l
 
-/usr/share/nginx/html/table-visit
+/usr/share/nginx/html/myngly
 
 mariadb
 pBJRetR2EKPg
@@ -25,8 +25,8 @@ DB_PASSWORD=pBJRetR2EKPg
 
 mysql -h localhost -u root -p table-visit
 
-DROP DATABASE `table-visit`;
-CREATE DATABASE `table-visit`;
+DROP DATABASE `myngly-db`;
+CREATE DATABASE `myngly-db`;
 
 /usr/share/nginx/html/topdevrank.com/storage/logs/laravel.log
 

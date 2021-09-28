@@ -40,7 +40,8 @@ class AuthController extends ApiController
 
         if (Auth::attempt($credentials)) {
 
-            if (Auth::user()->user_type_id == UserTypeEnum::Customer) {
+            if (Auth::user()->user_type_id != UserTypeEnum::Admin
+                && Auth::user()->user_type_id != UserTypeEnum::PlaceAdmin) {
                 $auth_token = $request->user()->createToken('auth_token');
 
                 $token = new TokenModel();

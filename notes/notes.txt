@@ -100,6 +100,8 @@ sudo chmod -R 775 storage
 sudo chmod -R 775 bootstrap/cache
 sudo chmod -R 775 /usr/share/nginx/html/table-visit/public/images
 
+sudo chmod -R 777 /usr/share/nginx/html/webapp/storage
+
 /usr/share/nginx/html/table-visit/storage
 
 brewtopia-centos

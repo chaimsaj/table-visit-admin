@@ -180,6 +180,8 @@ class BookingsController extends ApiController
                     $query = $this->bookingRepository->userBookings($user->id);
 
                     foreach ($query as $item) {
+
+
                         $place = $this->placeRepository->find($item->place_id);
 
                         if (isset($place)) {

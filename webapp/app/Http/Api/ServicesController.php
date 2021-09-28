@@ -52,6 +52,7 @@ class ServicesController extends ApiController
                 }
             }
 
+            // $query->sortBy('service_name')
             $response->setData($query);
 
         } catch (Throwable $ex) {
