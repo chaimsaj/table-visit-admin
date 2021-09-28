@@ -12,4 +12,6 @@ interface PlaceToPlaceTypeRepositoryInterface extends BaseRepositoryInterface
     public function findByPlace(int $place_id): Collection;
 
     public function existsByPlace(int $place_type_id, int $place_id): ?Model;
+
+    public function findFirstByPlace(int $place_id): ?Model;
 }

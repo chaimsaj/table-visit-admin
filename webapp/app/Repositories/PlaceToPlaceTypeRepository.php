@@ -32,4 +32,12 @@ class PlaceToPlaceTypeRepository extends BaseRepository implements PlaceToPlaceT
             ->where('place_id', $place_id)
             ->first();
     }
+
+    public function findFirstByPlace(int $place_id): ?Model
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('place_id', $place_id)
+            ->first();
+    }
 }

@@ -10,11 +10,11 @@ use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
-use App\Http\Controllers\Base\BasicController;
 use App\Models\Place;
 use App\Models\PlaceDetail;
 use App\Models\PlaceToFeature;
 use App\Models\PlaceToMusic;
+use App\Models\PlaceToPlaceType;
 use App\Models\Policy;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\PlaceDetailRepositoryInterface;
@@ -23,6 +23,7 @@ use App\Repositories\PlaceMusicRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceToFeatureRepositoryInterface;
 use App\Repositories\PlaceToMusicRepositoryInterface;
+use App\Repositories\PlaceToPlaceTypeRepositoryInterface;
 use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\PolicyRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
@@ -50,19 +51,21 @@ class PlacesController extends AdminController
     private PlaceToMusicRepositoryInterface $placeToMusicRepository;
     private PolicyRepositoryInterface $policyRepository;
     private PlaceTypeRepositoryInterface $placeTypeRepository;
+    private PlaceToPlaceTypeRepositoryInterface $placeToPlaceTypeRepository;
 
-    public function __construct(PlaceRepositoryInterface          $repository,
-                                StateRepositoryInterface          $stateRepository,
-                                CityRepositoryInterface           $cityRepository,
-                                TenantRepositoryInterface         $tenantRepository,
-                                PlaceFeatureRepositoryInterface   $placeFeatureRepository,
-                                PlaceMusicRepositoryInterface     $placeMusicRepository,
-                                PlaceDetailRepositoryInterface    $placeDetailRepository,
-                                PlaceToFeatureRepositoryInterface $placeToFeatureRepository,
-                                PlaceToMusicRepositoryInterface   $placeToMusicRepository,
-                                PolicyRepositoryInterface         $policyRepository,
-                                PlaceTypeRepositoryInterface      $placeTypeRepository,
-                                LogServiceInterface               $logger)
+    public function __construct(PlaceRepositoryInterface            $repository,
+                                StateRepositoryInterface            $stateRepository,
+                                CityRepositoryInterface             $cityRepository,
+                                TenantRepositoryInterface           $tenantRepository,
+                                PlaceFeatureRepositoryInterface     $placeFeatureRepository,
+                                PlaceMusicRepositoryInterface       $placeMusicRepository,
+                                PlaceDetailRepositoryInterface      $placeDetailRepository,
+                                PlaceToFeatureRepositoryInterface   $placeToFeatureRepository,
+                                PlaceToMusicRepositoryInterface     $placeToMusicRepository,
+                                PolicyRepositoryInterface           $policyRepository,
+                                PlaceTypeRepositoryInterface        $placeTypeRepository,
+                                PlaceToPlaceTypeRepositoryInterface $placeToPlaceTypeRepository,
+                                LogServiceInterface                 $logger)
     {
         parent::__construct($logger);
 
@@ -77,6 +80,7 @@ class PlacesController extends AdminController
         $this->placeToMusicRepository = $placeToMusicRepository;
         $this->policyRepository = $policyRepository;
         $this->placeTypeRepository = $placeTypeRepository;
+        $this->placeToPlaceTypeRepository = $placeToPlaceTypeRepository;
     }
 
     public function index()
@@ -120,6 +124,11 @@ class PlacesController extends AdminController
         if (isset($data)) {
             $place_detail = $this->placeDetailRepository->loadBy($id, LanguageEnum::English);
             $cities = $this->cityRepository->publishedByState($data->state_id);
+
+            $place_to_place_type = $this->placeToPlaceTypeRepository->findFirstByPlace($data->id);
+
+            if (isset($place_to_place_type))
+                $data->place_type_id = $place_to_place_type->place_type_id;
         }
 
         $tenant_id = null;
@@ -188,11 +197,25 @@ class PlacesController extends AdminController
 
             $place_type_id = intval($request->get('place_type_id'));
 
-            if ($place_type_id > 0) {
-                
-            }
-
             $this->repository->save($db);
+
+            if ($place_type_id > 0) {
+                $place_to_place_type = $this->placeToPlaceTypeRepository->existsByPlace($place_type_id, $db->id);
+
+                if (!isset($place_to_place_type)) {
+                    $place_to_place_type = new PlaceToPlaceType();
+                    $place_to_place_type->place_id = $db->id;
+                    $place_to_place_type->place_type_id = $place_type_id;
+                    $place_to_place_type->published = 1;
+
+                    $this->placeToPlaceTypeRepository->save($place_to_place_type);
+                }
+            } else {
+                $place_to_place_type = $this->placeToPlaceTypeRepository->findFirstByPlace($db->id);
+
+                if (isset($place_to_place_type))
+                    $this->placeToPlaceTypeRepository->delete($place_to_place_type->id);
+            }
 
             if ($request->has('image_path')) {
                 MediaHelper::deletePlacesImage($db->image_path);
