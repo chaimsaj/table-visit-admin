@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class PlaceHelper
 {
-    public static function load(Model $item): Model
+    public static function load(Model $item, Collection $place_types): Model
     {
         $image = $item->image_path;
 
@@ -19,7 +19,11 @@ class PlaceHelper
 
         $item->place_rating_count = rand(0, 100);
         $item->place_rating_avg = rand(1, 5);
-        $item->place_type_name = "Venue";
+
+        if ($place_types->count() > 0)
+            $item->place_type_name = $place_types[0]->name;
+        else
+            $item->place_type_name = "Venue";
 
         return $item;
     }

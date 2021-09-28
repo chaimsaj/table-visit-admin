@@ -15,6 +15,7 @@ use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\BookingServiceRepositoryInterface;
 use App\Repositories\BookingTableRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
+use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
 use App\Services\LogServiceInterface;
 use DateTime;
@@ -30,17 +31,20 @@ class BookingsController extends ApiController
     private BookingRepositoryInterface $bookingRepository;
     private PlaceRepositoryInterface $placeRepository;
     private TableRepositoryInterface $tableRepository;
+    private PlaceTypeRepositoryInterface $placeTypeRepository;
 
-    public function __construct(BookingRepositoryInterface $bookingRepository,
-                                PlaceRepositoryInterface   $placeRepository,
-                                TableRepositoryInterface   $tableRepository,
-                                LogServiceInterface        $logger)
+    public function __construct(BookingRepositoryInterface   $bookingRepository,
+                                PlaceRepositoryInterface     $placeRepository,
+                                TableRepositoryInterface     $tableRepository,
+                                PlaceTypeRepositoryInterface $placeTypeRepository,
+                                LogServiceInterface          $logger)
     {
         parent::__construct($logger);
 
         $this->bookingRepository = $bookingRepository;
         $this->placeRepository = $placeRepository;
         $this->tableRepository = $tableRepository;
+        $this->placeTypeRepository = $placeTypeRepository;
     }
 
     public function book(Request $request): JsonResponse
@@ -180,12 +184,11 @@ class BookingsController extends ApiController
                     $query = $this->bookingRepository->userBookings($user->id);
 
                     foreach ($query as $item) {
-
-
                         $place = $this->placeRepository->find($item->place_id);
 
                         if (isset($place)) {
-                            $item->place = PlaceHelper::load($place);
+                            $place_types = $this->placeTypeRepository->shown($place->id);
+                            $item->place = PlaceHelper::load($place, $place_types);
                         }
                     }
 
