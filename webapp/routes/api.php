@@ -138,4 +138,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/table/spends', [App\Http\Api\TableSpendsController::class, 'list'])->name('api.table.spends');
     Route::post('/table/spend/add', [App\Http\Api\TableSpendsController::class, 'add'])->name('api.table.spends.add');
     Route::get('/table/spend/remove/{id}', [App\Http\Api\TableSpendsController::class, 'remove'])->name('api.table.spends.remove');
+
+    // User Settings
+    Route::get('/user/settings', [App\Http\Api\UserSettingsController::class, 'list'])->name('api.user.settings.list');
+
+    // Booking Guests
+    Route::get('/booking/guests/{booking_id}', [App\Http\Api\BookingGuestsController::class, 'list'])->name('api.booking.guests.list');
+    Route::post('/booking/guest/add', [App\Http\Api\BookingGuestsController::class, 'list'])->name('api.booking.guests.add');
 });
