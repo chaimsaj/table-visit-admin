@@ -5,6 +5,10 @@ namespace App\Providers;
 
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
+use App\Repositories\BookingChatRepository;
+use App\Repositories\BookingChatRepositoryInterface;
+use App\Repositories\BookingNotificationRepository;
+use App\Repositories\BookingNotificationRepositoryInterface;
 use App\Repositories\BookingRepository;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\BookingServiceRepository;
@@ -93,6 +97,8 @@ use App\Repositories\UserProfileRepository;
 use App\Repositories\UserProfileRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\UserSettingRepository;
+use App\Repositories\UserSettingRepositoryInterface;
 use App\Services\LogService;
 use App\Services\LogServiceInterface;
 use Illuminate\Support\ServiceProvider;
@@ -109,6 +115,8 @@ class ApplicationServiceProvider extends ServiceProvider
         //Repositories
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
 
+        $this->app->bind(BookingChatRepositoryInterface::class, BookingChatRepository::class);
+        $this->app->bind(BookingNotificationRepositoryInterface::class, BookingNotificationRepository::class);
         $this->app->bind(BookingRepositoryInterface::class, BookingRepository::class);
         $this->app->bind(BookingServiceRepositoryInterface::class, BookingServiceRepository::class);
         $this->app->bind(BookingTableRepositoryInterface::class, BookingTableRepository::class);
@@ -153,6 +161,7 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(UserActionRepositoryInterface::class, UserActionRepository::class);
         $this->app->bind(UserProfileRepositoryInterface::class, UserProfileRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(UserSettingRepositoryInterface::class, UserSettingRepository::class);
 
         //Services
         $this->app->bind(LogServiceInterface::class, LogService::class);
