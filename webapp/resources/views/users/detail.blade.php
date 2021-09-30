@@ -112,9 +112,9 @@
                                                 </div>
                                                 @if($is_admin)
                                                     <div class="mb-3">
-                                                        <label class="form-label select2">Tenant</label>
+                                                        <label class="form-label">Tenant</label>
                                                         <div>
-                                                            <select class="form-select" name="tenant_id">
+                                                            <select class="form-select select2" name="tenant_id">
                                                                 <option value="0">@lang('translation.Select')</option>
                                                                 @foreach($tenants as $tenant)
                                                                     <option
@@ -131,7 +131,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Place</label>
                                                         <div>
-                                                            <select class="form-select" name="place_id">
+                                                            <select class="form-select select2" name="place_id">
                                                                 <option value="0">@lang('translation.Select')</option>
                                                                 @foreach($places as $place)
                                                                     <option
