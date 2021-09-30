@@ -7,6 +7,8 @@ use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
 use App\Repositories\BookingChatRepository;
 use App\Repositories\BookingChatRepositoryInterface;
+use App\Repositories\BookingGuestRepository;
+use App\Repositories\BookingGuestRepositoryInterface;
 use App\Repositories\BookingNotificationRepository;
 use App\Repositories\BookingNotificationRepositoryInterface;
 use App\Repositories\BookingRepository;
@@ -116,6 +118,7 @@ class ApplicationServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
 
         $this->app->bind(BookingChatRepositoryInterface::class, BookingChatRepository::class);
+        $this->app->bind(BookingGuestRepositoryInterface::class, BookingGuestRepository::class);
         $this->app->bind(BookingNotificationRepositoryInterface::class, BookingNotificationRepository::class);
         $this->app->bind(BookingRepositoryInterface::class, BookingRepository::class);
         $this->app->bind(BookingServiceRepositoryInterface::class, BookingServiceRepository::class);
