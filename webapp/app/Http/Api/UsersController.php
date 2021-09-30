@@ -45,6 +45,7 @@ class UsersController extends ApiController
             $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
+            $response->setError($ex->getMessage());
         }
 
         return response()->json($response);
