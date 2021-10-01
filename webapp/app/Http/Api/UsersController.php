@@ -12,6 +12,8 @@ use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\User;
+use App\Models\UserProfile;
+use App\Repositories\UserProfileRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -26,13 +28,16 @@ use Throwable;
 class UsersController extends ApiController
 {
     private UserRepositoryInterface $userRepository;
+    private UserProfileRepositoryInterface $userProfileRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository,
-                                LogServiceInterface     $logger)
+    public function __construct(UserRepositoryInterface        $userRepository,
+                                UserProfileRepositoryInterface $userProfileRepository,
+                                LogServiceInterface            $logger)
     {
         parent::__construct($logger);
 
         $this->userRepository = $userRepository;
+        $this->userProfileRepository = $userProfileRepository;
     }
 
     public function list(): JsonResponse
@@ -107,7 +112,7 @@ class UsersController extends ApiController
                         $db->email = $data['email'];
                     }
 
-                    $db->name = $data['email'];
+                    $db->name = $data['name'];
                     $db->last_name = $data['last_name'];
 
                     $this->userRepository->save($db);
@@ -120,7 +125,7 @@ class UsersController extends ApiController
         return response()->json($response);
     }
 
-    public function upload_id(Request $request): JsonResponse
+    public function upload_avatar(Request $request): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -131,10 +136,49 @@ class UsersController extends ApiController
 
                 $db = $this->userRepository->find($user->id);
 
-                if (isset($db)) {
-                    if ($request->has('id_data')) {
-                        $image_file = $request->file('id_data');
-                    }
+                if (isset($db) && $request->has('avatar')) {
+                    $image_file = $request->file('avatar');
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
+                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+
+                    Image::make($image_file)->save(MediaHelper::getUsersPath($image_name));
+
+                    $db->avatar = $image_name;
+
+                    $db->save();
+                }
+            }
+        } catch (Throwable $ex) {
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function upload_government_id(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                $db = $this->userProfileRepository->loadByUser($user->id);
+
+                if (!isset($db))
+                    $db = new UserProfile();
+
+                if ($request->has('government_id')) {
+                    $image_file = $request->file('government_id');
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
+                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+
+                    Image::make($image_file)->save(MediaHelper::getGovernmentIdsPath($image_name));
+
+                    $db->government_id_path = $image_name;
+
+                    $db->save();
                 }
             }
         } catch (Throwable $ex) {

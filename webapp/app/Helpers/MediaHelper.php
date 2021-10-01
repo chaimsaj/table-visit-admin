@@ -42,10 +42,32 @@ class MediaHelper
         return $image_path . '/' . $image;
     }
 
+    static function getGovernmentIdsPath($image = null): string
+    {
+        $image_path = public_path('images/government');
+
+        if (!File::exists($image_path)) {
+            File::makeDirectory($image_path);
+        }
+
+        return $image_path . '/' . $image;
+    }
+
     static function deleteUsersImage($image): void
     {
         if (isset($image)) {
             $image_path = MediaHelper::getUsersPath() . '/' . $image;
+
+            if (File::exists($image_path)) {
+                File::delete($image_path);
+            }
+        }
+    }
+
+    static function deleteGovernmentIdsImage($image): void
+    {
+        if (isset($image)) {
+            $image_path = MediaHelper::getGovernmentIdPath() . '/' . $image;
 
             if (File::exists($image_path)) {
                 File::delete($image_path);
