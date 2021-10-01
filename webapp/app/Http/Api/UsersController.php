@@ -7,6 +7,7 @@ use App\AppModels\ApiModel;
 use App\Core\AuthModeEnum;
 use App\Core\GenderEnum;
 use App\Core\MediaObjectTypeEnum;
+use App\Core\MediaSizeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\MediaHelper;
@@ -66,6 +67,26 @@ class UsersController extends ApiController
             $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function load_profile(): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+                $profile = $this->userProfileRepository->loadByUser($user->id);
+                $response->setData($profile);
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
         }
 
         return response()->json($response);
@@ -119,6 +140,7 @@ class UsersController extends ApiController
                 }
             }
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             $response->setError($ex->getMessage());
         }
 
@@ -149,6 +171,7 @@ class UsersController extends ApiController
                 }
             }
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             $response->setError($ex->getMessage());
         }
 
@@ -182,6 +205,7 @@ class UsersController extends ApiController
                 }
             }
         } catch (Throwable $ex) {
+            $this->logger->save($ex);
             $response->setError($ex->getMessage());
         }
 

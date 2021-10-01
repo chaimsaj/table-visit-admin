@@ -119,6 +119,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/payments/stripe', [App\Http\Api\PaymentsController::class, 'stripe'])->name('api.payments.stripe');
 
     // Profile
+    Route::get('/user/profile/load', [App\Http\Api\UsersController::class, 'load_profile'])->name('api.user.profile.load');
     Route::post('/user/profile/update', [App\Http\Api\UsersController::class, 'update'])->name('api.user.profile.update');
     Route::post('/user/profile/upload_avatar', [App\Http\Api\UsersController::class, 'upload_avatar'])->name('api.user.profile.upload_avatar');
 
