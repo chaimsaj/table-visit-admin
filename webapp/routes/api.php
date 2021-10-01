@@ -118,6 +118,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Payments
     Route::post('/payments/stripe', [App\Http\Api\PaymentsController::class, 'stripe'])->name('api.payments.stripe');
 
+    // Users
+    Route::get('/user/find/{id}', [App\Http\Api\UsersController::class, 'find'])->name('api.users.find');
+
     // Profile
     Route::get('/user/profile/load', [App\Http\Api\UsersController::class, 'load_profile'])->name('api.user.profile.load');
     Route::post('/user/profile/update', [App\Http\Api\UsersController::class, 'update'])->name('api.user.profile.update');

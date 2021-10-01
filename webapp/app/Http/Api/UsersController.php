@@ -63,8 +63,10 @@ class UsersController extends ApiController
         $response->setSuccess();
 
         try {
-            $query = $this->userRepository->find($id);
-            $response->setData($query);
+            if (Auth::check()) {
+                $query = $this->userRepository->find($id);
+                $response->setData($query);
+            }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
             $response->setError($ex->getMessage());
@@ -92,15 +94,55 @@ class UsersController extends ApiController
         return response()->json($response);
     }
 
+    public function save_phone_number(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $data = $request->json()->all();
+
+                $rules = [
+                    'phone_number' => ['required', 'string', 'max:50'],
+                ];
+
+                $validator = Validator::make($data, $rules);
+
+                if ($validator->fails()) {
+                    $response->setError($validator->getMessageBag());
+                    return response()->json($response);
+                }
+
+                $user = Auth::user();
+
+                $db = $this->userProfileRepository->loadByUser($user->id);
+
+                if (!isset($db))
+                    $db = new UserProfile();
+
+                $db->phone_number = $data['phone_number'];
+                $db->user_id = $user->id;
+
+                $this->userProfileRepository->save($db);
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
     public function update(Request $request): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
 
-        $data = $request->json()->all();
-
         try {
             if (Auth::check()) {
+                $data = $request->json()->all();
+
                 $user = Auth::user();
 
                 $db = $this->userRepository->find($user->id);
@@ -135,6 +177,10 @@ class UsersController extends ApiController
 
                     $db->name = $data['name'];
                     $db->last_name = $data['last_name'];
+                    $db->gender = intval($data['gender']);
+
+                    // $db->dob = date('Y-m-d', strtotime($request->get('dob')));
+                    // $db->last_name = $data['last_name'];
 
                     $this->userRepository->save($db);
                 }
@@ -200,6 +246,7 @@ class UsersController extends ApiController
                     Image::make($image_file)->save(MediaHelper::getGovernmentIdsPath($image_name));
 
                     $db->government_id_path = $image_name;
+                    $db->user_id = $user->id;
 
                     $db->save();
                 }

@@ -15,6 +15,7 @@ use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\User;
 use App\Repositories\CityRepositoryInterface;
+use App\Repositories\UserProfileRepositoryInterface;
 use App\Services\LogServiceInterface;
 use DateTime;
 use Illuminate\Http\JsonResponse;
@@ -26,9 +27,14 @@ use Throwable;
 
 class AuthController extends ApiController
 {
-    public function __construct(LogServiceInterface $logger)
+    private UserProfileRepositoryInterface $userProfileRepository;
+
+    public function __construct(UserProfileRepositoryInterface $userProfileRepository,
+                                LogServiceInterface            $logger)
     {
         parent::__construct($logger);
+
+        $this->userProfileRepository = $userProfileRepository;
     }
 
     public function sign_in(Request $request): JsonResponse
@@ -130,6 +136,11 @@ class AuthController extends ApiController
                 $user->dob = DateTime::createFromFormat('Y-m-d', $user->dob)->format('d-m-Y');
 
             $user->avatar = MediaHelper::getImageUrl($user->avatar, MediaSizeEnum::medium);
+
+            $profile = $this->userProfileRepository->loadByUser($user->id);
+
+            if (isset($profile))
+                $user->profile = $user;
 
             $response->setData($user);
         } else
