@@ -56,3 +56,37 @@ debian sudo -i
 
 administrator@tablevisit.com
 1234qwerty
+
+
+https://cloud.google.com/community/tutorials/run-laravel-on-appengine-flexible
+
+Hi Team – here is the documentation for the dev team to download to setup the App Engine Flexible environment along with the php documentation I provided in the previous email (providing again).
+
+ 
+
+Cloud SDK for App Engine Environment: https://cloud.google.com/sdk/docs/quickstart
+
+ 
+
+App Engine Flexible Environment PHP documentation: https://cloud.google.com/appengine/docs/flexible/php?hl=en_US&_ga=2.153610224.-976019646.1633048160
+
+ 
+
+Github Code Samples: https://github.com/GoogleCloudPlatform/php-docs-samples/tree/master/appengine/flexible
+
+ 
+
+I’m creating all the APIs and permissions now including linking the Firebase account.
+
+/Volumes/DATA/google-cloud-sdk/install.sh
+/Volumes/DATA/google-cloud-sdk/bin/gcloud init
+
+/Volumes/DATA/google-cloud-sdk/bin/gcloud init
+
+install PATH /Users/develop/.bashrc
+
+gcloud app deploy
+
+source ~/.bashrc
+
+export PATH="/Volumes/DATA/google-cloud-sdk/bin:$PATH"

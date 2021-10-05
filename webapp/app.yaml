@@ -1,0 +1,24 @@
+runtime: php
+env: flex
+
+runtime_config:
+  php_version: 7.4
+  document_root: public
+
+manual_scaling:
+  instances: 1
+
+# Ensure we skip ".env", which is only for local development
+skip_files:
+  - .env.table-visit
+
+env_variables:
+  # Put production environment variables here.
+  APP_LOG: errorlog
+  APP_KEY: base64:xlldCTdzZKLYNRHHvwp8z8sOxOfy0BE4U+k+9TJ2qNw=
+  ## Set these environment variables according to your CloudSQL configuration.
+  DB_HOST: 35.222.113.167
+  DB_DATABASE: table_visit
+  DB_USERNAME: root
+  DB_PASSWORD: npl39HM0MgJvBfbv
+  # DB_SOCKET: "/"
