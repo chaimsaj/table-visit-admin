@@ -1,16 +1,15 @@
 runtime: php74
-env: standard
 
-runtime_config:
-  document_root: public
-
-manual_scaling:
-  instances: 1
+handlers:
+  - url: /assets
+    static_dir: public/assets
 
 env_variables:
   # Put production environment variables here.
-  APP_LOG: errorlog
   APP_KEY: base64:xlldCTdzZKLYNRHHvwp8z8sOxOfy0BE4U+k+9TJ2qNw=
+  APP_STORAGE: /tmp
+  VIEW_COMPILED_PATH: /tmp
+  SESSION_DRIVER: cookie
   ## Set these environment variables according to your CloudSQL configuration.
   DB_HOST: 35.222.113.167
   DB_DATABASE: table_visit
