@@ -17,3 +17,4 @@ env_variables:
   DB_PASSWORD: npl39HM0MgJvBfbv
   APP_URL: https://halogen-inkwell-326701.uw.r.appspot.com
   DB_SOCKET: "/cloudsql/halogen-inkwell-326701:us-central1:table-visit-database"
+  APP_ENV: production
