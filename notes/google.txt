@@ -90,3 +90,5 @@ gcloud app deploy
 source ~/.bashrc
 
 export PATH="/Volumes/DATA/google-cloud-sdk/bin:$PATH"
+
+composer remove --dev facade/ignition
