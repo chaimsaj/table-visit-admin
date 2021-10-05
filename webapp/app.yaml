@@ -1,16 +1,11 @@
-runtime: php
-env: flex
+runtime: php74
+env: standard
 
 runtime_config:
-  php_version: 7.4
   document_root: public
 
 manual_scaling:
   instances: 1
-
-# Ensure we skip ".env", which is only for local development
-skip_files:
-  - .env.table-visit
 
 env_variables:
   # Put production environment variables here.
@@ -21,4 +16,5 @@ env_variables:
   DB_DATABASE: table_visit
   DB_USERNAME: root
   DB_PASSWORD: npl39HM0MgJvBfbv
+  APP_URL: https://halogen-inkwell-326701.uw.r.appspot.com
   # DB_SOCKET: "/"
