@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('api')->group(function () {
     Route::get('/health', [App\Http\Api\MainController::class, 'health'])->name('api.main.health');
+    Route::get('/upload', [App\Http\Api\MainController::class, 'upload'])->name('api.main.upload');
 
     Route::post('/sign_in', [App\Http\Api\AuthController::class, 'sign_in'])->name('api.auth.sign_in');
     Route::post('/sign_up', [App\Http\Api\AuthController::class, 'sign_up'])->name('api.auth.sign_up');

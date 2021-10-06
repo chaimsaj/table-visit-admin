@@ -11,6 +11,7 @@
         "php": "^7.4|^8.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "google/cloud-storage": "^1.25",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
         "intervention/imagecache": "^2.5",
@@ -18,11 +19,11 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
+        "nunomaduro/collision": "^5.0",
         "stripe/stripe-php": "^7.95",
         "twilio/sdk": "^6.28",
         "yajra/laravel-datatables-fractal": "^1.6",
-        "yajra/laravel-datatables-oracle": "^9.18",
-        "nunomaduro/collision": "^5.0"
+        "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
