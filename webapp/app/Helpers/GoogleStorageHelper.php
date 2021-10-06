@@ -5,37 +5,48 @@ namespace App\Helpers;
 
 
 use Google\Cloud\Storage\StorageClient;
-use Illuminate\Support\Facades\File;
-use Psr\Http\Message\StreamInterface;
 
 class GoogleStorageHelper
 {
-    static function upload()
+    static function upload(string $image)
     {
         $storage = new StorageClient([
-            'keyFilePath' => public_path('key/google-storage.json'),
+            'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
         ]);
 
-        $bucket = $storage->bucket('table-visit-storage');
-        $file = public_path('images/shared/no-image-available.png');
-        $file_name = 'shared/no-image-available.png';
+        $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
 
-        $bucket->upload(fopen($file, 'r'),
+        $bucket->upload(fopen($image, 'r'),
             [
-                'name' => $file_name
+                'name' => $image
             ]);
     }
 
-    static function download()
+    static function download(string $file)
     {
         $storage = new StorageClient([
-            'keyFilePath' => public_path('key/google-storage.json'),
+            'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
         ]);
 
-        $bucket = $storage->bucket('table-visit-storage');
-        $file_name = 'shared/no-image-available.png';
-        $object = $bucket->object($file_name);
+        $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
 
-        $object->downloadToFile(public_path('images/no_image_available.png'));
+        $object = $bucket->object($file);
+
+        if (isset($object))
+            $object->downloadToFile($file);
+    }
+
+    static function delete(string $file)
+    {
+        $storage = new StorageClient([
+            'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
+        ]);
+
+        $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
+
+        $object = $bucket->object($file);
+
+        if (isset($object))
+            $object->delete();
     }
 }

@@ -8,6 +8,7 @@ use App\Core\MediaObjectTypeEnum;
 use App\Core\PolicyTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
+use App\Helpers\GoogleStorageHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Place;
@@ -224,7 +225,9 @@ class PlacesController extends AdminController
                 $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
                 $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
 
-                Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
+
+                Image::make($image_file)->save(public_path(MediaHelper::getPlacesPath($image_name)));
+                GoogleStorageHelper::upload(MediaHelper::getPlacesPath($image_name));
 
                 $db->image_path = $image_name;
 
