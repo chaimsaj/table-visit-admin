@@ -1,7 +1,7 @@
 FROM alpine:3.9
 
 # set main params
-ARG BUILD_ARGUMENT_DEBUG_ENABLED=false
+ARG BUILD_ARGUMENT_DEBUG_ENABLED=true
 ENV DEBUG_ENABLED=$BUILD_ARGUMENT_DEBUG_ENABLED
 ENV ENV=prod
 ENV APP_HOME /var/www/html
@@ -76,10 +76,13 @@ COPY .env.$ENV $APP_HOME/.env
 WORKDIR $APP_HOME
 
 # install all PHP dependencies
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress;
 
 RUN chmod -R 777 $APP_HOME/bootstrap/cache
 RUN chmod -R 777 $APP_HOME/storage
+
+RUN php artisan cache:clear
+RUN php artisan config:clear
 
 # set working directory
 WORKDIR $APP_ROOT
