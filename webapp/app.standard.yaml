@@ -11,9 +11,10 @@ env_variables:
   VIEW_COMPILED_PATH: /tmp
   SESSION_DRIVER: cookie
   ## Set these environment variables according to your CloudSQL configuration.
-  DB_HOST: 35.222.113.167
+  DB_HOST: 35.197.58.99
   DB_DATABASE: table_visit
   DB_USERNAME: root
   DB_PASSWORD: npl39HM0MgJvBfbv
   APP_URL: https://halogen-inkwell-326701.uw.r.appspot.com
-  # DB_SOCKET: "/"
+  DB_SOCKET: "/cloudsql/halogen-inkwell-326701:us-west1:table-visit-db"
+  APP_ENV: production

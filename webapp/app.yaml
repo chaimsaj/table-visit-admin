@@ -1,8 +1,11 @@
-runtime: php74
+runtime: custom
+env: flex
+# service: table-visit
 
-handlers:
-  - url: /assets
-    static_dir: public/assets
+resources:
+  cpu: 2
+  memory_gb: 4
+  disk_size_gb: 25
 
 env_variables:
   # Put production environment variables here.
@@ -11,10 +14,9 @@ env_variables:
   VIEW_COMPILED_PATH: /tmp
   SESSION_DRIVER: cookie
   ## Set these environment variables according to your CloudSQL configuration.
-  DB_HOST: 35.197.58.99
+  DB_HOST: 35.222.113.167
   DB_DATABASE: table_visit
   DB_USERNAME: root
   DB_PASSWORD: npl39HM0MgJvBfbv
   APP_URL: https://halogen-inkwell-326701.uw.r.appspot.com
-  DB_SOCKET: "/cloudsql/halogen-inkwell-326701:us-west1:table-visit-db"
-  APP_ENV: production
+  # DB_SOCKET: "/"
