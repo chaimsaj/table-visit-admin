@@ -5,6 +5,7 @@ ARG BUILD_ARGUMENT_DEBUG_ENABLED=false
 ENV DEBUG_ENABLED=$BUILD_ARGUMENT_DEBUG_ENABLED
 ENV ENV=prod
 ENV APP_HOME /var/www/html
+ENV APP_ROOT /
 ENV USERNAME=www-data
 
 # PHP_INI_DIR to be symmetrical with official php docker image
@@ -66,23 +67,22 @@ RUN set -x \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN chmod +x /usr/bin/composer
 
-# create document root, fix permissions for www-data user and change owner to www-data
-ENTRYPOINT ["sh", "entrypoint.sh"]
+# copy source files and config file
+COPY docker/nginx /
+COPY . $APP_HOME
+COPY .env.$ENV $APP_HOME/.env
 
 # set working directory
 WORKDIR $APP_HOME
 
-USER ${USERNAME}
-
-# copy source files and config file
-COPY --chown=${USERNAME}:${USERNAME} docker/nginx $APP_HOME/
-COPY --chown=${USERNAME}:${USERNAME} . $APP_HOME/
-COPY --chown=${USERNAME}:${USERNAME} .env.$ENV $APP_HOME/.env
-
-USER root
-
 # install all PHP dependencies
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
+
+RUN chmod -R 777 $APP_HOME/bootstrap/cache
+RUN chmod -R 777 $APP_HOME/storage
+
+# set working directory
+WORKDIR $APP_ROOT
 
 EXPOSE 8080
 
