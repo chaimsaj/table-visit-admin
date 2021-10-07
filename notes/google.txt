@@ -1,13 +1,11 @@
-table-visit-database
+table-visit-mysql
 npl39HM0MgJvBfbv
-
-table-visit-db
+34.132.165.149
 
 table_visit
 
 table-visit-vm	
 
-34.122.237.30
 
 ssh-keygen -t rsa -f ~/.ssh/table-visit -C table-visit-usr
 /Users/develop/.ssh/

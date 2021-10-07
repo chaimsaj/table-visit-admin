@@ -16,5 +16,6 @@
 webapp/.idea
 backup/images
 webapp/public/images/places
+webapp/public/images/users
 webapp/public/key
 webapp/public/google_key

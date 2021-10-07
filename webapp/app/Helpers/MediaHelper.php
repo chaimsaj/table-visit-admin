@@ -58,9 +58,9 @@ class MediaHelper
     static function getImageUrl(string $image = null, $size = MediaSizeEnum::small): string
     {
         if (isset($image)) {
-            if (!File::exists(MediaHelper::getPlacesPath($image)))
-                GoogleStorageHelper::download(MediaHelper::getPlacesPath($image));
-            else
+            if (!File::exists(MediaHelper::getPlacesPath($image))) {
+                // GoogleStorageHelper::download(MediaHelper::getPlacesPath($image));
+            } else
                 return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . $image);
         }
 

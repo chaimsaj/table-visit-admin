@@ -1,79 +1,73 @@
-FROM php:8.0-fpm
+FROM alpine:3.9
 
 # set main params
 ARG BUILD_ARGUMENT_DEBUG_ENABLED=false
 ENV DEBUG_ENABLED=$BUILD_ARGUMENT_DEBUG_ENABLED
-ARG BUILD_ARGUMENT_ENV=dev
-ENV ENV=$BUILD_ARGUMENT_ENV
+ENV ENV=prod
 ENV APP_HOME /var/www/html
-ARG UID=1000
-ARG GID=1000
 ENV USERNAME=www-data
 
+# PHP_INI_DIR to be symmetrical with official php docker image
+ENV PHP_INI_DIR /etc/php/7.4
 
-# check environment
-RUN if [ "$BUILD_ARGUMENT_ENV" = "default" ]; then echo "Set BUILD_ARGUMENT_ENV in docker build-args like --build-arg BUILD_ARGUMENT_ENV=dev" && exit 2; \
-    elif [ "$BUILD_ARGUMENT_ENV" = "dev" ]; then echo "Building development environment."; \
-    elif [ "$BUILD_ARGUMENT_ENV" = "test" ]; then echo "Building test environment."; \
-    elif [ "$BUILD_ARGUMENT_ENV" = "staging" ]; then echo "Building staging environment."; \
-    elif [ "$BUILD_ARGUMENT_ENV" = "prod" ]; then echo "Building production environment."; \
-    else echo "Set correct BUILD_ARGUMENT_ENV in docker build-args like --build-arg BUILD_ARGUMENT_ENV=dev. Available choices are dev,test,staging,prod." && exit 2; \
-    fi
+# When using Composer, disable the warning about running commands as root/super user
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# install all the dependencies and enable PHP modules
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-      procps \
-      nano \
-      git \
-      unzip \
-      libicu-dev \
-      zlib1g-dev \
-      libxml2 \
-      libxml2-dev \
-      libreadline-dev \
-      supervisor \
-      cron \
-      sudo \
-      libzip-dev \
-    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install \
-      pdo_mysql \
-      sockets \
-      intl \
-      opcache \
-      zip \
-    && rm -rf /tmp/* \
-    && rm -rf /var/list/apt/* \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+# Persistent runtime dependencies
+ARG DEPS="\
+        nginx \
+        nginx-mod-http-headers-more \
+        php7.4 \
+        php7.4-phar \
+        php7.4-bcmath \
+        php7.4-calendar \
+        php7.4-mbstring \
+        php7.4-exif \
+        php7.4-ftp \
+        php7.4-openssl \
+        php7.4-zip \
+        php7.4-sysvsem \
+        php7.4-sysvshm \
+        php7.4-sysvmsg \
+        php7.4-shmop \
+        php7.4-sockets \
+        php7.4-zlib \
+        php7.4-bz2 \
+        php7.4-curl \
+        php7.4-simplexml \
+        php7.4-xml \
+        php7.4-opcache \
+        php7.4-dom \
+        php7.4-xmlreader \
+        php7.4-xmlwriter \
+        php7.4-tokenizer \
+        php7.4-ctype \
+        php7.4-session \
+        php7.4-fileinfo \
+        php7.4-iconv \
+        php7.4-json \
+        php7.4-posix \
+        php7.4-fpm \
+        curl \
+        ca-certificates \
+        runit \
+"
 
-# create document root, fix permissions for www-data user and change owner to www-data
-RUN mkdir -p $APP_HOME/public && \
-    mkdir -p /home/$USERNAME && chown $USERNAME:$USERNAME /home/$USERNAME \
-    && usermod -u $UID $USERNAME -d /home/$USERNAME \
-    && groupmod -g $GID $USERNAME \
-    && chown -R ${USERNAME}:${USERNAME} $APP_HOME
+# PHP.earth Alpine repository for better developer experience
+ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
 
-# put php config for Laravel
-COPY ./docker/$BUILD_ARGUMENT_ENV/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY ./docker/$BUILD_ARGUMENT_ENV/php.ini /usr/local/etc/php/php.ini
-
-# install Xdebug in case dev/test environment
-COPY ./docker/general/do_we_need_xdebug.sh /tmp/
-COPY ./docker/dev/xdebug.ini /tmp/
-RUN chmod u+x /tmp/do_we_need_xdebug.sh && /tmp/do_we_need_xdebug.sh
+RUN set -x \
+    && echo "https://repos.php.earth/alpine/v3.9" >> /etc/apk/repositories \
+    && apk add --no-cache $DEPS \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN chmod +x /usr/bin/composer
-ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# add supervisor
-RUN mkdir -p /var/log/supervisor
-COPY --chown=root:root ./docker/general/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY --chown=root:crontab ./docker/general/cron /var/spool/cron/crontabs/root
-RUN chmod 0600 /var/spool/cron/crontabs/root
+# create document root, fix permissions for www-data user and change owner to www-data
+ENTRYPOINT ["sh", "entrypoint.sh"]
 
 # set working directory
 WORKDIR $APP_HOME
@@ -81,12 +75,15 @@ WORKDIR $APP_HOME
 USER ${USERNAME}
 
 # copy source files and config file
+COPY --chown=${USERNAME}:${USERNAME} docker/nginx $APP_HOME/
 COPY --chown=${USERNAME}:${USERNAME} . $APP_HOME/
 COPY --chown=${USERNAME}:${USERNAME} .env.$ENV $APP_HOME/.env
 
-# install all PHP dependencies
-RUN if [ "$BUILD_ARGUMENT_ENV" = "dev" ] || [ "$BUILD_ARGUMENT_ENV" = "test" ]; then COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress; \
-    else COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev; \
-    fi
-
 USER root
+
+# install all PHP dependencies
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
+
+EXPOSE 8080
+
+CMD ["/sbin/runit-wrapper"]

@@ -13,9 +13,13 @@
 .git
 .gitignore
 
+.env
+
 # PHP Composer dependencies:
 /vendor/
 
 /node_modules/
+/public/images/users/
+/public/images/places/
 
 composer.lock
