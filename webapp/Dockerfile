@@ -49,6 +49,7 @@ ARG DEPS="\
         php7.4-json \
         php7.4-posix \
         php7.4-fpm \
+        mysql-client \
         curl \
         ca-certificates \
         runit \
