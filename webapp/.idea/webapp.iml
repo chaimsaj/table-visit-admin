@@ -133,6 +133,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/google/cloud-storage" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/google/crc32" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/rize/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/facade/ignition" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/facade/flare-client-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
