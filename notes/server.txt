@@ -3,6 +3,8 @@ ssh centos-vm@develop.southcentralus.cloudapp.azure.com
 centos-vm
 d7LFhnPmbwuIln3l
 
+ssh -i <private key path> centos-vm@develop.southcentralus.cloudapp.azure.com
+
 /usr/share/nginx/html/myngly
 
 mariadb
@@ -139,3 +141,7 @@ ssh-keygen -t rsa -f ~/.ssh/table-visit -C table-visit-usr
 sudo yum-config-manager --enable remi-php80
 
 sudo chown -R nginx.nginx /usr/share/nginx/html/
+
+sudo systemctl start mariadb
+
+https://myngly-dev.aolideas.com/
