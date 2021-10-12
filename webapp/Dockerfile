@@ -79,8 +79,9 @@ WORKDIR $APP_HOME
 # install all PHP dependencies
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
 
-RUN chmod -R 777 $APP_HOME/bootstrap/cache
-RUN chmod -R 777 $APP_HOME/storage
+RUN chmod -R 755 $APP_HOME/bootstrap/cache
+RUN chmod -R 755 $APP_HOME/storage
+RUN chmod -R 755 $APP_HOME/public/images
 
 
 # set working directory
