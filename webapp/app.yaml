@@ -21,7 +21,3 @@ env_variables:
   STORAGE_DIR: /tmp
   CACHE_DRIVER: file
   SESSION_DRIVER: file
-  DB_DATABASE: table_visit
-  DB_USERNAME: root
-  DB_PASSWORD: npl39HM0MgJvBfbv
-  DB_SOCKET: "/cloudsql/halogen-inkwell-326701:us-west1:table-visit-db"
