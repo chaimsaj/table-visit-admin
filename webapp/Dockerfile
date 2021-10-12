@@ -82,12 +82,10 @@ RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interac
 RUN chmod -R 777 $APP_HOME/bootstrap/cache
 RUN chmod -R 777 $APP_HOME/storage
 
-RUN php artisan cache:clear
-RUN php artisan config:clear
-
 # set working directory
 WORKDIR $APP_ROOT
 
 EXPOSE 8080
+EXPOSE 443
 
 CMD ["/sbin/runit-wrapper"]

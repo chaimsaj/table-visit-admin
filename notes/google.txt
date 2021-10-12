@@ -1,6 +1,8 @@
 table-visit-mysql
 npl39HM0MgJvBfbv
-34.132.165.149
+34.82.158.193
+
+table-visit-db
 
 table_visit
 
