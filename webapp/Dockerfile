@@ -49,7 +49,7 @@ ARG DEPS="\
         php7.4-json \
         php7.4-posix \
         php7.4-fpm \
-        mysql-client \
+        php7.4-pdo_mysql \
         curl \
         ca-certificates \
         runit \
@@ -81,6 +81,7 @@ RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interac
 
 RUN chmod -R 777 $APP_HOME/bootstrap/cache
 RUN chmod -R 777 $APP_HOME/storage
+
 
 # set working directory
 WORKDIR $APP_ROOT

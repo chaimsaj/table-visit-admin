@@ -16,7 +16,6 @@ resources:
   disk_size_gb: 25
 
 env_variables:
-  # Put production environment variables here.
   APP_LOG: errorlog
   APP_KEY: base64:LTy6h/skYzteuqYu1GRDFyVGWG6R4TrGi/CJTviSSdo=
   STORAGE_DIR: /tmp
