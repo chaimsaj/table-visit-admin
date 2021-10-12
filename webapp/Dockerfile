@@ -50,6 +50,7 @@ ARG DEPS="\
         php7.4-posix \
         php7.4-fpm \
         php7.4-pdo_mysql \
+        php7.4-gd \
         curl \
         ca-certificates \
         runit \
@@ -79,9 +80,9 @@ WORKDIR $APP_HOME
 # install all PHP dependencies
 RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
 
-RUN chmod -R 755 $APP_HOME/bootstrap/cache
-RUN chmod -R 755 $APP_HOME/storage
-RUN chmod -R 755 $APP_HOME/public/images
+RUN chmod -R 777 $APP_HOME/bootstrap/cache
+RUN chmod -R 777 $APP_HOME/storage
+RUN chmod -R 777 $APP_HOME/public/images
 
 
 # set working directory
