@@ -77,7 +77,7 @@ COPY .env.$ENV $APP_HOME/.env
 WORKDIR $APP_HOME
 
 # install all PHP dependencies
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress;
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
 
 RUN chmod -R 777 $APP_HOME/bootstrap/cache
 RUN chmod -R 777 $APP_HOME/storage
