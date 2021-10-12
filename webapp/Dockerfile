@@ -61,9 +61,9 @@ ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.p
 
 RUN set -x \
     && echo "https://repos.php.earth/alpine/v3.9" >> /etc/apk/repositories \
-    && apk add --no-cache $DEPS \
-    && ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    && apk add --no-cache $DEPS
+#   && ln -sf /dev/stdout /var/log/nginx/access.log \
+#   && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # install composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
