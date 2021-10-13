@@ -50,8 +50,7 @@ RUN mkdir -p /var/www/html
 RUN chown -R nobody.nobody /var/www/html && \
   chown -R nobody.nobody /run && \
   chown -R nobody.nobody /var/lib/nginx && \
-  chown -R nobody.nobody /var/log/nginx && \
-  chown -R nobody.nobody /var/www/html/public/images
+  chown -R nobody.nobody /var/log/nginx
 
 # Switch to use a non-root user from here on
 USER nobody
