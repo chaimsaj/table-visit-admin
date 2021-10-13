@@ -1,6 +1,5 @@
 runtime: custom
 env: flex
-# service: table-visit
 
 automatic_scaling:
   min_num_instances: 1
@@ -16,8 +15,4 @@ resources:
   disk_size_gb: 25
 
 env_variables:
-  APP_LOG: errorlog
   APP_KEY: base64:LTy6h/skYzteuqYu1GRDFyVGWG6R4TrGi/CJTviSSdo=
-  STORAGE_DIR: /tmp
-  CACHE_DRIVER: file
-  SESSION_DRIVER: file
