@@ -1,94 +1,76 @@
-FROM alpine:3.9
+FROM alpine:3.14
 
-# set main params
-ARG BUILD_ARGUMENT_DEBUG_ENABLED=true
-ENV DEBUG_ENABLED=$BUILD_ARGUMENT_DEBUG_ENABLED
-ENV ENV=production
-ENV APP_HOME /var/www/html
-ENV APP_ROOT /
-ENV USERNAME=www-data
+# Install packages and remove default server definition
+RUN apk --no-cache add \
+  curl \
+  nginx \
+  php8 \
+  php8-ctype \
+  php8-curl \
+  php8-dom \
+  php8-fpm \
+  php8-gd \
+  php8-intl \
+  php8-json \
+  php8-mbstring \
+  php8-mysqli \
+  php8-opcache \
+  php8-openssl \
+  php8-phar \
+  php8-session \
+  php8-xml \
+  php8-xmlreader \
+  php8-zlib \
+  php8-fileinfo \
+  php8-simplexml \
+  php8-sockets \
+  php8-xmlwriter \
+  php8-xmlreader \
+  php8-tokenizer \
+  php8-pdo_mysql \
+  supervisor
 
-# PHP_INI_DIR to be symmetrical with official php docker image
-ENV PHP_INI_DIR /etc/php/7.4
+# Create symlink so programs depending on `php` still function
+RUN ln -s /usr/bin/php8 /usr/bin/php
 
-# When using Composer, disable the warning about running commands as root/super user
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Configure nginx
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 
-# Persistent runtime dependencies
-ARG DEPS="\
-        nginx \
-        nginx-mod-http-headers-more \
-        php7.4 \
-        php7.4-phar \
-        php7.4-bcmath \
-        php7.4-calendar \
-        php7.4-mbstring \
-        php7.4-exif \
-        php7.4-ftp \
-        php7.4-openssl \
-        php7.4-zip \
-        php7.4-sysvsem \
-        php7.4-sysvshm \
-        php7.4-sysvmsg \
-        php7.4-shmop \
-        php7.4-sockets \
-        php7.4-zlib \
-        php7.4-bz2 \
-        php7.4-curl \
-        php7.4-simplexml \
-        php7.4-xml \
-        php7.4-opcache \
-        php7.4-dom \
-        php7.4-xmlreader \
-        php7.4-xmlwriter \
-        php7.4-tokenizer \
-        php7.4-ctype \
-        php7.4-session \
-        php7.4-fileinfo \
-        php7.4-iconv \
-        php7.4-json \
-        php7.4-posix \
-        php7.4-fpm \
-        php7.4-pdo_mysql \
-        php7.4-gd \
-        curl \
-        ca-certificates \
-        runit \
-"
+# Configure PHP-FPM
+COPY docker/fpm-pool.conf /etc/php8/php-fpm.d/www.conf
+COPY docker/php.ini /etc/php8/conf.d/custom.ini
 
-# PHP.earth Alpine repository for better developer experience
-ADD https://repos.php.earth/alpine/phpearth.rsa.pub /etc/apk/keys/phpearth.rsa.pub
+# Configure supervisord
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN set -x \
-    && echo "https://repos.php.earth/alpine/v3.9" >> /etc/apk/repositories \
-    && apk add --no-cache $DEPS
-#   && ln -sf /dev/stdout /var/log/nginx/access.log \
-#   && ln -sf /dev/stderr /var/log/nginx/error.log
+# Setup document root
+RUN mkdir -p /var/www/html
 
-# install composer
+# Make sure files/folders needed by the processes are accessable when they run under the nobody user
+RUN chown -R nobody.nobody /var/www/html && \
+  chown -R nobody.nobody /run && \
+  chown -R nobody.nobody /var/lib/nginx && \
+  chown -R nobody.nobody /var/log/nginx
+
+# Switch to use a non-root user from here on
+USER nobody
+
+# Add application
+WORKDIR /var/www/html
+COPY --chown=nobody . /var/www/html/
+COPY --chown=nobody .env.production /var/www/html/.env
+
+# Install composer from the official image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN chmod +x /usr/bin/composer
 
-# copy source files and config file
-COPY docker/nginx /
-COPY . $APP_HOME
-COPY .env.$ENV $APP_HOME/.env
+# Run composer install to install the dependencies
+RUN composer install --optimize-autoloader --no-interaction --no-progress;
 
-# set working directory
-WORKDIR $APP_HOME
-
-# install all PHP dependencies
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader --no-interaction --no-progress --no-dev;
-
-RUN chmod -R 777 $APP_HOME/bootstrap/cache
-RUN chmod -R 777 $APP_HOME/storage
-RUN chmod -R 777 $APP_HOME/public/images
-
-
-# set working directory
-WORKDIR $APP_ROOT
-
+# Expose the port nginx is reachable on
 EXPOSE 8080
-EXPOSE 443
 
-CMD ["/sbin/runit-wrapper"]
+# Let supervisord start nginx & php-fpm
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+# Configure a healthcheck to validate that everything is up&running
+HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping
