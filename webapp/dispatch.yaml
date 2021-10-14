@@ -1,0 +1,3 @@
+dispatch:
+  - url: "tablevisit.com/*"
+    service: default
