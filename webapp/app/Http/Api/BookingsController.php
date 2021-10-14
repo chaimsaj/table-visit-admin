@@ -108,34 +108,6 @@ class BookingsController extends ApiController
                     $db->code = AppHelper::getBookingCode($db->id, $db->place_id);
                     $db->confirmation_code = AppHelper::getBookingConfirmationCode($db->id);
                     $this->bookingRepository->save($db);
-
-                    /*$booking_table = new BookingTable();
-                    $booking_table->rate = $request->get('rate');
-                    $booking_table->tax = $request->get('tax');
-                    $booking_table->total_rate = $request->get('total_rate');
-                    $booking_table->table_number = $table->table_number;
-                    $booking_table->table_code = $table->table_number;
-                    $booking_table->detail = '';
-                    $booking_table->count = 1;
-
-                    if ($request->has('special_comment')) {
-                        $booking_table->is_special = 1;
-                        $booking_table->special_comment = $request->get('special_comment');
-                    } else {
-                        $booking_table->is_special = 0;
-                        $booking_table->special_comment = '';
-                    }
-
-                    $booking_table->canceled_at = null;
-                    $booking_table->approved_at = now();
-                    $booking_table->table_rate_id = $request->get('table_rate_id');
-                    $booking_table->table_id = $request->get('table_id');
-                    $booking_table->user_id = $user->id;
-                    $booking_table->booking_id = $db->id;
-                    $booking_table->published = 1;
-                    $booking_table->deleted = 0;
-
-                    $this->bookingTableRepository->save($booking_table);*/
                 }
             }
 

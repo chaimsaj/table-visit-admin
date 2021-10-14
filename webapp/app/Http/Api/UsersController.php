@@ -258,4 +258,42 @@ class UsersController extends ApiController
 
         return response()->json($response);
     }
+
+    public function save_timezone(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $data = $request->json()->all();
+
+                $rules = [
+                    'timezone_offset' => ['required', 'int'],
+                ];
+
+                $validator = Validator::make($data, $rules);
+
+                if ($validator->fails()) {
+                    $response->setError($validator->getMessageBag());
+                    return response()->json($response);
+                }
+
+                $user = Auth::user();
+
+                $db = $this->userRepository->find($user->id);
+
+                if (isset($db)) {
+                    $db->timezone_offset = intval($data['timezone_offset']);
+
+                    $this->userRepository->save($db);
+                }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
 }
