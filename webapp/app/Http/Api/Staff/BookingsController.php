@@ -52,7 +52,7 @@ class BookingsController extends ApiController
                         $item->table = $table;
                         $item->customer_name = $customer->name;
                         $item->customer_last_name = $customer->last_name;
-                        $item->customer_avatar = MediaHelper::getImageUrl($customer->avatar, MediaSizeEnum::medium);
+                        $item->customer_avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $customer->avatar, MediaSizeEnum::medium);
                     }
                 }
 

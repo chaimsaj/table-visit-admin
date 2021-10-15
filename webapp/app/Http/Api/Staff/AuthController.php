@@ -85,7 +85,7 @@ class AuthController extends ApiController
                 if (isset($user->dob))
                     $user->dob = DateTime::createFromFormat('Y-m-d', $user->dob)->format('d-m-Y');
 
-                $user->avatar = MediaHelper::getImageUrl($user->avatar, MediaSizeEnum::medium);
+                $user->avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $user->avatar, MediaSizeEnum::medium);
 
                 $response->setData($user);
             } else

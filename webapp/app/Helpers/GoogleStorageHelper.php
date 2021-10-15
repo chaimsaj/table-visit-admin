@@ -8,7 +8,7 @@ use Google\Cloud\Storage\StorageClient;
 
 class GoogleStorageHelper
 {
-    static function upload(string $image)
+    static function upload(string $local, string $remote)
     {
         $storage = new StorageClient([
             'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
@@ -16,13 +16,13 @@ class GoogleStorageHelper
 
         $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
 
-        $bucket->upload(fopen($image, 'r'),
+        $bucket->upload(fopen($local, 'r'),
             [
-                'name' => $image
+                'name' => $remote
             ]);
     }
 
-    static function download(string $file)
+    static function download(string $local, string $remote): bool
     {
         $storage = new StorageClient([
             'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
@@ -30,10 +30,14 @@ class GoogleStorageHelper
 
         $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
 
-        $object = $bucket->object($file);
+        $object = $bucket->object($remote);
 
-        if (isset($object))
-            $object->downloadToFile($file);
+        if ($object->exists())
+            $object->downloadToFile($local);
+        else
+            return false;
+
+        return true;
     }
 
     static function delete(string $file)
@@ -46,7 +50,7 @@ class GoogleStorageHelper
 
         $object = $bucket->object($file);
 
-        if (isset($object))
+        if ($object->exists())
             $object->delete();
     }
 }

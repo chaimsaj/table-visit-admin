@@ -7,6 +7,7 @@ use App\Core\GenderEnum;
 use App\Core\MediaObjectTypeEnum;
 use App\Core\UserTypeEnum;
 use App\Helpers\AppHelper;
+use App\Helpers\GoogleStorageHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Base\AdminController;
 use App\Repositories\CityRepositoryInterface;
@@ -152,15 +153,13 @@ class UsersController extends AdminController
                 $this->repository->save($db);
 
                 if ($request->has('avatar')) {
-                    MediaHelper::deleteUsersImage($db->avatar);
-
-                    $image_file = $request->file('avatar');
+                    $file = $request->file('avatar');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
-                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+                    $name = $code . '_' . time();
 
-                    Image::make($image_file)->save(MediaHelper::getUsersPath($image_name));
+                    MediaHelper::save($file, MediaHelper::getUsersPath(), $name);
 
-                    $db->avatar = $image_name;
+                    $db->avatar = $name . '.' . $file->getClientOriginalExtension();
 
                     $this->repository->save($db);
                 }

@@ -12,10 +12,10 @@ class PlaceHelper
     {
         $image = $item->image_path;
 
-        $item->image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::medium);
-        $item->large_image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::large);
-        $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::large);
-        $item->food_menu_path = MediaHelper::getImageUrl($item->food_menu_path, MediaSizeEnum::large);
+        $item->image_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $image, MediaSizeEnum::medium);
+        $item->large_image_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $image, MediaSizeEnum::large);
+        $item->floor_plan_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->floor_plan_path, MediaSizeEnum::large);
+        $item->food_menu_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->food_menu_path, MediaSizeEnum::large);
 
         $item->place_rating_count = rand(0, 100);
         $item->place_rating_avg = rand(1, 5);

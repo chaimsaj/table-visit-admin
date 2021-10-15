@@ -78,7 +78,7 @@ class PlacesController extends AdminApiController
                         $item->state_name = $state->name;
                 }
 
-                $item->image = MediaHelper::getImageUrl($item->image_path);
+                $item->image = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->image_path);
             }
 
             $count = $query["count"];

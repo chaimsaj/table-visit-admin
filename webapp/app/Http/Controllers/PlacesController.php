@@ -219,29 +219,16 @@ class PlacesController extends AdminController
             }
 
             if ($request->has('image_path')) {
-                MediaHelper::deletePlacesImage($db->image_path);
-
-                $image_file = $request->file('image_path');
+                $file = $request->file('image_path');
                 $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
-                $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+                $name = $code . '_' . time();
 
+                MediaHelper::save($file, MediaHelper::getPlacesPath(), $name);
 
-                Image::make($image_file)->save(public_path(MediaHelper::getPlacesPath($image_name)));
-                GoogleStorageHelper::upload(MediaHelper::getPlacesPath($image_name));
-
-                $db->image_path = $image_name;
+                $db->image_path = $name . '.' . $file->getClientOriginalExtension();
 
                 $this->repository->save($db);
-
-                // Image::make(Input::file('image_path'))->resize(300, 200)->save('foo.jpg');
             }
-
-            /*if ($validator->fails() && $db == null) {
-                return view('places/detail', ["data" => $request])->withErrors($validator);
-            } else {
-
-            }*/
-
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
@@ -294,15 +281,13 @@ class PlacesController extends AdminController
 
             if ($db != null) {
                 if ($request->has('floor_plan_path')) {
-                    MediaHelper::deletePlacesImage($db->floor_plan_path);
-
-                    $image_file = $request->file('floor_plan_path');
+                    $file = $request->file('floor_plan_path');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
-                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+                    $name = $code . '_' . time();
 
-                    Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
+                    MediaHelper::save($file, MediaHelper::getPlacesPath(), $name);
 
-                    $db->floor_plan_path = $image_name;
+                    $db->floor_plan_path = $name . '.' . $file->getClientOriginalExtension();
 
                     $this->repository->save($db);
                 }
@@ -324,15 +309,13 @@ class PlacesController extends AdminController
 
             if ($db != null) {
                 if ($request->has('food_menu_path')) {
-                    MediaHelper::deletePlacesImage($db->food_menu_path);
-
-                    $image_file = $request->file('food_menu_path');
+                    $file = $request->file('food_menu_path');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Places);
-                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+                    $name = $code . '_' . time();
 
-                    Image::make($image_file)->save(MediaHelper::getPlacesPath($image_name));
+                    MediaHelper::save($file, MediaHelper::getPlacesPath(), $name);
 
-                    $db->food_menu_path = $image_name;
+                    $db->food_menu_path = $name . '.' . $file->getClientOriginalExtension();
 
                     $this->repository->save($db);
                 }

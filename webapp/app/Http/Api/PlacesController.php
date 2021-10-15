@@ -76,7 +76,7 @@ class PlacesController extends ApiController
             foreach ($query as $item) {
                 $has = $user_favorites->firstWhere('place_id', '=', $item->id);
                 $item->is_favorite = isset($has);
-                $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
+                $item->image_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->image_path, MediaSizeEnum::medium);
             }
 
             $response->setData($query);
@@ -311,10 +311,10 @@ class PlacesController extends ApiController
     {
         $image = $item->image_path;
 
-        $item->image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::medium);
-        $item->large_image_path = MediaHelper::getImageUrl($image, MediaSizeEnum::large);
-        $item->floor_plan_path = MediaHelper::getImageUrl($item->floor_plan_path, MediaSizeEnum::large);
-        $item->food_menu_path = MediaHelper::getImageUrl($item->food_menu_path, MediaSizeEnum::large);
+        $item->image_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $image, MediaSizeEnum::medium);
+        $item->large_image_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $image, MediaSizeEnum::large);
+        $item->floor_plan_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->floor_plan_path, MediaSizeEnum::large);
+        $item->food_menu_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->food_menu_path, MediaSizeEnum::large);
 
         $ratings = $this->ratingRepository->ratingByPlace($item->id);
 

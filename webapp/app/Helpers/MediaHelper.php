@@ -4,21 +4,26 @@
 namespace App\Helpers;
 
 use App\Core\MediaSizeEnum;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
+use Intervention\Image\Facades\Image;
 
 class MediaHelper
 {
-    static function getPlacesPath(string $image = null): string
+    static function defaultImage(): string
     {
-        $image_path = 'images/places';
-        $public_path = public_path($image_path);
+        return 'no-image-available.png';
+    }
 
-        if (!File::exists($public_path)) {
-            File::makeDirectory($public_path);
-        }
+    static function getPlacesPath(): string
+    {
+        return 'images/places/';
+    }
 
-        return $image_path . '/' . $image;
+    static function getUsersPath(): string
+    {
+        return 'images/users/';
     }
 
     static function deletePlacesImage(string $image = null): void
@@ -32,18 +37,6 @@ class MediaHelper
         }
     }
 
-    static function getUsersPath(string $image = null): string
-    {
-        $image_path = 'images/users';
-        $public_path = public_path($image_path);
-
-        if (!File::exists($public_path)) {
-            File::makeDirectory($public_path);
-        }
-
-        return $image_path . '/' . $image;
-    }
-
     static function deleteUsersImage(string $image = null): void
     {
         if (isset($image)) {
@@ -55,15 +48,69 @@ class MediaHelper
         }
     }
 
-    static function getImageUrl(string $image = null, $size = MediaSizeEnum::small): string
+    static function getImageUrl(string $path, string $file_name, $size = MediaSizeEnum::small): string
     {
-        if (isset($image)) {
-            if (!File::exists(MediaHelper::getPlacesPath($image))) {
-                // GoogleStorageHelper::download(MediaHelper::getPlacesPath($image));
+        $exists = false;
+
+        if (!empty($file_name)) {
+            $local = public_path($path) . $file_name;
+            $remote = $path . $file_name;
+
+            if (!File::exists(public_path($path))) {
+                File::makeDirectory(public_path($path));
+            }
+
+            if (!File::exists($local)) {
+                $exists = GoogleStorageHelper::download($local, $remote);
             } else
-                return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . $image);
+                $exists = true;
         }
 
-        return URL::to('media/' . MediaSizeEnum::toString($size) . '/no-image-available.png');
+        if ($exists)
+            return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . $file_name);
+
+        return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . MediaHelper::defaultImage());
+    }
+
+    static function save(UploadedFile $file, string $path, string $name)
+    {
+        /*$this->validate($request, [
+            'name' => 'required',
+            'imgFile' => 'required|image|mimes:jpg,jpeg,png,svg,gif|max:2048',
+        ]);*/
+
+        $local = public_path($path);
+
+        if (!File::exists($local)) {
+            File::makeDirectory($local);
+        }
+
+        $file_name = $name . '.' . $file->getClientOriginalExtension();
+
+        $local = $local . $file_name;
+        $remote = $path . $file_name;
+
+        // original
+        Image::make($file)->save($local);
+        GoogleStorageHelper::upload($local, $remote);
+
+        // large
+        // MediaHelper::save_thumb($original, $path, $name, 480, 360, $extension);
+
+        // medium
+        // MediaHelper::save_thumb($original, $path, $name, 240, 180, $extension);
+
+        // small
+        // MediaHelper::save_thumb($original, $path, $name, 120, 90, $extension);
+
+        // square
+        // MediaHelper::save_thumb($original, $path, $name, 250, 250, $extension);
+    }
+
+    static function save_thumb(string $original, string $path, string $name, int $width, int $height, string $extension)
+    {
+        Image::make($original)->fit($width, $height, function ($callback) {
+            $callback->aspectRatio();
+        })->save($path . $name . '_' . $width . '_' . $height . '.' . $extension);
     }
 }

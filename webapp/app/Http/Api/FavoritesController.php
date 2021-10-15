@@ -83,7 +83,7 @@ class FavoritesController extends ApiController
                         if (!isset($item->close_at))
                             $item->close_at = 0;
 
-                        $item->image_path = MediaHelper::getImageUrl($item->image_path, MediaSizeEnum::medium);
+                        $item->image_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->image_path, MediaSizeEnum::medium);
                     }
                     $response->setData($query);
                 }
