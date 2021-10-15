@@ -49,9 +49,8 @@
                                 <tr class="text-center">
                                     <td>{{ $item->id }}</td>
                                     <td>
-                                        <img class="rounded avatar-sm"
-                                             src="{{\App\Helpers\MediaHelper::getImageUrl($item->avatar)}}"
-                                             alt=""/>
+                                        <img class="rounded avatar-sm" src="{{$item->avatar_url}}"
+                                             alt="{{ $item->email }}"/>
                                     </td>
                                     <td>{{ $item->name }} {{ $item->last_name }}</td>
                                     <td>{{ $item->email }}</td>

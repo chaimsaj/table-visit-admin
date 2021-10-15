@@ -7,11 +7,11 @@
             @csrf
             @if(isset($data))
                 <img class="rounded mt-2"
-                     src="{{\App\Helpers\MediaHelper::getImageUrl($data->food_menu_path, \App\Core\MediaSizeEnum::large)}}"
+                     src="{{$data->food_menu_path_url ?? ''}}"
                      alt=""/>
-                <div class="text-muted">
+                {{--<div class="text-muted">
                     {{$data->food_menu_path ?? ''}}
-                </div>
+                </div>--}}
                 <hr/>
             @endif
             <div class="mb-4 mt-3">

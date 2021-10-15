@@ -47,25 +47,23 @@ class UsersController extends AdminController
     {
         $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
 
-        $data = new Collection();
-
-        if ($is_admin) {
-            $data = $this->repository->actives();
-            foreach ($data as $item) {
-                $item->user_type_name = AppHelper::userType($item->user_type_id);
-            }
-        } else {
+        if ($is_admin)
+            $users = $this->repository->actives();
+        else
             $users = $this->repository->activesByTenant(Auth::user()->tenant_id);
-            foreach ($users as $user) {
-                $user->user_type_name = AppHelper::userType($user->user_type_id);
-                $data->push($user);
-            }
+
+        foreach ($users as $user) {
+            $user->user_type_name = AppHelper::userType($user->user_type_id);
+            $user->avatar_url = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $user->avatar);
         }
 
-        return view('users/index', ["data" => $data,
-            "user_types" => AppHelper::userTypesAll(),
-            "is_admin" => $is_admin
-        ]);
+        return view('users/index',
+            [
+                "data" => $users,
+                "user_types" => AppHelper::userTypesAll(),
+                "is_admin" => $is_admin
+            ]
+        );
     }
 
     public function detail($id)
@@ -85,15 +83,21 @@ class UsersController extends AdminController
         } else
             $places = $this->placeRepository->activesByTenant(Auth::user()->tenant_id);
 
+        if (isset($data))
+            $data->avatar_url = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $data->avatar);
+
         $tab = Session::get("tab", "data");
 
-        return view('users/detail', ["data" => $data,
-            "user_types" => AppHelper::userTypes($is_admin),
-            "tenants" => $tenants,
-            "places" => $places,
-            "is_admin" => $is_admin,
-            "tab" => $tab
-        ]);
+        return view('users/detail',
+            [
+                "data" => $data,
+                "user_types" => AppHelper::userTypes($is_admin),
+                "tenants" => $tenants,
+                "places" => $places,
+                "is_admin" => $is_admin,
+                "tab" => $tab
+            ]
+        );
     }
 
     public function save(Request $request, $id)

@@ -130,6 +130,10 @@ class PlacesController extends AdminController
 
             if (isset($place_to_place_type))
                 $data->place_type_id = $place_to_place_type->place_type_id;
+
+            $data->image_path_url = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $data->image_path);
+            $data->floor_plan_path_url = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $data->floor_plan_path);
+            $data->food_menu_path_url = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $data->food_menu_path);
         }
 
         $tenant_id = null;

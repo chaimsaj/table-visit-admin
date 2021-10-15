@@ -48,7 +48,7 @@ class MediaHelper
         }
     }
 
-    static function getImageUrl(string $path, string $file_name, $size = MediaSizeEnum::small): string
+    static function getImageUrl(string $path, string $file_name = null, $size = MediaSizeEnum::custom): string
     {
         $exists = false;
 
@@ -72,7 +72,7 @@ class MediaHelper
         return URL::to('media/' . MediaSizeEnum::toString($size) . '/' . MediaHelper::defaultImage());
     }
 
-    static function save(UploadedFile $file, string $path, string $name)
+    static function save(UploadedFile $file, string $path = null, string $name = null)
     {
         /*$this->validate($request, [
             'name' => 'required',

@@ -37,7 +37,7 @@
                                                 @csrf
                                                 @if(isset($data))
                                                     <img class="rounded avatar-md mt-2"
-                                                         src="{{\App\Helpers\MediaHelper::getImageUrl($data->avatar, \App\Core\MediaSizeEnum::medium)}}"
+                                                         src="{{$data->avatar_url ?? ''}}"
                                                          alt=""/>
                                                     <hr/>
                                                 @endif

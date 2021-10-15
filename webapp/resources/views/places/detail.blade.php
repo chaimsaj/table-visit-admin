@@ -85,8 +85,8 @@
                                                   enctype="multipart/form-data">
                                                 @csrf
                                                 @if(isset($data))
-                                                    <img class="rounded mt-2"
-                                                         src="{{\App\Helpers\MediaHelper::getImageUrl($data->image_path)}}"
+                                                    <img class="rounded avatar-lg mt-2"
+                                                         src="{{$data->image_path_url ?? ''}}"
                                                          alt=""/>
                                                     <hr/>
                                                 @endif
