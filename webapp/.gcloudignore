@@ -11,7 +11,7 @@
 # from your .gitignore file, remove the corresponding line
 # below:
 .git
-.gitignore
+# .gitignore
 
 .env
 
@@ -19,7 +19,12 @@
 /vendor/
 
 /node_modules/
-# /public/images/users/
-# /public/images/places/
+/public/hot/
+/public/storage/
+/storage/*.key
+/vendor/
+
+/public/images/users/
+/public/images/places/
 
 composer.lock

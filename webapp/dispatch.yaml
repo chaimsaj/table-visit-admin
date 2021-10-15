@@ -1,3 +1,5 @@
 dispatch:
   - url: "tablevisit.com/*"
     service: default
+  - url: "halogen-inkwell-326701.uw.r.appspot.com/*"
+    service: default
