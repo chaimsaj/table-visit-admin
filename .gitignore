@@ -18,3 +18,4 @@ backup/images
 webapp/public/images/places
 webapp/public/images/users
 webapp/key
+webapp/key/google-storage.json
