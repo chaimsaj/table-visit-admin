@@ -11,7 +11,7 @@ class GoogleStorageHelper
     static function upload(string $local, string $remote)
     {
         $storage = new StorageClient([
-            'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
+            'keyFilePath' => base_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
         ]);
 
         $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
@@ -25,7 +25,7 @@ class GoogleStorageHelper
     static function download(string $local, string $remote): bool
     {
         $storage = new StorageClient([
-            'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
+            'keyFilePath' => base_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
         ]);
 
         $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
@@ -43,7 +43,7 @@ class GoogleStorageHelper
     static function delete(string $file)
     {
         $storage = new StorageClient([
-            'keyFilePath' => public_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
+            'keyFilePath' => base_path(env('GOOGLE_CLOUD_KEY_FILE_PATH', ''))
         ]);
 
         $bucket = $storage->bucket(env('GOOGLE_CLOUD_BUCKET', ''));
