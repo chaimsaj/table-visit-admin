@@ -153,9 +153,13 @@ class BookingsController extends ApiController
                 $user = Auth::user();
 
                 if (isset($user)) {
-                    $query = $this->bookingRepository->userBookings($user->id);
+                    $actives = $this->bookingRepository->userActiveBookings($user->id);
+                    $pasts = $this->bookingRepository->userPastBookings($user->id);
+
+                    $query = $actives->merge($pasts);
 
                     foreach ($query as $item) {
+                        $item->is_past = $item->book_date < today();
                         $place = $this->placeRepository->find($item->place_id);
 
                         if (isset($place)) {

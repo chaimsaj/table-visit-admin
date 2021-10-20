@@ -8,7 +8,9 @@ use Illuminate\Support\Collection;
 
 interface BookingRepositoryInterface extends BaseRepositoryInterface
 {
-    public function userBookings($user_id): Collection;
+    public function userActiveBookings(int $user_id): Collection;
+
+    public function userPastBookings(int $user_id, int $length = 10): Collection;
 
     public function activesPaged(int $start, int $length, string $order_by, string $order, string $search): array;
 

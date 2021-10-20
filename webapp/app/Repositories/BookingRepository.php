@@ -14,12 +14,25 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         parent::__construct($model);
     }
 
-    public function userBookings($user_id): Collection
+    public function userActiveBookings(int $user_id): Collection
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where('user_id', $user_id)
+            ->whereDate('book_date', '>=', today())
+            // ->whereTime('matriculas.fe_update', '>=', $last_update)
             ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    public function userPastBookings(int $user_id, int $length = 10): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('user_id', $user_id)
+            ->whereDate('book_date', '<', today())
+            ->orderBy('id', 'desc')
+            ->take($length)
             ->get();
     }
 
