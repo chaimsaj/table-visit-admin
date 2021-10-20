@@ -62,7 +62,9 @@ class PoliciesController extends ApiController
         try {
             $language = LanguageEnum::English;
             $query = $this->policyRepository->loadBy($place_id, $policy_type, $language);
-            $response->setData($query);
+
+            if (isset($query))
+                $response->setData($query);
         } catch (Throwable $ex) {
             $this->logger->save($ex);
             $response->setError($ex->getMessage());
