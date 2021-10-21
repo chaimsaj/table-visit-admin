@@ -16,6 +16,7 @@ use App\Http\Api\Base\ApiController;
 use App\Models\User;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\UserProfileRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
 use DateTime;
 use Illuminate\Http\JsonResponse;
@@ -28,13 +29,16 @@ use Throwable;
 class AuthController extends ApiController
 {
     private UserProfileRepositoryInterface $userProfileRepository;
+    private UserRepositoryInterface $userRepository;
 
     public function __construct(UserProfileRepositoryInterface $userProfileRepository,
+                                UserRepositoryInterface        $userRepository,
                                 LogServiceInterface            $logger)
     {
         parent::__construct($logger);
 
         $this->userProfileRepository = $userProfileRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function sign_in(Request $request): JsonResponse
@@ -130,19 +134,21 @@ class AuthController extends ApiController
         $response->setSuccess();
 
         if (Auth::check()) {
-            $user = Auth::user();
+            $user = $this->userRepository->find(Auth::user()->id);
 
-            if (isset($user->dob))
-                $user->dob = DateTime::createFromFormat('Y-m-d', $user->dob)->format('d-m-Y');
+            if (isset($user)) {
+                if (isset($user->dob))
+                    $user->dob = DateTime::createFromFormat('Y-m-d', $user->dob)->format('Y-m-d');
 
-            $user->avatar = MediaHelper::getImageUrl($user->avatar, MediaSizeEnum::medium);
+                $user->avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $user->avatar);
 
-            $profile = $this->userProfileRepository->loadByUser($user->id);
+                $profile = $this->userProfileRepository->loadByUser($user->id);
 
-            if (isset($profile))
-                $user->profile = $user;
+                if (isset($profile))
+                    $user->profile = $user;
 
-            $response->setData($user);
+                $response->setData($user);
+            }
         } else
             $response->setError();
 
