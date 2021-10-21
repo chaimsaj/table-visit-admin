@@ -17,6 +17,7 @@ use App\Models\UserProfile;
 use App\Repositories\UserProfileRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
+use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -177,9 +178,11 @@ class UsersController extends ApiController
 
                     $db->name = $data['name'];
                     $db->last_name = $data['last_name'];
-                    $db->gender = intval($data['gender']);
+                    $db->gender = GenderEnum::Undefined;
+                    $db->dob = DateTime::createFromFormat('Y-m-d', $request->get('dob'));
 
-                    // $db->dob = date('Y-m-d', strtotime($request->get('dob')));
+                    // date('Y-m-d', strtotime($request->get('dob')));
+
                     // $db->last_name = $data['last_name'];
 
                     $this->userRepository->save($db);
