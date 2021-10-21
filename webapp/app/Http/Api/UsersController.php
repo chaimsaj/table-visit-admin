@@ -208,15 +208,15 @@ class UsersController extends ApiController
                 $db = $this->userRepository->find($user->id);
 
                 if (isset($db) && $request->has('avatar')) {
-                    $image_file = $request->file('avatar');
+                    $file = $request->file('avatar');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
-                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+                    $name = $code . '_' . time();
 
-                    Image::make($image_file)->save(MediaHelper::getUsersPath($image_name));
+                    MediaHelper::save($file, MediaHelper::getUsersPath(), $name);
 
-                    $db->avatar = $image_name;
+                    $db->avatar = $name . '.' . $file->getClientOriginalExtension();
 
-                    $db->save();
+                    $this->userRepository->save($db);
                 }
             }
         } catch (Throwable $ex) {
@@ -242,16 +242,16 @@ class UsersController extends ApiController
                     $db = new UserProfile();
 
                 if ($request->has('government_id')) {
-                    $image_file = $request->file('government_id');
+                    $file = $request->file('government_id');
                     $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
-                    $image_name = $code . '_' . time() . '.' . $image_file->getClientOriginalExtension();
+                    $name = $code . '_' . time();
 
-                    Image::make($image_file)->save(MediaHelper::getGovernmentIdsPath($image_name));
+                    MediaHelper::save($file, MediaHelper::getUsersPath(), $name);
 
-                    $db->government_id_path = $image_name;
+                    $db->government_id_path = $name . '.' . $file->getClientOriginalExtension();
                     $db->user_id = $user->id;
 
-                    $db->save();
+                    $this->userProfileRepository->save($db);
                 }
             }
         } catch (Throwable $ex) {
