@@ -126,12 +126,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/profile/load', [App\Http\Api\UsersController::class, 'load_profile'])->name('api.user.profile.load');
     Route::post('/user/profile/update', [App\Http\Api\UsersController::class, 'update'])->name('api.user.profile.update');
     Route::post('/user/profile/upload_avatar', [App\Http\Api\UsersController::class, 'upload_avatar'])->name('api.user.profile.upload_avatar');
+    Route::post('/user/profile/save_phone_number', [App\Http\Api\UsersController::class, 'save_phone_number'])->name('api.user.profile.save_phone_number');
 
     // Government ID
     Route::post('/user/profile/upload_government_id', [App\Http\Api\UsersController::class, 'upload_government_id'])->name('api.user.profile.upload_government_id');
-
-    // Government ID
-    Route::post('/user/profile/save_phone_number', [App\Http\Api\UsersController::class, 'save_phone_number'])->name('api.user.profile.save_phone_number');
+    Route::post('/user/profile/save_government_id', [App\Http\Api\UsersController::class, 'save_government_id'])->name('api.user.profile.save_government_id');
 
     // Twilio/ChatController
     Route::post('/chat/token', [App\Http\Api\Twilio\ChatController::class, 'token'])->name('api.chat.token');

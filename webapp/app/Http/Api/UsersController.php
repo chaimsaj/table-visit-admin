@@ -243,16 +243,44 @@ class UsersController extends ApiController
 
                 if ($request->has('government_id')) {
                     $file = $request->file('government_id');
-                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Users);
+                    $code = AppHelper::getCode($db->id, MediaObjectTypeEnum::Identities);
                     $name = $code . '_' . time();
 
-                    MediaHelper::save($file, MediaHelper::getUsersPath(), $name);
+                    MediaHelper::save($file, MediaHelper::getIdentitiesPath(), $name);
 
                     $db->government_id_path = $name . '.' . $file->getClientOriginalExtension();
                     $db->user_id = $user->id;
 
                     $this->userProfileRepository->save($db);
                 }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function save_government_id(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                $db = $this->userProfileRepository->loadByUser($user->id);
+
+                if (!isset($db))
+                    $db = new UserProfile();
+
+                $db->government_id = mb_strimwidth($request->get("government_id"), 0, 50, "");
+                $db->government_id_type = intval($request->get("government_id_type"));
+                $db->issued_country_id = intval($request->get("issued_country_id"));
+
+                $this->userProfileRepository->save($db);
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);

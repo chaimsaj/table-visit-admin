@@ -10,4 +10,5 @@ class MediaObjectTypeEnum extends BaseEnum
     const Users = 1;
     const Places = 2;
     const Services = 3;
+    const Identities = 4;
 }

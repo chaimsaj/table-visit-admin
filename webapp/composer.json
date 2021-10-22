@@ -23,7 +23,8 @@
         "stripe/stripe-php": "^7.95",
         "twilio/sdk": "^6.28",
         "yajra/laravel-datatables-fractal": "^1.6",
-        "yajra/laravel-datatables-oracle": "^9.18"
+        "yajra/laravel-datatables-oracle": "^9.18",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.14",

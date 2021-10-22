@@ -16,7 +16,7 @@ class CountriesController extends ApiController
     private CountryRepositoryInterface $countryRepository;
 
     public function __construct(CountryRepositoryInterface $countryRepository,
-                                LogServiceInterface $logger)
+                                LogServiceInterface        $logger)
     {
         parent::__construct($logger);
 

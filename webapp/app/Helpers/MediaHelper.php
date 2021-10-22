@@ -26,6 +26,11 @@ class MediaHelper
         return 'images/users/';
     }
 
+    static function getIdentitiesPath(): string
+    {
+        return 'images/identities/';
+    }
+
     static function deletePlacesImage(string $image = null): void
     {
         if (isset($image)) {
