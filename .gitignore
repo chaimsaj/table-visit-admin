@@ -17,6 +17,7 @@ webapp/.idea
 backup/images
 webapp/public/images/places
 webapp/public/images/users
+webapp/public/images/identities
 webapp/key
 webapp/key/google-storage.json
 webapp/key/google-storage.json
