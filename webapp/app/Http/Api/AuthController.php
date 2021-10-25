@@ -145,7 +145,7 @@ class AuthController extends ApiController
                 $profile = $this->userProfileRepository->loadByUser($user->id);
 
                 if (isset($profile))
-                    $user->profile = $user;
+                    $user->profile = $profile;
 
                 $response->setData($user);
             }
