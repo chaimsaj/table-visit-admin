@@ -88,9 +88,9 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where(function ($query) use ($search) {
-                if (!empty($search) && strlen($search) > 2) {
-                    $query->where('code', 'like', $search . '%')
-                        ->orWhere('confirmation_code', 'like', $search . '%');
+                if (!empty($search) && strlen($search) >= 2) {
+                    $query->where('code', 'like', '%' . $search . '%')
+                        ->orWhere('confirmation_code', 'like', '%' . $search . '%');
                 }
             })
             ->whereDate('book_date', '>=', today())
