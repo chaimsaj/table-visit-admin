@@ -42,21 +42,23 @@ class BookingsController extends ApiController
             if (Auth::check()) {
                 $user = Auth::user();
 
-                $query = $this->bookingRepository->staffSearch($request->get('word'), $user->place_id);
+                if (isset($user->place_id)) {
+                    $query = $this->bookingRepository->staffSearch($user->place_id, $request->get('search'));
 
-                foreach ($query as $item) {
-                    $table = $this->tableRepository->find($item->table_id);
-                    $customer = $this->userRepository->find($item->user_id);
+                    foreach ($query as $item) {
+                        $table = $this->tableRepository->find($item->table_id);
+                        $customer = $this->userRepository->find($item->user_id);
 
-                    if (isset($table) && isset($customer)) {
-                        $item->table = $table;
-                        $item->customer_name = $customer->name;
-                        $item->customer_last_name = $customer->last_name;
-                        $item->customer_avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $customer->avatar, MediaSizeEnum::medium);
+                        if (isset($table) && isset($customer)) {
+                            $item->table = $table;
+                            $item->customer_name = $customer->name;
+                            $item->customer_last_name = $customer->last_name;
+                            $item->customer_avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $customer->avatar, MediaSizeEnum::medium);
+                        }
                     }
-                }
 
-                $response->setData($query);
+                    $response->setData($query);
+                }
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);

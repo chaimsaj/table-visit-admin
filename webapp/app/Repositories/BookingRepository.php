@@ -83,16 +83,17 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         ];
     }
 
-    public function staffSearch(string $search, int $place_id): Collection
+    public function staffSearch(int $place_id, string $search = null): Collection
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where(function ($query) use ($search) {
-                if (strlen($search) > 2) {
+                if (!empty($search) && strlen($search) > 2) {
                     $query->where('code', 'like', $search . '%')
                         ->orWhere('confirmation_code', 'like', $search . '%');
                 }
             })
+            ->whereDate('book_date', '>=', today())
             ->where('place_id', $place_id)
             ->orderBy('id', 'desc')
             ->get();
