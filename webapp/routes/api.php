@@ -158,5 +158,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/booking/guest/add', [App\Http\Api\BookingGuestsController::class, 'list'])->name('api.booking.guests.add');
 
     // Staff Booking
-    Route::get('/staff/bookings', [App\Http\Api\Staff\BookingsController::class, 'search'])->name('api.staff.bookings');
+    Route::post('/staff/bookings', [App\Http\Api\Staff\BookingsController::class, 'search'])->name('api.staff.bookings');
 });

@@ -25,43 +25,43 @@ class AppHelper
 
     static function userTypes(bool $is_admin = true): Collection
     {
-        if ($is_admin) {
-            $undefined = new KeyValueModel();
-            $undefined->setKey(UserTypeEnum::Undefined);
-            $undefined->setValue("Undefined");
+        $undefined = new KeyValueModel();
+        $undefined->setKey(UserTypeEnum::Undefined);
+        $undefined->setValue("Undefined");
 
-            $admin = new KeyValueModel();
-            $admin->setKey(UserTypeEnum::Admin);
-            $admin->setValue("Admin");
+        $admin = new KeyValueModel();
+        $admin->setKey(UserTypeEnum::Admin);
+        $admin->setValue("Admin");
 
-            $place_admin = new KeyValueModel();
-            $place_admin->setKey(UserTypeEnum::PlaceAdmin);
-            $place_admin->setValue("Place Admin");
+        $place_admin = new KeyValueModel();
+        $place_admin->setKey(UserTypeEnum::PlaceAdmin);
+        $place_admin->setValue("Place Admin");
 
-            $customer = new KeyValueModel();
-            $customer->setKey(UserTypeEnum::Customer);
-            $customer->setValue("Customer");
+        //Staff
+        $valet_parking = new KeyValueModel();
+        $valet_parking->setKey(UserTypeEnum::ValetParking);
+        $valet_parking->setValue("Valet Parking");
 
-            return collect([$undefined, $admin, $place_admin, $customer]);
-        } else {
-            $place_admin = new KeyValueModel();
-            $place_admin->setKey(UserTypeEnum::PlaceAdmin);
-            $place_admin->setValue("Place Admin");
+        $waiter = new KeyValueModel();
+        $waiter->setKey(UserTypeEnum::Waiter);
+        $waiter->setValue("Waiter");
 
-            $valet_parking = new KeyValueModel();
-            $valet_parking->setKey(UserTypeEnum::ValetParking);
-            $valet_parking->setValue("Valet Parking");
+        $dj = new KeyValueModel();
+        $dj->setKey(UserTypeEnum::DJ);
+        $dj->setValue("DJ");
 
-            $waiter = new KeyValueModel();
-            $waiter->setKey(UserTypeEnum::Waiter);
-            $waiter->setValue("Waiter");
+        $hookah_waitress = new KeyValueModel();
+        $hookah_waitress->setKey(UserTypeEnum::HookahWaitress);
+        $hookah_waitress->setValue("Hookah Waitress");
 
-            $dj = new KeyValueModel();
-            $dj->setKey(UserTypeEnum::DJ);
-            $dj->setValue("DJ");
+        $customer = new KeyValueModel();
+        $customer->setKey(UserTypeEnum::Customer);
+        $customer->setValue("Customer");
 
-            return collect([$place_admin, $valet_parking, $waiter, $dj]);
-        }
+        if (!$is_admin)
+            return collect([$place_admin, $valet_parking, $waiter, $dj, $hookah_waitress, $customer]);
+        else
+            return collect([$undefined, $admin, $place_admin, $valet_parking, $waiter, $dj, $hookah_waitress, $customer]);
     }
 
     static function userTypesAll(): Collection
@@ -71,19 +71,12 @@ class AppHelper
         foreach (AppHelper::userTypes() as $user_type)
             $all_types->push($user_type);
 
-        foreach (AppHelper::userTypes(false) as $user_type)
-            $all_types->push($user_type);
-
         return $all_types;
     }
 
     static function userType($user_type_id)
     {
         return AppHelper::userTypesAll()->firstWhere('key', $user_type_id)->getValue();
-        /*return AppHelper::userTypesAll()->first(function ($value) use ($user_type_id) {
-            if ($value->getKey() == $user_type_id)
-                return $value->getValue();
-        });*/
     }
 
     static function truncateString($str, int $max): string
