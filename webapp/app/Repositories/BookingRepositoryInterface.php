@@ -16,5 +16,8 @@ interface BookingRepositoryInterface extends BaseRepositoryInterface
 
     public function activesPagedByTenant(int $tenant_id, int $start, int $length, string $order_by, string $order, string $search): array;
 
-    public function staffSearch(int $place_id, string $search = null): Collection;
+    // Staff
+    public function inboxStaff(int $place_id, string $search = null): Collection;
+
+    public function assignedStaff(int $user_id, string $search = null): Collection;
 }

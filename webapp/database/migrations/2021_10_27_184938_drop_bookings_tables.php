@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterBookingTablesCloseTable extends Migration
+class DropBookingsTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AlterBookingTablesCloseTable extends Migration
      */
     public function up()
     {
-        Schema::table('booking_tables', function (Blueprint $table) {
-
-        });
+        Schema::dropIfExists('booking_tables');
+        Schema::dropIfExists('booking_services');
     }
 
     /**

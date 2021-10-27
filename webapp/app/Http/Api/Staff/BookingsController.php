@@ -33,7 +33,7 @@ class BookingsController extends ApiController
         $this->userRepository = $userRepository;
     }
 
-    public function search(Request $request): JsonResponse
+    public function inbox(Request $request): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -42,8 +42,43 @@ class BookingsController extends ApiController
             if (Auth::check()) {
                 $user = Auth::user();
 
-                if (isset($user->place_id)) {
-                    $query = $this->bookingRepository->staffSearch($user->place_id, $request->get('search'));
+                if (isset($user) && isset($user->place_id)) {
+                    $query = $this->bookingRepository->inboxStaff($user->place_id, $request->get('search'));
+
+                    foreach ($query as $item) {
+                        $table = $this->tableRepository->find($item->table_id);
+                        $customer = $this->userRepository->find($item->user_id);
+
+                        if (isset($table) && isset($customer)) {
+                            $item->table = $table;
+                            $item->customer_name = $customer->name;
+                            $item->customer_last_name = $customer->last_name;
+                            $item->customer_avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $customer->avatar, MediaSizeEnum::medium);
+                        }
+                    }
+
+                    $response->setData($query);
+                }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function assigned(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $query = $this->bookingRepository->assignedStaff($user->id, $request->get('search'));
 
                     foreach ($query as $item) {
                         $table = $this->tableRepository->find($item->table_id);

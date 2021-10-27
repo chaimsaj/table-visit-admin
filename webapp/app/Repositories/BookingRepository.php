@@ -83,18 +83,38 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         ];
     }
 
-    public function staffSearch(int $place_id, string $search = null): Collection
+    public function inboxStaff(int $place_id, string $search = null): Collection
     {
+        // ->whereDate('book_date', '>=', today())
+
         return $this->model->where('deleted', 0)
             ->where('published', 1)
+            ->where('assigned_at', '=', null)
+            ->where('closed_at', '=', null)
+            ->where('place_id', $place_id)
             ->where(function ($query) use ($search) {
                 if (!empty($search) && strlen($search) >= 2) {
                     $query->where('code', 'like', '%' . $search . '%')
                         ->orWhere('confirmation_code', 'like', '%' . $search . '%');
                 }
             })
-            ->whereDate('book_date', '>=', today())
-            ->where('place_id', $place_id)
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
+    public function assignedStaff(int $user_id, string $search = null): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('assigned_at', '!=', null)
+            ->where('assigned_to_user_id', $user_id)
+            ->where('closed_at', '=', null)
+            ->where(function ($query) use ($search) {
+                if (!empty($search) && strlen($search) >= 2) {
+                    $query->where('code', 'like', '%' . $search . '%')
+                        ->orWhere('confirmation_code', 'like', '%' . $search . '%');
+                }
+            })
             ->orderBy('id', 'desc')
             ->get();
     }
