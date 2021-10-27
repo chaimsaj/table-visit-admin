@@ -99,7 +99,7 @@ class BookingsController extends ApiController
                     $db->deleted = 0;
 
                     if ($request->has('special_comment')) {
-                        $db->special_comment = $request->get('special_comment');
+                        $db->special_comment = AppHelper::limitString($request->get('special_comment'), 500);
                     }
 
                     $this->bookingRepository->save($db);
