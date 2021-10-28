@@ -119,3 +119,5 @@ nano /usr/share/nginx/html/table-visit/public/info.php
 us-central1-a
 
 sudo certbot --nginx -d myngly-dev.aolideas.com
+
+/usr/local/Cellar/mariadb/10.5.9/bin/mariadb-dump
