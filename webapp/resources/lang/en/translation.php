@@ -63,6 +63,11 @@ return [
     "BottleRates" => "Bottle Rates",
     "BottlesAndDrinks" => "Bottles & Drinks",
     "BottleRate" => "Bottle Rate",
+    "BottleService" => "Bottle / Service",
+
+    "TableNumber" => "Table Number",
+    "AssignedTo" => "Assigned To",
+    "ReservedTable" => "Reserved Table",
 
     "ConfirmationCode" => "Confirmation Code",
     "BookDate" => "Date",
@@ -171,6 +176,8 @@ return [
     "Payments" => "Payments",
 
     "Customer" => "Customer",
+
+    "SpecialComment" => "Special comment",
 
     "Financial" => "Financial",
     "Commissions" => "Commissions",

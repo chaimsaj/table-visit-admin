@@ -45,6 +45,8 @@ Route::get('/bookings', [App\Http\Controllers\BookingsController::class, 'index'
 Route::get('/booking/{id}', [App\Http\Controllers\BookingsController::class, 'detail'])->name('booking.detail');
 Route::post('/booking/{id}', [App\Http\Controllers\BookingsController::class, 'save'])->name('booking.save');
 Route::get('/booking/delete/{id}', [App\Http\Controllers\BookingsController::class, 'delete'])->name('booking.delete');
+Route::get('/booking/close/{id}', [App\Http\Controllers\BookingsController::class, 'close'])->name('booking.close');
+Route::get('/booking/cancel/{id}', [App\Http\Controllers\BookingsController::class, 'cancel'])->name('booking.cancel');
 
 // Payments
 Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');

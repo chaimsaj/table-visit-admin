@@ -33,7 +33,7 @@ function sweetWarning() {
             showCancelButton: true,
             confirmButtonColor: "#34c38f",
             cancelButtonColor: "#f46a6a",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, I'm sure!"
         }).then(function (result) {
             if (result.value) {
                 showLoad();
