@@ -123,7 +123,7 @@
                     </ul>
                 </li>
 
-                <li>
+                {{--<li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-lock-alt"></i>
                         <span key="t-authentication">@lang('translation.Authentication')</span>
@@ -137,7 +137,7 @@
                         <li><a href="{{route("content.lock-screen")}}"
                                key="t-lock-screen">@lang('translation.LockScreen')</a></li>
                     </ul>
-                </li>
+                </li>--}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

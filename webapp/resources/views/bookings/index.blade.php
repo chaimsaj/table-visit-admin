@@ -24,10 +24,11 @@
                         <tr class="text-center">
                             <th>@lang('translation.Code')</th>
                             <th>@lang('translation.ConfirmationCode')</th>
+                            <th>@lang('translation.Customer')</th>
+                            <th>@lang('translation.Place')</th>
                             <th>@lang('translation.BookDate')</th>
-                            <th>@lang('translation.TotalAmount')</th>
                             <th>@lang('translation.GuestsCount')</th>
-                            <th class="th45 no-sort">@lang('translation.Delete')</th>
+                            <th>@lang('translation.TotalAmount')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
                         </thead>

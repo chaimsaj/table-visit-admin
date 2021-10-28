@@ -21,15 +21,16 @@ function initBookings() {
         columns: [
             {data: 'code'},
             {data: 'confirmation_code'},
+            {data: 'customer'},
+            {data: 'place'},
             {data: 'book_date'},
-            {data: 'total_amount'},
             {data: 'guests_count'},
-            {
+            {data: 'total_amount'},
+            /*{
                 data: null, render: function (data) {
                     return null;
-                    // return '<a href="/booking/delete/' + data['id'] + '" class="text-danger sweet-warning"><i class="mdi mdi-delete font-size-18"></i></a>';
                 }
-            },
+            },*/
             {
                 data: null, render: function (data) {
                     return '<a href="/booking/' + data['id'] + '" class="text-success load"><i class="mdi mdi-pencil font-size-18"></i></a>';

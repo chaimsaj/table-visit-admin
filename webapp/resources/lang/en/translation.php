@@ -170,6 +170,8 @@ return [
     "Payment" => "Payment",
     "Payments" => "Payments",
 
+    "Customer" => "Customer",
+
     "Financial" => "Financial",
     "Commissions" => "Commissions",
     "Fees" => "Fees",

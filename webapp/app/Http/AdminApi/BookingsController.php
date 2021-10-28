@@ -11,6 +11,7 @@ use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,13 +20,19 @@ use Throwable;
 class BookingsController extends AdminApiController
 {
     private BookingRepositoryInterface $bookingRepository;
+    private UserRepositoryInterface $userRepository;
+    private PlaceRepositoryInterface $placeRepository;
 
     public function __construct(BookingRepositoryInterface $bookingRepository,
+                                UserRepositoryInterface    $userRepository,
+                                PlaceRepositoryInterface   $placeRepository,
                                 LogServiceInterface        $logger)
     {
         parent::__construct($logger);
 
         $this->bookingRepository = $bookingRepository;
+        $this->userRepository = $userRepository;
+        $this->placeRepository = $placeRepository;
     }
 
     public function list(Request $request): JsonResponse
@@ -49,14 +56,14 @@ class BookingsController extends AdminApiController
             case 1:
                 $order_by = 'confirmation_code';
                 break;
-            case 2:
+            case 4:
                 $order_by = 'book_date';
                 break;
-            case 3:
-                $order_by = 'total_amount';
-                break;
-            case 4:
+            case 5:
                 $order_by = 'guests_count';
+                break;
+            case 6:
+                $order_by = 'total_amount';
                 break;
         }
 
@@ -65,6 +72,17 @@ class BookingsController extends AdminApiController
                 $query = $this->bookingRepository->activesPaged($start, $length, $order_by, $this->order(), $search);
             else
                 $query = $this->bookingRepository->activesPagedByTenant($tenant_id, $start, $length, $order_by, $this->order(), $search);
+
+            foreach ($query["data"] as $item) {
+                $user = $this->userRepository->find($item->user_id);
+                $place = $this->placeRepository->find($item->place_id);
+
+                if (isset($user))
+                    $item->customer = $user->name . ' ' . $user->last_name;
+
+                if (isset($place))
+                    $item->place = $place->name;
+            }
 
             $count = $query["count"];
 
