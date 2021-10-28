@@ -114,94 +114,6 @@ class BookingsController extends ApiController
         return response()->json($response);
     }
 
-    public function assign(Request $request): JsonResponse
-    {
-        $response = new ApiModel();
-        $response->setSuccess();
-
-        try {
-            if (Auth::check()) {
-                $user = Auth::user();
-
-                if (isset($user)) {
-                    $booking = $this->bookingRepository->find($request->get('booking_id'));
-
-                    if (isset($booking) && !isset($booking->assigned_at)) {
-                        $booking->assigned_at = now();
-                        $booking->assigned_to_user_id = $request->get('user_id');
-
-                        $this->bookingRepository->save($booking);
-                    }
-                }
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-            $response->setError($ex->getMessage());
-        }
-
-        return response()->json($response);
-    }
-
-    public function close(Request $request): JsonResponse
-    {
-        $response = new ApiModel();
-        $response->setSuccess();
-
-        try {
-            if (Auth::check()) {
-                $user = Auth::user();
-
-                if (isset($user)) {
-                    $booking = $this->bookingRepository->find($request->get('booking_id'));
-
-                    if (isset($booking) && !isset($booking->closed_at)) {
-                        $booking->closed_at = now();
-                        $booking->closed_by_user_id = $user->id;
-
-                        $this->bookingRepository->save($booking);
-                    }
-                }
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-            $response->setError($ex->getMessage());
-        }
-
-        return response()->json($response);
-    }
-
-    public function cancel(Request $request): JsonResponse
-    {
-        $response = new ApiModel();
-        $response->setSuccess();
-
-        try {
-            if (Auth::check()) {
-                $user = Auth::user();
-
-                if (isset($user)) {
-                    $booking = $this->bookingRepository->find($request->get('booking_id'));
-
-                    if (isset($booking) && !isset($booking->closed_at)) {
-                        $booking->closed_at = now();
-                        $booking->canceled_at = now();
-                        $booking->closed_by_user_id = $user->id;
-
-                        $this->bookingRepository->save($booking);
-                    }
-                }
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-            $response->setError($ex->getMessage());
-        }
-
-        return response()->json($response);
-    }
-
     public function list(): JsonResponse
     {
         $response = new ApiModel();
@@ -229,24 +141,6 @@ class BookingsController extends ApiController
 
                     $response->setData($query);
                 }
-            }
-
-        } catch (Throwable $ex) {
-            $this->logger->save($ex);
-            $response->setError($ex->getMessage());
-        }
-
-        return response()->json($response);
-    }
-
-    public function search(Request $request): JsonResponse
-    {
-        $response = new ApiModel();
-        $response->setSuccess();
-
-        try {
-            if (Auth::check()) {
-                $user = Auth::user();
             }
 
         } catch (Throwable $ex) {

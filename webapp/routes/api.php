@@ -160,4 +160,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Staff Booking
     Route::post('/staff/bookings/inbox', [App\Http\Api\Staff\BookingsController::class, 'inbox'])->name('api.staff.bookings.inbox');
     Route::post('/staff/bookings/assigned', [App\Http\Api\Staff\BookingsController::class, 'assigned'])->name('api.staff.bookings.assigned');
+
+    Route::post('/staff/booking/assign', [App\Http\Api\Staff\BookingsController::class, 'assign'])->name('api.staff.booking.assign');
+    Route::post('/staff/booking/close', [App\Http\Api\Staff\BookingsController::class, 'close'])->name('api.staff.booking.close');
+    Route::post('/staff/booking/cancel', [App\Http\Api\Staff\BookingsController::class, 'cancel'])->name('api.staff.booking.cancel');
 });
