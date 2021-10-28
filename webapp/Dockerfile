@@ -66,6 +66,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Run composer install to install the dependencies
 RUN composer install --optimize-autoloader --no-interaction --no-progress;
 
+# RUN php artisan migrate;
+
 # Expose the port nginx is reachable on
 EXPOSE 8080
 
