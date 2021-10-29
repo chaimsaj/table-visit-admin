@@ -319,7 +319,7 @@ class PlacesController extends ApiController
         $ratings = $this->ratingRepository->ratingByPlace($item->id);
 
         $item->place_rating_count = $ratings->count();
-        $item->place_rating_avg = $ratings->avg('rating');
+        $item->place_rating_avg = round($ratings->avg('rating'), 2);
 
         if ($item->place_rating_count == 0)
             $item->place_rating_avg = 0;

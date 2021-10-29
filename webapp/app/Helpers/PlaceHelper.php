@@ -17,8 +17,8 @@ class PlaceHelper
         $item->floor_plan_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->floor_plan_path, MediaSizeEnum::large);
         $item->food_menu_path = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $item->food_menu_path, MediaSizeEnum::large);
 
-        $item->place_rating_count = rand(0, 100);
-        $item->place_rating_avg = rand(1, 5);
+        $item->place_rating_count = 0;
+        $item->place_rating_avg = 0;
 
         if ($place_types->count() > 0)
             $item->place_type_name = $place_types[0]->name;
