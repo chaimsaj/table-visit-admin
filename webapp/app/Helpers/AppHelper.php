@@ -125,7 +125,7 @@ class AppHelper
         return strtoupper(Str::random(4)) . sprintf("%08d", $id);
     }
 
-    static function limitString(string $data, int $limit): string
+    static function limitString(?string $data, int $limit): ?string
     {
         if (!empty($data) && strlen($data) > $limit)
             return mb_strimwidth($data, 0, $limit, "..");
