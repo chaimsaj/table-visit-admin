@@ -53,8 +53,8 @@ class BookingChatsController extends ApiController
                     $db->date = now();
                     $db->chat_text = '';
                     $db->chat_type = intval($request->get('chat_type'));
-                    $db->external_name = intval($request->get('external_name'));
-                    $db->external_code = intval($request->get('external_code'));
+                    $db->external_name = $request->get('external_name');
+                    $db->external_code = $request->get('external_code');
                     $db->chat_status = BookingChatStatusEnum::Opened;
                     $db->booking_id = $booking->id;
                     $db->place_id = $booking->place_id;
