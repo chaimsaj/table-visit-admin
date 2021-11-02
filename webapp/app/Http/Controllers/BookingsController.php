@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\BookingStatusEnum;
+use App\Core\TableStatusEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
@@ -126,13 +128,20 @@ class BookingsController extends AdminController
             if (isset($booking) && !isset($booking->closed_by_user_id)) {
                 $user = Auth::user();
 
+                $booking->booking_status = BookingStatusEnum::Completed;
                 $booking->closed_by_user_id = $user->id;
                 $booking->closed_at = now();
-
                 $this->bookingRepository->save($booking);
+
+                // Update Table Status
+                $table = $this->tableRepository->find($booking->table_id);
+                if (isset($table)) {
+                    $table->table_status = TableStatusEnum::Available;
+                    $this->tableRepository->save($table);
+                }
             }
         } catch (Throwable $ex) {
-
+            $this->logger->save($ex);
         }
 
         return redirect("bookings");
@@ -144,12 +153,20 @@ class BookingsController extends AdminController
             $booking = $this->bookingRepository->find($id);
 
             if (isset($booking) && !isset($booking->canceled_at)) {
-                $booking->canceled_at = now();
 
+                $booking->booking_status = BookingStatusEnum::Canceled;
+                $booking->canceled_at = now();
                 $this->bookingRepository->save($booking);
+
+                // Update Table Status
+                $table = $this->tableRepository->find($booking->table_id);
+                if (isset($table)) {
+                    $table->table_status = TableStatusEnum::Available;
+                    $this->tableRepository->save($table);
+                }
             }
         } catch (Throwable $ex) {
-
+            $this->logger->save($ex);
         }
 
         return redirect("bookings");

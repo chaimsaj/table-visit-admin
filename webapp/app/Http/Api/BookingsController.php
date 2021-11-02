@@ -135,7 +135,7 @@ class BookingsController extends ApiController
                     $query = $actives->merge($pasts);
 
                     foreach ($query as $item) {
-                        $item->is_past = $item->book_date < today();
+                        $item->is_past = ($item->closed_at != null || $item->canceled_at != null);
                         $place = $this->placeRepository->find($item->place_id);
 
                         if (isset($place)) {

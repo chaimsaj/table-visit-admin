@@ -19,8 +19,9 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where('user_id', $user_id)
-            ->whereDate('book_date', '>=', today())
-            // ->whereTime('matriculas.fe_update', '>=', $last_update)
+            //->whereDate('book_date', '>=', today())
+            ->where('closed_at', '=', null)
+            ->where('canceled_at', '=', null)
             ->orderBy('id', 'desc')
             ->get();
     }
@@ -30,7 +31,8 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         return $this->model->where('deleted', 0)
             ->where('published', 1)
             ->where('user_id', $user_id)
-            ->whereDate('book_date', '<', today())
+            ->where('closed_at', '!=', null)
+            ->orWhere('canceled_at', '!=', null)
             ->orderBy('id', 'desc')
             ->take($length)
             ->get();
