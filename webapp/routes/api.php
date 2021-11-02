@@ -164,4 +164,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/staff/booking/assign', [App\Http\Api\Staff\BookingsController::class, 'assign'])->name('api.staff.booking.assign');
     Route::post('/staff/booking/close', [App\Http\Api\Staff\BookingsController::class, 'close'])->name('api.staff.booking.close');
     Route::post('/staff/booking/cancel', [App\Http\Api\Staff\BookingsController::class, 'cancel'])->name('api.staff.booking.cancel');
+
+    // Booking Chats
+    Route::get('/booking/chats', [App\Http\Api\BookingChatsController::class, 'list'])->name('api.booking.chat.list');
+    Route::post('/booking/chat/save', [App\Http\Api\BookingChatsController::class, 'save'])->name('api.booking.chat.save');
 });
