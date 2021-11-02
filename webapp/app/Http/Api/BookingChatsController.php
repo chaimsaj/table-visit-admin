@@ -5,13 +5,14 @@ namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
 use App\Core\BookingChatStatusEnum;
-use App\Core\BookingStatusEnum;
-use App\Core\TableStatusEnum;
-use App\Helpers\AppHelper;
+use App\Core\MediaSizeEnum;
+use App\Helpers\MediaHelper;
+use App\Helpers\PlaceHelper;
 use App\Http\Api\Base\ApiController;
 use App\Models\BookingChat;
 use App\Repositories\BookingChatRepositoryInterface;
 use App\Repositories\BookingRepositoryInterface;
+use App\Repositories\PlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,15 +23,18 @@ class BookingChatsController extends ApiController
 {
     private BookingChatRepositoryInterface $bookingChatRepository;
     private BookingRepositoryInterface $bookingRepository;
+    private PlaceRepositoryInterface $placeRepository;
 
     public function __construct(BookingChatRepositoryInterface $bookingChatRepository,
                                 BookingRepositoryInterface     $bookingRepository,
+                                PlaceRepositoryInterface       $placeRepository,
                                 LogServiceInterface            $logger)
     {
         parent::__construct($logger);
 
         $this->bookingChatRepository = $bookingChatRepository;
         $this->bookingRepository = $bookingRepository;
+        $this->placeRepository = $placeRepository;
     }
 
     public function save(Request $request): JsonResponse
@@ -84,7 +88,17 @@ class BookingChatsController extends ApiController
                 $user = Auth::user();
 
                 if (isset($user)) {
-                    $query = $this->bookingChatRepository->published();
+                    $query = $this->bookingChatRepository->loadByUser($user->id);
+
+                    foreach ($query as $item) {
+                        $place = $this->placeRepository->find($item->place_id);
+
+                        if (isset($place)) {
+                            $item->place_name = $place->name;
+                            $item->place_image = MediaHelper::getImageUrl(MediaHelper::getPlacesPath(), $place->image_path, MediaSizeEnum::medium);;
+                        }
+                    }
+
                     $response->setData($query);
                 }
             }

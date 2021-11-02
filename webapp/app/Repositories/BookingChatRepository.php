@@ -25,11 +25,11 @@ class BookingChatRepository extends BaseRepository implements BookingChatReposit
             ->first();
     }
 
-    public function loadByUser(int $user_id): Collection
+    public function loadByUser(int $from_user_id): Collection
     {
         return $this->model->where('deleted', '=', 0)
             ->where('published', '=', 1)
-            ->where('user_id', '=', $user_id)
+            ->where('from_user_id', '=', $from_user_id)
             ->orderBy('id', 'desc')
             ->get();
     }

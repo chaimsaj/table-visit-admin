@@ -11,5 +11,5 @@ interface BookingChatRepositoryInterface extends BaseRepositoryInterface
 {
     public function loadBy(int $booking_id, int $chat_type): ?Model;
 
-    public function loadByUser(int $user_id): Collection;
+    public function loadByUser(int $from_user_id): Collection;
 }
