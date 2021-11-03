@@ -117,7 +117,11 @@ class BookingsController extends ApiController
 
                     if (isset($booking) && !isset($booking->assigned_at)) {
                         $booking->assigned_at = now();
-                        $booking->assigned_to_user_id = $request->get('user_id');
+
+                        if ($request->has('user_id'))
+                            $booking->assigned_to_user_id = $request->get('user_id');
+                        else
+                            $booking->assigned_to_user_id = $user->id;
 
                         $this->bookingRepository->save($booking);
                     }
