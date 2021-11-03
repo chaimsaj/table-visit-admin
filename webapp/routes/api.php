@@ -146,7 +146,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/notifications/send_validation', [App\Http\Api\NotificationsController::class, 'send_validation'])->name('api.notifications.send_validation');
 
     // Table Spends
-    Route::get('/table/spends', [App\Http\Api\TableSpendsController::class, 'list'])->name('api.table.spends');
     Route::post('/table/spend/add', [App\Http\Api\TableSpendsController::class, 'add'])->name('api.table.spends.add');
     Route::get('/table/spend/remove/{id}', [App\Http\Api\TableSpendsController::class, 'remove'])->name('api.table.spends.remove');
 
@@ -159,8 +158,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/booking/guest/add', [App\Http\Api\BookingGuestsController::class, 'list'])->name('api.booking.guests.add');
 
     // Staff Booking
-    Route::post('/staff/bookings/inbox', [App\Http\Api\Staff\BookingsController::class, 'inbox'])->name('api.staff.bookings.inbox');
-    Route::post('/staff/bookings/assigned', [App\Http\Api\Staff\BookingsController::class, 'assigned'])->name('api.staff.bookings.assigned');
+    Route::post('/staff/bookings/inbox', [App\Http\Api\Staff\BookingsController::class, 'inbox'])->name('api.staff.booking.inbox');
+    Route::post('/staff/bookings/assigned', [App\Http\Api\Staff\BookingsController::class, 'assigned'])->name('api.staff.booking.assigned');
 
     Route::post('/staff/booking/assign', [App\Http\Api\Staff\BookingsController::class, 'assign'])->name('api.staff.booking.assign');
     Route::post('/staff/booking/close', [App\Http\Api\Staff\BookingsController::class, 'close'])->name('api.staff.booking.close');
@@ -169,4 +168,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Booking Chats
     Route::get('/booking/chats', [App\Http\Api\BookingChatsController::class, 'list'])->name('api.booking.chat.list');
     Route::post('/booking/chat/save', [App\Http\Api\BookingChatsController::class, 'save'])->name('api.booking.chat.save');
+
+    // Staff Table Spends
+    Route::post('/staff/table-spends', [App\Http\Api\Staff\TableSpendsController::class, 'list'])->name('api.staff.table_spends.list');
 });
