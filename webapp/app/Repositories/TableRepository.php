@@ -3,10 +3,7 @@
 
 namespace App\Repositories;
 
-use App\Models\City;
-use App\Models\ServiceRate;
-use App\Models\Service;
-use App\Models\ServiceType;
+use App\Core\TableStatusEnum;
 use App\Models\Table;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
@@ -20,10 +17,13 @@ class TableRepository extends BaseRepository implements TableRepositoryInterface
 
     public function loadByPlace(int $place_id): Collection
     {
+        $table_status = TableStatusEnum::Available;
+
         return $this->model->where('published', '=', 1)
             ->where('show', '=', 1)
             ->where('deleted', '=', 0)
             ->where('place_id', '=', $place_id)
+            ->where('table_status', '=', $table_status)
             ->get();
     }
 }

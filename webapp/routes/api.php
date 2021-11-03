@@ -151,7 +151,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/table/spend/remove/{id}', [App\Http\Api\TableSpendsController::class, 'remove'])->name('api.table.spends.remove');
 
     // User Settings
-    Route::get('/user/settings', [App\Http\Api\UserSettingsController::class, 'list'])->name('api.user.settings.list');
+    Route::get('/user/settings', [App\Http\Api\UserSettingsController::class, 'list'])->name('api.user.setting.list');
+    Route::post('/user/setting/save', [App\Http\Api\UserSettingsController::class, 'save'])->name('api.user.setting.save');
 
     // Booking Guests
     Route::get('/booking/guests/{booking_id}', [App\Http\Api\BookingGuestsController::class, 'list'])->name('api.booking.guests.list');
