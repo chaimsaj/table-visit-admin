@@ -85,7 +85,9 @@ class UsersController extends ApiController
             if (Auth::check()) {
                 $user = Auth::user();
                 $profile = $this->userProfileRepository->loadByUser($user->id);
-                $response->setData($profile);
+
+                if (isset($profile))
+                    $response->setData($profile);
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
