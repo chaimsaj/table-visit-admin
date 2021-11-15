@@ -5,7 +5,6 @@ namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
 use App\Core\BookingStatusEnum;
-use App\Core\TableStatusEnum;
 use App\Helpers\AppHelper;
 use App\Helpers\PlaceHelper;
 use App\Http\Api\Base\ApiController;
@@ -104,10 +103,6 @@ class BookingsController extends ApiController
                     $db->code = AppHelper::getBookingCode($db->id, $db->place_id);
                     $db->confirmation_code = AppHelper::getBookingConfirmationCode($db->id);
                     $this->bookingRepository->save($db);
-
-                    // Update Table Status
-                    $table->table_status = TableStatusEnum::Reserved;
-                    $this->tableRepository->save($table);
                 }
             }
 

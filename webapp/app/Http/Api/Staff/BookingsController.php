@@ -4,7 +4,6 @@ namespace App\Http\Api\Staff;
 
 use App\AppModels\ApiModel;
 use App\Core\MediaSizeEnum;
-use App\Core\TableStatusEnum;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
 use App\Repositories\BookingRepositoryInterface;
@@ -156,14 +155,6 @@ class BookingsController extends ApiController
                         $booking->closed_by_user_id = $user->id;
 
                         $this->bookingRepository->save($booking);
-
-                        // Open Table
-                        $table = $this->tableRepository->find($booking->table_id);
-
-                        if (isset($table)) {
-                            $table->table_status = TableStatusEnum::Available;
-                            $this->tableRepository->save($table);
-                        }
                     }
                 }
             }
