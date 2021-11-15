@@ -106,8 +106,12 @@ class AuthController extends ApiController
         ]);
 
         if ($validator->fails()) {
-            // $validator->getMessageBag()
-            $response->setError('Please fill out all fields as required..');
+            $error = 'An error occurred. Please try again later.';
+
+            if ($validator->getMessageBag()->count() != 0)
+                $error = $validator->getMessageBag()->first();
+
+            $response->setError($error);
             return response()->json($response);
         }
 
