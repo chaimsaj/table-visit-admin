@@ -24,7 +24,7 @@ class MainController extends ApiController
 
     public function health(): JsonResponse
     {
-        Mail::to('olegp@aolideas.com')->send(new BookingInvitationEmail());
+        Mail::to('olegp@aolideas.com')->send(new ForgotPasswordEmail());
 
         $response = new ApiModel();
         $response->setData(now());
