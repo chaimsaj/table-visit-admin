@@ -4,13 +4,13 @@
 namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
-use App\Core\ApiCodeEnum;
-use App\Core\LanguageEnum;
 use App\Http\Api\Base\ApiController;
+use App\Mail\ForgotPasswordEmail;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class NotificationsController extends ApiController
@@ -26,9 +26,14 @@ class NotificationsController extends ApiController
         $response->setSuccess();
 
         try {
-            if (Auth::check()) {
+            /*if (Auth::check()) {
                 $user = Auth::user();
-            }
+            $data = ['message' => 'This is a test!'];
+            Mail::to('john@example.com')->send(new TestEmail($data));
+            }*/
+
+
+
         } catch (Throwable $ex) {
             $this->logger->save($ex);
             $response->setError($ex->getMessage());
