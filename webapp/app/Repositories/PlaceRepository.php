@@ -29,6 +29,17 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->get();
     }
 
+    public function featuredByCity(int $city_id, int $top = 25): Collection
+    {
+        return $this->model->where('published', '=', 1)
+            ->where('show', '=', 1)
+            ->where('deleted', '=', 0)
+            ->where('city_id', '=', $city_id)
+            ->take($top)
+            ->orderBy('name')
+            ->get();
+    }
+
     public function featured(int $top = 25): Collection
     {
         return $this->model->where('published', '=', 1)
@@ -49,9 +60,10 @@ class PlaceRepository extends BaseRepository implements PlaceRepositoryInterface
             ->get();
     }
 
-    public function search(string $search, int $top = 25): Collection
+    public function search(string $search, int $city_id, int $top = 25): Collection
     {
         return $this->model->where('published', '=', 1)
+            ->where('city_id', '=', $city_id)
             ->where('name', 'like', '%' . $search . '%')
             ->where('show', '=', 1)
             ->where('deleted', '=', 0)

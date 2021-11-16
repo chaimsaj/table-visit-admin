@@ -12,11 +12,13 @@ interface PlaceRepositoryInterface extends BaseRepositoryInterface
 {
     public function byCity(int $city_id, int $top = 25): Collection;
 
+    public function featuredByCity(int $city_id, int $top = 25): Collection;
+
     public function featured(int $top = 25): Collection;
 
     public function near(int $top = 25): Collection;
 
-    public function search(string $search, int $top = 25): Collection;
+    public function search(string $search, int $city_id,  int $top = 25): Collection;
 
     public function favorites($user_id): Collection;
 }
