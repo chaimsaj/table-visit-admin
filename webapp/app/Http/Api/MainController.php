@@ -7,6 +7,7 @@ use App\AppModels\ApiModel;
 use App\Core\ApiCodeEnum;
 use App\Helpers\GoogleStorageHelper;
 use App\Http\Api\Base\ApiController;
+use App\Mail\BookingInvitationEmail;
 use App\Mail\ForgotPasswordEmail;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,7 @@ class MainController extends ApiController
 
     public function health(): JsonResponse
     {
-        Mail::to('olegp@aolideas.com')->send(new ForgotPasswordEmail());
+        Mail::to('olegp@aolideas.com')->send(new BookingInvitationEmail());
 
         $response = new ApiModel();
         $response->setData(now());

@@ -26,8 +26,12 @@ class BookingInvitationEmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): BookingInvitationEmail
     {
-        return $this->view('view.name');
+        $subject = 'Booking Invitation Email';
+
+        return $this->view('emails.booking-invitation')
+            ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+            ->subject($subject);
     }
 }
