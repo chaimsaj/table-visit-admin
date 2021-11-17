@@ -67,10 +67,12 @@ class CitiesController extends ApiController
             if (isset($request_data) && isset($request_data['word']))
                 $word = $request_data['word'];
 
-            if (strlen($word) >= 3) {
-                $query = $this->cityRepository->search($word);
-                $response->setData($query);
-            }
+            $query = $this->cityRepository->search($word);
+
+            $response->setData($query);
+
+            /*if (strlen($word) >= 3) {
+            }*/
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }

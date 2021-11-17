@@ -118,7 +118,8 @@ class TablesController extends ApiController
             $date = DateTime::createFromFormat('m-d-Y H:i:s', $request->get('date') . ' 00:00:00');
             $query = $this->tableRateRepository->rate($request->get('table_id'), $date);
 
-            $response->setData($query);
+            if (isset($query))
+                $response->setData($query);
 
         } catch (Throwable $ex) {
             $this->logger->save($ex);
