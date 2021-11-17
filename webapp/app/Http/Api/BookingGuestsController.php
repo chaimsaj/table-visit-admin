@@ -5,6 +5,7 @@ namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
 use App\Http\Api\Base\ApiController;
+use App\Models\BookingGuest;
 use App\Repositories\BookingGuestRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -31,12 +32,10 @@ class BookingGuestsController extends ApiController
 
         try {
             if (Auth::check()) {
-                $user = Auth::user();
+                $query = $this->bookingGuestRepository->loadByBooking($booking_id);
 
-                if (isset($user)) {
-                    $query = $this->bookingGuestRepository->published();
+                if (isset($query))
                     $response->setData($query);
-                }
             }
 
         } catch (Throwable $ex) {
@@ -53,10 +52,28 @@ class BookingGuestsController extends ApiController
         $response->setSuccess();
 
         try {
-            // $data = $request->json()->all();
-
             if (Auth::check()) {
-                $user = Auth::user();
+                $guests = $request->get("guests");
+
+                foreach ($guests as $guest) {
+                    try {
+                        $booking_guest = new BookingGuest();
+                        $booking_guest->name = $guest->name;
+                        $booking_guest->email = $guest->email;
+                        $booking_guest->phone = $guest->phone;
+                        $booking_guest->comment = $guest->comment;
+                        $booking_guest->booking_id = $guest->booking_id;
+                        $booking_guest->place_id = $guest->place_id;
+                        $booking_guest->table_id = $guest->table_id;
+                        $booking_guest->published = true;
+                        $booking_guest->deleted = false;
+
+                        $this->bookingGuestRepository->save($booking_guest);
+
+                    } catch (Throwable $ex) {
+                        $this->logger->save($ex);
+                    }
+                }
             }
 
         } catch (Throwable $ex) {
