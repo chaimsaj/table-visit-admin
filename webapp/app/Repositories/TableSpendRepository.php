@@ -22,4 +22,12 @@ class TableSpendRepository extends BaseRepository implements TableSpendRepositor
             ->orderBy('id', 'asc')
             ->get();
     }
+
+    public function loadTotalByBooking(int $booking_id)
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('booking_id', $booking_id)
+            ->sum('total_amount');
+    }
 }

@@ -9,4 +9,6 @@ use Illuminate\Support\Collection;
 interface TableSpendRepositoryInterface extends BaseRepositoryInterface
 {
     public function loadByBooking(int $booking_id): Collection;
+
+    public function loadTotalByBooking(int $booking_id);
 }

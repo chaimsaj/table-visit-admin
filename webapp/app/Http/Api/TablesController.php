@@ -56,6 +56,28 @@ class TablesController extends ApiController
         return response()->json($response);
     }
 
+    public function with_date(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+        $language = LanguageEnum::English;
+
+        try {
+            $query = $this->tableRepository->loadByPlace($request->get('place_id'));
+
+            foreach ($query as $item) {
+                $item->detail = $this->detail($item->id, $language);
+            }
+
+            $response->setData($query);
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
+    }
+
     public function find($id): JsonResponse
     {
         $response = new ApiModel();

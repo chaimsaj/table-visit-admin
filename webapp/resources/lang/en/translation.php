@@ -40,6 +40,10 @@ return [
     "TableDescription" => "Table description",
     "MinimumSpend" => "Minimum spend",
     "GuestsCount" => "Guests count",
+    "Guests" => "Guests",
+    "TableAmount" => "Table Amount",
+
+    "SpendsAmount" => "Spends",
 
     "TableTypes" => "Table Types",
     "TableType" => "Table Type",

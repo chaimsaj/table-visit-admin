@@ -23,9 +23,10 @@ function initBookings() {
             {data: 'confirmation_code'},
             {data: 'customer'},
             {data: 'place'},
-            {data: 'book_date'},
+            {data: 'book_date_data'},
             {data: 'guests_count'},
             {data: 'total_amount'},
+            {data: 'spent_amount'},
             /*{
                 data: null, render: function (data) {
                     return null;

@@ -27,8 +27,9 @@
                             <th>@lang('translation.Customer')</th>
                             <th>@lang('translation.Place')</th>
                             <th>@lang('translation.BookDate')</th>
-                            <th>@lang('translation.GuestsCount')</th>
-                            <th>@lang('translation.TotalAmount')</th>
+                            <th>@lang('translation.Guests')</th>
+                            <th>@lang('translation.TableAmount')</th>
+                            <th class="no-sort">@lang('translation.SpendsAmount')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
                         </tr>
                         </thead>

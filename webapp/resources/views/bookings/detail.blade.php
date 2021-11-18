@@ -43,7 +43,7 @@
                                 <td>{{$data->guests_count ?? ''}}</td>
                             </tr>
                             <tr>
-                                <th scope="row">@lang('translation.TotalAmount')</th>
+                                <th scope="row">@lang('translation.TableAmount')</th>
                                 <td>{{$data->total_amount ?? ''}}</td>
                             </tr>
                             </tbody>

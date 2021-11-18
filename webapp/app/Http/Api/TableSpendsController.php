@@ -61,6 +61,9 @@ class TableSpendsController extends ApiController
                     $db->deleted = 0;
 
                     $this->tableSpendRepository->save($db);
+
+                    $booking->spent_amount += $db->total_amount;
+                    $this->bookingRepository->save($booking);
                 }
             }
         } catch (Throwable $ex) {

@@ -11,8 +11,10 @@ use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\CityRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\StateRepositoryInterface;
+use App\Repositories\TableSpendRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
+use DateTime;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Throwable;
@@ -22,17 +24,20 @@ class BookingsController extends AdminApiController
     private BookingRepositoryInterface $bookingRepository;
     private UserRepositoryInterface $userRepository;
     private PlaceRepositoryInterface $placeRepository;
+    private TableSpendRepositoryInterface $tableSpendRepository;
 
-    public function __construct(BookingRepositoryInterface $bookingRepository,
-                                UserRepositoryInterface    $userRepository,
-                                PlaceRepositoryInterface   $placeRepository,
-                                LogServiceInterface        $logger)
+    public function __construct(BookingRepositoryInterface    $bookingRepository,
+                                UserRepositoryInterface       $userRepository,
+                                PlaceRepositoryInterface      $placeRepository,
+                                TableSpendRepositoryInterface $tableSpendRepository,
+                                LogServiceInterface           $logger)
     {
         parent::__construct($logger);
 
         $this->bookingRepository = $bookingRepository;
         $this->userRepository = $userRepository;
         $this->placeRepository = $placeRepository;
+        $this->tableSpendRepository = $tableSpendRepository;
     }
 
     public function list(Request $request): JsonResponse
@@ -82,6 +87,10 @@ class BookingsController extends AdminApiController
 
                 if (isset($place))
                     $item->place = $place->name;
+
+                //$item->table_spends_amount = $this->tableSpendRepository->loadTotalByBooking($item->id);
+
+                $item->book_date_data = DateTime::createFromFormat('Y-m-d H:i:s', $item->book_date)->format('m-d-Y');
             }
 
             $count = $query["count"];
