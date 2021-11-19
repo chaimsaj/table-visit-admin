@@ -49,8 +49,14 @@ class UsersController extends AdminController
 
         if ($is_admin)
             $users = $this->repository->actives();
-        else
-            $users = $this->repository->activesByTenant(Auth::user()->tenant_id);
+        else {
+            $tenant_id = 0;
+
+            if (isset(Auth::user()->tenant_id))
+                $tenant_id = Auth::user()->tenant_id;
+
+            $users = $this->repository->activesByTenant($tenant_id);
+        }
 
         foreach ($users as $user) {
             $user->user_type_name = AppHelper::userType($user->user_type_id);
@@ -80,8 +86,14 @@ class UsersController extends AdminController
         if ($is_admin) {
             $tenants = $this->tenantRepository->actives();
             $places = $this->placeRepository->actives();
-        } else
-            $places = $this->placeRepository->activesByTenant(Auth::user()->tenant_id);
+        } else {
+            $tenant_id = 0;
+
+            if (isset(Auth::user()->tenant_id))
+                $tenant_id = Auth::user()->tenant_id;
+
+            $places = $this->placeRepository->activesByTenant($tenant_id);
+        }
 
         if (isset($data))
             $data->avatar_url = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $data->avatar);

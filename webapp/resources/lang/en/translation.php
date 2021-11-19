@@ -71,6 +71,7 @@ return [
 
     "TableNumber" => "Table Number",
     "AssignedTo" => "Assigned To",
+    "AcceptedBy" => "Accepted By",
     "ReservedTable" => "Reserved Table",
 
     "ConfirmationCode" => "Confirmation Code",

@@ -6,6 +6,8 @@ use App\AppModels\ApiModel;
 use App\Core\MediaSizeEnum;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
+use App\Models\BookingAssignment;
+use App\Repositories\BookingAssignmentRepositoryInterface;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
@@ -20,17 +22,20 @@ class BookingsController extends ApiController
     private BookingRepositoryInterface $bookingRepository;
     private TableRepositoryInterface $tableRepository;
     private UserRepositoryInterface $userRepository;
+    private BookingAssignmentRepositoryInterface $bookingAssignmentRepository;
 
-    public function __construct(BookingRepositoryInterface $bookingRepository,
-                                TableRepositoryInterface   $tableRepository,
-                                UserRepositoryInterface    $userRepository,
-                                LogServiceInterface        $logger)
+    public function __construct(BookingRepositoryInterface           $bookingRepository,
+                                TableRepositoryInterface             $tableRepository,
+                                UserRepositoryInterface              $userRepository,
+                                BookingAssignmentRepositoryInterface $bookingAssignmentRepository,
+                                LogServiceInterface                  $logger)
     {
         parent::__construct($logger);
 
         $this->bookingRepository = $bookingRepository;
         $this->tableRepository = $tableRepository;
         $this->userRepository = $userRepository;
+        $this->bookingAssignmentRepository = $bookingAssignmentRepository;
     }
 
     public function inbox(Request $request): JsonResponse
@@ -115,17 +120,24 @@ class BookingsController extends ApiController
                 if (isset($user)) {
                     $booking = $this->bookingRepository->find($request->get('booking_id'));
 
-                    if (isset($booking) && !isset($booking->assigned_at)) {
-                        $booking->assigned_at = now();
+                    if (isset($booking)) {
 
-                        if ($request->has('user_id'))
-                            $booking->assigned_to_user_id = $request->get('user_id');
-                        else
-                            $booking->assigned_to_user_id = $user->id;
+                        $exists = $this->bookingAssignmentRepository->exists($user->id, $user->user_type_id, $booking->id);
 
-                        $this->bookingRepository->save($booking);
-                    } else {
-                        $response->setError("Table already assigned to another user");
+                        if (!isset($exists)) {
+                            $bookingAssignment = new BookingAssignment();
+                            $bookingAssignment->date = now();
+                            $bookingAssignment->user_id = $user->id;
+                            $bookingAssignment->user_type_id = $user->user_type_id;
+                            $bookingAssignment->booking_id = $booking->id;
+                            $bookingAssignment->table_id = $booking->table_id;
+                            $bookingAssignment->published = true;
+                            $bookingAssignment->deleted = false;
+
+                            $this->bookingAssignmentRepository->save($bookingAssignment);
+                        } else {
+                            $response->setError("Table already assigned to another user");
+                        }
                     }
                 }
             }

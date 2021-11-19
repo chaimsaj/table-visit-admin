@@ -61,7 +61,8 @@
                                class="btn btn-dark float-end waves-effect waves-light sweet-warning">Close Booking</a>
 
                             <a href="{{route("booking.cancel", $data->id)}}"
-                               class="btn btn-danger float-end waves-effect waves-light mr-15 sweet-warning">Cancel Booking</a>
+                               class="btn btn-danger float-end waves-effect waves-light mr-15 sweet-warning">Cancel
+                                Booking</a>
                         </div>
                     @endif
                     {{--<div class="row">
@@ -106,8 +107,12 @@
                                 <td>{{$data->table_number ?? '-'}}</td>
                             </tr>
                             <tr>
-                                <th scope="row">@lang('translation.AssignedTo')</th>
-                                <td>{{$data->staff ?? ''}}</td>
+                                <th scope="row">@lang('translation.AcceptedBy')</th>
+                                <td>
+                                    @foreach ($data->staff as $staff)
+                                        {{$staff->name ?? ''}} {{$staff->last_name ?? ''}} |
+                                    @endforeach
+                                </td>
                             </tr>
                             </tbody>
                         </table>

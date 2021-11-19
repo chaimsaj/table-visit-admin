@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\BookingStatusEnum;
 use App\Http\Controllers\Base\AdminController;
+use App\Repositories\BookingAssignmentRepositoryInterface;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\ServiceRepositoryInterface;
@@ -25,14 +26,16 @@ class BookingsController extends AdminController
     private TableRepositoryInterface $tableRepository;
     private TableSpendRepositoryInterface $tableSpendRepository;
     private ServiceRepositoryInterface $serviceRepository;
+    private BookingAssignmentRepositoryInterface $bookingAssignmentRepository;
 
-    public function __construct(BookingRepositoryInterface    $bookingRepository,
-                                UserRepositoryInterface       $userRepository,
-                                PlaceRepositoryInterface      $placeRepository,
-                                TableRepositoryInterface      $tableRepository,
-                                TableSpendRepositoryInterface $tableSpendRepository,
-                                ServiceRepositoryInterface    $serviceRepository,
-                                LogServiceInterface           $logger)
+    public function __construct(BookingRepositoryInterface           $bookingRepository,
+                                UserRepositoryInterface              $userRepository,
+                                PlaceRepositoryInterface             $placeRepository,
+                                TableRepositoryInterface             $tableRepository,
+                                TableSpendRepositoryInterface        $tableSpendRepository,
+                                ServiceRepositoryInterface           $serviceRepository,
+                                BookingAssignmentRepositoryInterface $bookingAssignmentRepository,
+                                LogServiceInterface                  $logger)
     {
         parent::__construct($logger);
 
@@ -42,6 +45,7 @@ class BookingsController extends AdminController
         $this->tableRepository = $tableRepository;
         $this->tableSpendRepository = $tableSpendRepository;
         $this->serviceRepository = $serviceRepository;
+        $this->bookingAssignmentRepository = $bookingAssignmentRepository;
     }
 
     public function index()
@@ -99,11 +103,15 @@ class BookingsController extends AdminController
             }
         }
 
-        if (isset($data->assigned_to_user_id)) {
-            $staff = $this->userRepository->find($data->assigned_to_user_id);
+        $bookingAssignments = $this->bookingAssignmentRepository->loadByBooking($data->id);
+
+        $data->staff = new Collection();
+
+        foreach ($bookingAssignments as $bookingAssignment) {
+            $staff = $this->userRepository->find($bookingAssignment->user_id);
 
             if (isset($staff))
-                $data->staff = $staff->name . ' ' . $staff->last_name;
+                $data->staff->add($staff->pluck('name', 'last_name'));
         }
 
         return view('bookings/detail', ["data" => $data]);

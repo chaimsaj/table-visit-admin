@@ -91,7 +91,6 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
 
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('assigned_at', '=', null)
             ->where('closed_at', '=', null)
             ->where('place_id', $place_id)
             ->where(function ($query) use ($search) {
@@ -108,8 +107,6 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('assigned_at', '!=', null)
-            ->where('assigned_to_user_id', $user_id)
             ->where('closed_at', '=', null)
             ->where(function ($query) use ($search) {
                 if (!empty($search) && strlen($search) >= 2) {

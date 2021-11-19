@@ -5,6 +5,8 @@ namespace App\Providers;
 
 use App\Repositories\Base\BaseRepository;
 use App\Repositories\Base\BaseRepositoryInterface;
+use App\Repositories\BookingAssignmentRepository;
+use App\Repositories\BookingAssignmentRepositoryInterface;
 use App\Repositories\BookingChatRepository;
 use App\Repositories\BookingChatRepositoryInterface;
 use App\Repositories\BookingGuestRepository;
@@ -113,6 +115,7 @@ class ApplicationServiceProvider extends ServiceProvider
         //Repositories
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
 
+        $this->app->bind(BookingAssignmentRepositoryInterface::class, BookingAssignmentRepository::class);
         $this->app->bind(BookingChatRepositoryInterface::class, BookingChatRepository::class);
         $this->app->bind(BookingGuestRepositoryInterface::class, BookingGuestRepository::class);
         $this->app->bind(BookingNotificationRepositoryInterface::class, BookingNotificationRepository::class);
