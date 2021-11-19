@@ -3,6 +3,7 @@
 namespace App\Http\Api\Staff;
 
 use App\AppModels\ApiModel;
+use App\Core\BookingStatusEnum;
 use App\Core\MediaSizeEnum;
 use App\Helpers\MediaHelper;
 use App\Http\Api\Base\ApiController;
@@ -48,7 +49,7 @@ class BookingsController extends ApiController
                 $user = Auth::user();
 
                 if (isset($user) && isset($user->place_id)) {
-                    $query = $this->bookingRepository->inboxStaff($user->place_id, $request->get('search'));
+                    $query = $this->bookingRepository->inboxStaff($user->place_id, $user->user_type_id, $request->get('search'));
 
                     foreach ($query as $item) {
                         $table = $this->tableRepository->find($item->table_id);
@@ -127,6 +128,7 @@ class BookingsController extends ApiController
                         if (!isset($exists)) {
                             $bookingAssignment = new BookingAssignment();
                             $bookingAssignment->date = now();
+                            $bookingAssignment->booking_status = BookingStatusEnum::Confirmed;
                             $bookingAssignment->user_id = $user->id;
                             $bookingAssignment->user_type_id = $user->user_type_id;
                             $bookingAssignment->booking_id = $booking->id;
@@ -167,6 +169,8 @@ class BookingsController extends ApiController
                         $booking->closed_by_user_id = $user->id;
 
                         $this->bookingRepository->save($booking);
+
+                        $this->closeBookingAssignments($booking->id);
                     }
                 }
             }
@@ -197,6 +201,8 @@ class BookingsController extends ApiController
                         $booking->closed_by_user_id = $user->id;
 
                         $this->bookingRepository->save($booking);
+
+                        $this->closeBookingAssignments($booking->id);
                     }
                 }
             }
@@ -207,5 +213,19 @@ class BookingsController extends ApiController
         }
 
         return response()->json($response);
+    }
+
+    private function closeBookingAssignments($booking_id)
+    {
+        $bookingAssignments = $this->bookingAssignmentRepository->loadByBooking($booking_id);
+
+        foreach ($bookingAssignments as $bookingAssignment) {
+            try {
+                $bookingAssignment->closed_at = now();
+                $this->bookingAssignmentRepository->save($bookingAssignment);
+            } catch (Throwable $ex) {
+                $this->logger->save($ex);
+            }
+        }
     }
 }

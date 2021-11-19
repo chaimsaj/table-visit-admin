@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\Booking;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class BookingRepository extends BaseRepository implements BookingRepositoryInterface
 {
@@ -18,7 +19,7 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('user_id', $user_id)
+            ->where('user_id', '=', $user_id)
             //->whereDate('book_date', '>=', today())
             ->where('closed_at', '=', null)
             ->where('canceled_at', '=', null)
@@ -30,7 +31,7 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
-            ->where('user_id', $user_id)
+            ->where('user_id', '=', $user_id)
             ->where('closed_at', '!=', null)
             ->orWhere('canceled_at', '!=', null)
             ->orderBy('id', 'desc')
@@ -85,7 +86,7 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
         ];
     }
 
-    public function inboxStaff(int $place_id, string $search = null): Collection
+    public function inboxStaff(int $place_id, int $user_type_id, string $search = null): Collection
     {
         // ->whereDate('book_date', '>=', today())
 
@@ -99,22 +100,32 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
                         ->orWhere('confirmation_code', 'like', '%' . $search . '%');
                 }
             })
+            ->whereNotExists(
+                function ($query) use ($user_type_id) {
+                    $query->select(DB::raw(1))
+                        ->from('booking_assignments')
+                        ->where('user_type_id', $user_type_id)
+                        ->whereRaw('booking_assignments.booking_id = bookings.id');
+                })
             ->orderBy('id', 'desc')
             ->get();
     }
 
     public function assignedStaff(int $user_id, string $search = null): Collection
     {
-        return $this->model->where('deleted', 0)
-            ->where('published', 1)
-            ->where('closed_at', '=', null)
+        return DB::table('bookings')
+            ->join('booking_assignments', 'bookings.id', '=', 'booking_assignments.booking_id')
+            ->where('bookings.deleted', '=', 0)
+            ->where('bookings.published', '=', 1)
+            ->where('bookings.closed_at', '=', null)
             ->where(function ($query) use ($search) {
                 if (!empty($search) && strlen($search) >= 2) {
-                    $query->where('code', 'like', '%' . $search . '%')
-                        ->orWhere('confirmation_code', 'like', '%' . $search . '%');
+                    $query->where('bookings.code', 'like', '%' . $search . '%')
+                        ->orWhere('bookings.confirmation_code', 'like', '%' . $search . '%');
                 }
             })
-            ->orderBy('id', 'desc')
+            ->orderBy('bookings.id', 'desc')
+            ->select('bookings.*')
             ->get();
     }
 }

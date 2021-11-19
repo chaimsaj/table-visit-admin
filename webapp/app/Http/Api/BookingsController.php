@@ -104,7 +104,10 @@ class BookingsController extends ApiController
                     // Update Booking Code
                     $db->code = AppHelper::getBookingCode($db->id, $db->place_id);
                     $db->confirmation_code = AppHelper::getBookingConfirmationCode($db->id);
+
                     $this->bookingRepository->save($db);
+
+                    $response->setData($db);
                 }
             }
 

@@ -138,7 +138,10 @@ class BookingsController extends AdminController
                 $booking->booking_status = BookingStatusEnum::Completed;
                 $booking->closed_by_user_id = $user->id;
                 $booking->closed_at = now();
+
                 $this->bookingRepository->save($booking);
+
+                $this->closeBookingAssignments($booking->id);
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -156,12 +159,29 @@ class BookingsController extends AdminController
 
                 $booking->booking_status = BookingStatusEnum::Canceled;
                 $booking->canceled_at = now();
+
                 $this->bookingRepository->save($booking);
+
+                $this->closeBookingAssignments($booking->id);
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
         }
 
         return redirect("bookings");
+    }
+
+    private function closeBookingAssignments($booking_id)
+    {
+        $bookingAssignments = $this->bookingAssignmentRepository->loadByBooking($booking_id);
+
+        foreach ($bookingAssignments as $bookingAssignment) {
+            try {
+                $bookingAssignment->closed_at = now();
+                $this->bookingAssignmentRepository->save($bookingAssignment);
+            } catch (Throwable $ex) {
+                $this->logger->save($ex);
+            }
+        }
     }
 }
