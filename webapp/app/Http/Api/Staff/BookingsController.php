@@ -61,6 +61,13 @@ class BookingsController extends ApiController
                             $item->customer_last_name = $customer->last_name;
                             $item->customer_avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $customer->avatar, MediaSizeEnum::medium);
                         }
+
+                        $amount_to_pay = round(floatval($item->spent_amount - $item->total_amount), 2);
+
+                        if ($amount_to_pay > 0)
+                            $item->amount_to_pay = $amount_to_pay;
+                        else
+                            $item->amount_to_pay = 0;
                     }
 
                     $response->setData($query);
@@ -96,6 +103,13 @@ class BookingsController extends ApiController
                             $item->customer_last_name = $customer->last_name;
                             $item->customer_avatar = MediaHelper::getImageUrl(MediaHelper::getUsersPath(), $customer->avatar, MediaSizeEnum::medium);
                         }
+
+                        $amount_to_pay = round(floatval($item->spent_amount - $item->total_amount), 2);
+
+                        if ($amount_to_pay > 0)
+                            $item->amount_to_pay = $amount_to_pay;
+                        else
+                            $item->amount_to_pay = 0;
                     }
 
                     $response->setData($query);

@@ -143,6 +143,13 @@ class BookingsController extends ApiController
                             $place_types = $this->placeTypeRepository->shown($place->id);
                             $item->place = PlaceHelper::load($place, $place_types);
                         }
+
+                        $amount_to_pay = round(floatval($item->spent_amount - $item->total_amount), 2);
+
+                        if ($amount_to_pay > 0)
+                            $item->amount_to_pay = $amount_to_pay;
+                        else
+                            $item->amount_to_pay = 0;
                     }
 
                     $response->setData($query);
