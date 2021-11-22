@@ -144,12 +144,11 @@ class BookingsController extends ApiController
                             $item->place = PlaceHelper::load($place, $place_types);
                         }
 
-                        $amount_to_pay = round(floatval($item->spent_amount - $item->total_amount), 2);
+                        $amount_to_pay_default = 0.00;
 
-                        if ($amount_to_pay > 0)
-                            $item->amount_to_pay = $amount_to_pay;
-                        else
-                            $item->amount_to_pay = floatval(0);
+                        $amount_to_pay = round(floatval($item->spent_amount) - floatval($item->total_amount), 2);
+
+                        $item->amount_to_pay = $amount_to_pay > 0.00 ? $amount_to_pay : $amount_to_pay_default;
                     }
 
                     $response->setData($query);

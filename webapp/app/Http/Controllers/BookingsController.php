@@ -116,13 +116,11 @@ class BookingsController extends AdminController
                     $data->staff->add($staff->pluck('name', 'last_name'));
             }
 
-            $amount_to_pay = round(floatval($data->spent_amount - $data->total_amount), 2);
+            $amount_to_pay_default = 0.00;
 
-            if ($amount_to_pay > 0)
-                $data->amount_to_pay = $amount_to_pay;
-            else
-                $data->amount_to_pay = floatval(0);
+            $amount_to_pay = round(floatval($data->spent_amount) - floatval($data->total_amount), 2);
 
+            $data->amount_to_pay = $amount_to_pay > 0.00 ? $amount_to_pay : $amount_to_pay_default;
         }
 
         return view('bookings/detail', ["data" => $data]);
