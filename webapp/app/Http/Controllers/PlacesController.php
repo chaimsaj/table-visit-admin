@@ -441,24 +441,26 @@ class PlacesController extends AdminController
         return redirect()->back();
     }
 
-    private function save_policy($detail, $place, $policy_type)
+    private function save_policy(string $detail, $place, $policy_type)
     {
-        $language = LanguageEnum::English;
-        $db = $this->policyRepository->loadBy($place->id, $policy_type, $language);
+        if (!empty($detail)) {
+            $language = LanguageEnum::English;
+            $db = $this->policyRepository->loadBy($place->id, $policy_type, $language);
 
-        if ($db == null)
-            $db = new Policy();
+            if ($db == null)
+                $db = new Policy();
 
-        $db->title = '';
-        $db->introduction = '';
-        $db->detail = $detail;
-        $db->show = 1;
-        $db->policy_type = $policy_type;
-        $db->place_id = $place->id;
-        $db->tenant_id = $place->tenant_id;
-        $db->language_id = $language;
-        $db->published = 1;
+            $db->title = '';
+            $db->introduction = '';
+            $db->detail = $detail;
+            $db->show = 1;
+            $db->policy_type = $policy_type;
+            $db->place_id = $place->id;
+            $db->tenant_id = $place->tenant_id;
+            $db->language_id = $language;
+            $db->published = 1;
 
-        $this->policyRepository->save($db);
+            $this->policyRepository->save($db);
+        }
     }
 }
