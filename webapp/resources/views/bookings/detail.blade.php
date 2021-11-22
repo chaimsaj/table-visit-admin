@@ -43,8 +43,28 @@
                                 <td>{{$data->guests_count ?? ''}}</td>
                             </tr>
                             <tr>
+                                <th scope="row">@lang('translation.Amount')</th>
+                                <td>$ {{$data->amount ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@lang('translation.TaxAmount')</th>
+                                <td>$ {{$data->tax_amount ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@lang('translation.GratuityAmount')</th>
+                                <td>$ {{$data->gratuity_amount ?? ''}}</td>
+                            </tr>
+                            <tr>
                                 <th scope="row">@lang('translation.TableAmount')</th>
-                                <td>{{$data->total_amount ?? ''}}</td>
+                                <td>$ {{$data->total_amount ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@lang('translation.TableSpends')</th>
+                                <td>$ {{$data->spent_amount ?? ''}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@lang('translation.AmountToPay')</th>
+                                <td>$ {{$data->amount_to_pay ?? ''}}</td>
                             </tr>
                             </tbody>
                         </table>

@@ -41,7 +41,8 @@ return [
     "MinimumSpend" => "Minimum spend",
     "GuestsCount" => "Guests count",
     "Guests" => "Guests",
-    "TableAmount" => "Table Amount",
+    "TableAmount" => "Table amount",
+    "AmountToPay" => "Amount to pay",
 
     "SpendsAmount" => "Spends",
 
@@ -77,6 +78,9 @@ return [
     "ConfirmationCode" => "Confirmation Code",
     "BookDate" => "Date",
     "TotalAmount" => "Total Amount",
+    "Amount" => "Amount",
+    "TaxAmount" => "Taxes",
+    "GratuityAmount" => "Gratuity",
 
     "Name" => "Name",
     "Code" => "Code",

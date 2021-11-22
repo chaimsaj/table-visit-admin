@@ -56,62 +56,73 @@ class BookingsController extends AdminController
     public function detail($id)
     {
         $data = $this->bookingRepository->find($id);
-        $user = $this->userRepository->find($data->user_id);
-        $place = $this->placeRepository->find($data->place_id);
 
-        $table_spends = $this->tableSpendRepository->loadByBooking($data->id);
-        $service_number = 1;
+        if (isset($data)) {
+            $user = $this->userRepository->find($data->user_id);
+            $place = $this->placeRepository->find($data->place_id);
 
-        $data->table_spends = new Collection();
-        $data->table_spends_total = 0;
+            $table_spends = $this->tableSpendRepository->loadByBooking($data->id);
+            $service_number = 1;
 
-        foreach ($table_spends as $table_spend) {
-            $service = $this->serviceRepository->find($table_spend->service_id);
+            $data->table_spends = new Collection();
+            $data->table_spends_total = 0;
 
-            if (isset($service)) {
-                $table_spend->service_number = $service_number;
-                $table_spend->service_name = $service->name;
+            foreach ($table_spends as $table_spend) {
+                $service = $this->serviceRepository->find($table_spend->service_id);
 
-                $data->table_spends_total += $table_spend->total_amount;
+                if (isset($service)) {
+                    $table_spend->service_number = $service_number;
+                    $table_spend->service_name = $service->name;
 
-                $service_number++;
+                    $data->table_spends_total += $table_spend->total_amount;
+
+                    $service_number++;
+                }
             }
-        }
 
-        if (isset($table_spends))
-            $data->table_spends = $table_spends;
+            if (isset($table_spends))
+                $data->table_spends = $table_spends;
 
-        if (isset($user))
-            $data->customer = $user->name . ' ' . $user->last_name;
+            if (isset($user))
+                $data->customer = $user->name . ' ' . $user->last_name;
 
-        if (isset($place))
-            $data->place = $place->name;
+            if (isset($place))
+                $data->place = $place->name;
 
-        if (!empty($data->book_date)) {
-            $date = DateTime::createFromFormat('Y-m-d H:i:s', $data->book_date);
+            if (!empty($data->book_date)) {
+                $date = DateTime::createFromFormat('Y-m-d H:i:s', $data->book_date);
 
-            if ($date)
-                $data->book_date = $date->format('m-d-Y');
-        }
-
-        if (isset($data->table_id)) {
-            $table = $this->tableRepository->find($data->table_id);
-
-            if (isset($table)) {
-                $data->table_name = $table->name;
-                $data->table_number = $table->table_number;
+                if ($date)
+                    $data->book_date = $date->format('m-d-Y');
             }
-        }
 
-        $bookingAssignments = $this->bookingAssignmentRepository->loadByBooking($data->id);
+            if (isset($data->table_id)) {
+                $table = $this->tableRepository->find($data->table_id);
 
-        $data->staff = new Collection();
+                if (isset($table)) {
+                    $data->table_name = $table->name;
+                    $data->table_number = $table->table_number;
+                }
+            }
 
-        foreach ($bookingAssignments as $bookingAssignment) {
-            $staff = $this->userRepository->find($bookingAssignment->user_id);
+            $bookingAssignments = $this->bookingAssignmentRepository->loadByBooking($data->id);
 
-            if (isset($staff))
-                $data->staff->add($staff->pluck('name', 'last_name'));
+            $data->staff = new Collection();
+
+            foreach ($bookingAssignments as $bookingAssignment) {
+                $staff = $this->userRepository->find($bookingAssignment->user_id);
+
+                if (isset($staff))
+                    $data->staff->add($staff->pluck('name', 'last_name'));
+            }
+
+            $amount_to_pay = round(floatval($data->spent_amount - $data->total_amount), 2);
+
+            if ($amount_to_pay > 0)
+                $data->amount_to_pay = $amount_to_pay;
+            else
+                $data->amount_to_pay = 0;
+
         }
 
         return view('bookings/detail', ["data" => $data]);

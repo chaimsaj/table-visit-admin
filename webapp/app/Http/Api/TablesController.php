@@ -140,8 +140,14 @@ class TablesController extends ApiController
             $date = DateTime::createFromFormat('m-d-Y H:i:s', $request->get('date') . ' 00:00:00');
             $query = $this->tableRateRepository->rate($request->get('table_id'), $date);
 
-            if (isset($query))
+            if (isset($query)) {
+                $gratuity = floatval(env("TABLE_VISIT_APP_GRATUITY", 20));
+
+                $query->gratuity = round((($query->total_rate / 100) * $gratuity), 2);
+                $query->total_rate = round($query->total_rate + $query->gratuity, 2);
+
                 $response->setData($query);
+            }
 
         } catch (Throwable $ex) {
             $this->logger->save($ex);

@@ -54,6 +54,7 @@ class BookingsController extends ApiController
             $validator = Validator::make($data, [
                 'rate' => ['required', 'numeric'],
                 'tax' => ['required', 'numeric'],
+                //'gratuity' => ['required', 'numeric'],
                 'total_rate' => ['required', 'numeric'],
                 'date' => ['required', 'date'],
                 'place_id' => ['required', 'int'],
@@ -80,7 +81,7 @@ class BookingsController extends ApiController
                     $db->amount = $request->get('rate');
                     $db->tax_amount = $request->get('tax');
                     $db->total_amount = $request->get('total_rate');
-                    $db->gratuity_amount = 0;
+                    $db->gratuity_amount = $request->get('gratuity');
                     $db->spent_amount = 0;
                     $db->guests_count = $table->guests_count;
                     $db->book_date = DateTime::createFromFormat('Y-m-d H:i:s', $request->get('date'));

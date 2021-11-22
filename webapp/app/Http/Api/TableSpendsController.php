@@ -96,6 +96,14 @@ class TableSpendsController extends ApiController
                     $this->tableSpendRepository->save($db);
 
                     $booking->spent_amount += $db->total_amount;
+
+                    if($booking->spent_amount > $booking->total_amount)
+                    {
+                        $gratuity = floatval(env("TABLE_VISIT_APP_GRATUITY", 20));
+                        $booking->gratuity_amount = round((($booking->spent_amount / 100) * $gratuity), 2);
+                        $booking->spent_amount = round($booking->spent_amount + $booking->gratuity_amount, 2);
+                    }
+
                     $this->bookingRepository->save($booking);
                 }
             }
