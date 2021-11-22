@@ -113,7 +113,7 @@ class BookingsController extends AdminController
                 $staff = $this->userRepository->find($bookingAssignment->user_id);
 
                 if (isset($staff))
-                    $data->staff->add($staff->pluck('name', 'last_name'));
+                    $data->staff->add($staff);
             }
 
             $amount_to_pay_default = 0.00;
