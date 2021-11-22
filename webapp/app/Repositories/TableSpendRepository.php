@@ -30,4 +30,23 @@ class TableSpendRepository extends BaseRepository implements TableSpendRepositor
             ->where('booking_id', $booking_id)
             ->sum('total_amount');
     }
+
+    public function loadForCustomer(int $booking_id, int $user_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('booking_id', $booking_id)
+            ->where('user_id', $user_id)
+            ->orderBy('id', 'asc')
+            ->get();
+    }
+
+    public function loadTotalForCustomer(int $booking_id, int $user_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->where('booking_id', $booking_id)
+            ->where('user_id', $user_id)
+            ->sum('total_amount');
+    }
 }

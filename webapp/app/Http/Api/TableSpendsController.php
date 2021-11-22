@@ -21,10 +21,12 @@ class TableSpendsController extends ApiController
     private TableSpendRepositoryInterface $tableSpendRepository;
     private TableRepositoryInterface $tableRepository;
     private BookingRepositoryInterface $bookingRepository;
+    private ServiceRepositoryInterface $serviceRepository;
 
     public function __construct(TableSpendRepositoryInterface $tableSpendRepository,
                                 TableRepositoryInterface      $tableRepository,
                                 BookingRepositoryInterface    $bookingRepository,
+                                ServiceRepositoryInterface    $serviceRepository,
                                 LogServiceInterface           $logger)
     {
         parent::__construct($logger);
@@ -32,6 +34,37 @@ class TableSpendsController extends ApiController
         $this->tableSpendRepository = $tableSpendRepository;
         $this->tableRepository = $tableRepository;
         $this->bookingRepository = $bookingRepository;
+        $this->serviceRepository = $serviceRepository;
+    }
+
+    public function list(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $query = $this->tableSpendRepository->loadForCustomer(intval($request->get('booking_id')), $user->id);
+
+                    foreach ($query as $item) {
+                        $service = $this->serviceRepository->find($item->service_id);
+
+                        if (isset($service))
+                            $item->service_name = $service->name;
+                    }
+
+                    $response->setData($query);
+                }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
     }
 
     public function add(Request $request): JsonResponse
