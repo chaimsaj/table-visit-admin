@@ -118,7 +118,7 @@ class BookingsController extends AdminController
 
             $amount_to_pay_default = 0.00;
 
-            $amount_to_pay = round(floatval($data->spent_amount) - floatval($data->total_amount), 2);
+            $amount_to_pay = round(floatval($data->spent_total_amount) - floatval($data->total_amount), 2);
 
             $data->amount_to_pay = strval($amount_to_pay > 0.00 ? $amount_to_pay : $amount_to_pay_default);
         }

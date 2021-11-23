@@ -79,6 +79,7 @@ class TableSpendsController extends ApiController
                 $booking = $this->bookingRepository->find($request->get('booking_id'));
 
                 if (isset($user) && isset($table) && isset($booking) && $booking->closed_at == null) {
+
                     $db = new TableSpend();
                     $db->amount = $request->get('amount');
                     $db->tax_amount = $request->get('tax_amount');
@@ -96,13 +97,9 @@ class TableSpendsController extends ApiController
                     $this->tableSpendRepository->save($db);
 
                     $booking->spent_amount += $db->total_amount;
-
-                    if($booking->spent_amount > $booking->total_amount)
-                    {
-                        $gratuity = floatval(env("TABLE_VISIT_APP_GRATUITY", 20));
-                        $booking->gratuity_amount = round((($booking->spent_amount / 100) * $gratuity), 2);
-                        $booking->spent_amount = round($booking->spent_amount + $booking->gratuity_amount, 2);
-                    }
+                    $gratuity = floatval(env("TABLE_VISIT_APP_GRATUITY", 20));
+                    $booking->spent_gratuity = round((($booking->spent_amount / 100) * $gratuity), 2);
+                    $booking->spent_total_amount = $booking->spent_amount + $booking->spent_gratuity;
 
                     $this->bookingRepository->save($booking);
                 }

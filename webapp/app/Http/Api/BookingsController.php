@@ -83,6 +83,10 @@ class BookingsController extends ApiController
                     $db->total_amount = $request->get('total_rate');
                     $db->gratuity_amount = $request->get('gratuity');
                     $db->spent_amount = 0;
+                    $db->spent_tax = 0;
+                    $db->spent_gratuity = 0;
+                    $db->spent_total_amount = 0;
+                    $db->paid_amount = 0;
                     $db->guests_count = $table->guests_count;
                     $db->book_date = DateTime::createFromFormat('Y-m-d H:i:s', $request->get('date'));
                     $db->booking_status = BookingStatusEnum::Approved;
@@ -146,11 +150,9 @@ class BookingsController extends ApiController
 
                         $amount_to_pay_default = 0.00;
 
-                        $amount_to_pay = round(floatval($item->spent_amount) - floatval($item->total_amount), 2);
+                        $amount_to_pay = round(floatval($item->spent_total_amount) - floatval($item->total_amount), 2);
 
                         $item->amount_to_pay = strval($amount_to_pay > 0.00 ? $amount_to_pay : $amount_to_pay_default);
-
-                        $item->table_spends_amount = strval(round(floatval($item->spent_amount) - floatval($item->gratuity_amount), 2));
                     }
 
                     $response->setData($query);
