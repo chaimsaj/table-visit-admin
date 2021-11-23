@@ -146,6 +146,9 @@ class TablesController extends ApiController
                 $query->gratuity = round((($query->total_rate / 100) * $gratuity), 2);
                 $query->total_rate = round($query->total_rate + $query->gratuity, 2);
 
+                $query->gratuity = strval($query->gratuity);
+                $query->total_rate = strval($query->total_rate);
+
                 $response->setData($query);
             }
 

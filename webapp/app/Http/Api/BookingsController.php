@@ -148,7 +148,7 @@ class BookingsController extends ApiController
 
                         $amount_to_pay = round(floatval($item->spent_amount) - floatval($item->total_amount), 2);
 
-                        $item->amount_to_pay = $amount_to_pay > 0.00 ? $amount_to_pay : $amount_to_pay_default;
+                        $item->amount_to_pay = strval($amount_to_pay > 0.00 ? $amount_to_pay : $amount_to_pay_default);
                     }
 
                     $response->setData($query);
