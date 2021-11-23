@@ -29,15 +29,18 @@ class PaymentsController extends ApiController
 {
     private PaymentRepositoryInterface $paymentRepository;
     private UserRepositoryInterface $userRepository;
+    private BookingRepositoryInterface $bookingRepository;
 
     public function __construct(PaymentRepositoryInterface $paymentRepository,
                                 UserRepositoryInterface    $userRepository,
+                                BookingRepositoryInterface $bookingRepository,
                                 LogServiceInterface        $logger)
     {
         parent::__construct($logger);
 
         $this->paymentRepository = $paymentRepository;
         $this->userRepository = $userRepository;
+        $this->bookingRepository = $bookingRepository;
     }
 
     public function list(int $booking_id): JsonResponse
@@ -142,22 +145,27 @@ class PaymentsController extends ApiController
                 try {
 
                     $user = Auth::user();
+                    $booking = $this->bookingRepository->find($request->get('booking_id'));
 
-                    if (isset($user)) {
+                    if (isset($user) && isset($booking)) {
                         $payment = new Payment();
                         $payment->amount = $request->get('amount');
                         $payment->date = now();
                         $payment->payment_type = PaymentTypeEnum::Table;
                         $payment->payment_status = PaymentStatusEnum::Success;
                         $payment->payment_method = $request->get('payment_method');
-                        $payment->place_id = $request->get('place_id');
-                        $payment->booking_id = $request->get('booking_id');
+                        $payment->place_id = $booking->place_id;
+                        $payment->booking_id = $booking->id;;
                         $payment->user_id = $user->id;
-                        $payment->tenant_id = intval($user->tenant_id);
+                        $payment->tenant_id = intval($booking->tenant_id);
                         $payment->published = true;
                         $payment->deleted = false;
 
                         $this->paymentRepository->save($payment);
+
+                        // Update Booking
+                        $booking->paid_amount += $payment->amount;
+                        $this->bookingRepository->save($booking);
                     }
                 } catch (Throwable $ex) {
                     $this->logger->save($ex);
