@@ -46,7 +46,7 @@ class BookingGuestsController extends ApiController
         return response()->json($response);
     }
 
-    public function add(Request $request): JsonResponse
+    public function save(Request $request): JsonResponse
     {
         $response = new ApiModel();
         $response->setSuccess();
@@ -57,7 +57,13 @@ class BookingGuestsController extends ApiController
 
                 foreach ($guests as $guest) {
                     try {
-                        $booking_guest = new BookingGuest();
+
+                        if ($guest->id != 0)
+                            $booking_guest = $this->bookingGuestRepository->find($guest->id);
+
+                        if (!isset($booking_guest))
+                            $booking_guest = new BookingGuest();
+
                         $booking_guest->name = $guest->name;
                         $booking_guest->email = $guest->email;
                         $booking_guest->phone = $guest->phone;
@@ -76,6 +82,27 @@ class BookingGuestsController extends ApiController
                 }
             }
 
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function remove($id): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $this->bookingGuestRepository->delete($id);
+                }
+            }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
             $response->setError($ex->getMessage());
