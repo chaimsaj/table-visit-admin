@@ -5,7 +5,11 @@ namespace App\Http\Api;
 
 use App\AppModels\ApiModel;
 use App\AppModels\StripeModel;
+use App\Core\PaymentStatusEnum;
+use App\Core\PaymentTypeEnum;
 use App\Http\Api\Base\ApiController;
+use App\Models\BookingGuest;
+use App\Models\Payment;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\PaymentRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
@@ -34,6 +38,27 @@ class PaymentsController extends ApiController
 
         $this->paymentRepository = $paymentRepository;
         $this->userRepository = $userRepository;
+    }
+
+    public function list(int $booking_id): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $query = $this->paymentRepository->loadByBooking($booking_id);
+
+                if (isset($query))
+                    $response->setData($query);
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
     }
 
     public function stripe(Request $request): JsonResponse
@@ -99,6 +124,67 @@ class PaymentsController extends ApiController
                 ])->withStatus(200);*/
             }
 
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function add(Request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                try {
+
+                    $user = Auth::user();
+
+                    if (isset($user)) {
+                        $payment = new Payment();
+                        $payment->amount = $request->get('amount');
+                        $payment->date = now();
+                        $payment->payment_type = PaymentTypeEnum::Table;
+                        $payment->payment_status = PaymentStatusEnum::Success;
+                        $payment->payment_method = $request->get('payment_method');
+                        $payment->place_id = $request->get('place_id');
+                        $payment->booking_id = $request->get('booking_id');
+                        $payment->user_id = $user->id;
+                        $payment->tenant_id = intval($user->tenant_id);
+                        $payment->published = true;
+                        $payment->deleted = false;
+
+                        $this->paymentRepository->save($payment);
+                    }
+                } catch (Throwable $ex) {
+                    $this->logger->save($ex);
+                }
+            }
+
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+            $response->setError($ex->getMessage());
+        }
+
+        return response()->json($response);
+    }
+
+    public function remove($id): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+
+        try {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                if (isset($user)) {
+                    $this->paymentRepository->delete($id);
+                }
+            }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
             $response->setError($ex->getMessage());

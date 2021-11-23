@@ -121,6 +121,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Payments
     Route::post('/payments/stripe', [App\Http\Api\PaymentsController::class, 'stripe'])->name('api.payments.stripe');
+    Route::post('/payments/add', [App\Http\Api\PaymentsController::class, 'add'])->name('api.payments.add');
+    Route::get('/payments/remove/{id}', [App\Http\Api\PaymentsController::class, 'remove'])->name('api.payments.remove');
+    Route::get('/payments/{booking_id}', [App\Http\Api\PaymentsController::class, 'list'])->name('api.payments.list');
 
     // Users
     Route::get('/user/find/{id}', [App\Http\Api\UsersController::class, 'find'])->name('api.users.find');

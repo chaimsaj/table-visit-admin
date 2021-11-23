@@ -8,5 +8,5 @@ use Illuminate\Support\Collection;
 
 interface PaymentRepositoryInterface extends BaseRepositoryInterface
 {
-
+    public function loadByBooking(int $booking_id): Collection;
 }
