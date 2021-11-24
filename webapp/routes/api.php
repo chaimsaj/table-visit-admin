@@ -179,4 +179,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Staff Table Spends
     Route::post('/staff/table-spends', [App\Http\Api\Staff\TableSpendsController::class, 'list'])->name('api.staff.table_spends.list');
+
+    // Broadcast & Events
+    Route::get('/broadcast/payment/send', [App\Http\Api\BroadcastController::class, 'send'])->name('api.broadcast.payment.send');
 });

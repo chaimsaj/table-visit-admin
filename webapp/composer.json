@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4|^8.0",
+        "ext-mbstring": "*",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "google/cloud-storage": "^1.25",
@@ -20,11 +21,11 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "nunomaduro/collision": "^5.0",
+        "pusher/pusher-php-server": "^7.0",
         "stripe/stripe-php": "^7.95",
         "twilio/sdk": "^6.28",
         "yajra/laravel-datatables-fractal": "^1.6",
-        "yajra/laravel-datatables-oracle": "^9.18",
-        "ext-mbstring": "*"
+        "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {
         "facade/ignition": "^2.14",
