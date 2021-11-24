@@ -11,6 +11,8 @@ interface BookingAssignmentRepositoryInterface extends BaseRepositoryInterface
 {
     public function loadByBooking(int $booking_id): Collection;
 
+    public function loadForChat(int $booking_id, int $user_type_id): ?Model;
+
     public function loadBy(int $user_id): Collection;
 
     public function exists(int $user_id, int $user_type_id, int $booking_id): ?Model;

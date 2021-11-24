@@ -3,20 +3,33 @@
 namespace App\Events;
 
 use App\Models\Payment;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
 class MessageSentEvent implements ShouldBroadcast
 {
-    public Payment $payment;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(Payment $payment)
+    public $data;
+    public int $user_id;
+
+    public function __construct($data, int $user_id)
     {
-        $this->payment = $payment;
+        $this->data = $data;
+        $this->user_id = $user_id;
     }
 
-    public function broadcastOn(): PrivateChannel
+    public function broadcastAs(): string
     {
-        return new PrivateChannel('payment.' . $this->payment->id);
+        return 'event';
+    }
+
+    public function broadcastOn(): Channel
+    {
+        return new Channel('message.channel.' . $this->user_id);
     }
 }

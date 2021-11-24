@@ -181,5 +181,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/staff/table-spends', [App\Http\Api\Staff\TableSpendsController::class, 'list'])->name('api.staff.table_spends.list');
 
     // Broadcast & Events
-    Route::get('/broadcast/payment/send', [App\Http\Api\BroadcastController::class, 'send'])->name('api.broadcast.payment.send');
+    Route::post('/broadcast/payment/request', [App\Http\Api\BroadcastController::class, 'payment_request'])->name('api.broadcast.payment.request');
+    Route::post('/broadcast/message/sent', [App\Http\Api\BroadcastController::class, 'message_sent'])->name('api.broadcast.message.sent');
 });

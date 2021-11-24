@@ -23,6 +23,17 @@ class BookingAssignmentRepository extends BaseRepository implements BookingAssig
             ->get();
     }
 
+    public function loadForChat(int $booking_id, int $user_type_id): ?Model
+    {
+        return $this->model->where('deleted', '=', 0)
+            ->where('published', '=', 1)
+            ->where('user_type_id', '=', $user_type_id)
+            ->where('booking_id', '=', $booking_id)
+            ->where('closed_at', '=', null)
+            ->orderBy('id', 'desc')
+            ->first();
+    }
+
     public function loadBy(int $user_id): Collection
     {
         return $this->model->where('deleted', '=', 0)
