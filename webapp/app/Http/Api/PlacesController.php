@@ -19,6 +19,7 @@ use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\PlaceTypeRepositoryInterface;
 use App\Repositories\RatingRepositoryInterface;
 use App\Services\LogServiceInterface;
+use Geocoder\Laravel\Facades\Geocoder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -374,7 +375,34 @@ class PlacesController extends ApiController
         $item->place_features = $this->place_features($item->id);
         $item->place_music = $this->place_music($item->id);
 
+        if (!isset($item->location_lat) || !isset($item->location_lng))
+            $this->geocode($item->id);
+
         return $item;
+    }
+
+    private function geocode(int $id)
+    {
+        try {
+            $place = $this->placeRepository->find($id);
+
+            if (isset($place)) {
+                $geocodes = Geocoder::geocode($place->address)->get();
+
+                if ($geocodes->count() > 0) {
+                    $geocode = $geocodes->first();
+
+                    if (isset($geocode)) {
+                        $place->location_lat = $geocode->getCoordinates()->getLatitude();
+                        $place->location_lng = $geocode->getCoordinates()->getLongitude();
+
+                        $this->placeRepository->save($place);
+                    }
+                }
+            }
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
     }
 
     #end region

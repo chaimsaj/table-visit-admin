@@ -183,4 +183,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Broadcast & Events
     Route::post('/broadcast/payment/request', [App\Http\Api\BroadcastController::class, 'payment_request'])->name('api.broadcast.payment.request');
     Route::post('/broadcast/message/sent', [App\Http\Api\BroadcastController::class, 'message_sent'])->name('api.broadcast.message.sent');
+
+    // Geocode
+    // Route::get('/geocode/resolve', [App\Http\Api\GeocodeController::class, 'resolve'])->name('api.geocode.resolve');
 });

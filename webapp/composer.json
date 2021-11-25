@@ -23,6 +23,7 @@
         "nunomaduro/collision": "^5.0",
         "pusher/pusher-php-server": "^7.0",
         "stripe/stripe-php": "^7.95",
+        "toin0u/geocoder-laravel": "^4.4",
         "twilio/sdk": "^6.28",
         "yajra/laravel-datatables-fractal": "^1.6",
         "yajra/laravel-datatables-oracle": "^9.18"
