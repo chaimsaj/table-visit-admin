@@ -57,20 +57,19 @@ class BookingGuestsController extends ApiController
 
                 foreach ($guests as $guest) {
                     try {
-
-                        if ($guest->id != 0)
-                            $booking_guest = $this->bookingGuestRepository->find($guest->id);
+                        if (array_key_exists("id", $guest))
+                            $booking_guest = $this->bookingGuestRepository->find($guest["id"]);
 
                         if (!isset($booking_guest))
                             $booking_guest = new BookingGuest();
 
-                        $booking_guest->name = $guest->name;
-                        $booking_guest->email = $guest->email;
-                        $booking_guest->phone = $guest->phone;
-                        $booking_guest->comment = $guest->comment;
-                        $booking_guest->booking_id = $guest->booking_id;
-                        $booking_guest->place_id = $guest->place_id;
-                        $booking_guest->table_id = $guest->table_id;
+                        $booking_guest->name = $guest["name"];
+                        $booking_guest->email = $guest["email"];
+                        $booking_guest->phone = $guest["phone"];
+                        $booking_guest->comment = $guest["comment"];
+                        $booking_guest->booking_id = $guest["booking_id"];
+                        $booking_guest->place_id = $guest["place_id"];
+                        $booking_guest->table_id = $guest["table_id"];
                         $booking_guest->published = true;
                         $booking_guest->deleted = false;
 
