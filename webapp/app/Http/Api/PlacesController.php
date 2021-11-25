@@ -130,7 +130,7 @@ class PlacesController extends ApiController
         $data = new Collection;
 
         try {
-            $query = $this->placeRepository->byCity($city_id);
+            $query = $this->placeRepository->byCity($city_id, 1000);
 
             foreach ($query as $item) {
                 $data_item = $this->load_place($item);
