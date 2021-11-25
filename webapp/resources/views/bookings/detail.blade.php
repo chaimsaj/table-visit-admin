@@ -141,6 +141,31 @@
             </div>
             <div class="card">
                 <div class="card-body">
+                    <h4 class="card-title mb-4">@lang('translation.GuestList')</h4>
+                    <div class="table-responsive">
+                        <table class="table table-nowrap table-hover table-striped mb-0">
+                            <thead>
+                            <tr>
+                                <th scope="col">@lang('translation.GuestName')</th>
+                                <th scope="col">@lang('translation.GuestEmail')</th>
+                                <th scope="col">@lang('translation.GuestPhone')</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($data->guests as $guest)
+                                <tr>
+                                    <td>{{ $guest->name }}</td>
+                                    <td>{{ $guest->email }}</td>
+                                    <td>{{ $guest->phone }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
                     <h4 class="card-title mb-4">@lang('translation.TableSpends')</h4>
                     <div class="table-responsive">
                         <table class="table table-nowrap table-hover mb-0">

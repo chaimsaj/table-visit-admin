@@ -206,6 +206,10 @@ return [
     "TableSpends" => "Table spends",
     "TableSpend" => "Table spends",
     "Spends" => "Spends",
+    "GuestList" => "Guest list",
+    "GuestName" => "Name",
+    "GuestEmail" => "Email",
+    "GuestPhone" => "Phone",
 
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",

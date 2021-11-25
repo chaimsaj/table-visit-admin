@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\BookingStatusEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Repositories\BookingAssignmentRepositoryInterface;
+use App\Repositories\BookingGuestRepositoryInterface;
 use App\Repositories\BookingRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Repositories\ServiceRepositoryInterface;
@@ -27,6 +28,7 @@ class BookingsController extends AdminController
     private TableSpendRepositoryInterface $tableSpendRepository;
     private ServiceRepositoryInterface $serviceRepository;
     private BookingAssignmentRepositoryInterface $bookingAssignmentRepository;
+    private BookingGuestRepositoryInterface $bookingGuestRepository;
 
     public function __construct(BookingRepositoryInterface           $bookingRepository,
                                 UserRepositoryInterface              $userRepository,
@@ -35,6 +37,7 @@ class BookingsController extends AdminController
                                 TableSpendRepositoryInterface        $tableSpendRepository,
                                 ServiceRepositoryInterface           $serviceRepository,
                                 BookingAssignmentRepositoryInterface $bookingAssignmentRepository,
+                                BookingGuestRepositoryInterface      $bookingGuestRepository,
                                 LogServiceInterface                  $logger)
     {
         parent::__construct($logger);
@@ -46,6 +49,7 @@ class BookingsController extends AdminController
         $this->tableSpendRepository = $tableSpendRepository;
         $this->serviceRepository = $serviceRepository;
         $this->bookingAssignmentRepository = $bookingAssignmentRepository;
+        $this->bookingGuestRepository = $bookingGuestRepository;
     }
 
     public function index()
@@ -115,6 +119,13 @@ class BookingsController extends AdminController
                 if (isset($staff))
                     $data->staff->add($staff);
             }
+
+            $bookingGuests = $this->bookingGuestRepository->loadByBooking($data->id);
+
+            $data->guests = new Collection();
+
+            if (isset($bookingGuests))
+                $data->guests = $bookingGuests;
 
             $amount_to_pay_default = 0.00;
 
