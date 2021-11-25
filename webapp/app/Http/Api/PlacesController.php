@@ -130,11 +130,13 @@ class PlacesController extends ApiController
         $data = new Collection;
 
         try {
-            $query = $this->placeRepository->byCity($city_id, 1000);
+            if (Auth::check()) {
+                $query = $this->placeRepository->byCity($city_id, 1000);
 
-            foreach ($query as $item) {
-                $data_item = $this->load_place($item);
-                $data->add($data_item);
+                foreach ($query as $item) {
+                    $data_item = $this->load_place($item);
+                    $data->add($data_item);
+                }
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -152,11 +154,13 @@ class PlacesController extends ApiController
         $data = new Collection;
 
         try {
-            $query = $this->placeRepository->featuredByCity($city_id);
+            if (Auth::check()) {
+                $query = $this->placeRepository->featuredByCity($city_id);
 
-            foreach ($query as $item) {
-                $data_item = $this->load_place($item);
-                $data->add($data_item);
+                foreach ($query as $item) {
+                    $data_item = $this->load_place($item);
+                    $data->add($data_item);
+                }
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -208,11 +212,13 @@ class PlacesController extends ApiController
         $data = new Collection;
 
         try {
-            $query = $this->placeRepository->near($top);
+            if (Auth::check()) {
+                $query = $this->placeRepository->near($top);
 
-            foreach ($query as $item) {
-                $data_item = $this->load_place($item);
-                $data->add($data_item);
+                foreach ($query as $item) {
+                    $data_item = $this->load_place($item);
+                    $data->add($data_item);
+                }
             }
         } catch (Throwable $ex) {
             $this->logger->save($ex);
@@ -230,20 +236,20 @@ class PlacesController extends ApiController
         $data = new Collection;
 
         try {
-            $word = "";
-            $city_id = 0;
+            if (Auth::check()) {
+                $word = "";
+                $city_id = 0;
 
-            $request_data = $request->json()->all();
+                $request_data = $request->json()->all();
 
-            if (isset($request_data)) {
-                if (isset($request_data['word']))
-                    $word = $request_data['word'];
+                if (isset($request_data)) {
+                    if (isset($request_data['word']))
+                        $word = $request_data['word'];
 
-                if (isset($request_data['city_id']))
-                    $city_id = intval($request_data['city_id']);
-            }
+                    if (isset($request_data['city_id']))
+                        $city_id = intval($request_data['city_id']);
+                }
 
-            if (strlen($word) >= 3) {
                 $query = $this->placeRepository->search($word, $city_id);
 
                 $user_favorites = new Collection;
