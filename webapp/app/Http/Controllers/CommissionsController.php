@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Core\AppConstant;
 use App\Core\CommissionTypeEnum;
+use App\Core\UserTypeEnum;
 use App\Http\Controllers\Base\AdminController;
 use App\Models\Commission;
 use App\Repositories\CommissionRepositoryInterface;
 use App\Repositories\PlaceRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
 
@@ -74,10 +77,13 @@ class CommissionsController extends AdminController
                     $db = new Commission();
 
                 $db->percentage = floatval($request->get('percentage'));
-                $db->rate = floatval($request->get('rate'));
+                $db->rate = 0;
+                //floatval($request->get('rate'));
                 $db->commission_type = CommissionTypeEnum::Undefined;
-                $db->min_rate = floatval($request->get('min_rate'));
-                $db->max_rate = floatval($request->get('max_rate'));
+                $db->min_rate = 0;
+                //floatval($request->get('min_rate'));
+                $db->max_rate = 0;
+                //floatval($request->get('max_rate'));
                 $db->place_id = $request->get('place_id');
                 $db->published = $request->get('published') == "on";
                 $db->deleted = 0;
@@ -97,5 +103,32 @@ class CommissionsController extends AdminController
         $this->repository->deleteLogic($id);
 
         return redirect("commissions");
+    }
+
+    public function report()
+    {
+        $places = new Collection();
+
+        if (Auth::check()) {
+            $is_admin = Auth::user()->user_type_id == UserTypeEnum::Admin;
+
+            if ($is_admin) {
+                $places = $this->placeRepository->actives();
+            } else {
+                $tenant_id = 0;
+
+                if (isset(Auth::user()->tenant_id))
+                    $tenant_id = Auth::user()->tenant_id;
+
+                $places = $this->placeRepository->activesByTenant($tenant_id);
+            }
+        }
+
+
+        return view('commissions/report', [
+            "places" => $places,
+            "date_from" => today()->format('m-d-Y'),
+            "date_to" => today()->format('m-d-Y')
+        ]);
     }
 }

@@ -75,8 +75,8 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-money"></i>
-                        <span key="t-financial">@lang('translation.Financial')</span>
+                        <i class="bx bx-chart"></i>
+                        <span key="t-reports">@lang('translation.Reports')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("table-spends")}}"

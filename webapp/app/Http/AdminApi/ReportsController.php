@@ -7,6 +7,7 @@ use App\AppModels\ApiModel;
 use App\AppModels\DatatableModel;
 use App\Http\AdminApi\Base\AdminApiController;
 use App\Repositories\BookingRepositoryInterface;
+use App\Repositories\CommissionRepositoryInterface;
 use App\Repositories\TableRepositoryInterface;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\LogServiceInterface;
@@ -18,16 +19,16 @@ use Throwable;
 
 class ReportsController extends AdminApiController
 {
-    private TableRepositoryInterface $tableRepository;
+    private CommissionRepositoryInterface $commissionRepository;
     private BookingRepositoryInterface $bookingRepository;
 
-    public function __construct(TableRepositoryInterface   $tableRepository,
-                                BookingRepositoryInterface $bookingRepository,
-                                LogServiceInterface        $logger)
+    public function __construct(CommissionRepositoryInterface $commissionRepository,
+                                BookingRepositoryInterface    $bookingRepository,
+                                LogServiceInterface           $logger)
     {
         parent::__construct($logger);
 
-        $this->tableRepository = $tableRepository;
+        $this->commissionRepository = $commissionRepository;
         $this->bookingRepository = $bookingRepository;
     }
 
@@ -86,6 +87,17 @@ class ReportsController extends AdminApiController
 
             foreach ($query as $item) {
                 $item->book_date_data = DateTime::createFromFormat('Y-m-d H:i:s', $item->book_date)->format('m-d-Y');
+                $item->commission_amount = 0;
+
+                $commission = $this->commissionRepository->loadByPlace($item->place_id);
+
+                if (!isset($commission))
+                    $commission = $this->commissionRepository->loadByPlace(0);
+
+                if (isset($commission)) {
+                    $amount = $item->spent_total_amount > $item->total_amount ? $item->spent_total_amount : $item->total_amount;
+                    $item->commission_amount = round(($amount / 100) * $commission->percentage, 2);
+                }
             }
 
             $response->setDraw((int)$request->get('draw'));

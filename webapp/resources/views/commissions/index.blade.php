@@ -32,9 +32,9 @@
                         <tr class="text-center">
                             <th>@lang('translation.Id')</th>
                             <th>@lang('translation.Percentage')</th>
-                            <th>@lang('translation.FixedRate')</th>
+                            {{--<th>@lang('translation.FixedRate')</th>
                             <th>@lang('translation.MinRate')</th>
-                            <th>@lang('translation.MaxRate')</th>
+                            <th>@lang('translation.MaxRate')</th>--}}
                             <th>@lang('translation.Place')</th>
                             <th class="th45 no-sort">@lang('translation.Delete')</th>
                             <th class="th45 no-sort">@lang('translation.Edit')</th>
@@ -47,12 +47,13 @@
                             <tr class="text-center">
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->percentage }}</td>
-                                <td>{{ $item->rate }}</td>
+                                {{--<td>{{ $item->rate }}</td>
                                 <td>{{ $item->min_rate }}</td>
-                                <td>{{ $item->max_rate }}</td>
+                                <td>{{ $item->max_rate }}</td>--}}
                                 <td>{{ $item->place_name }}</td>
                                 <td>
-                                    <a href="{{route("commission.delete", $item->id)}}" class="text-danger sweet-warning"><i
+                                    <a href="{{route("commission.delete", $item->id)}}"
+                                       class="text-danger sweet-warning"><i
                                             class="mdi mdi-delete font-size-18"></i></a>
                                 </td>
                                 <td>

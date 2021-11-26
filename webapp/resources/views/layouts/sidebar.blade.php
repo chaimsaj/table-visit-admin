@@ -105,11 +105,9 @@
                         <span key="t-financial">@lang('translation.Financial')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route("table-spends")}}"
-                               key="t-table-spends">@lang('translation.Spends')</a></li>
                         <li><a href="{{route("commissions")}}" key="t-commissions">@lang('translation.Commissions')</a>
                         </li>
-                        <li><a href="{{route("fees")}}" key="t-fees">@lang('translation.Fees')</a></li>
+                        {{--<li><a href="{{route("fees")}}" key="t-fees">@lang('translation.Fees')</a></li>--}}
                     </ul>
                 </li>
 
@@ -119,7 +117,10 @@
                         <span key="t-reports">@lang('translation.Reports')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route("payments")}}" key="t-payments">@lang('translation.Payments')</a></li>
+                        <li><a href="{{route("table-spends")}}"
+                               key="t-table-spends">@lang('translation.Spends')</a></li>
+                        <li><a href="{{route("commissions.report")}}"
+                               key="t-commissions-report">@lang('translation.Commissions')</a></li>
                     </ul>
                 </li>
 

@@ -196,6 +196,7 @@ Route::get('/commissions', [App\Http\Controllers\CommissionsController::class, '
 Route::get('/commission/{id}', [App\Http\Controllers\CommissionsController::class, 'detail'])->name('commission.detail');
 Route::post('/commission/{id}', [App\Http\Controllers\CommissionsController::class, 'save'])->name('commission.save');
 Route::get('/commission/delete/{id}', [App\Http\Controllers\CommissionsController::class, 'delete'])->name('commission.delete');
+Route::get('/commissions-report', [App\Http\Controllers\CommissionsController::class, 'report'])->name('commissions.report');
 
 // Fees
 Route::get('/fees', [App\Http\Controllers\FeesController::class, 'index'])->name('fees');

@@ -53,8 +53,10 @@ class TableSpendsController extends AdminController
         }
 
 
-        return view('table-spends/index', [
-            "places" => $places
+        return view('table-spends/report', [
+            "places" => $places,
+            "date_from" => today()->format('m-d-Y'),
+            "date_to" => today()->format('m-d-Y')
         ]);
     }
 

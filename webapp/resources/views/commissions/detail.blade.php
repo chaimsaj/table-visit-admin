@@ -28,7 +28,7 @@
                                            class="form-control" placeholder="Percentage"/>
                                 </div>
 
-                                <div class="mb-3">
+                                {{--<div class="mb-3">
                                     <label class="form-label">Fixed rate</label>
                                     <div>
                                         <input name="rate"
@@ -37,9 +37,9 @@
                                                class="form-control"
                                                placeholder="Fixed rate"/>
                                     </div>
-                                </div>
+                                </div>--}}
 
-                                <div class="mb-3">
+                                {{--<div class="mb-3">
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="form-label">Min rate</label>
@@ -62,7 +62,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
 
                                 <div class="mb-3">
                                     <label class="form-label">Place</label>
