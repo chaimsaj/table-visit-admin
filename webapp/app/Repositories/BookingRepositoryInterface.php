@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 use App\Repositories\Base\BaseRepositoryInterface;
+use DateTime;
 use Illuminate\Support\Collection;
 
 interface BookingRepositoryInterface extends BaseRepositoryInterface
@@ -20,4 +21,8 @@ interface BookingRepositoryInterface extends BaseRepositoryInterface
     public function inboxStaff(int $place_id, int $user_type_id, string $search = null): Collection;
 
     public function assignedStaff(int $user_id, string $search = null): Collection;
+
+    //Report
+    public function tableSpendsReport(DateTime $date_from, DateTime $date_to, int $place_id): Collection;
+
 }

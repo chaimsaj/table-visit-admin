@@ -13,9 +13,10 @@ function initServices() {
         ajax: {
             url: "/api/admin/services/list",
             type: "POST",
-            data: {
-                is_admin: $("#user_is_admin").val(),
-                tenant_id: $("#user_tenant_id").val(),
+            "deferRender": true,
+            data: function (data) {
+                data.is_admin = $("#user_is_admin").val();
+                data.tenant_id = $("#user_tenant_id").val();
             }
         },
         columns: [

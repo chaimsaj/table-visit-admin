@@ -49,6 +49,10 @@ Route::middleware('api')->group(function () {
 
     // Places
     Route::post('/admin/bookings/list', [App\Http\AdminApi\BookingsController::class, 'list'])->name('admin_api.bookings.list');
+
+    // Reports
+    Route::post('/admin/reports/table-spends', [App\Http\AdminApi\ReportsController::class, 'table_spends'])->name('admin_api.reports.table_spends');
+    Route::post('/admin/reports/commissions', [App\Http\AdminApi\ReportsController::class, 'commissions'])->name('admin_api.reports.commissions');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

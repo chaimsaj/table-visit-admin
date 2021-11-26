@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class BookingRepository extends BaseRepository implements BookingRepositoryInterface
 {
@@ -126,6 +127,21 @@ class BookingRepository extends BaseRepository implements BookingRepositoryInter
             })
             ->orderBy('bookings.id', 'desc')
             ->select('bookings.*')
+            ->get();
+    }
+
+    public function tableSpendsReport(DateTime $date_from, DateTime $date_to, int $place_id): Collection
+    {
+        return $this->model->where('deleted', 0)
+            ->where('published', 1)
+            ->whereDate('book_date', '>=', $date_from)
+            ->whereDate('book_date', '<=', $date_to)
+            ->where('place_id', '=', $place_id)
+            /*->where(function ($query) {
+                $query->where('closed_at', '!=', null)
+                    ->orWhere('canceled_at', '!=', null);
+            })*/
+            ->orderBy('id', 'desc')
             ->get();
     }
 }

@@ -12,12 +12,12 @@
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect nav-item">
                         <i class="bx bx-user-circle"></i>
                         <span key="t-users">@lang('translation.Users')</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
+                        <li><a class="load" href="{{route("users")}}" key="t-users">@lang('translation.Users')</a></li>
                     </ul>
                 </li>
 
@@ -55,6 +55,9 @@
                             @lang('translation.BottlesAndDrinks')
                         </li>
                         <li><a href="{{route("services")}}" key="t-services">@lang('translation.Bottles')</a></li>
+                        <li><a href="{{route("service-rates")}}"
+                               key="t-service-rates">@lang('translation.BottleRates')</a>
+                        </li>
                         <li><a href="{{route("service-types")}}"
                                key="t-service-types">@lang('translation.DrinkTypes')</a></li>
                     </ul>
@@ -67,7 +70,17 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route("bookings")}}" key="t-bookings">@lang('translation.Bookings')</a></li>
-                        <li><a href="{{route("payments")}}" key="t-payments">@lang('translation.Payments')</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-money"></i>
+                        <span key="t-financial">@lang('translation.Financial')</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route("table-spends")}}"
+                               key="t-table-spends">@lang('translation.Spends')</a></li>
                     </ul>
                 </li>
 

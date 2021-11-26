@@ -211,6 +211,8 @@ return [
     "GuestEmail" => "Email",
     "GuestPhone" => "Phone",
 
+    "Search" => "Search",
+
     /*"Saas" => "Saas",
     "Crypto" => "Crypto",
     "Blog" => "Blog",
