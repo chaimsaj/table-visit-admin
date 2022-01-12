@@ -121,3 +121,6 @@ us-central1-a
 sudo certbot --nginx -d myngly-dev.aolideas.com
 
 /usr/local/Cellar/mariadb/10.5.9/bin/mariadb-dump
+
+LOCAL
+/usr/local/etc/nginx/nginx.conf
