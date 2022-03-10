@@ -42,9 +42,9 @@ class AppHelper
         $valet_parking->setKey(UserTypeEnum::ValetParking);
         $valet_parking->setValue("Valet Parking");
 
-        $waiter = new KeyValueModel();
-        $waiter->setKey(UserTypeEnum::Waiter);
-        $waiter->setValue("Waiter");
+       $server = new KeyValueModel();
+       $server->setKey(UserTypeEnum::Server);
+       $server->setValue("Server");
 
         $dj = new KeyValueModel();
         $dj->setKey(UserTypeEnum::DJ);
@@ -59,9 +59,9 @@ class AppHelper
         $customer->setValue("Customer");
 
         if (!$is_admin)
-            return collect([$place_admin, $valet_parking, $waiter, $dj, $hookah_waitress, $customer]);
+            return collect([$place_admin, $valet_parking,$server, $dj, $hookah_waitress, $customer]);
         else
-            return collect([$undefined, $admin, $place_admin, $valet_parking, $waiter, $dj, $hookah_waitress, $customer]);
+            return collect([$undefined, $admin, $place_admin, $valet_parking,$server, $dj, $hookah_waitress, $customer]);
     }
 
     static function userTypesAll(): Collection

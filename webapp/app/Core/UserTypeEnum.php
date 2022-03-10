@@ -14,7 +14,7 @@ class UserTypeEnum extends BaseEnum
 
     //Staff
     const ValetParking = 3;
-    const Waiter = 4;
+    const Server = 4;
     const DJ = 5;
     const HookahWaitress = 7;
 
