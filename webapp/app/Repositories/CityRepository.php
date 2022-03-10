@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\City;
 use App\Repositories\Base\BaseRepository;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 use function PHPUnit\Framework\isEmpty;
 
@@ -71,6 +72,14 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
     {
         return $this->model->where('deleted', 0)
             ->where('published', 1)
+            ->whereExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                      ->from('places')
+                      ->where('deleted', 0)
+                      ->where('published',1)
+                      ->whereRaw('places.city_id = cities.id');
+            })
             ->orderBy('name', 'asc')
             ->take($top)
             ->get();
