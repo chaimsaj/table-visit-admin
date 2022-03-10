@@ -84,4 +84,15 @@ class CityRepository extends BaseRepository implements CityRepositoryInterface
             ->take($top)
             ->get();
     }
+
+    public function near(float $lat, float $lon, int $distance) : Collection
+    {
+
+        return $this->model->selectRaw("id, name, (6371 * ACOS(SIN(RADIANS(latitude)) * 
+        SIN(radians($lat)) + COS(radians(longitude - $lon)) 
+        * COS(radians(latitude)) * COS(radians($lat)))) as distance")
+        ->havingRaw('distance < ?', [$distance])
+        ->orderByRaw('distance ASC')
+        ->get();
+    }
 }

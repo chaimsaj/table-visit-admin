@@ -19,4 +19,6 @@ interface CityRepositoryInterface extends BaseRepositoryInterface
     public function search(string $word, int $top = 25): Collection;
 
     public function top(int $top = 25): Collection;
+
+    public function near(float $lat, float $lon, int $distance):Collection;
 }

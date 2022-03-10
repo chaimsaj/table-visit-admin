@@ -6,6 +6,7 @@ namespace App\Http\Api;
 use App\AppModels\ApiModel;
 use App\Core\ApiCodeEnum;
 use App\Http\Api\Base\ApiController;
+use App\Http\Requests\Cities\Cities_near_request;
 use App\Repositories\CityRepositoryInterface;
 use App\Services\LogServiceInterface;
 use Illuminate\Http\JsonResponse;
@@ -94,4 +95,23 @@ class CitiesController extends ApiController
 
         return response()->json($response);
     }
+
+    public function near(Cities_near_request $request): JsonResponse
+    {
+        $response = new ApiModel();
+        $response->setSuccess();
+        $lat = $request->input('latitude');
+        $lon = $request->input('longitude');
+        $distance = $request->has('distance') ? $request->input('distance') : 10;
+        try {
+            $query = $this->cityRepository->near($lat,$lon,$distance);
+            $response->setData($query);
+        } catch (Throwable $ex) {
+            $this->logger->save($ex);
+        }
+
+        return response()->json($response);
+    }
+
+    
 }
