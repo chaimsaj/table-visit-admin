@@ -24,3 +24,5 @@ webapp/key/google-storage.json
 webapp/key/google-storage.json
 webapp/key/google-storage.json
 webapp/.env.production
+*.DS_Store
+.DS_Store
