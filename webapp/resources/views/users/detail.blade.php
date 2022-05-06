@@ -110,7 +110,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                @if($is_admin)
+                                                @if(isset($is_admin) && $is_admin)
                                                     <div class="mb-3">
                                                         <label class="form-label">Tenant</label>
                                                         <div>
@@ -127,7 +127,7 @@
                                                     </div>
                                                 @endif
 
-                                                @if(!$is_admin)
+                                                @if(isset($is_admin) && !$is_admin)
                                                     <div class="mb-3">
                                                         <label class="form-label">Place</label>
                                                         <div>
